@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-08-25T02:46:25.166Z",
+        "reason": "user confirmed: brief named Inter explicitly for body copy ('Cuerpo de texto: Inter o Satoshi')"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-08-25T02:46:25.226Z",
+        "reason": "user confirmed: brief named Space Grotesk explicitly as a display option ('General Sans, Neue Montreal, Space Grotesk o Clash Display'); verified it's the only one of the four actually hosted on Google Fonts, matching the brief's own fallback rule"
+      }
+    ]
+  }
+}
