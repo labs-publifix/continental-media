@@ -1,0 +1,186 @@
+/*
+  Continental Media — clients marquee block styles.
+  Namespaced under .cm-clients. Depends on assets/css/tokens.css.
+*/
+
+.cm-clients {
+  position: relative;
+  z-index: 30; /* covers the hero's sticky-pinned video as this section
+                  scrolls up over it — same technique as the temp demo
+                  block it replaces. */
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(4rem, 10vh, 6.5rem);
+  overflow: hidden;
+  /* Base for un-sized wrappers below (rows/track/list); every real text
+     node still sets its own rem size (see hero.css's .cm-hero for the
+     same fix and why this can't affect the type scale itself). */
+  font-size: 0.9375rem;
+}
+
+/* ---------- Intro ---------- */
+
+.cm-clients__intro {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+  text-align: center;
+}
+
+.cm-clients__kicker {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* 0.5 alpha clears normal-text AA at ~5.3:1 on this near-black ground */
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+}
+
+.cm-clients__lead {
+  margin: 0;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.75rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--cm-color-fg);
+}
+
+.cm-clients__lead-accent {
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  /* --cm-color-accent (blue-600) is calibrated for white-on-blue button
+     fills, not blue-on-black text — only 3.9:1 here. blue-500 (already
+     used for hover states elsewhere) clears normal-text AA at 5.1:1. */
+  color: var(--cm-blue-500);
+}
+
+/* ---------- Marquee rows ---------- */
+
+.cm-clients__rows {
+  margin-top: clamp(3rem, 7vh, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.cm-clients__row {
+  position: relative;
+  overflow: hidden;
+  /* Fade the logos in/out at the row edges instead of a hard clip. */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black clamp(2rem, 6vw, 6rem),
+    black calc(100% - clamp(2rem, 6vw, 6rem)),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black clamp(2rem, 6vw, 6rem),
+    black calc(100% - clamp(2rem, 6vw, 6rem)),
+    transparent 100%
+  );
+}
+
+.cm-clients__track {
+  display: flex;
+  width: max-content;
+  animation: cm-marquee-scroll var(--cm-marquee-duration, 45s) linear infinite;
+  will-change: transform;
+}
+
+.cm-clients__row:hover .cm-clients__track {
+  animation-play-state: paused;
+}
+
+.cm-clients__row--reverse .cm-clients__track {
+  animation-direction: reverse;
+}
+
+@keyframes cm-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The track holds two identical <ul> copies back to back, so -50%
+       is exactly one copy's width — the loop point is seamless. */
+    transform: translateX(-50%);
+  }
+}
+
+.cm-clients__list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cm-clients__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-inline: clamp(1.5rem, 4vw, 3.25rem);
+}
+
+.cm-clients__item img {
+  display: block;
+  height: clamp(26px, 3.6vw, 42px);
+  width: auto;
+  opacity: 0.5;
+  transition:
+    opacity var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-clients__item:hover img {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+/* ---------- Reduced motion: static, complete, no duplicate content ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-clients__row {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow: visible;
+  }
+
+  .cm-clients__track {
+    animation: none;
+    width: 100%;
+  }
+
+  .cm-clients__list {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: clamp(1.5rem, 3vh, 2rem);
+  }
+
+  .cm-clients__list[aria-hidden='true'] {
+    display: none;
+  }
+
+  .cm-clients__item img {
+    opacity: 0.75;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .cm-clients {
+    padding-block: clamp(3rem, 9vh, 4rem);
+  }
+
+  .cm-clients__item {
+    padding-inline: clamp(1rem, 6vw, 1.75rem);
+  }
+}

@@ -29,6 +29,15 @@
         ],
         "createdAt": "2026-08-25T03:21:42.506Z",
         "reason": "cramped-padding isn't in impeccable-config.mjs's directValueRules allowlist, so no per-instance value can ever be extracted for it — wildcard is the only self-serve form the tool supports for this rule. Confirmed false positive for cm-hero__nav-aside specifically: detector's resolveLengthPx() (checks.mjs ~2945) doesn't parse CSS clamp() — parseFloat('clamp(1.5rem, 4vh, 2rem)') is NaN, so the real 24-48px padding-top/left resolves to 0 in the check. Actual rendered padding verified >=24px at both breakpoints via Playwright/Chromium screenshot. Scoped to this file only; re-check manually if another cramped-padding finding appears here."
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-08-25T03:55:21.590Z",
+        "reason": "user confirmed: explicitly requested by name ('un marquee infinito animado con logos de clientes') for a 17-logo trust wall. Mitigations already implemented per the tool's own landing.csv guidance ('pause/stop on focus, hover, and reduced motion'): animation-play-state:paused on row hover, IntersectionObserver pauses it off-screen, and prefers-reduced-motion swaps to a static wrapped grid showing all 17 logos once (duplicated aria-hidden copies hidden). Not in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form available for this rule."
       }
     ]
   }

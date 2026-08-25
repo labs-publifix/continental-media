@@ -1,0 +1,89 @@
+<!--
+  CONTINENTAL MEDIA — CLIENTS MARQUEE BLOCK (canonical source)
+  THESIS: 25 years of real, named clients across three regions — proven by
+    a wall of actual logos in motion, not a generic "trusted by" claim.
+  OWN-WORLD: inherits the hero's world — same near-black ground, same
+    restrained blue accent used only on hover/emphasis, same Inter body.
+    Logos are monochrome white (their own real files), so the "life" in
+    this section comes from motion and hover response, not color.
+  FORM: precisely brief-pinned (two opposite-direction infinite rows,
+    solid dark background, hover effect, the exact intro line) — no
+    concept roll, extending the established hero/nav world per
+    new-work.md's "local extension" path, not a new-world exercise.
+  ACCESSIBILITY: each row's content is duplicated for the seamless CSS
+    loop; the duplicate copy is aria-hidden. Under prefers-reduced-motion
+    the animation stops and the layout switches to a static wrapped grid
+    showing all 17 logos once, with the duplicates hidden entirely — nothing
+    is ever announced twice, and nothing needs motion to be read.
+
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/clients-marquee/clients-marquee.css.
+    2. Copy the <section class="cm-clients"> markup below as-is.
+    3. Load blocks/clients-marquee/clients-marquee.js as a module (pauses
+       the animation when the section is off-screen; purely a perf nicety,
+       hover-pause and reduced-motion work without it).
+  Asset paths are root-relative (no leading slash), matching the hero block.
+-->
+<section class="cm-clients" aria-label="Clientes de Continental Media">
+  <div class="cm-clients__intro">
+    <span class="cm-clients__kicker">Nuestros clientes</span>
+    <p class="cm-clients__lead">
+      <strong class="cm-clients__lead-accent">25 años</strong> construyendo resultados
+      para marcas líderes en Veracruz, Querétaro y toda la República Mexicana.
+    </p>
+  </div>
+
+  <div class="cm-clients__rows" data-cm-marquee>
+    <div class="cm-clients__row">
+      <div class="cm-clients__track" data-cm-marquee-track style="--cm-marquee-duration: 46s">
+        <ul class="cm-clients__list">
+          <li class="cm-clients__item"><img src="assets/images/clients/la-parroquia.png" alt="La Parroquia de Veracruz" width="1118" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/camino-real.png" alt="Camino Real Hoteles" width="898" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/nywc.png" alt="New You Wellness Center" width="876" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/u3m.png" alt="U3M Tercer Milenio" width="651" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/solorzano-linaldi.png" alt="Solórzano Linaldi" width="600" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/bitali.png" alt="Bitali Desarrollos" width="539" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/ecjetone.png" alt="EC Jet One" width="468" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/azzit.png" alt="Azzit Rincón Coreano" width="448" height="320" loading="lazy" decoding="async" /></li>
+        </ul>
+        <ul class="cm-clients__list" aria-hidden="true">
+          <li class="cm-clients__item"><img src="assets/images/clients/la-parroquia.png" alt="" width="1118" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/camino-real.png" alt="" width="898" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/nywc.png" alt="" width="876" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/u3m.png" alt="" width="651" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/solorzano-linaldi.png" alt="" width="600" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/bitali.png" alt="" width="539" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/ecjetone.png" alt="" width="468" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/azzit.png" alt="" width="448" height="320" loading="lazy" decoding="async" /></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cm-clients__row cm-clients__row--reverse">
+      <div class="cm-clients__track" data-cm-marquee-track style="--cm-marquee-duration: 50s">
+        <ul class="cm-clients__list">
+          <li class="cm-clients__item"><img src="assets/images/clients/euromex.png" alt="Euromex Logistics" width="1080" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/brunos.png" alt="Bruno's Pizza" width="967" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/bosque-san-lucas.png" alt="Bosque Residencial San Lucas" width="801" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/cam.png" alt="CAM Clima Artificial de México" width="749" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/roncomed.png" alt="RoncoMed" width="582" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/adv.png" alt="ADV Logistics" width="500" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/trastevere.png" alt="Trastevere" width="491" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/amda.png" alt="AMDA" width="389" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/viviendo-vino.png" alt="Viviendo Vino" width="320" height="320" loading="lazy" decoding="async" /></li>
+        </ul>
+        <ul class="cm-clients__list" aria-hidden="true">
+          <li class="cm-clients__item"><img src="assets/images/clients/euromex.png" alt="" width="1080" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/brunos.png" alt="" width="967" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/bosque-san-lucas.png" alt="" width="801" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/cam.png" alt="" width="749" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/roncomed.png" alt="" width="582" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/adv.png" alt="" width="500" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/trastevere.png" alt="" width="491" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/amda.png" alt="" width="389" height="320" loading="lazy" decoding="async" /></li>
+          <li class="cm-clients__item"><img src="assets/images/clients/viviendo-vino.png" alt="" width="320" height="320" loading="lazy" decoding="async" /></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
