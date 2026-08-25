@@ -197,10 +197,26 @@
 /* ---------- Nav panel (disclosure, not a modal) ---------- */
 
 .cm-hero__nav {
-  position: absolute;
+  /* Fixed to the real viewport, not absolute within .cm-hero: .cm-hero
+     carries min-height:560px for its own baseline content, and inset:0
+     under position:absolute would inherit that floor, making the nav
+     panel taller than the viewport (and the whole PAGE scroll to reveal
+     the rest of it) on anything shorter than 560px — a short-viewport
+     bug .cm-hero__nav's own internal overflow-y never sees, since the
+     panel isn't overflowing itself, the page is. Fixed positioning
+     anchors to the viewport unconditionally instead. */
+  position: fixed;
   inset: 0;
   z-index: 15;
+  /* Vertical scroll only ever as a last-resort safety net (see the
+     content-fit work in .cm-hero__nav-inner); horizontal never scrolls —
+     without this, the browser's "one axis auto forces the other to
+     compute as auto too" rule silently turned any horizontal overflow
+     (the glow pseudo-element below was the actual cause) into a
+     scrollable, layout-breaking mess on every device. */
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   background: rgba(6, 7, 10, 0.97);
   opacity: 0;
@@ -210,15 +226,18 @@
     visibility 0s linear var(--cm-duration-fast);
 }
 
-/* Purely decorative depth — restrained: one soft accent glow, not a scene */
+/* Purely decorative depth — restrained: one soft accent glow, not a scene.
+   Kept fully inside the box (no negative offsets) so it can never be the
+   thing that forces scroll — overflow-x:hidden above is a backstop, not
+   a license to size this carelessly. */
 .cm-hero__nav::before {
   content: '';
   position: absolute;
-  top: -15%;
-  right: -10%;
-  width: 55%;
-  height: 55%;
-  background: radial-gradient(circle, rgba(30, 95, 255, 0.16), transparent 70%);
+  top: 0;
+  right: 0;
+  width: 45%;
+  height: 45%;
+  background: radial-gradient(circle at top right, rgba(30, 95, 255, 0.16), transparent 70%);
   pointer-events: none;
 }
 
@@ -675,10 +694,86 @@
   .cm-hero__menu-label {
     display: none;
   }
+
+  /* Nav: the tagline is a nice-to-have callback to the hero's own copy,
+     not load-bearing navigation — drop it first so the six real menu
+     items (the thing people actually came for) get the room, before
+     ever relying on scroll. */
+  .cm-hero__nav-tagline {
+    display: none;
+  }
+
+  .cm-hero__nav-inner {
+    padding-top: clamp(3.5rem, 9vh, 5rem);
+    padding-bottom: clamp(1.5rem, 3vh, 2rem);
+    gap: clamp(1rem, 3vh, 1.5rem);
+  }
+
+  .cm-hero__nav-aside {
+    padding-top: clamp(1rem, 3vh, 1.5rem);
+    gap: clamp(1rem, 3vh, 1.25rem);
+  }
 }
 
 @media (min-width: 641px) and (max-width: 900px) {
   .cm-hero__menu-label {
+    display: none;
+  }
+}
+
+/* Short-viewport safety net: orthogonal to width — a landscape phone or
+   any small screen under ~700px tall gets the same treatment regardless
+   of how wide it is, since height (not width) is what's actually tight
+   here. Copyright is the last thing to go: least essential, purely
+   decorative metadata. */
+@media (max-height: 700px) {
+  /* Short height is the real constraint here regardless of width — a
+     landscape phone (e.g. 812x375) never matches the <=640px width rule
+     above but is exactly as vertically tight, so the tagline goes here
+     too, not just there. */
+  .cm-hero__nav-tagline {
+    display: none;
+  }
+
+  .cm-hero__nav-inner {
+    padding-top: clamp(3rem, 10vh, 4rem);
+    padding-bottom: clamp(1rem, 3vh, 1.5rem);
+    gap: clamp(0.75rem, 3vh, 1.25rem);
+  }
+
+  .cm-hero__nav-list {
+    gap: 0;
+  }
+
+  .cm-hero__nav-list a {
+    /* Sized by viewport height, not width — a landscape phone has width
+       to spare but almost none of this. */
+    font-size: clamp(1.25rem, 5vh, 2rem);
+    padding-block: 0.22em;
+  }
+
+  .cm-hero__nav-arrow {
+    display: none;
+  }
+
+  .cm-hero__nav-social-list a {
+    width: 34px;
+    height: 34px;
+  }
+
+  .cm-hero__nav-social-list svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cm-hero__nav-aside {
+    padding-top: clamp(0.75rem, 3vh, 1rem);
+    gap: clamp(0.75rem, 2vh, 1rem);
+  }
+}
+
+@media (max-height: 520px) {
+  .cm-hero__nav-copyright {
     display: none;
   }
 }

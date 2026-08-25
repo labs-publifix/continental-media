@@ -48,6 +48,12 @@
     if (menuLabel) menuLabel.textContent = 'Cerrar';
     nav.scrollTop = 0;
     nav.hidden = false;
+    // Lock the background page while the fixed full-screen overlay is
+    // open — otherwise a wheel/touch gesture that misses the overlay's
+    // own scroll (or lands during its opening transition) can scroll the
+    // page behind it, which reads as the menu "breaking".
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
     // Let the browser register hidden=false before animating in.
     requestAnimationFrame(function () {
       nav.classList.add('is-open');
@@ -64,6 +70,8 @@
     if (menuLabel) menuLabel.textContent = 'Menú';
     nav.classList.remove('is-open');
     document.removeEventListener('keydown', onKeydown);
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
 
     var finish = function () {
       nav.hidden = true;
