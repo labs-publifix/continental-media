@@ -113,7 +113,7 @@
 
 .cm-hero__logo {
   display: block;
-  height: clamp(28px, 3.4vw, 38px);
+  height: clamp(32px, 4.2vw, 52px);
   width: auto;
 }
 
