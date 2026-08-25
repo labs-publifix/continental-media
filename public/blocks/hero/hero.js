@@ -46,6 +46,7 @@
     // from the accessibility tree) — keep both in sync regardless.
     toggle.setAttribute('aria-label', 'Cerrar menú');
     if (menuLabel) menuLabel.textContent = 'Cerrar';
+    nav.scrollTop = 0;
     nav.hidden = false;
     // Let the browser register hidden=false before animating in.
     requestAnimationFrame(function () {
@@ -94,10 +95,11 @@
       }
     });
 
-    nav.addEventListener('click', function (event) {
-      if (event.target.closest('a')) {
-        closeMenu({ returnFocus: false });
-      }
+    // Clicking a link, or the empty backdrop/gaps around the panel, both
+    // close it — every click inside the nav does, since nothing else in
+    // here needs to stay open on click (social links open in a new tab).
+    nav.addEventListener('click', function () {
+      closeMenu({ returnFocus: false });
     });
   }
 
