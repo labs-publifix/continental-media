@@ -3,30 +3,148 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Continental Media</title>
+  <title>Continental Media — Agencia de Marketing, Comunicación y RP potenciada por IA</title>
+  <meta
+    name="description"
+    content="Continental Media diseña soluciones de marketing, comunicación y relaciones públicas a la medida de cada cliente, potenciadas por las tecnologías más modernas en Inteligencia Artificial."
+  />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="blocks/hero/hero.css" />
+
   <style>
-    :root { color-scheme: light dark; }
+    /* Minimal page shell — not a design system, just enough to view the hero block in context. */
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
     body {
       margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+
+    /* TEMP DEMO ONLY — a neutral placeholder standing in for the next real
+       block, so the hero's sticky-pin + parallax handoff can be previewed
+       on the live site. Delete this <section> (and nothing else) the
+       moment the next real section is built. */
+    .demo-next-block {
+      position: relative;
+      z-index: 30;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0b0d12;
-      color: #f4f5f7;
+      background: #f4f3ef;
+      color: #0a0b0d;
       text-align: center;
       padding: 2rem;
     }
-    main { max-width: 32rem; }
-    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-    p { color: #9aa1ac; line-height: 1.5; }
+    .demo-next-block p {
+      font-family: var(--cm-font-body);
+      font-size: 0.9375rem;
+      color: rgba(10, 11, 13, 0.55);
+      max-width: 26rem;
+      margin: 0;
+    }
   </style>
 </head>
-<body>
-  <main>
-    <h1>Continental Media</h1>
-    <p>Sitio en construcción. Este deploy automático se actualizará en cada ronda de trabajo.</p>
+<body id="top">
+  <!-- ===== HERO BLOCK — see public/blocks/hero/hero.html for the canonical source ===== -->
+  <section class="cm-hero" data-cm-hero aria-label="Continental Media — inicio">
+    <!-- Targets the hero's own headline, not a page-level #main-content: the
+         hero IS the unique content here, the top bar is the only boilerplate
+         worth skipping. Re-point this once real sections exist after it. -->
+    <a class="cm-hero__skip" href="#cm-hero-heading">Saltar al contenido</a>
+
+    <div class="cm-hero__media" data-cm-hero-media>
+      <video
+        class="cm-hero__video"
+        data-cm-hero-video
+        poster="assets/images/hero-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <source src="assets/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="cm-hero__overlay" aria-hidden="true"></div>
+    </div>
+
+    <header class="cm-hero__bar">
+      <a class="cm-hero__logo-link" href="#top" aria-label="Continental Media — ir al inicio">
+        <img
+          class="cm-hero__logo"
+          src="assets/images/continental-media-logo-white.png"
+          alt="Continental Media"
+          width="380"
+          height="151"
+        />
+      </a>
+
+      <button
+        type="button"
+        class="cm-hero__menu-toggle"
+        data-cm-hero-menu-toggle
+        aria-expanded="false"
+        aria-controls="cm-hero-nav"
+        aria-label="Abrir menú"
+      >
+        <span class="cm-hero__menu-icon" aria-hidden="true">
+          <span class="cm-hero__menu-bar"></span>
+          <span class="cm-hero__menu-bar"></span>
+          <span class="cm-hero__menu-bar"></span>
+        </span>
+        <span class="cm-hero__menu-label" data-cm-hero-menu-label>Menú</span>
+      </button>
+    </header>
+
+    <nav class="cm-hero__nav" id="cm-hero-nav" data-cm-hero-nav aria-label="Menú principal" hidden>
+      <ul class="cm-hero__nav-list">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#portafolio">Portafolio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="cm-hero__stage">
+      <div class="cm-hero__content">
+        <h1 class="cm-hero__title" data-cm-reveal id="cm-hero-heading" tabindex="-1">Multiplica tu capacidad.</h1>
+        <p class="cm-hero__subtitle" data-cm-reveal>
+          La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
+        </p>
+        <p class="cm-hero__body" data-cm-reveal>
+          En Continental Media diseñamos soluciones de marketing, comunicación y
+          relaciones públicas a la medida de cada cliente, potenciadas por las
+          tecnologías más modernas en IA.
+        </p>
+        <div class="cm-hero__actions" data-cm-reveal>
+          <a class="cm-hero__cta cm-hero__cta--primary" href="#servicios">Nuestros Servicios</a>
+          <a class="cm-hero__cta cm-hero__cta--secondary" href="#portafolio">Ver Portafolio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== /HERO BLOCK ===== -->
+
+  <main id="main-content">
+    <!-- TEMP DEMO ONLY: see the comment in <style> above. -->
+    <section class="demo-next-block">
+      <p>Siguiente sección — próximamente.<br />Este bloque solo existe para previsualizar el efecto de scroll del hero.</p>
+    </section>
   </main>
+
+  <script type="module" src="blocks/hero/hero.js"></script>
 </body>
 </html>

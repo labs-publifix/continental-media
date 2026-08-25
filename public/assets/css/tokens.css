@@ -1,0 +1,51 @@
+/*
+  Continental Media — brand design tokens
+  Shared primitive + semantic tokens consumed by every block under public/blocks/.
+  A new block links this file once, then its own <block>.css, and reads these
+  custom properties instead of hard-coding brand values again.
+*/
+
+:root {
+  /* Primitive — color
+     Accent anchored to the "IA" capsule from hero-background.mp4 (sampled
+     ~#0a5891 on screen, muted by studio lighting/compression); rendered at
+     the brand's intended saturation per the approved #1E5FFF–#2563EB range. */
+  --cm-black: #0a0b0d;
+  --cm-white: #ffffff;
+  --cm-blue-700: #1547c4;
+  --cm-blue-600: #1e5fff;
+  --cm-blue-500: #4779ff;
+
+  /* Primitive — type */
+  --cm-font-display: 'Space Grotesk', 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --cm-font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  /* Primitive — motion */
+  --cm-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --cm-duration-fast: 200ms;
+  --cm-duration-base: 700ms;
+  --cm-duration-slow: 1000ms;
+
+  /* Primitive — radius (near-sharp by brand direction; never pill/soft) */
+  --cm-radius-sm: 2px;
+
+  /* Semantic — color */
+  --cm-color-bg: var(--cm-black);
+  --cm-color-fg: var(--cm-white);
+  --cm-color-accent: var(--cm-blue-600);
+  --cm-color-accent-hover: var(--cm-blue-700);
+  --cm-color-accent-active: var(--cm-blue-700);
+  --cm-color-on-accent: var(--cm-white);
+
+  /* Semantic — layout */
+  --cm-gutter: clamp(1.25rem, 4vw, 4rem);
+  --cm-content-max: 640px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cm-duration-fast: 1ms;
+    --cm-duration-base: 1ms;
+    --cm-duration-slow: 1ms;
+  }
+}

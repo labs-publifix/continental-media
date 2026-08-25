@@ -1,0 +1,109 @@
+<!--
+  CONTINENTAL MEDIA — HERO BLOCK (canonical source)
+  THESIS: AI multiplies a real team, it never replaces it — proven in motion in
+    the first seconds, not asserted in a headline.
+  OWN-WORLD: near-black cinematic ground, full-bleed looping video, electric
+    blue (#1E5FFF) anchored to the video's own "IA" capsule, Space Grotesk
+    display over Inter body, hairline geometry, near-sharp corners, no pill
+    shapes.
+  STORY: a marketing/comms/PR agency visitor sees AI dramatized as force
+    multiplier for people (not a replacement), reads the claim, then acts via
+    two clearly weighted CTAs.
+  FIRST VIEWPORT: full-bleed video, transparent-to-video top bar (logo +
+    hamburger), content block anchored lower-left, cinematic fade-up on load.
+  FORM: precisely brief-pinned (copy, colors, structure, motion) — no concept
+    roll, per new-work.md's "brief-pinned direction beats the roll, always"
+    and "never run the tournament for a precisely specified narrow request";
+    code-led (no image-generation tool available this session).
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+    finish review and every asset carrying its provenance.
+
+  USAGE — this file is the canonical, framework-agnostic source for the hero
+  block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/hero/hero.css, in <head>.
+    2. Copy the <section class="cm-hero"> markup below as-is.
+    3. Load blocks/hero/hero.js as a module before </body>.
+    4. Preload Space Grotesk + Inter (see public/index.html for the exact
+       <link> tags) so the display face is ready before the entrance reveal.
+  Asset paths below are root-relative (no leading slash) so the block works
+  unmodified from any page at the site root.
+-->
+<section class="cm-hero" data-cm-hero aria-label="Continental Media — inicio">
+  <!-- Targets the hero's own headline, not a page-level #main-content: the
+       hero IS the unique content here, the top bar is the only boilerplate
+       worth skipping. Re-point this once real sections exist after it. -->
+  <a class="cm-hero__skip" href="#cm-hero-heading">Saltar al contenido</a>
+
+  <div class="cm-hero__media" data-cm-hero-media>
+    <video
+      class="cm-hero__video"
+      data-cm-hero-video
+      poster="assets/images/hero-poster.jpg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <source src="assets/video/hero-background.mp4" type="video/mp4" />
+    </video>
+    <div class="cm-hero__overlay" aria-hidden="true"></div>
+  </div>
+
+  <header class="cm-hero__bar">
+    <a class="cm-hero__logo-link" href="#top" aria-label="Continental Media — ir al inicio">
+      <img
+        class="cm-hero__logo"
+        src="assets/images/continental-media-logo-white.png"
+        alt="Continental Media"
+        width="380"
+        height="151"
+      />
+    </a>
+
+    <button
+      type="button"
+      class="cm-hero__menu-toggle"
+      data-cm-hero-menu-toggle
+      aria-expanded="false"
+      aria-controls="cm-hero-nav"
+      aria-label="Abrir menú"
+    >
+      <span class="cm-hero__menu-icon" aria-hidden="true">
+        <span class="cm-hero__menu-bar"></span>
+        <span class="cm-hero__menu-bar"></span>
+        <span class="cm-hero__menu-bar"></span>
+      </span>
+      <span class="cm-hero__menu-label" data-cm-hero-menu-label>Menú</span>
+    </button>
+  </header>
+
+  <nav class="cm-hero__nav" id="cm-hero-nav" data-cm-hero-nav aria-label="Menú principal" hidden>
+    <ul class="cm-hero__nav-list">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#portafolio">Portafolio</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <div class="cm-hero__stage">
+    <div class="cm-hero__content">
+      <h1 class="cm-hero__title" data-cm-reveal id="cm-hero-heading" tabindex="-1">Multiplica tu capacidad.</h1>
+      <p class="cm-hero__subtitle" data-cm-reveal>
+        La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
+      </p>
+      <p class="cm-hero__body" data-cm-reveal>
+        En Continental Media diseñamos soluciones de marketing, comunicación y
+        relaciones públicas a la medida de cada cliente, potenciadas por las
+        tecnologías más modernas en IA.
+      </p>
+      <div class="cm-hero__actions" data-cm-reveal>
+        <a class="cm-hero__cta cm-hero__cta--primary" href="#servicios">Nuestros Servicios</a>
+        <a class="cm-hero__cta cm-hero__cta--secondary" href="#portafolio">Ver Portafolio</a>
+      </div>
+    </div>
+  </div>
+</section>
