@@ -188,11 +188,8 @@
   line-height: 1.3;
 }
 
-/* Hover reveal (both the full-color photo and the caption) is a
-   desktop/mouse enhancement only — the name/role is already carried by
-   the <img alt> for everyone else, and the photo simply stays
-   black-and-white, so touch devices never get a stuck or fake-hover
-   state. */
+/* Hover reveal (both the full-color photo and the caption), desktop/mouse
+   only — gated so touch devices never get a stuck or fake-hover state. */
 @media (hover: hover) and (pointer: fine) {
   .cm-about__photo:hover img {
     filter: none;
@@ -202,6 +199,20 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Touch equivalent of the hover reveal above: about-teaser.js toggles
+   .is-active on tap for devices with no real hover (touch), so a finger
+   gets the same full-color-photo + caption payoff a cursor gets for free.
+   The name/role is still carried by the <img alt> regardless — this is a
+   parity enhancement, not the only way to learn who someone is. */
+.cm-about__photo.is-active img {
+  filter: none;
+}
+
+.cm-about__photo.is-active .cm-about__caption {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* ---------- Scroll-triggered entrance ---------- */
