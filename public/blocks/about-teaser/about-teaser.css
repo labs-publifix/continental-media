@@ -133,12 +133,6 @@
   gap: clamp(0.75rem, 1.6vw, 1.25rem);
 }
 
-/* Center the 7th (odd one out) under the two rows of three above it,
-   rather than leaving it stranded at the left edge of a half-empty row. */
-.cm-about__photo:nth-child(7) {
-  grid-column: 2;
-}
-
 .cm-about__photo {
   position: relative;
   aspect-ratio: 4 / 5;
@@ -159,18 +153,22 @@
   filter: grayscale(1) contrast(1.08) brightness(0.92);
 }
 
-/* Brand-blue duotone: mix-blend-mode:color takes hue/saturation from this
-   layer and luminance from the grayscale photo beneath it — unifies the
-   seven originally-disparate backgrounds (and skin tones) into one
-   coherent blue-toned series. --cm-photo-tint cycles 2-3 blue shades
-   per card (set inline per item) for subtle variation within the palette. */
+/* Brand-blue duotone, revealed on hover only: the grid sits fully
+   black-and-white at rest (mix-blend-mode:color takes hue/saturation from
+   this layer and luminance from the grayscale photo beneath it), and
+   fades in per-card on hover/focus as a deliberate "portrait becomes
+   Continental Media blue" moment rather than a permanent wash.
+   --cm-photo-tint cycles 2-3 blue shades per card (set inline per item)
+   for subtle variation within the palette. */
 .cm-about__photo::after {
   content: '';
   position: absolute;
   inset: 0;
   background: var(--cm-photo-tint, var(--cm-color-accent));
   mix-blend-mode: color;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity var(--cm-duration-base) var(--cm-ease-out);
 }
 
 .cm-about__caption {
@@ -207,11 +205,15 @@
   line-height: 1.3;
 }
 
-/* Hover reveal is a desktop/mouse enhancement only — the name/role is
-   already carried by the <img alt> for everyone else, so touch devices
-   simply never see this layer rather than getting a stuck or fake-hover
-   state. */
+/* Hover reveal (both the blue duotone and the caption) is a desktop/mouse
+   enhancement only — the name/role is already carried by the <img alt>
+   for everyone else, and the photo simply stays black-and-white, so touch
+   devices never get a stuck or fake-hover state. */
 @media (hover: hover) and (pointer: fine) {
+  .cm-about__photo:hover::after {
+    opacity: 1;
+  }
+
   .cm-about__photo:hover .cm-about__caption {
     transform: translateY(0);
     opacity: 1;
@@ -254,6 +256,8 @@
 .cm-about.is-visible .cm-about__photo:nth-child(5) { transition-delay: 360ms; }
 .cm-about.is-visible .cm-about__photo:nth-child(6) { transition-delay: 450ms; }
 .cm-about.is-visible .cm-about__photo:nth-child(7) { transition-delay: 540ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(8) { transition-delay: 630ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(9) { transition-delay: 720ms; }
 
 @media (prefers-reduced-motion: reduce) {
   .cm-about [data-cm-about-reveal],
@@ -286,9 +290,9 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Two-column grid: re-center the 7th item under the pairs above it
-     (was centered for a 3-column grid; span both columns here instead). */
-  .cm-about__photo:nth-child(7) {
+  /* Two-column grid, 9 photos: the last one is the odd one out — center
+     it under the pairs above it instead of leaving it pinned left. */
+  .cm-about__photo:nth-child(9) {
     grid-column: 1 / -1;
     max-width: calc(50% - clamp(0.5rem, 3vw, 0.75rem) / 2);
     margin-inline: auto;
