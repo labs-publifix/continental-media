@@ -1,0 +1,300 @@
+/*
+  Continental Media — "Nosotros" teaser block styles.
+  Namespaced under .cm-about. Depends on assets/css/tokens.css.
+*/
+
+.cm-about {
+  position: relative;
+  z-index: 30; /* same reasoning as .cm-clients: sits after the hero in
+                  normal flow and must stay opaque above its sticky video */
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(4.5rem, 11vh, 7.5rem);
+  overflow: hidden;
+  font-size: 0.9375rem; /* base for unsized wrappers, see hero.css's .cm-hero for why */
+}
+
+.cm-about__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(3rem, 6vw, 6rem);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+}
+
+/* ---------- Text column ---------- */
+
+.cm-about__text {
+  max-width: 34rem;
+}
+
+.cm-about__eyebrow {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* 0.5 alpha clears normal-text AA at ~5.3:1 on this near-black ground */
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+}
+
+.cm-about__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.3rem + 2.2vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cm-about__body {
+  margin: 1.1em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: clamp(1rem, 0.93rem + 0.3vw, 1.125rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 42ch;
+}
+
+.cm-about__chips {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.cm-about__chip {
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  /* Reuses the site's existing 12px micro-label size (see hero/clients-marquee
+     eyebrows) instead of a new in-between size, keeping the type scale's steps
+     wide enough to read as intentional hierarchy rather than noise. */
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.5em 0.85em;
+  white-space: nowrap;
+}
+
+.cm-about__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.25rem;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--cm-radius-sm);
+  padding: 0.95em 1.75em;
+  cursor: pointer;
+  border: 1.5px solid var(--cm-color-accent);
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-about__cta:hover {
+  background: var(--cm-color-accent-hover);
+  border-color: var(--cm-color-accent-hover);
+}
+
+.cm-about__cta:active {
+  transform: translateY(1px);
+}
+
+.cm-about__cta:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+/* ---------- Photo grid ---------- */
+
+.cm-about__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
+}
+
+/* Center the 7th (odd one out) under the two rows of three above it,
+   rather than leaving it stranded at the left edge of a half-empty row. */
+.cm-about__photo:nth-child(7) {
+  grid-column: 2;
+}
+
+.cm-about__photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--cm-radius-sm);
+  background: var(--cm-black);
+  isolation: isolate;
+}
+
+.cm-about__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Desaturate first so the tint below reads as a true duotone (hue +
+     saturation from the tint, luminance from the photo) instead of a
+     color wash sitting on top of the original colors. */
+  filter: grayscale(1) contrast(1.08) brightness(0.92);
+}
+
+/* Brand-blue duotone: mix-blend-mode:color takes hue/saturation from this
+   layer and luminance from the grayscale photo beneath it — unifies the
+   seven originally-disparate backgrounds (and skin tones) into one
+   coherent blue-toned series. --cm-photo-tint cycles 2-3 blue shades
+   per card (set inline per item) for subtle variation within the palette. */
+.cm-about__photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cm-photo-tint, var(--cm-color-accent));
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
+.cm-about__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  padding: 1rem 0.9rem 0.85rem;
+  background: linear-gradient(to top, rgba(4, 5, 8, 0.92) 0%, rgba(4, 5, 8, 0.55) 60%, transparent 100%);
+  transform: translateY(100%);
+  opacity: 0;
+  transition:
+    transform var(--cm-duration-fast) var(--cm-ease-out),
+    opacity var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-about__caption-name {
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  /* Reuses the site's existing 15px small-UI size (see nav links, CTAs)
+     rather than a new in-between size. */
+  font-size: 0.9375rem;
+  color: var(--cm-color-fg);
+  line-height: 1.3;
+}
+
+.cm-about__caption-role {
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.3;
+}
+
+/* Hover reveal is a desktop/mouse enhancement only — the name/role is
+   already carried by the <img alt> for everyone else, so touch devices
+   simply never see this layer rather than getting a stuck or fake-hover
+   state. */
+@media (hover: hover) and (pointer: fine) {
+  .cm-about__photo:hover .cm-about__caption {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------- Scroll-triggered entrance ---------- */
+
+.cm-about [data-cm-about-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-about__photo {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+.cm-about.is-visible [data-cm-about-reveal] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-about.is-visible .cm-about__photo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ~90ms stagger, reading order = DOM order = the order specified in the brief */
+.cm-about.is-visible .cm-about__photo:nth-child(1) { transition-delay: 0ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(2) { transition-delay: 90ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(3) { transition-delay: 180ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(4) { transition-delay: 270ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(5) { transition-delay: 360ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(6) { transition-delay: 450ms; }
+.cm-about.is-visible .cm-about__photo:nth-child(7) { transition-delay: 540ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-about [data-cm-about-reveal],
+  .cm-about__photo {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .cm-about__inner {
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 8vh, 3.5rem);
+  }
+
+  .cm-about__text {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-about {
+    padding-block: clamp(3.5rem, 10vh, 5rem);
+  }
+
+  .cm-about__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Two-column grid: re-center the 7th item under the pairs above it
+     (was centered for a 3-column grid; span both columns here instead). */
+  .cm-about__photo:nth-child(7) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - clamp(0.5rem, 3vw, 0.75rem) / 2);
+    margin-inline: auto;
+  }
+
+  .cm-about__title {
+    text-wrap: balance;
+  }
+}

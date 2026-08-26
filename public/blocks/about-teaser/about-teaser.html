@@ -1,0 +1,175 @@
+<!--
+  CONTINENTAL MEDIA — ABOUT ("NOSOTROS") TEASER BLOCK (canonical source)
+  THESIS: a fully remote agency has no office to photograph, so the proof
+    of "team" is the team's own faces — a mosaic of real portraits,
+    unified under one brand-blue duotone so seven disparate photo shoots
+    read as one coherent series, not a stock-photo grab bag.
+  OWN-WORLD: inherits the site's established world — same near-black
+    ground, same restrained blue accent, same Space Grotesk display /
+    Inter body pairing as hero and the clients marquee.
+  FORM: precisely brief-pinned (exact copy, 50/50 split, specific photo
+    order, specific treatment options offered) — a local extension of
+    the established world per new-work.md, not a new concept exercise.
+  ACCESSIBILITY: every photo's identity lives in its <img alt>, not only
+    in the hover caption — the caption is a desktop/mouse enhancement
+    (hover:hover and pointer:fine), never the only way to learn who
+    someone is. Entrance reveals default to the final visible state and
+    are only animated where JS runs and motion is not reduced; a
+    <noscript> rule forces the visible state if JS never executes at all.
+
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/about-teaser/about-teaser.css.
+    2. Copy the <section class="cm-about"> markup below as-is.
+    3. Load blocks/about-teaser/about-teaser.js as a module (drives the
+       scroll-triggered reveal; the <noscript> fallback and
+       prefers-reduced-motion both work without it).
+  Asset paths are root-relative (no leading slash), matching every other
+  block on the site.
+-->
+<section class="cm-about" data-cm-about aria-labelledby="cm-about-heading">
+  <noscript>
+    <style>
+      [data-cm-about] [data-cm-about-reveal],
+      [data-cm-about] [data-cm-about-photo] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-about__inner">
+    <div class="cm-about__text" data-cm-about-reveal>
+      <span class="cm-about__eyebrow">Nosotros</span>
+      <h2 class="cm-about__title" id="cm-about-heading">Una agencia 360°, evolucionando contigo</h2>
+      <p class="cm-about__body">
+        Somos un equipo multidisciplinario en marketing digital, comunicación, diseño y
+        relaciones públicas. Integramos constantemente nuevas herramientas —incluida la
+        inteligencia artificial— para crear soluciones creativas, medibles y a la medida de
+        cada cliente.
+      </p>
+
+      <ul class="cm-about__chips">
+        <li class="cm-about__chip">360° integral</li>
+        <li class="cm-about__chip">México + EE.UU.</li>
+        <li class="cm-about__chip">Multidisciplinario</li>
+      </ul>
+
+      <!-- Placeholder route: no standalone /nosotros page exists yet in
+           this static, page-per-file build. Relative (not root-absolute
+           "/nosotros") so it resolves correctly under a project subpath
+           like GitHub Pages' /continental-media/ — swap for the real
+           route once that page ships. -->
+      <a class="cm-about__cta" href="nosotros.html">Conocer más</a>
+    </div>
+
+    <ul class="cm-about__grid" data-cm-about-grid aria-label="Equipo de Continental Media">
+      <!-- 1–2: real leadership, must lead the grid -->
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-600)">
+        <img
+          src="assets/images/team/rafael-aguirre.jpg"
+          alt="Rafael Aguirre, Director General"
+          width="508"
+          height="430"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Rafael Aguirre</span>
+          <span class="cm-about__caption-role">Director General</span>
+        </span>
+      </li>
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-500)">
+        <img
+          src="assets/images/team/pepe-bermudez.jpg"
+          alt="Pepe Bermúdez, Director Querétaro"
+          width="513"
+          height="462"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Pepe Bermúdez</span>
+          <span class="cm-about__caption-role">Director Querétaro</span>
+        </span>
+      </li>
+
+      <!--
+        PLACEHOLDER — items 3–7 (agent-1.jpg … agent-5.jpg) are stock
+        photos standing in for the rest of the team, with fictitious
+        names and agency-typical roles. None of these five people are
+        real Continental Media staff; swap for real photos/names/roles
+        as they become available.
+      -->
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-700)">
+        <img
+          src="assets/images/team/agent-1.jpg"
+          alt="Fernanda Ruiz, Directora de Cuentas (placeholder)"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Fernanda Ruiz</span>
+          <span class="cm-about__caption-role">Directora de Cuentas</span>
+        </span>
+      </li>
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-600)">
+        <img
+          src="assets/images/team/agent-2.jpg"
+          alt="Camila Torres, Estratega Digital (placeholder)"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Camila Torres</span>
+          <span class="cm-about__caption-role">Estratega Digital</span>
+        </span>
+      </li>
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-500)">
+        <img
+          src="assets/images/team/agent-3.jpg"
+          alt="Diego Ramírez, Diseñador Creativo (placeholder)"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Diego Ramírez</span>
+          <span class="cm-about__caption-role">Diseñador Creativo</span>
+        </span>
+      </li>
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-700)">
+        <img
+          src="assets/images/team/agent-4.jpg"
+          alt="Valeria Castro, Community Manager (placeholder)"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Valeria Castro</span>
+          <span class="cm-about__caption-role">Community Manager</span>
+        </span>
+      </li>
+      <li class="cm-about__photo" data-cm-about-photo style="--cm-photo-tint: var(--cm-blue-600)">
+        <img
+          src="assets/images/team/agent-5.jpg"
+          alt="Mauricio Solís, Especialista en Medios (placeholder)"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="cm-about__caption" aria-hidden="true">
+          <span class="cm-about__caption-name">Mauricio Solís</span>
+          <span class="cm-about__caption-role">Especialista en Medios</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</section>
