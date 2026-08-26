@@ -218,7 +218,13 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  background: rgba(6, 7, 10, 0.97);
+  /* Fully solid, not rgba(...,0.97): a full-screen nav overlay should
+     never let the page behind it show through, even faintly — measured
+     pixel values under the old near-opaque alpha were technically dark
+     (~15-20% brightness) but still clearly readable as ghosted hero
+     text/CTAs on a real display, which is exactly the "todo apilado"
+     bug reported. Solid removes the ambiguity outright. */
+  background: var(--cm-color-bg);
   opacity: 0;
   visibility: hidden;
   transition:
