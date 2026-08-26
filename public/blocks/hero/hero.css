@@ -514,6 +514,13 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     align-items: start;
+    /* The base rule's justify-content:center vertically centers content
+       in flex mode (column axis) but means something else entirely in
+       grid mode (horizontal track alignment) — without this, grid's
+       row content defaults to align-content:start, pinning everything
+       to the top with dead space below on any viewport taller than the
+       content, exactly the "todo arriba a la izquierda" bug reported. */
+    align-content: center;
     gap: clamp(2rem, 6vw, 5rem);
   }
 
