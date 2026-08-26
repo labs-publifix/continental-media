@@ -147,28 +147,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Desaturate first so the tint below reads as a true duotone (hue +
-     saturation from the tint, luminance from the photo) instead of a
-     color wash sitting on top of the original colors. */
+  /* Grayscale at rest, fades to the real color photo on hover (see the
+     hover:hover media query below) — the color reveal itself is the
+     brand-blue accent's moment on this card, not a permanent tint. */
   filter: grayscale(1) contrast(1.08) brightness(0.92);
-}
-
-/* Brand-blue duotone, revealed on hover only: the grid sits fully
-   black-and-white at rest (mix-blend-mode:color takes hue/saturation from
-   this layer and luminance from the grayscale photo beneath it), and
-   fades in per-card on hover/focus as a deliberate "portrait becomes
-   Continental Media blue" moment rather than a permanent wash.
-   --cm-photo-tint cycles 2-3 blue shades per card (set inline per item)
-   for subtle variation within the palette. */
-.cm-about__photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--cm-photo-tint, var(--cm-color-accent));
-  mix-blend-mode: color;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--cm-duration-base) var(--cm-ease-out);
+  transition: filter var(--cm-duration-base) var(--cm-ease-out);
 }
 
 .cm-about__caption {
@@ -205,13 +188,14 @@
   line-height: 1.3;
 }
 
-/* Hover reveal (both the blue duotone and the caption) is a desktop/mouse
-   enhancement only — the name/role is already carried by the <img alt>
-   for everyone else, and the photo simply stays black-and-white, so touch
-   devices never get a stuck or fake-hover state. */
+/* Hover reveal (both the full-color photo and the caption) is a
+   desktop/mouse enhancement only — the name/role is already carried by
+   the <img alt> for everyone else, and the photo simply stays
+   black-and-white, so touch devices never get a stuck or fake-hover
+   state. */
 @media (hover: hover) and (pointer: fine) {
-  .cm-about__photo:hover::after {
-    opacity: 1;
+  .cm-about__photo:hover img {
+    filter: none;
   }
 
   .cm-about__photo:hover .cm-about__caption {
@@ -290,12 +274,12 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Two-column grid, 9 photos: the last one is the odd one out — center
-     it under the pairs above it instead of leaving it pinned left. */
+  /* Mobile keeps a clean 4x2 grid (8 photos) rather than all 9: drop the
+     last item (one of the two temporary preview duplicates from the
+     desktop 3x3 — see the HTML comment above it) so nothing is orphaned
+     into a lopsided last row. */
   .cm-about__photo:nth-child(9) {
-    grid-column: 1 / -1;
-    max-width: calc(50% - clamp(0.5rem, 3vw, 0.75rem) / 2);
-    margin-inline: auto;
+    display: none;
   }
 
   .cm-about__title {
