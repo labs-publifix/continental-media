@@ -1,0 +1,51 @@
+<!--
+  CONTINENTAL MEDIA — "NUESTRO ADN" BLOCK (canonical source)
+  THESIS: the agency's origin story in one breath — a single, tightly
+    measured paragraph, not a wall of text. Constraint is the point:
+    a narrow column reads as considered, not padded out to fill space.
+  OWN-WORLD: same near-black ground, same restrained blue accent, same
+    Space Grotesk display / Inter body pairing as every other block on
+    the site; the eyebrow reuses the exact convention already shipped on
+    the home Nosotros teaser (public/blocks/about-teaser), since this
+    page is that teaser's direct destination and must read as the same
+    voice, not a new one.
+  FORM: precisely brief-pinned (exact copy, a controlled 700-800px
+    column) — a local extension of the established world, not a new
+    concept exercise.
+  ACCESSIBILITY: reveal-on-scroll defaults to the final visible state and
+    is only animated where JS runs and motion is not reduced; a
+    <noscript> rule and the CSS prefers-reduced-motion query both force
+    the visible state independently of JS.
+
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/dna/dna.css.
+    2. Copy the <section class="cm-dna"> markup below as-is.
+    3. Load blocks/dna/dna.js as a module (drives the scroll-triggered
+       reveal; the <noscript> fallback and prefers-reduced-motion both
+       work without it).
+-->
+<section class="cm-dna" data-cm-dna aria-labelledby="cm-dna-heading">
+  <noscript>
+    <style>
+      [data-cm-dna] [data-cm-dna-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-dna__inner" data-cm-dna-reveal>
+    <span class="cm-dna__eyebrow" aria-hidden="true">01</span>
+    <h2 class="cm-dna__title" id="cm-dna-heading">Nuestro ADN</h2>
+    <p class="cm-dna__body">
+      Somos una agencia de publicidad y comunicación 360° con 25 años de experiencia y
+      presencia en Veracruz y Querétaro, impulsada por un equipo multidisciplinario de
+      especialistas en marketing digital, comunicación, diseño, relaciones públicas y
+      tecnología aplicada. Evolucionamos de forma constante mediante la adopción de nuevas
+      herramientas y metodologías —incluida la inteligencia artificial— para desarrollar
+      soluciones integrales, creativas, eficientes y medibles, enfocadas en fortalecer marcas,
+      conectar con audiencias y cumplir los objetivos de negocio de nuestros clientes en
+      México y Estados Unidos.
+    </p>
+  </div>
+</section>

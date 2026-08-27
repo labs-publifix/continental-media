@@ -1,0 +1,257 @@
+/*
+  Continental Media — "Un Equipo en Constante Evolución" block styles.
+  Namespaced under .cm-timeline. Depends on assets/css/tokens.css.
+*/
+
+.cm-timeline {
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(4.5rem, 12vh, 7.5rem);
+  font-size: 0.9375rem; /* base for unsized wrappers, see about-teaser.css's .cm-about for why */
+}
+
+.cm-timeline__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+}
+
+.cm-timeline__title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cm-timeline__track {
+  position: relative;
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+/* ---------- Connecting line (real SVG, drawn via stroke-dasharray) ---------- */
+
+.cm-timeline__line {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.cm-timeline__line-base {
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 2;
+}
+
+.cm-timeline__line-progress {
+  stroke: var(--cm-color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.cm-timeline__line--h {
+  top: 27px; /* vertical center of the 56px icon circle */
+  left: 12.5%;
+  width: 75%;
+  height: 2px;
+}
+
+.cm-timeline__line--v {
+  display: none;
+}
+
+/* ---------- Milestone list ---------- */
+
+.cm-timeline__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.cm-timeline__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+.cm-timeline__item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-timeline__icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--cm-color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cm-color-accent);
+  transition:
+    border-color var(--cm-duration-base) var(--cm-ease-out),
+    box-shadow var(--cm-duration-base) var(--cm-ease-out);
+}
+
+.cm-timeline__item.is-visible .cm-timeline__icon {
+  border-color: var(--cm-color-accent);
+  box-shadow: 0 0 0 5px rgba(30, 95, 255, 0.16);
+}
+
+.cm-timeline__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cm-timeline__item-body {
+  max-width: 26ch;
+}
+
+.cm-timeline__item-title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  /* A clear step above the 15px body/UI size instead of a near-duplicate
+     18px — shared with .cm-presence__leader-name for the same "small
+     card heading" role. */
+  font-size: 1.375rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.cm-timeline__item-text {
+  margin: 0.6em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Closing CTA ---------- */
+
+.cm-timeline__cta {
+  margin-top: clamp(3.5rem, 8vw, 5.5rem);
+  text-align: center;
+}
+
+.cm-timeline__cta-text {
+  margin: 0 0 1.5rem;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1.15rem + 1vw, 1.875rem);
+  letter-spacing: -0.015em;
+}
+
+.cm-timeline__cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--cm-radius-sm);
+  padding: 0.95em 2.25em;
+  cursor: pointer;
+  border: 1.5px solid var(--cm-color-accent);
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-timeline__cta-button:hover {
+  background: var(--cm-color-accent-hover);
+  border-color: var(--cm-color-accent-hover);
+}
+
+.cm-timeline__cta-button:active {
+  transform: translateY(1px);
+}
+
+.cm-timeline__cta-button:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-timeline__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .cm-timeline__line-progress {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .cm-timeline__list {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .cm-timeline__line--h {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-timeline {
+    padding-block: clamp(3.5rem, 10vh, 5rem);
+  }
+
+  .cm-timeline__list {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 8vw, 2.75rem);
+  }
+
+  .cm-timeline__item {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.25rem;
+  }
+
+  .cm-timeline__item-body {
+    max-width: none;
+  }
+
+  .cm-timeline__line--v {
+    display: block;
+    left: 27px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+  }
+}

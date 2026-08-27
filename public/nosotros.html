@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nosotros — Continental Media | 25 años construyendo marcas con propósito</title>
+  <meta
+    name="description"
+    content="Conoce a Continental Media: 25 años de experiencia, presencia en Veracruz y Querétaro, y un equipo multidisciplinario que evoluciona junto a las herramientas más modernas, incluida la inteligencia artificial."
+  />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="blocks/page-hero/page-hero.css" />
+  <link rel="stylesheet" href="blocks/dna/dna.css" />
+  <link rel="stylesheet" href="blocks/evolution-timeline/evolution-timeline.css" />
+  <link rel="stylesheet" href="blocks/presence/presence.css" />
+
+  <style>
+    /* Minimal page shell — not a design system, just enough to view these
+       blocks in context. The site's global header/nav and footer are
+       intentionally not built here; they integrate around this content
+       once they exist as their own reusable pieces. */
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>
+<body>
+  <main id="main-content">
+    <!-- ===== PAGE HERO BLOCK — see public/blocks/page-hero/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — INTERNAL PAGE HERO BLOCK (canonical source)
+      THESIS: an interior page needs presence, not spectacle — a tall band
+        of real photography (not full-bleed, no video/parallax/nav) states
+        "this is a working agency" in one breath, then gets out of the way
+        for the page's actual content.
+      OWN-WORLD: same near-black ground, same restrained blue accent, same
+        Space Grotesk display / Inter body pairing as the home hero and the
+        Nosotros teaser — restated at interior-page scale (~60-70vh) rather
+        than the home hero's 100vh video treatment.
+      FORM: reusable across any interior page — swap the background image
+        (set directly as an inline background-image on .cm-page-hero__media,
+        not via a CSS custom property — a var()-supplied url() resolves
+        relative to the *stylesheet* that consumes it, not the HTML document,
+        so a page-relative path through a custom property silently 404s) and
+        the <h1>/subtitle text per page; no page-specific logic lives here.
+      ACCESSIBILITY: the title is the page's real <h1>. The background photo
+        is decorative (empty alt via CSS background-image, not <img>) — the
+        dark gradient overlay guarantees text contrast regardless of the
+        photo's own content. Entrance animation renders in its final,
+        fully-visible state immediately under prefers-reduced-motion or with
+        JS disabled (see the <noscript> rule below).
+
+      USAGE — canonical source for this block. To use it on a page:
+        1. Link assets/css/tokens.css, then blocks/page-hero/page-hero.css.
+        2. Copy the <section> below; set .cm-page-hero__media's inline
+           background-image to the page's banner photo and swap the
+           <h1>/<p> copy.
+        3. Load blocks/page-hero/page-hero.js as a module (adds .is-loaded on
+           DOMContentLoaded to trigger the fade/rise-in; the <noscript> rule
+           and prefers-reduced-motion both work without it).
+      Asset paths are root-relative (no leading slash), matching every other
+      block on the site.
+    -->
+    <section class="cm-page-hero" data-cm-page-hero aria-label="Continental Media — Nosotros">
+      <noscript>
+        <style>
+          [data-cm-page-hero] .cm-page-hero__content > * {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        </style>
+      </noscript>
+
+      <div
+        class="cm-page-hero__media"
+        aria-hidden="true"
+        style="background-image: url('assets/images/nosotros/hero.jpg')"
+      ></div>
+      <div class="cm-page-hero__overlay" aria-hidden="true"></div>
+
+      <div class="cm-page-hero__content">
+        <h1 class="cm-page-hero__title">25 años construyendo marcas con propósito.</h1>
+        <p class="cm-page-hero__subtitle">Con presencia en Veracruz y Querétaro, y alcance nacional.</p>
+      </div>
+    </section>
+    <!-- ===== /PAGE HERO BLOCK ===== -->
+
+    <!-- ===== NUESTRO ADN BLOCK — see public/blocks/dna/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — "NUESTRO ADN" BLOCK (canonical source)
+      THESIS: the agency's origin story in one breath — a single, tightly
+        measured paragraph, not a wall of text. Constraint is the point:
+        a narrow column reads as considered, not padded out to fill space.
+      OWN-WORLD: same near-black ground, same restrained blue accent, same
+        Space Grotesk display / Inter body pairing as every other block on
+        the site; the eyebrow reuses the exact convention already shipped on
+        the home Nosotros teaser (public/blocks/about-teaser), since this
+        page is that teaser's direct destination and must read as the same
+        voice, not a new one.
+      FORM: precisely brief-pinned (exact copy, a controlled 700-800px
+        column) — a local extension of the established world, not a new
+        concept exercise.
+      ACCESSIBILITY: reveal-on-scroll defaults to the final visible state and
+        is only animated where JS runs and motion is not reduced; a
+        <noscript> rule and the CSS prefers-reduced-motion query both force
+        the visible state independently of JS.
+
+      USAGE — canonical source for this block. To use it on a page:
+        1. Link assets/css/tokens.css, then blocks/dna/dna.css.
+        2. Copy the <section class="cm-dna"> markup below as-is.
+        3. Load blocks/dna/dna.js as a module (drives the scroll-triggered
+           reveal; the <noscript> fallback and prefers-reduced-motion both
+           work without it).
+    -->
+    <section class="cm-dna" data-cm-dna aria-labelledby="cm-dna-heading">
+      <noscript>
+        <style>
+          [data-cm-dna] [data-cm-dna-reveal] {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        </style>
+      </noscript>
+
+      <div class="cm-dna__inner" data-cm-dna-reveal>
+        <span class="cm-dna__eyebrow" aria-hidden="true">01</span>
+        <h2 class="cm-dna__title" id="cm-dna-heading">Nuestro ADN</h2>
+        <p class="cm-dna__body">
+          Somos una agencia de publicidad y comunicación 360° con 25 años de experiencia y
+          presencia en Veracruz y Querétaro, impulsada por un equipo multidisciplinario de
+          especialistas en marketing digital, comunicación, diseño, relaciones públicas y
+          tecnología aplicada. Evolucionamos de forma constante mediante la adopción de nuevas
+          herramientas y metodologías —incluida la inteligencia artificial— para desarrollar
+          soluciones integrales, creativas, eficientes y medibles, enfocadas en fortalecer marcas,
+          conectar con audiencias y cumplir los objetivos de negocio de nuestros clientes en
+          México y Estados Unidos.
+        </p>
+      </div>
+    </section>
+    <!-- ===== /NUESTRO ADN BLOCK ===== -->
+
+    <!-- ===== EVOLUTION TIMELINE BLOCK — see public/blocks/evolution-timeline/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — "UN EQUIPO EN CONSTANTE EVOLUCIÓN" BLOCK (canonical source)
+      THESIS: 25 years compressed into four honest steps — the connecting
+        line drawing itself as the visitor scrolls is the whole idea: growth
+        is continuous, not four disconnected bullet points.
+      OWN-WORLD: same near-black ground, same restrained blue accent, same
+        Space Grotesk display / Inter body pairing as every other block on
+        the site. Icons are hand-authored single-stroke line icons reusing
+        the exact stroke convention already shipped on the home hero's nav
+        arrow / social icons (fill:none, stroke:currentColor, stroke-width
+        1.5, round caps/joins) — not a new icon language.
+      FORM: precisely brief-pinned (exact 4 milestones, exact copy, exact
+        closing CTA) — a local extension of the established world, not a new
+        concept exercise. The connecting line is real SVG (not a CSS
+        gradient) so a true stroke-dasharray/dashoffset draw is possible, as
+        the brief asks for explicitly.
+      ACCESSIBILITY: the connecting line is decorative (aria-hidden) — the
+        <ol> and its four <li> already carry the sequence semantically, so no
+        information is lost if the line's animation is skipped entirely
+        (prefers-reduced-motion renders it fully drawn, no scroll-scrub).
+        Each milestone's reveal-on-scroll defaults to visible; a <noscript>
+        rule forces it if JS never runs.
+
+      USAGE — canonical source for this block. To use it on a page:
+        1. Link assets/css/tokens.css, then
+           blocks/evolution-timeline/evolution-timeline.css.
+        2. Copy the <section class="cm-timeline"> markup below as-is.
+        3. Load blocks/evolution-timeline/evolution-timeline.js as a module
+           (drives the scroll-scrubbed line draw and the per-item reveal; the
+           <noscript> fallback and prefers-reduced-motion both work without
+           it — the line just renders fully drawn and items visible).
+    -->
+    <section class="cm-timeline" data-cm-timeline aria-labelledby="cm-timeline-heading">
+      <noscript>
+        <style>
+          [data-cm-timeline] [data-cm-timeline-item],
+          [data-cm-timeline] [data-cm-timeline-progress] {
+            opacity: 1 !important;
+            transform: none !important;
+            stroke-dashoffset: 0 !important;
+          }
+        </style>
+      </noscript>
+
+      <div class="cm-timeline__inner">
+        <h2 class="cm-timeline__title" id="cm-timeline-heading">Un Equipo en Constante Evolución</h2>
+
+        <div class="cm-timeline__track" data-cm-timeline-track>
+          <svg
+            class="cm-timeline__line cm-timeline__line--h"
+            viewBox="0 0 100 2"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <line class="cm-timeline__line-base" x1="0" y1="1" x2="100" y2="1" vector-effect="non-scaling-stroke" />
+            <line
+              class="cm-timeline__line-progress"
+              data-cm-timeline-progress
+              x1="0"
+              y1="1"
+              x2="100"
+              y2="1"
+              pathLength="100"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+          <svg
+            class="cm-timeline__line cm-timeline__line--v"
+            viewBox="0 0 2 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <line class="cm-timeline__line-base" x1="1" y1="0" x2="1" y2="100" vector-effect="non-scaling-stroke" />
+            <line
+              class="cm-timeline__line-progress"
+              data-cm-timeline-progress
+              x1="1"
+              y1="0"
+              x2="1"
+              y2="100"
+              pathLength="100"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+
+          <ol class="cm-timeline__list">
+            <li class="cm-timeline__item" data-cm-timeline-item>
+              <span class="cm-timeline__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M3 11v2a2 2 0 0 0 2 2h1l4 4v-14l-4 4H5a2 2 0 0 0-2 2z" />
+                  <path d="M14 8a4 4 0 0 1 0 8" />
+                  <path d="M17 5a8 8 0 0 1 0 14" />
+                </svg>
+              </span>
+              <div class="cm-timeline__item-body">
+                <h3 class="cm-timeline__item-title">Marketing tradicional</h3>
+                <p class="cm-timeline__item-text">
+                  Nacimos en un entorno de marketing tradicional, donde la estrategia, la creatividad
+                  y los medios convencionales eran el punto de partida.
+                </p>
+              </div>
+            </li>
+            <li class="cm-timeline__item" data-cm-timeline-item>
+              <span class="cm-timeline__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M4 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H6a2 2 0 0 1-2-2z" />
+                  <path d="M15.5 3a4.5 4.5 0 0 1 3.3 3.9" />
+                  <path d="M15.5 0.5a7 7 0 0 1 5.7 6.3" />
+                </svg>
+              </span>
+              <div class="cm-timeline__item-body">
+                <h3 class="cm-timeline__item-title">Comunicación digital</h3>
+                <p class="cm-timeline__item-text">
+                  Evolucionamos hacia la gestión de comunidades digitales y campañas de paid media,
+                  adaptándonos al ritmo de la tecnología y las nuevas audiencias.
+                </p>
+              </div>
+            </li>
+            <li class="cm-timeline__item" data-cm-timeline-item>
+              <span class="cm-timeline__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M12 2.5l1.8 5.7 5.7 1.8-5.7 1.8-1.8 5.7-1.8-5.7-5.7-1.8 5.7-1.8z" />
+                  <path d="M19 15.5l0.7 2 2 0.7-2 0.7-0.7 2-0.7-2-2-0.7 2-0.7z" />
+                </svg>
+              </span>
+              <div class="cm-timeline__item-body">
+                <h3 class="cm-timeline__item-title">IA y automatización</h3>
+                <p class="cm-timeline__item-text">
+                  Integramos agentes conversacionales con inteligencia artificial, automatización de
+                  procesos y análisis de datos en tiempo real para optimizar cada estrategia.
+                </p>
+              </div>
+            </li>
+            <li class="cm-timeline__item" data-cm-timeline-item>
+              <span class="cm-timeline__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <circle cx="9" cy="9.5" r="5" />
+                  <circle cx="15" cy="9.5" r="5" />
+                  <circle cx="12" cy="14.5" r="5" />
+                </svg>
+              </span>
+              <div class="cm-timeline__item-body">
+                <h3 class="cm-timeline__item-title">Ecosistemas integrales</h3>
+                <p class="cm-timeline__item-text">
+                  Hoy diseñamos estrategias integrales de marketing digital, relaciones públicas,
+                  producción audiovisual, branding y planificación de medios, combinando experiencia,
+                  creatividad, tecnología y datos en constante evolución.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="cm-timeline__cta">
+          <p class="cm-timeline__cta-text">¿Listo para que logremos juntos tus objetivos?</p>
+          <!-- Placeholder route: no standalone /contacto page exists yet in this
+               static, page-per-file build. Relative (not root-absolute
+               "/contacto") so it resolves correctly under a project subpath like
+               GitHub Pages' /continental-media/ — swap for the real route once
+               that page ships. -->
+          <a class="cm-timeline__cta-button" href="contacto.html">Contáctanos</a>
+        </div>
+      </div>
+    </section>
+    <!-- ===== /EVOLUTION TIMELINE BLOCK ===== -->
+
+    <!-- ===== PRESENCE BLOCK — see public/blocks/presence/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — "NUESTRA PRESENCIA" BLOCK (canonical source)
+      THESIS: two real cities, not a generic "nationwide" claim — a simplified
+        flat map with two pins makes Veracruz and Querétaro legible at a
+        glance, backed by the two people who actually run each office.
+      OWN-WORLD: same near-black ground, same restrained blue accent, same
+        Space Grotesk display / Inter body pairing as every other block on
+        the site. The map is an authored flat-illustration SVG silhouette
+        (explicitly not an embedded Google Maps widget per the brief) in the
+        same near-sharp, single-accent visual language as the rest of the
+        site — a shape and two pins, not a literal atlas.
+      FORM: precisely brief-pinned (exact copy, 2 pins, 3 data cards, 2
+        leadership cards in that reading order) — a local extension of the
+        established world, not a new concept exercise.
+      ACCESSIBILITY: the map SVG is decorative (aria-hidden) — the two pins
+        are real <button> elements (not divs) with descriptive aria-labels,
+        each with its own visible focus ring, satisfying "focus/hover clara"
+        for map pins without depending on hover alone. Reveal-on-scroll
+        (intro, pins, cards, leadership) defaults to the final visible state;
+        a <noscript> rule forces it if JS never runs.
+
+      USAGE — canonical source for this block. To use it on a page:
+        1. Link assets/css/tokens.css, then blocks/presence/presence.css.
+        2. Copy the <section class="cm-presence"> markup below as-is.
+        3. Load blocks/presence/presence.js as a module (drives the
+           scroll-triggered reveals — intro, pin drop-in, card stagger,
+           leadership fade-up, in that sequence; the <noscript> fallback and
+           prefers-reduced-motion both work without it).
+      Asset paths are root-relative (no leading slash), matching every other
+      block on the site.
+    -->
+    <section class="cm-presence" data-cm-presence aria-labelledby="cm-presence-heading">
+      <noscript>
+        <style>
+          [data-cm-presence] [data-cm-presence-reveal],
+          [data-cm-presence] [data-cm-presence-pin],
+          [data-cm-presence] [data-cm-presence-card],
+          [data-cm-presence] [data-cm-presence-leader] {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        </style>
+      </noscript>
+
+      <div class="cm-presence__inner">
+        <div class="cm-presence__intro" data-cm-presence-reveal>
+          <h2 class="cm-presence__title" id="cm-presence-heading">
+            Veracruz y Querétaro — Nuestras sedes de operaciones
+          </h2>
+          <p class="cm-presence__body">
+            Somos una agencia con raíces en Veracruz y Querétaro, dos de los mercados más dinámicos
+            de México. Desde nuestras oficinas en ambas ciudades operamos proyectos para clientes
+            locales, nacionales e internacionales, con profundo conocimiento del mercado mexicano y
+            experiencia atendiendo clientes en Estados Unidos.
+          </p>
+        </div>
+
+        <div class="cm-presence__map-row">
+          <div class="cm-presence__map" data-cm-presence-map>
+            <svg
+              class="cm-presence__map-svg"
+              viewBox="0 0 400 320"
+              role="img"
+              aria-label="Mapa simplificado de México con Veracruz y Querétaro marcados"
+            >
+              <path
+                class="cm-presence__map-shape"
+                d="M75,30 L60,55 L48,90 L55,125 L68,150 L80,155 L92,125 L98,95 L108,68 L118,55
+                   L135,95 L155,135 L175,175 L195,205 L218,222 L245,232 L265,228 L285,215 L298,195
+                   L308,178 L330,165 L355,158 L378,148 L372,132 L350,138 L325,148 L308,160 L295,145
+                   L278,118 L262,90 L248,65 L232,42 L210,28 L180,20 L150,22 L120,26 L95,28 Z"
+              />
+            </svg>
+
+            <button
+              type="button"
+              class="cm-presence__pin"
+              data-cm-presence-pin
+              style="--cm-pin-x: 67%; --cm-pin-y: 41%"
+              aria-label="Sede Veracruz, Ver."
+            >
+              <span class="cm-presence__pin-dot" aria-hidden="true"></span>
+              <span class="cm-presence__pin-label">Veracruz</span>
+            </button>
+            <button
+              type="button"
+              class="cm-presence__pin"
+              data-cm-presence-pin
+              style="--cm-pin-x: 40%; --cm-pin-y: 33%"
+              aria-label="Sede Querétaro, Qro."
+            >
+              <span class="cm-presence__pin-dot" aria-hidden="true"></span>
+              <span class="cm-presence__pin-label">Querétaro</span>
+            </button>
+          </div>
+
+          <ul class="cm-presence__cards" data-cm-presence-cards>
+            <li class="cm-presence__card" data-cm-presence-card>
+              <strong>Ciudad base:</strong> Veracruz, Ver. y Querétaro, Qro. — México.
+            </li>
+            <li class="cm-presence__card" data-cm-presence-card>
+              <strong>Cobertura:</strong> Nacional e internacional — clientes en toda la República
+              Mexicana y Estados Unidos.
+            </li>
+            <li class="cm-presence__card" data-cm-presence-card>
+              <strong>Presencia digital:</strong> Operación remota y en sitio para proyectos que lo
+              requieran.
+            </li>
+          </ul>
+        </div>
+
+        <div class="cm-presence__leadership">
+          <article class="cm-presence__leader" data-cm-presence-leader>
+            <img
+              class="cm-presence__leader-photo"
+              src="assets/images/leadership/rafael-aguirre.jpg"
+              alt="Rafael Aguirre, Fundador y Director General de Continental Media"
+              width="720"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="cm-presence__leader-name">Rafael Aguirre</h3>
+            <p class="cm-presence__leader-role">Fundador y Director General</p>
+          </article>
+          <article class="cm-presence__leader" data-cm-presence-leader>
+            <img
+              class="cm-presence__leader-photo"
+              src="assets/images/leadership/pepe-bermudez.jpg"
+              alt="Pepe Bermúdez, Director Querétaro de Continental Media"
+              width="720"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="cm-presence__leader-name">Pepe Bermúdez</h3>
+            <p class="cm-presence__leader-role">Director Querétaro</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- ===== /PRESENCE BLOCK ===== -->
+
+  </main>
+
+  <script type="module" src="blocks/page-hero/page-hero.js"></script>
+  <script type="module" src="blocks/dna/dna.js"></script>
+  <script type="module" src="blocks/evolution-timeline/evolution-timeline.js"></script>
+  <script type="module" src="blocks/presence/presence.js"></script>
+</body>
+</html>

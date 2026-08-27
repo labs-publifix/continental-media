@@ -38,6 +38,42 @@
         ],
         "createdAt": "2026-08-25T03:55:21.590Z",
         "reason": "user confirmed: explicitly requested by name ('un marquee infinito animado con logos de clientes') for a 17-logo trust wall. Mitigations already implemented per the tool's own landing.csv guidance ('pause/stop on focus, hover, and reduced motion'): animation-play-state:paused on row hover, IntersectionObserver pauses it off-screen, and prefers-reduced-motion swaps to a static wrapped grid showing all 17 logos once (duplicated aria-hidden copies hidden). Not in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form available for this rule."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/nosotros.html"
+        ],
+        "createdAt": "2026-08-27T04:58:48.782Z",
+        "reason": "user confirmed: brief for /nosotros explicitly requires the same typographic family already established site-wide ('misma familia tipográfica sans-serif sin serifas'), i.e. Inter/Space Grotesk per the prior index.html suppression — same reasoning, new file."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/nosotros.html"
+        ],
+        "createdAt": "2026-08-27T04:58:48.844Z",
+        "reason": "user confirmed: brief for /nosotros explicitly requires visual/typographic coherence with the existing about-teaser section, which already ships Space Grotesk as the brand display face (see the index.html suppression with the same reasoning)."
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "files": [
+          "public/blocks/presence/presence.css"
+        ],
+        "createdAt": "2026-08-27T04:58:48.908Z",
+        "reason": "user's brief explicitly requested 'un pequeño efecto de drop-in (caída con rebote sutil)' for the map pins — a subtle bounce is the literal ask, not a default reached for without deciding. Scoped tightly to the two map-pin dots only; duration/scale kept small (650ms, ~12% overshoot) so it reads as 'sutil' per the brief's own wording."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/nosotros.html"
+        ],
+        "createdAt": "2026-08-27T04:58:57.338Z",
+        "reason": "Verified false positive: flat-type-hierarchy isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form. The detector's static analyzer doesn't resolve clamp()+vw font-size expressions (same class of issue as the cramped-padding suppression on index.html), so every h1/h2/h3 on this page (which all use clamp(1.75rem, 1.3rem+1.8vw, 2.75rem)-style fluid sizing, 28-58px real range) drops out of its scanned set entirely, leaving only the small fixed UI sizes (12/15/18/22px) to compute a ratio against each other. Verified via Playwright/Chromium real computed styles: actual page sizes are 12, 13.3, 15, 16(inert unsized-wrapper divs only, no visible text), 18, 22, 30, 43.8, 58.2px — real max/min ratio 4.85:1, well past the tool's own 2.0 threshold."
       }
     ]
   }

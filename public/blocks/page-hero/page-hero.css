@@ -1,0 +1,107 @@
+/*
+  Continental Media — internal page hero block styles.
+  Namespaced under .cm-page-hero. Depends on assets/css/tokens.css.
+*/
+
+.cm-page-hero {
+  position: relative;
+  height: 65vh;
+  min-height: 460px;
+  max-height: 780px;
+  overflow: hidden;
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  display: flex;
+  align-items: flex-end;
+  font-size: 0.9375rem; /* base for unsized wrappers, see about-teaser.css's .cm-about for why */
+}
+
+.cm-page-hero__media {
+  position: absolute;
+  inset: 0;
+  /* background-image itself is set inline in the HTML (per-page), not
+     here — see page-hero.html's FORM note on why a custom property
+     can't carry a page-relative url() across this stylesheet. */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Same near-black gradient family as the home hero's overlay — bottom-
+   heavy so the title/subtitle sitting at the bottom edge always clear
+   AA contrast against the photo underneath, regardless of its content. */
+.cm-page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(4, 5, 8, 0.92) 0%,
+    rgba(4, 5, 8, 0.78) 20%,
+    rgba(4, 5, 8, 0.5) 45%,
+    rgba(4, 5, 8, 0.22) 68%,
+    rgba(4, 5, 8, 0.05) 100%
+  );
+}
+
+.cm-page-hero__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--cm-gutter) clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.cm-page-hero__content > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-page-hero.is-loaded .cm-page-hero__content > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-page-hero.is-loaded .cm-page-hero__subtitle {
+  transition-delay: 120ms;
+}
+
+.cm-page-hero__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 1.4rem + 2.8vw, 3.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.cm-page-hero__subtitle {
+  margin: 0.9em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  /* Same body size as dna/presence's paragraphs (not a new step) —
+     keeps the whole page's type scale to a small, deliberate set. */
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 42ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-page-hero__content > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-page-hero {
+    height: 60vh;
+    min-height: 400px;
+  }
+}

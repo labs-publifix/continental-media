@@ -1,0 +1,69 @@
+/*
+  Continental Media — "Nuestro ADN" block styles.
+  Namespaced under .cm-dna. Depends on assets/css/tokens.css.
+*/
+
+.cm-dna {
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(4.5rem, 12vh, 7.5rem);
+  font-size: 0.9375rem; /* base for unsized wrappers, see about-teaser.css's .cm-about for why */
+}
+
+.cm-dna__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-dna.is-visible .cm-dna__inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-dna__eyebrow {
+  display: block;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  color: var(--cm-color-accent);
+  margin-bottom: 1rem;
+}
+
+.cm-dna__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.cm-dna__body {
+  margin: 1.25em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-dna__inner {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-dna {
+    padding-block: clamp(3.5rem, 10vh, 5rem);
+  }
+}

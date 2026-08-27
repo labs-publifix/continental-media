@@ -1,0 +1,56 @@
+<!--
+  CONTINENTAL MEDIA — INTERNAL PAGE HERO BLOCK (canonical source)
+  THESIS: an interior page needs presence, not spectacle — a tall band
+    of real photography (not full-bleed, no video/parallax/nav) states
+    "this is a working agency" in one breath, then gets out of the way
+    for the page's actual content.
+  OWN-WORLD: same near-black ground, same restrained blue accent, same
+    Space Grotesk display / Inter body pairing as the home hero and the
+    Nosotros teaser — restated at interior-page scale (~60-70vh) rather
+    than the home hero's 100vh video treatment.
+  FORM: reusable across any interior page — swap the background image
+    (set directly as an inline background-image on .cm-page-hero__media,
+    not via a CSS custom property — a var()-supplied url() resolves
+    relative to the *stylesheet* that consumes it, not the HTML document,
+    so a page-relative path through a custom property silently 404s) and
+    the <h1>/subtitle text per page; no page-specific logic lives here.
+  ACCESSIBILITY: the title is the page's real <h1>. The background photo
+    is decorative (empty alt via CSS background-image, not <img>) — the
+    dark gradient overlay guarantees text contrast regardless of the
+    photo's own content. Entrance animation renders in its final,
+    fully-visible state immediately under prefers-reduced-motion or with
+    JS disabled (see the <noscript> rule below).
+
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/page-hero/page-hero.css.
+    2. Copy the <section> below; set .cm-page-hero__media's inline
+       background-image to the page's banner photo and swap the
+       <h1>/<p> copy.
+    3. Load blocks/page-hero/page-hero.js as a module (adds .is-loaded on
+       DOMContentLoaded to trigger the fade/rise-in; the <noscript> rule
+       and prefers-reduced-motion both work without it).
+  Asset paths are root-relative (no leading slash), matching every other
+  block on the site.
+-->
+<section class="cm-page-hero" data-cm-page-hero aria-label="Continental Media — Nosotros">
+  <noscript>
+    <style>
+      [data-cm-page-hero] .cm-page-hero__content > * {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div
+    class="cm-page-hero__media"
+    aria-hidden="true"
+    style="background-image: url('assets/images/nosotros/hero.jpg')"
+  ></div>
+  <div class="cm-page-hero__overlay" aria-hidden="true"></div>
+
+  <div class="cm-page-hero__content">
+    <h1 class="cm-page-hero__title">25 años construyendo marcas con propósito.</h1>
+    <p class="cm-page-hero__subtitle">Con presencia en Veracruz y Querétaro, y alcance nacional.</p>
+  </div>
+</section>
