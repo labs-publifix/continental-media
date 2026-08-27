@@ -19,6 +19,7 @@
 
   <link rel="stylesheet" href="assets/css/tokens.css" />
   <link rel="stylesheet" href="blocks/hero/hero.css" />
+  <link rel="stylesheet" href="blocks/site-header/site-header.css" />
   <link rel="stylesheet" href="blocks/clients-marquee/clients-marquee.css" />
   <link rel="stylesheet" href="blocks/about-teaser/about-teaser.css" />
   <link rel="stylesheet" href="blocks/services-teaser/services-teaser.css" />
@@ -35,35 +36,59 @@
   </style>
 </head>
 <body id="top">
-  <!-- ===== HERO BLOCK — see public/blocks/hero/hero.html for the canonical source ===== -->
-  <section class="cm-hero" data-cm-hero aria-label="Continental Media — inicio">
-    <!-- Targets the hero's own headline, not a page-level #main-content: the
-         hero IS the unique content here, the top bar is the only boilerplate
-         worth skipping. Re-point this once real sections exist after it. -->
-    <a class="cm-hero__skip" href="#cm-hero-heading">Saltar al contenido</a>
+  <!-- ===== SITE HEADER BLOCK — see public/blocks/site-header/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — SITE HEADER BLOCK (canonical source)
+    THESIS: the menu must always be one tap away — extracted from the home
+      hero (where it used to live as position:absolute, scrolling away with
+      it) into its own page-agnostic, always-reachable component.
+    OWN-WORLD: same near-black ground, same restrained blue accent, same
+      Space Grotesk display / Inter body pairing as every other block on
+      the site. The bar and the full-screen expandable menu are the exact
+      same markup/behavior the home hero shipped with (numbered links,
+      dividers, spotlight-dim-on-hover, social icons, hamburger-to-X morph)
+      — only namespaced and relocated, not redesigned.
+    FORM: position:fixed at all times (never absolute), so it survives
+      scroll on every page. Two visual states, both driven by
+      site-header.js:
+        - Default (home, at the very top): transparent bar over the hero
+          video, exactly as before.
+        - .is-scrolled (added once scrollY passes a small threshold): the
+          bar gets a solid/blurred dark background, tighter padding, and a
+          smaller logo — added via a class, not a position:absolute ->
+          fixed swap, so there is no layout jump at the transition.
+        - .cm-site-header--solid (set in markup, not by scroll): interior
+          pages without a hero video — like /nosotros, whose page-hero
+          overlay is *lightest* right at the top where this bar sits — get
+          the same solid/compact treatment permanently, from first paint,
+          instead of starting transparent over a background that can't
+          guarantee contrast.
+    ACCESSIBILITY: the skip link targets #main-content (a landmark present
+      on every page that uses this header), not a hero-specific heading id,
+      so it works unmodified everywhere this block is used. Full-screen nav
+      is a disclosure (not a modal): Escape closes it, background scroll is
+      locked while open, first link receives focus on open, focus returns
+      to the toggle on close. See site-header.js's own header comment for
+      the rest.
 
-    <div class="cm-hero__media" data-cm-hero-media>
-      <video
-        class="cm-hero__video"
-        data-cm-hero-video
-        poster="assets/images/hero-poster.jpg"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        aria-hidden="true"
-        tabindex="-1"
-      >
-        <source src="assets/video/hero-background.mp4" type="video/mp4" />
-      </video>
-      <div class="cm-hero__overlay" aria-hidden="true"></div>
-    </div>
+    USAGE — canonical source for this block. To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/site-header/site-header.css.
+      2. Copy the <header class="cm-site-header"> markup below as the very
+         first element inside <body>, before any other section. Add the
+         `cm-site-header--solid` modifier class for interior pages that
+         don't have a full-bleed video/photo hero to overlay transparently.
+      3. Load blocks/site-header/site-header.js as a module (drives the
+         menu disclosure and the scroll-triggered .is-scrolled toggle).
+    Asset paths are root-relative (no leading slash), matching every other
+    block on the site.
+  -->
+  <header class="cm-site-header" data-cm-site-header>
+    <a class="cm-site-header__skip" href="#main-content">Saltar al contenido</a>
 
-    <header class="cm-hero__bar">
-      <a class="cm-hero__logo-link" href="#top" aria-label="Continental Media — ir al inicio">
+    <div class="cm-site-header__bar">
+      <a class="cm-site-header__logo-link" href="index.html" aria-label="Continental Media — ir al inicio">
         <img
-          class="cm-hero__logo"
+          class="cm-site-header__logo"
           src="assets/images/continental-media-logo-white.png"
           alt="Continental Media"
           width="380"
@@ -73,76 +98,83 @@
 
       <button
         type="button"
-        class="cm-hero__menu-toggle"
-        data-cm-hero-menu-toggle
+        class="cm-site-header__menu-toggle"
+        data-cm-site-header-menu-toggle
         aria-expanded="false"
-        aria-controls="cm-hero-nav"
+        aria-controls="cm-site-header-nav"
         aria-label="Abrir menú"
       >
-        <span class="cm-hero__menu-icon" aria-hidden="true">
-          <span class="cm-hero__menu-bar"></span>
-          <span class="cm-hero__menu-bar"></span>
-          <span class="cm-hero__menu-bar"></span>
+        <span class="cm-site-header__menu-icon" aria-hidden="true">
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
         </span>
-        <span class="cm-hero__menu-label" data-cm-hero-menu-label>Menú</span>
+        <span class="cm-site-header__menu-label" data-cm-site-header-menu-label>Menú</span>
       </button>
-    </header>
+    </div>
 
-    <nav class="cm-hero__nav" id="cm-hero-nav" data-cm-hero-nav aria-label="Menú principal" hidden>
-      <div class="cm-hero__nav-inner">
-        <ol class="cm-hero__nav-list">
-          <li class="cm-hero__nav-item">
-            <a href="#top">
-              <span class="cm-hero__nav-index">01</span>
-              <span class="cm-hero__nav-text">Inicio</span>
-              <svg class="cm-hero__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+    <nav
+      class="cm-site-header__nav"
+      id="cm-site-header-nav"
+      data-cm-site-header-nav
+      aria-label="Menú principal"
+      hidden
+    >
+      <div class="cm-site-header__nav-inner">
+        <ol class="cm-site-header__nav-list">
+          <li class="cm-site-header__nav-item">
+            <a href="index.html#top">
+              <span class="cm-site-header__nav-index">01</span>
+              <span class="cm-site-header__nav-text">Inicio</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
-          <li class="cm-hero__nav-item">
-            <a href="#nosotros">
-              <span class="cm-hero__nav-index">02</span>
-              <span class="cm-hero__nav-text">Nosotros</span>
-              <svg class="cm-hero__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          <li class="cm-site-header__nav-item">
+            <!-- Real internal page (public/nosotros.html), not an in-page anchor. -->
+            <a href="nosotros.html">
+              <span class="cm-site-header__nav-index">02</span>
+              <span class="cm-site-header__nav-text">Nosotros</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
-          <li class="cm-hero__nav-item">
-            <a href="#servicios">
-              <span class="cm-hero__nav-index">03</span>
-              <span class="cm-hero__nav-text">Servicios</span>
-              <svg class="cm-hero__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          <li class="cm-site-header__nav-item">
+            <a href="index.html#servicios">
+              <span class="cm-site-header__nav-index">03</span>
+              <span class="cm-site-header__nav-text">Servicios</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
-          <li class="cm-hero__nav-item">
-            <a href="#portafolio">
-              <span class="cm-hero__nav-index">04</span>
-              <span class="cm-hero__nav-text">Portafolio</span>
-              <svg class="cm-hero__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          <li class="cm-site-header__nav-item">
+            <a href="index.html#portafolio">
+              <span class="cm-site-header__nav-index">04</span>
+              <span class="cm-site-header__nav-text">Portafolio</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
-          <li class="cm-hero__nav-item">
-            <a href="#blog">
-              <span class="cm-hero__nav-index">05</span>
-              <span class="cm-hero__nav-text">Blog</span>
-              <svg class="cm-hero__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          <li class="cm-site-header__nav-item">
+            <a href="index.html#blog">
+              <span class="cm-site-header__nav-index">05</span>
+              <span class="cm-site-header__nav-text">Blog</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
-          <li class="cm-hero__nav-item">
-            <a href="#contacto">
-              <span class="cm-hero__nav-index">06</span>
-              <span class="cm-hero__nav-text">Contacto</span>
-              <svg class="cm-hero__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          <li class="cm-site-header__nav-item">
+            <a href="index.html#contacto">
+              <span class="cm-site-header__nav-index">06</span>
+              <span class="cm-site-header__nav-text">Contacto</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
         </ol>
 
-        <div class="cm-hero__nav-aside">
-          <p class="cm-hero__nav-tagline">
+        <div class="cm-site-header__nav-aside">
+          <p class="cm-site-header__nav-tagline">
             La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
           </p>
 
-          <div class="cm-hero__nav-social">
-            <span class="cm-hero__nav-social-label">Síguenos</span>
-            <ul class="cm-hero__nav-social-list">
+          <div class="cm-site-header__nav-social">
+            <span class="cm-site-header__nav-social-label">Síguenos</span>
+            <ul class="cm-site-header__nav-social-list">
               <li>
                 <a
                   href="https://www.facebook.com/ContinentalMkt/"
@@ -166,7 +198,7 @@
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
                     <circle cx="12" cy="12" r="4.2" />
-                    <circle class="cm-hero__nav-social-dot" cx="16.9" cy="7.1" r="0.6" />
+                    <circle class="cm-site-header__nav-social-dot" cx="16.9" cy="7.1" r="0.6" />
                   </svg>
                 </a>
               </li>
@@ -179,7 +211,7 @@
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
-                    <path class="cm-hero__nav-social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                    <path class="cm-site-header__nav-social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
                   </svg>
                 </a>
               </li>
@@ -192,7 +224,7 @@
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
-                    <circle class="cm-hero__nav-social-dot" cx="7.7" cy="8.3" r="1" />
+                    <circle class="cm-site-header__nav-social-dot" cx="7.7" cy="8.3" r="1" />
                     <path d="M7.7 11.2V17" />
                     <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
                   </svg>
@@ -201,10 +233,68 @@
             </ul>
           </div>
 
-          <p class="cm-hero__nav-copyright">© 2026 Continental Media</p>
+          <p class="cm-site-header__nav-copyright">© 2026 Continental Media</p>
         </div>
       </div>
     </nav>
+  </header>
+  <!-- ===== /SITE HEADER BLOCK ===== -->
+
+  <!-- ===== HERO BLOCK — see public/blocks/hero/hero.html for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — HERO BLOCK (canonical source)
+    THESIS: AI multiplies a real team, it never replaces it — proven in motion in
+      the first seconds, not asserted in a headline.
+    OWN-WORLD: near-black cinematic ground, full-bleed looping video, electric
+      blue (#1E5FFF) anchored to the video's own "IA" capsule, Space Grotesk
+      display over Inter body, hairline geometry, near-sharp corners, no pill
+      shapes.
+    STORY: a marketing/comms/PR agency visitor sees AI dramatized as force
+      multiplier for people (not a replacement), reads the claim, then acts via
+      two clearly weighted CTAs.
+    FIRST VIEWPORT: full-bleed video, content block anchored lower-left,
+      cinematic fade-up on load. The transparent-to-video top bar and
+      hamburger menu now live in public/blocks/site-header (extracted so
+      the menu survives scroll and works on every page, not just this
+      one) — this block owns only the video/content stage.
+    FORM: precisely brief-pinned (copy, colors, structure, motion) — no concept
+      roll, per new-work.md's "brief-pinned direction beats the roll, always"
+      and "never run the tournament for a precisely specified narrow request";
+      code-led (no image-generation tool available this session).
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the
+      finish review and every asset carrying its provenance.
+
+    USAGE — this file is the canonical, framework-agnostic source for the hero
+    block. To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/hero/hero.css, in <head>.
+      2. Copy the <section class="cm-hero"> markup below as-is, directly
+         after the public/blocks/site-header block (this block no longer
+         carries its own top bar/menu/skip-link — site-header provides
+         all three, page-wide).
+      3. Load blocks/hero/hero.js as a module before </body>.
+      4. Preload Space Grotesk + Inter (see public/index.html for the exact
+         <link> tags) so the display face is ready before the entrance reveal.
+    Asset paths below are root-relative (no leading slash) so the block works
+    unmodified from any page at the site root.
+  -->
+  <section class="cm-hero" data-cm-hero aria-label="Continental Media — inicio">
+    <div class="cm-hero__media" data-cm-hero-media>
+      <video
+        class="cm-hero__video"
+        data-cm-hero-video
+        poster="assets/images/hero-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <source src="assets/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="cm-hero__overlay" aria-hidden="true"></div>
+    </div>
 
     <div class="cm-hero__stage">
       <div class="cm-hero__content">
@@ -226,7 +316,7 @@
   </section>
   <!-- ===== /HERO BLOCK ===== -->
 
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <!-- ===== CLIENTS MARQUEE BLOCK — see public/blocks/clients-marquee/clients-marquee.html for the canonical source ===== -->
     <section class="cm-clients" aria-label="Clientes de Continental Media">
       <div class="cm-clients__intro">
@@ -478,7 +568,7 @@
       Asset paths are root-relative (no leading slash), matching every other
       block on the site.
     -->
-    <section class="cm-services" data-cm-services aria-labelledby="cm-services-heading">
+    <section id="servicios" class="cm-services" data-cm-services aria-labelledby="cm-services-heading">
       <noscript>
         <style>
           [data-cm-services] [data-cm-services-reveal],
@@ -642,6 +732,7 @@
     <!-- ===== /SERVICES TEASER BLOCK ===== -->
   </main>
 
+  <script type="module" src="blocks/site-header/site-header.js"></script>
   <script type="module" src="blocks/hero/hero.js"></script>
   <script type="module" src="blocks/clients-marquee/clients-marquee.js"></script>
   <script type="module" src="blocks/about-teaser/about-teaser.js"></script>

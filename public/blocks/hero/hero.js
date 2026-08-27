@@ -2,6 +2,9 @@
  * Continental Media — hero block behavior.
  * Self-initializing progressive enhancement: works with markup alone
  * (video autoplays, content is visible) if this script fails to load.
+ * The menu toggle/disclosure this file used to own now lives in
+ * public/blocks/site-header/site-header.js — this file is video +
+ * content-entrance + parallax only.
  */
 (function () {
   'use strict';
@@ -11,9 +14,6 @@
 
   var video = hero.querySelector('[data-cm-hero-video]');
   var media = hero.querySelector('[data-cm-hero-media]');
-  var toggle = hero.querySelector('[data-cm-hero-menu-toggle]');
-  var nav = hero.querySelector('[data-cm-hero-nav]');
-  var menuLabel = hero.querySelector('[data-cm-hero-menu-label]');
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---------- Cinematic entrance on load (not on scroll) ---------- */
@@ -32,83 +32,6 @@
     playEntrance();
   } else {
     window.addEventListener('load', playEntrance, { once: true });
-  }
-
-  /* ---------- Hamburger menu: accessible disclosure ---------- */
-
-  var isOpen = false;
-
-  function openMenu() {
-    isOpen = true;
-    toggle.setAttribute('aria-expanded', 'true');
-    // aria-label carries the accessible name at every breakpoint, including
-    // mobile where the visible label span is display:none (and so removed
-    // from the accessibility tree) — keep both in sync regardless.
-    toggle.setAttribute('aria-label', 'Cerrar menú');
-    if (menuLabel) menuLabel.textContent = 'Cerrar';
-    nav.scrollTop = 0;
-    nav.hidden = false;
-    // Lock the background page while the fixed full-screen overlay is
-    // open — otherwise a wheel/touch gesture that misses the overlay's
-    // own scroll (or lands during its opening transition) can scroll the
-    // page behind it, which reads as the menu "breaking".
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    // Let the browser register hidden=false before animating in.
-    requestAnimationFrame(function () {
-      nav.classList.add('is-open');
-    });
-    var firstLink = nav.querySelector('a');
-    if (firstLink) firstLink.focus();
-    document.addEventListener('keydown', onKeydown);
-  }
-
-  function closeMenu(options) {
-    isOpen = false;
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Abrir menú');
-    if (menuLabel) menuLabel.textContent = 'Menú';
-    nav.classList.remove('is-open');
-    document.removeEventListener('keydown', onKeydown);
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-
-    var finish = function () {
-      nav.hidden = true;
-    };
-    if (reduceMotionQuery.matches) {
-      finish();
-    } else {
-      nav.addEventListener('transitionend', finish, { once: true });
-    }
-
-    if (!options || options.returnFocus !== false) {
-      toggle.focus();
-    }
-  }
-
-  function onKeydown(event) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      closeMenu();
-    }
-  }
-
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      if (isOpen) {
-        closeMenu({ returnFocus: false });
-      } else {
-        openMenu();
-      }
-    });
-
-    // Clicking a link, or the empty backdrop/gaps around the panel, both
-    // close it — every click inside the nav does, since nothing else in
-    // here needs to stay open on click (social links open in a new tab).
-    nav.addEventListener('click', function () {
-      closeMenu({ returnFocus: false });
-    });
   }
 
   /* ---------- Video lifecycle: pause off-screen, freeze under reduced motion ---------- */
