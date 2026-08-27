@@ -257,12 +257,14 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Two-column grid, 9 photos: the last one is the odd one out — center
-     it under the pairs above it instead of leaving it pinned left. */
+  /* Mobile shows a tighter 3x2 grid (6 photos) instead of all 9 — keeps
+     the section shorter to scroll through on a phone. Desktop keeps the
+     full 3x3. Rafael and Pepe (items 1-2) always stay, so the trimmed
+     set still leads with real leadership. */
+  .cm-about__photo:nth-child(7),
+  .cm-about__photo:nth-child(8),
   .cm-about__photo:nth-child(9) {
-    grid-column: 1 / -1;
-    max-width: calc(50% - clamp(0.5rem, 3vw, 0.75rem) / 2);
-    margin-inline: auto;
+    display: none;
   }
 
   .cm-about__title {
