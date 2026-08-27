@@ -74,6 +74,33 @@
         ],
         "createdAt": "2026-08-27T04:58:57.338Z",
         "reason": "Verified false positive: flat-type-hierarchy isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form. The detector's static analyzer doesn't resolve clamp()+vw font-size expressions (same class of issue as the cramped-padding suppression on index.html), so every h1/h2/h3 on this page (which all use clamp(1.75rem, 1.3rem+1.8vw, 2.75rem)-style fluid sizing, 28-58px real range) drops out of its scanned set entirely, leaving only the small fixed UI sizes (12/15/18/22px) to compute a ratio against each other. Verified via Playwright/Chromium real computed styles: actual page sizes are 12, 13.3, 15, 16(inert unsized-wrapper divs only, no visible text), 18, 22, 30, 43.8, 58.2px — real max/min ratio 4.85:1, well past the tool's own 2.0 threshold."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-08-27T14:12:31.103Z",
+        "reason": "Verified false positive, same root cause as the /nosotros suppression: the detector's static analyzer doesn't resolve clamp()+vw font-size expressions, so the services-teaser's fluid pillar-name (32-64px) and every clamp-based heading on the page drop out of its scanned set, leaving only small fixed UI sizes (12/15/18px) to ratio against each other. Verified via Playwright real computed styles on index.html: actual sizes are 12, 15, 17, 18, 20, 22, 28, 44, 52, 64, 83.2px — real max/min ratio 6.93:1, well past the tool's own 2.0 threshold."
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-08-27T14:13:14.900Z",
+        "reason": "layout-transition isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form (a specific-value ignore was tried first and had no effect, confirmed by re-running the detector). user's brief explicitly specified the technique: 'La transición debe ser vía max-height y opacity' for the services-teaser pillar panel expand/collapse (public/blocks/services-teaser/services-teaser.css, linked from this file). Kept the cost bounded: max-height is capped at a small fixed 220px ceiling (not measured/unbounded), and the transition fires only on discrete hover/focus/tap state changes, never in a loop."
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "public/blocks/services-teaser/services-teaser.css"
+        ],
+        "createdAt": "2026-08-27T14:13:14.975Z",
+        "reason": "layout-transition isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form. user's brief explicitly specified the technique: 'La transición debe ser vía max-height y opacity' for the pillar panel expand/collapse. Kept the cost bounded: max-height is capped at a small fixed 220px ceiling (not measured/unbounded), and the transition fires only on discrete hover/focus/tap state changes, never in a scroll or animation loop; the adjacent divider-sweep animation was switched from width to transform:scaleX() specifically to avoid stacking a second layout-cost transition in the same interaction."
       }
     ]
   }

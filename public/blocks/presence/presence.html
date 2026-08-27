@@ -1,31 +1,37 @@
 <!--
   CONTINENTAL MEDIA — "NUESTRA PRESENCIA" BLOCK (canonical source)
-  THESIS: two real cities, not a generic "nationwide" claim — a simplified
-    flat map with two pins makes Veracruz and Querétaro legible at a
-    glance, backed by the two people who actually run each office.
+  THESIS: two real cities, not a generic "nationwide" claim — a detailed,
+    real map of Mexico's 32 states (not an abstracted blob) makes
+    Veracruz and Querétaro legible at a glance and gives the section the
+    visual weight of an actual atlas, backed by the two people who
+    actually run each office.
   OWN-WORLD: same near-black ground, same restrained blue accent, same
     Space Grotesk display / Inter body pairing as every other block on
-    the site. The map is an authored flat-illustration SVG silhouette
-    (explicitly not an embedded Google Maps widget per the brief) in the
-    same near-sharp, single-accent visual language as the rest of the
-    site — a shape and two pins, not a literal atlas.
+    the site. The map is authored SVG built from real state-boundary
+    path data (explicitly not an embedded Google Maps widget per the
+    brief), restyled into the site's near-sharp, single-accent language
+    — every state outlined, the two home states tinted and pinned.
   FORM: precisely brief-pinned (exact copy, 2 pins, 3 data cards, 2
     leadership cards in that reading order) — a local extension of the
     established world, not a new concept exercise.
-  ACCESSIBILITY: the map SVG is decorative (aria-hidden) — the two pins
-    are real <button> elements (not divs) with descriptive aria-labels,
-    each with its own visible focus ring, satisfying "focus/hover clara"
-    for map pins without depending on hover alone. Reveal-on-scroll
-    (intro, pins, cards, leadership) defaults to the final visible state;
-    a <noscript> rule forces it if JS never runs.
+  ACCESSIBILITY: the map canvas is JS-populated (see mexico-states-data.js
+    + presence.js); a <noscript> paragraph states both cities in plain
+    text if JS never runs. Once rendered, each pin is a focusable SVG <g>
+    (tabindex, role="img", full aria-label with the office's sub-line) so
+    the office info is available to screen readers unconditionally, not
+    only via the hover/focus tooltip built for sighted/keyboard users.
+    Reveal-on-scroll (intro, pin drop-in, cards, leadership) defaults to
+    the final visible state; a <noscript> rule forces it if JS never runs.
 
   USAGE — canonical source for this block. To use it on a page:
     1. Link assets/css/tokens.css, then blocks/presence/presence.css.
     2. Copy the <section class="cm-presence"> markup below as-is.
-    3. Load blocks/presence/presence.js as a module (drives the
-       scroll-triggered reveals — intro, pin drop-in, card stagger,
-       leadership fade-up, in that sequence; the <noscript> fallback and
-       prefers-reduced-motion both work without it).
+    3. Load blocks/presence/presence.js as a module — it imports
+       mexico-states-data.js and renders the map into
+       [data-cm-presence-map-canvas] on load, then drives the
+       scroll-triggered reveals (intro, pin drop-in, card stagger,
+       leadership fade-up, in that sequence). The <noscript> fallbacks
+       and prefers-reduced-motion both work without it.
   Asset paths are root-relative (no leading slash), matching every other
   block on the site.
 -->
@@ -33,7 +39,6 @@
   <noscript>
     <style>
       [data-cm-presence] [data-cm-presence-reveal],
-      [data-cm-presence] [data-cm-presence-pin],
       [data-cm-presence] [data-cm-presence-card],
       [data-cm-presence] [data-cm-presence-leader] {
         opacity: 1 !important;
@@ -57,41 +62,12 @@
 
     <div class="cm-presence__map-row">
       <div class="cm-presence__map" data-cm-presence-map>
-        <svg
-          class="cm-presence__map-svg"
-          viewBox="0 0 400 320"
-          role="img"
-          aria-label="Mapa simplificado de México con Veracruz y Querétaro marcados"
-        >
-          <path
-            class="cm-presence__map-shape"
-            d="M75,30 L60,55 L48,90 L55,125 L68,150 L80,155 L92,125 L98,95 L108,68 L118,55
-               L135,95 L155,135 L175,175 L195,205 L218,222 L245,232 L265,228 L285,215 L298,195
-               L308,178 L330,165 L355,158 L378,148 L372,132 L350,138 L325,148 L308,160 L295,145
-               L278,118 L262,90 L248,65 L232,42 L210,28 L180,20 L150,22 L120,26 L95,28 Z"
-          />
-        </svg>
-
-        <button
-          type="button"
-          class="cm-presence__pin"
-          data-cm-presence-pin
-          style="--cm-pin-x: 67%; --cm-pin-y: 41%"
-          aria-label="Sede Veracruz, Ver."
-        >
-          <span class="cm-presence__pin-dot" aria-hidden="true"></span>
-          <span class="cm-presence__pin-label">Veracruz</span>
-        </button>
-        <button
-          type="button"
-          class="cm-presence__pin"
-          data-cm-presence-pin
-          style="--cm-pin-x: 40%; --cm-pin-y: 33%"
-          aria-label="Sede Querétaro, Qro."
-        >
-          <span class="cm-presence__pin-dot" aria-hidden="true"></span>
-          <span class="cm-presence__pin-label">Querétaro</span>
-        </button>
+        <noscript>
+          <p class="cm-presence__map-noscript">
+            Mapa de México con nuestras dos sedes: Veracruz, Ver. y Querétaro, Qro.
+          </p>
+        </noscript>
+        <div class="cm-presence__map-canvas" data-cm-presence-map-canvas></div>
       </div>
 
       <ul class="cm-presence__cards" data-cm-presence-cards>

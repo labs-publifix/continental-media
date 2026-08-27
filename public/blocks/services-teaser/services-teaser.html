@@ -1,0 +1,201 @@
+<!--
+  CONTINENTAL MEDIA — "SERVICIOS" TEASER BLOCK (canonical source)
+  THESIS: a typographic marquee, not five identical cards — the 5 pillars
+    are the content, so make the pillar NAMES the interface. Deliberately
+    breaks from the site's card-grid habit (clients marquee, about
+    teaser's photo grid) to read as the agency's own creative voice, not
+    a template.
+  OWN-WORLD: same near-black ground, same restrained blue accent, same
+    Space Grotesk display / Inter body pairing as every other block on
+    the site. Chips reuse the about-teaser chip language (near-sharp
+    radius, thin border, no fill) rather than inventing a new one.
+  FORM: precisely brief-pinned (exact copy, exact 5 pillars + subservices,
+    exact expand/hover mechanics) — a local extension of the established
+    world, not a new concept exercise.
+  ACCESSIBILITY: each pillar trigger is a real <a href> (not a button) so
+    it keeps native link semantics — open-in-new-tab, right-click-copy-
+    link, Enter-to-follow all work — while still carrying aria-expanded/
+    aria-controls for the disclosure pattern. Desktop/keyboard hover or
+    focus reveals the subservice preview via pure CSS before any
+    activation, so a single click/Enter always navigates (the preview
+    already happened). Touch has no hover step, so services-teaser.js
+    intercepts the FIRST tap on a collapsed pillar to reveal instead of
+    navigate (mirroring what hover/focus already gives everyone else),
+    and only lets a SECOND tap on an already-expanded pillar follow the
+    link — see the file's own header comment for the full reasoning.
+    Entrance/expand animations default to visible/expanded; a <noscript>
+    rule and prefers-reduced-motion both force that without JS.
+
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then
+       blocks/services-teaser/services-teaser.css.
+    2. Copy the <section class="cm-services"> markup below as-is.
+    3. Load blocks/services-teaser/services-teaser.js as a module (drives
+       the scroll-triggered cascade, the touch tap-to-expand/tap-to-follow
+       intercept, and the optional desktop cursor-follower; the
+       <noscript> fallback and prefers-reduced-motion both work without
+       it).
+  Asset paths are root-relative (no leading slash), matching every other
+  block on the site.
+-->
+<section class="cm-services" data-cm-services aria-labelledby="cm-services-heading">
+  <noscript>
+    <style>
+      [data-cm-services] [data-cm-services-reveal],
+      [data-cm-services] [data-cm-services-pillar] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      [data-cm-services] [data-cm-services-panel] {
+        max-height: none !important;
+        opacity: 1 !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-services__inner">
+    <div class="cm-services__intro" data-cm-services-reveal>
+      <span class="cm-services__eyebrow">Servicios</span>
+      <h2 class="cm-services__title" id="cm-services-heading">
+        Soluciones integrales para marcas que quieren crecer.
+      </h2>
+      <p class="cm-services__subtitle">
+        Estrategia, creatividad, tecnología e inteligencia artificial en un mismo lugar.
+      </p>
+    </div>
+
+    <ul class="cm-services__list" data-cm-services-list>
+      <li class="cm-services__pillar" data-cm-services-pillar>
+        <a
+          class="cm-services__pillar-trigger"
+          data-cm-services-trigger
+          href="servicios.html#marketing-digital"
+          aria-expanded="false"
+          aria-controls="cm-services-panel-marketing-digital"
+        >
+          <span class="cm-services__pillar-name">Marketing Digital</span>
+          <svg class="cm-services__pillar-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+        <div class="cm-services__pillar-panel" id="cm-services-panel-marketing-digital" data-cm-services-panel>
+          <ul class="cm-services__chips">
+            <li class="cm-services__chip">Redes sociales</li>
+            <li class="cm-services__chip">Desarrollo web</li>
+            <li class="cm-services__chip">Google / Meta / TikTok Ads</li>
+            <li class="cm-services__chip">SEO</li>
+            <li class="cm-services__chip">Influencer marketing</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="cm-services__pillar" data-cm-services-pillar>
+        <a
+          class="cm-services__pillar-trigger"
+          data-cm-services-trigger
+          href="servicios.html#ai-marketing-solutions"
+          aria-expanded="false"
+          aria-controls="cm-services-panel-ai-marketing-solutions"
+        >
+          <span class="cm-services__pillar-name">
+            AI Marketing Solutions
+            <span class="cm-services__badge">Nuevo</span>
+          </span>
+          <svg class="cm-services__pillar-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+        <div
+          class="cm-services__pillar-panel"
+          id="cm-services-panel-ai-marketing-solutions"
+          data-cm-services-panel
+        >
+          <ul class="cm-services__chips">
+            <li class="cm-services__chip">Agentes de IA</li>
+            <li class="cm-services__chip">Blogs Automáticos con IA</li>
+            <li class="cm-services__chip">Campañas en OpenAI Ads Network</li>
+            <li class="cm-services__chip">Automatización de Marketing y CRM</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="cm-services__pillar" data-cm-services-pillar>
+        <a
+          class="cm-services__pillar-trigger"
+          data-cm-services-trigger
+          href="servicios.html#marketing-tradicional"
+          aria-expanded="false"
+          aria-controls="cm-services-panel-marketing-tradicional"
+        >
+          <span class="cm-services__pillar-name">Marketing Tradicional</span>
+          <svg class="cm-services__pillar-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+        <div
+          class="cm-services__pillar-panel"
+          id="cm-services-panel-marketing-tradicional"
+          data-cm-services-panel
+        >
+          <ul class="cm-services__chips">
+            <li class="cm-services__chip">Plan de medios</li>
+            <li class="cm-services__chip">Investigación de mercados</li>
+            <li class="cm-services__chip">Branding</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="cm-services__pillar" data-cm-services-pillar>
+        <a
+          class="cm-services__pillar-trigger"
+          data-cm-services-trigger
+          href="servicios.html#relaciones-publicas"
+          aria-expanded="false"
+          aria-controls="cm-services-panel-relaciones-publicas"
+        >
+          <span class="cm-services__pillar-name">Relaciones Públicas</span>
+          <svg class="cm-services__pillar-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+        <div
+          class="cm-services__pillar-panel"
+          id="cm-services-panel-relaciones-publicas"
+          data-cm-services-panel
+        >
+          <ul class="cm-services__chips">
+            <li class="cm-services__chip">Estrategia de RP</li>
+            <li class="cm-services__chip">Logística de eventos</li>
+            <li class="cm-services__chip">Patrocinios</li>
+            <li class="cm-services__chip">Convocatoria de medios</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="cm-services__pillar" data-cm-services-pillar>
+        <a
+          class="cm-services__pillar-trigger"
+          data-cm-services-trigger
+          href="servicios.html#produccion"
+          aria-expanded="false"
+          aria-controls="cm-services-panel-produccion"
+        >
+          <span class="cm-services__pillar-name">Producción</span>
+          <svg class="cm-services__pillar-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+        <div class="cm-services__pillar-panel" id="cm-services-panel-produccion" data-cm-services-panel>
+          <ul class="cm-services__chips">
+            <li class="cm-services__chip">Diseño gráfico</li>
+            <li class="cm-services__chip">Producción audiovisual</li>
+            <li class="cm-services__chip">Animaciones con IA</li>
+            <li class="cm-services__chip">Print</li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="cm-services__cursor" data-cm-services-cursor aria-hidden="true">Ver más</div>
+</section>

@@ -1,0 +1,325 @@
+/*
+  Continental Media — "Servicios" teaser block styles.
+  Namespaced under .cm-services. Depends on assets/css/tokens.css.
+*/
+
+.cm-services {
+  position: relative;
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(4.5rem, 12vh, 7.5rem);
+  font-size: 0.9375rem; /* base for unsized wrappers, see about-teaser.css's .cm-about for why */
+}
+
+.cm-services__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+}
+
+/* ---------- Intro ---------- */
+
+.cm-services__intro {
+  max-width: 700px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-services.is-visible .cm-services__intro {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-services__eyebrow {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+}
+
+.cm-services__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.3rem + 2.2vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cm-services__subtitle {
+  margin: 0.9em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---------- Pillar list ---------- */
+
+.cm-services__list {
+  list-style: none;
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+  padding: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.cm-services__pillar {
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+.cm-services.is-visible .cm-services__pillar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ~90ms stagger, reading order = DOM order = pillar order in the brief */
+.cm-services.is-visible .cm-services__pillar:nth-child(1) { transition-delay: 0ms; }
+.cm-services.is-visible .cm-services__pillar:nth-child(2) { transition-delay: 90ms; }
+.cm-services.is-visible .cm-services__pillar:nth-child(3) { transition-delay: 180ms; }
+.cm-services.is-visible .cm-services__pillar:nth-child(4) { transition-delay: 270ms; }
+.cm-services.is-visible .cm-services__pillar:nth-child(5) { transition-delay: 360ms; }
+
+/* Divider: a static neutral base line, plus an accent line layered on top
+   that animates its own width 0 -> 100% on activation — a real color
+   "sweep", not an instant border-color swap. */
+.cm-services__pillar::before,
+.cm-services__pillar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+}
+
+.cm-services__pillar::before {
+  right: 0;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.cm-services__pillar::after {
+  right: 0;
+  background: var(--cm-color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--cm-ease-out);
+}
+
+.cm-services__pillar:hover::after,
+.cm-services__pillar:focus-within::after,
+.cm-services__pillar.is-expanded::after {
+  transform: scaleX(1);
+}
+
+.cm-services__pillar-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: 100%;
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cm-services__pillar-trigger:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 4px;
+}
+
+.cm-services__pillar-name {
+  /* Plain inline flow (not inline-flex): when the name wraps to a second
+     line at narrow widths, the badge should flow and vertical-align with
+     whichever line it lands on, not cross-axis-center against the whole
+     (now multi-line) flex box — that centers it against the wrong line. */
+  display: inline;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.3rem + 3vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  transition:
+    color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-services__pillar:hover .cm-services__pillar-name,
+.cm-services__pillar:focus-within .cm-services__pillar-name,
+.cm-services__pillar.is-expanded .cm-services__pillar-name {
+  color: var(--cm-color-accent);
+  transform: translateX(10px);
+}
+
+.cm-services__badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5em;
+  font-family: var(--cm-font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cm-color-on-accent);
+  background: var(--cm-color-accent);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.35em 0.65em;
+  line-height: 1;
+}
+
+.cm-services__pillar-arrow {
+  flex-shrink: 0;
+  width: clamp(20px, 2.5vw, 28px);
+  height: clamp(20px, 2.5vw, 28px);
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    transform var(--cm-duration-fast) var(--cm-ease-out),
+    stroke var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-services__pillar:hover .cm-services__pillar-arrow,
+.cm-services__pillar:focus-within .cm-services__pillar-arrow,
+.cm-services__pillar.is-expanded .cm-services__pillar-arrow {
+  transform: rotate(90deg);
+  stroke: var(--cm-color-accent);
+}
+
+/* ---------- Expandable panel ---------- */
+
+.cm-services__pillar-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height 280ms var(--cm-ease-out),
+    opacity 280ms var(--cm-ease-out);
+}
+
+.cm-services__pillar:hover .cm-services__pillar-panel,
+.cm-services__pillar:focus-within .cm-services__pillar-panel,
+.cm-services__pillar.is-expanded .cm-services__pillar-panel {
+  max-height: 220px;
+  opacity: 1;
+}
+
+.cm-services__chips {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 clamp(1.5rem, 4vw, 2.25rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.cm-services__chip {
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  /* Reuses the site's existing 15px UI-text size (about-teaser chips,
+     buttons) instead of a new in-between size. */
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.5em 0.9em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 220ms var(--cm-ease-out),
+    transform 220ms var(--cm-ease-out);
+}
+
+.cm-services__pillar:hover .cm-services__chip,
+.cm-services__pillar:focus-within .cm-services__chip,
+.cm-services__pillar.is-expanded .cm-services__chip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ~35ms mini-stagger, independent of the pillar-level entrance stagger above */
+.cm-services__chip:nth-child(1) { transition-delay: 0ms; }
+.cm-services__chip:nth-child(2) { transition-delay: 35ms; }
+.cm-services__chip:nth-child(3) { transition-delay: 70ms; }
+.cm-services__chip:nth-child(4) { transition-delay: 105ms; }
+.cm-services__chip:nth-child(5) { transition-delay: 140ms; }
+
+/* ---------- Desktop cursor follower (progressive enhancement) ---------- */
+
+.cm-services__cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  /* Same 15px UI-text size as the chips — see that rule's comment. */
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-200px, -200px, 0) translate(-50%, -50%);
+  transition:
+    opacity var(--cm-duration-fast) var(--cm-ease-out),
+    transform 90ms linear;
+}
+
+.cm-services__cursor.is-visible {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cm-services__cursor {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-services__intro,
+  .cm-services__pillar,
+  .cm-services__pillar-name,
+  .cm-services__pillar-arrow,
+  .cm-services__pillar::after,
+  .cm-services__pillar-panel,
+  .cm-services__chip,
+  .cm-services__cursor {
+    transition: none !important;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .cm-services {
+    padding-block: clamp(3.5rem, 10vh, 5rem);
+  }
+
+  .cm-services__pillar-trigger {
+    gap: 0.75rem;
+  }
+}

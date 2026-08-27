@@ -257,12 +257,9 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Mobile shows a tighter 3x2 grid (6 photos) instead of all 9 — keeps
-     the section shorter to scroll through on a phone. Desktop keeps the
-     full 3x3. Rafael and Pepe (items 1-2) always stay, so the trimmed
-     set still leads with real leadership. */
-  .cm-about__photo:nth-child(7),
-  .cm-about__photo:nth-child(8),
+  /* Mobile shows a 4x2 grid (8 photos) instead of all 9 — drops just the
+     last one so nothing is orphaned into a lopsided last row. Desktop
+     keeps the full 3x3. */
   .cm-about__photo:nth-child(9) {
     display: none;
   }
