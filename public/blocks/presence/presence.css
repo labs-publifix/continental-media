@@ -292,6 +292,26 @@ text.cm-presence__pin-label-sub {
   transition-delay: 140ms;
 }
 
+.cm-presence__leader-trigger {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cm-presence__leader-trigger:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 4px;
+  border-radius: var(--cm-radius-sm);
+}
+
 .cm-presence__leader-photo {
   display: block;
   width: 100%;
@@ -299,6 +319,83 @@ text.cm-presence__pin-label-sub {
   object-fit: cover;
   border-radius: var(--cm-radius-sm);
   background: var(--cm-black);
+  transition: filter var(--cm-duration-base) var(--cm-ease-out);
+}
+
+/* Small discoverability affordance, always present at rest — same chip
+   language as about-teaser/services-teaser (near-sharp, thin border, no
+   fill), pinned over the photo so it reads as "there's more here"
+   before any hover/tap happens. */
+.cm-presence__leader-cue {
+  position: absolute;
+  left: 0.9rem;
+  bottom: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--cm-color-fg);
+  background: rgba(10, 11, 13, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.4em 0.7em;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-presence__leader-cue-icon {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  flex: none;
+}
+
+.cm-presence__leader-cue-icon::before,
+.cm-presence__leader-cue-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--cm-color-fg);
+  transition: transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-presence__leader-cue-icon::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.cm-presence__leader-cue-icon::after {
+  top: 0;
+  left: 50%;
+  width: 1.5px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.cm-presence__leader:hover .cm-presence__leader-cue,
+.cm-presence__leader:focus-within .cm-presence__leader-cue,
+.cm-presence__leader.is-expanded .cm-presence__leader-cue {
+  background: var(--cm-color-accent);
+  border-color: var(--cm-color-accent);
+}
+
+/* The "+" rotates into an "×" once the bio is open, signaling collapse. */
+.cm-presence__leader:hover .cm-presence__leader-cue-icon::after,
+.cm-presence__leader:focus-within .cm-presence__leader-cue-icon::after,
+.cm-presence__leader.is-expanded .cm-presence__leader-cue-icon::after {
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.cm-presence__leader:hover .cm-presence__leader-photo,
+.cm-presence__leader:focus-within .cm-presence__leader-photo,
+.cm-presence__leader.is-expanded .cm-presence__leader-photo {
+  filter: brightness(0.55);
 }
 
 .cm-presence__leader-name {
@@ -319,6 +416,35 @@ text.cm-presence__pin-label-sub {
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* ---------- Leader bio (hover/focus/tap-expand, same mechanic as
+   services-teaser's pillar panels: bounded max-height + opacity) ---------- */
+
+.cm-presence__leader-bio {
+  margin: 0;
+  /* Static, not transitioned — clipped along with the text by max-height
+     when collapsed, so it costs nothing at rest and only ever animates
+     alongside the (already-bounded) max-height/opacity pair below. */
+  padding-top: 0.6rem;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.78);
+  transition:
+    max-height 280ms var(--cm-ease-out),
+    opacity 280ms var(--cm-ease-out);
+}
+
+.cm-presence__leader:hover .cm-presence__leader-bio,
+.cm-presence__leader:focus-within .cm-presence__leader-bio,
+.cm-presence__leader.is-expanded .cm-presence__leader-bio {
+  max-height: 220px;
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cm-presence__intro,
   .cm-presence__pin-dot,
@@ -326,6 +452,14 @@ text.cm-presence__pin-label-sub {
   .cm-presence__leader {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .cm-presence__leader-bio,
+  .cm-presence__leader-photo,
+  .cm-presence__leader-cue,
+  .cm-presence__leader-cue-icon::before,
+  .cm-presence__leader-cue-icon::after {
     transition: none;
   }
 }

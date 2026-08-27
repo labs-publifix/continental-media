@@ -13,7 +13,10 @@
     — every state outlined, the two home states tinted and pinned.
   FORM: precisely brief-pinned (exact copy, 2 pins, 3 data cards, 2
     leadership cards in that reading order) — a local extension of the
-    established world, not a new concept exercise.
+    established world, not a new concept exercise. Each leadership card
+    also carries a short bio, revealed with the same hover/tap-expand
+    mechanic as the home page's services-teaser pillars (own-world reuse,
+    not a new interaction pattern).
   ACCESSIBILITY: the map canvas is JS-populated (see mexico-states-data.js
     + presence.js); a <noscript> paragraph states both cities in plain
     text if JS never runs. Once rendered, each pin is a focusable SVG <g>
@@ -22,6 +25,13 @@
     only via the hover/focus tooltip built for sighted/keyboard users.
     Reveal-on-scroll (intro, pin drop-in, cards, leadership) defaults to
     the final visible state; a <noscript> rule forces it if JS never runs.
+    Each leader photo sits inside a real <button> (aria-expanded/aria-
+    controls targeting its bio paragraph's id) so the disclosure is
+    reachable and operable by keyboard/AT, not just a hover trick. Desktop
+    hover or keyboard focus on the card reveals the bio via pure CSS
+    before any activation (same "preview, then optional commit" mechanic
+    as services-teaser); touch has no hover step, so presence.js toggles
+    the same expanded state on tap — see that file's header comment.
 
   USAGE — canonical source for this block. To use it on a page:
     1. Link assets/css/tokens.css, then blocks/presence/presence.css.
@@ -43,6 +53,13 @@
       [data-cm-presence] [data-cm-presence-leader] {
         opacity: 1 !important;
         transform: none !important;
+      }
+      [data-cm-presence] [data-cm-presence-leader-bio] {
+        max-height: none !important;
+        opacity: 1 !important;
+      }
+      [data-cm-presence] [data-cm-presence-leader-trigger] {
+        cursor: default;
       }
     </style>
   </noscript>
@@ -87,30 +104,64 @@
 
     <div class="cm-presence__leadership">
       <article class="cm-presence__leader" data-cm-presence-leader>
-        <img
-          class="cm-presence__leader-photo"
-          src="assets/images/leadership/rafael-aguirre.jpg"
-          alt="Rafael Aguirre, Fundador y Director General de Continental Media"
-          width="720"
-          height="900"
-          loading="lazy"
-          decoding="async"
-        />
+        <button
+          type="button"
+          class="cm-presence__leader-trigger"
+          data-cm-presence-leader-trigger
+          aria-expanded="false"
+          aria-controls="cm-presence-bio-rafael"
+        >
+          <img
+            class="cm-presence__leader-photo"
+            src="assets/images/leadership/rafael-aguirre.jpg"
+            alt="Rafael Aguirre, Fundador y Director General de Continental Media"
+            width="720"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="cm-presence__leader-cue" aria-hidden="true">
+            <span class="cm-presence__leader-cue-icon"></span>
+            Bio
+          </span>
+        </button>
         <h3 class="cm-presence__leader-name">Rafael Aguirre</h3>
         <p class="cm-presence__leader-role">Fundador y Director General</p>
+        <p class="cm-presence__leader-bio" id="cm-presence-bio-rafael" data-cm-presence-leader-bio>
+          Fundador y director de Continental Media. Más de 25 años de experiencia en marketing
+          digital y comunicación, ayudando a marcas a conectar con sus audiencias en cada etapa de
+          su crecimiento.
+        </p>
       </article>
       <article class="cm-presence__leader" data-cm-presence-leader>
-        <img
-          class="cm-presence__leader-photo"
-          src="assets/images/leadership/pepe-bermudez.jpg"
-          alt="Pepe Bermúdez, Director Querétaro de Continental Media"
-          width="720"
-          height="900"
-          loading="lazy"
-          decoding="async"
-        />
+        <button
+          type="button"
+          class="cm-presence__leader-trigger"
+          data-cm-presence-leader-trigger
+          aria-expanded="false"
+          aria-controls="cm-presence-bio-pepe"
+        >
+          <img
+            class="cm-presence__leader-photo"
+            src="assets/images/leadership/pepe-bermudez.jpg"
+            alt="Pepe Bermúdez, Director Querétaro de Continental Media"
+            width="720"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="cm-presence__leader-cue" aria-hidden="true">
+            <span class="cm-presence__leader-cue-icon"></span>
+            Bio
+          </span>
+        </button>
         <h3 class="cm-presence__leader-name">Pepe Bermúdez</h3>
         <p class="cm-presence__leader-role">Director Querétaro</p>
+        <p class="cm-presence__leader-bio" id="cm-presence-bio-pepe" data-cm-presence-leader-bio>
+          Fundador de Publifix. Construyó una de las plataformas SaaS más reconocidas en
+          Latinoamérica para relaciones públicas, social listening y análisis de audiencias con
+          IA.
+        </p>
       </article>
     </div>
   </div>

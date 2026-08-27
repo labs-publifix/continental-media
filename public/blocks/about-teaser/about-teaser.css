@@ -160,13 +160,11 @@
   transition: transform var(--cm-duration-slow) var(--cm-ease-out);
 }
 
-/* "Spotlight" hover, desktop/mouse only: the whole wall dims and desaturates
-   slightly the moment the pointer enters the grid, and the one card under
-   the cursor lifts back to full color/scale with a brand-blue focus ring —
-   a group interaction (not a single-card tooltip) that reads as "this is a
-   real team, look closer" without needing any name/role text. Gated so
-   touch devices — which have no cursor to spotlight around — just see the
-   plain, fully-lit grid instead of a stuck hover state. */
+/* "Spotlight", desktop/mouse: the whole wall dims and desaturates slightly
+   the moment the pointer enters the grid, and the one card under the
+   cursor lifts back to full color/scale with a brand-blue focus ring — a
+   group interaction (not a single-card tooltip) that reads as "this is a
+   real team, look closer" without needing any name/role text. */
 @media (hover: hover) and (pointer: fine) {
   .cm-about__grid:hover .cm-about__photo:not(:hover) {
     opacity: 0.55;
@@ -185,6 +183,29 @@
   .cm-about__photo:hover img {
     transform: scale(1.08);
   }
+}
+
+/* Touch equivalent: no cursor to spotlight around, so about-teaser.js
+   toggles the same visual states on tap instead — .has-active on the grid
+   dims every photo except the tapped one, which gets .is-active. Same
+   states, same transitions, just driven by a class instead of :hover so
+   the effect isn't limited to desktop/mouse. */
+.cm-about__grid.has-active .cm-about__photo:not(.is-active) {
+  opacity: 0.55;
+  filter: saturate(0.55);
+  transform: scale(0.97);
+}
+
+.cm-about__photo.is-active {
+  transform: scale(1.045);
+  box-shadow:
+    0 0 0 2px var(--cm-color-accent),
+    0 24px 44px -16px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.cm-about__photo.is-active img {
+  transform: scale(1.08);
 }
 
 /* ---------- Scroll-triggered entrance ---------- */

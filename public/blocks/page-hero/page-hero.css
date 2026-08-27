@@ -23,7 +23,10 @@
      here — see page-hero.html's FORM note on why a custom property
      can't carry a page-relative url() across this stylesheet. */
   background-size: cover;
-  background-position: center;
+  /* Tuned for /nosotros's behind-the-scenes hero photo: its subject sits
+     left-of-center and upper-half of frame, so a plain "center" would
+     crop into the subject on narrow (portrait-cropped) viewports. */
+  background-position: 40% 25%;
 }
 
 /* Same near-black gradient family as the home hero's overlay — bottom-
@@ -103,5 +106,11 @@
   .cm-page-hero {
     height: 60vh;
     min-height: 400px;
+  }
+
+  .cm-page-hero__media {
+    /* Narrow/tall viewports crop horizontally under cover; shift further
+       left so the subject isn't pushed out of frame. */
+    background-position: 20% 25%;
   }
 }

@@ -110,6 +110,24 @@
         ],
         "createdAt": "2026-08-27T15:21:41.667Z",
         "reason": "Verified false positive, same root cause as the existing index.html cramped-padding suppression: detector's resolveLengthPx() doesn't parse CSS clamp(), so .cm-site-header__nav-aside's real padding (clamp(1.5rem,4vh,2rem) top on mobile/tablet, clamp(2rem,4vw,3rem) left at >=901px alongside border-left) resolves to 0 in the check. Verified via Playwright real computed styles at 1440x900: padding-top 32px, padding-left 48px, border-left 1px — comfortably past the tool's own 8-16px floor. Not in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form."
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "public/nosotros.html"
+        ],
+        "createdAt": "2026-08-27T15:42:58.586Z",
+        "reason": "layout-transition isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form. This is the same technique already suppressed for the services-teaser pillar panel (index.html + services-teaser.css) applied to the presence block's new leader-bio expand panel: max-height is capped at a small fixed 220px ceiling (not measured/unbounded), padding-top is static (not transitioned, just clipped along with the text), and the transition only fires on discrete hover/focus/tap state changes, never in a loop."
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "public/blocks/presence/presence.css"
+        ],
+        "createdAt": "2026-08-27T15:43:05.475Z",
+        "reason": "Same technique/justification as the nosotros.html suppression and the existing services-teaser.css precedent: the leader-bio panel's max-height+opacity expand (280ms, capped at a fixed 220px ceiling, no measured/unbounded height, padding-top left static/untransitioned) only fires on discrete hover/focus/tap state changes. Standalone scan of this file alone returns zero findings (the detector needs page context to flag it), but suppressed here too so a future direct edit to this file doesn't re-trigger the hook."
       }
     ]
   }

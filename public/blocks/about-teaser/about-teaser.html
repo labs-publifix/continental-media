@@ -12,12 +12,16 @@
     established world per new-work.md, not a new concept exercise.
   ACCESSIBILITY: no name/role is shown on any photo (by design — this is
     a portrait wall, not a directory), so each photo's <img alt> is the
-    only identity information and is written accordingly. The hover
+    only identity information and is written accordingly. The spotlight
     effect is a pure visual embellishment (focus + depth), never the
-    carrier of information, so it needs no touch equivalent. Entrance
-    reveals default to the final visible state and are only animated
-    where JS runs and motion is not reduced; a <noscript> rule forces the
-    visible state if JS never executes at all.
+    carrier of information — but it's still available on every input, not
+    desktop/mouse only: about-teaser.js gives touch a tap-to-spotlight
+    equivalent (matchMedia('(hover: none), (pointer: coarse)')) that
+    toggles the same classes the CSS :hover rules already use, since
+    touch has no cursor to hover with. Entrance reveals default to the
+    final visible state and are only animated where JS runs and motion is
+    not reduced; a <noscript> rule forces the visible state if JS never
+    executes at all.
 
   USAGE — canonical source for this block. To use it on a page:
     1. Link assets/css/tokens.css, then blocks/about-teaser/about-teaser.css.
