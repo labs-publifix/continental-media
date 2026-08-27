@@ -128,6 +128,51 @@
         ],
         "createdAt": "2026-08-27T15:43:05.475Z",
         "reason": "Same technique/justification as the nosotros.html suppression and the existing services-teaser.css precedent: the leader-bio panel's max-height+opacity expand (280ms, capped at a fixed 220px ceiling, no measured/unbounded height, padding-top left static/untransitioned) only fires on discrete hover/focus/tap state changes. Standalone scan of this file alone returns zero findings (the detector needs page context to flag it), but suppressed here too so a future direct edit to this file doesn't re-trigger the hook."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/servicios/*/index.html"
+        ],
+        "createdAt": "2026-08-27T16:11:31.250Z",
+        "reason": "Verified false positive, same root cause as the existing index.html/nosotros.html cramped-padding suppressions: detector's resolveLengthPx() doesn't parse CSS clamp(), so .cm-pillar-row__inner/.cm-pillar-cta/.cm-pillar-rows/.cm-pillar-row__title-col/.cm-site-header__nav-aside's real clamp()-based padding all resolve to 0 in the check even though it's generous. Verified via Playwright real computed styles at 1440px and 390px: .cm-pillar-row__inner 60px/57.6px -> 36px/20px, .cm-pillar-cta 112px/57.6px -> 112px/20px, all comfortably past the tool's 8-16px floor; .cm-pillar-row__title-col's border-right + padding-right pair is removed together at the 768px breakpoint (1-col stack), so there is no boundary-with-no-inset case there either."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/servicios/*/index.html"
+        ],
+        "createdAt": "2026-08-27T16:11:38.068Z",
+        "reason": "Verified false positive, same root cause as the existing index.html/nosotros.html flat-type-hierarchy suppressions: the detector's static analyzer doesn't resolve clamp()+vw font-size expressions, so every clamp-based heading on this page family (.cm-pillar-hero__title 36-68px, .cm-pillar-row__name 24-44px, .cm-pillar-cta__title 28-44px) drops out of its scanned set entirely, leaving only small fixed UI sizes (12/13/15/16px) to compute a ratio against each other."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/servicios/*/index.html"
+        ],
+        "createdAt": "2026-08-27T16:11:44.057Z",
+        "reason": "user confirmed: same sitewide typographic family established for index.html/nosotros.html ('misma familia tipográfica sans-serif sin serifas'), new files for the 5 generated pillar pages."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/servicios/*/index.html"
+        ],
+        "createdAt": "2026-08-27T16:11:44.124Z",
+        "reason": "user confirmed: same sitewide display face established for index.html/nosotros.html, reused here for visual/typographic coherence with the services-teaser these pages are the direct destination of."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "public/servicios/*/index.html"
+        ],
+        "createdAt": "2026-08-27T16:11:51.044Z",
+        "reason": "user's brief explicitly specified this exact structure by name for this page family: 'Hero corto de pilar: eyebrow NUESTRA EXPERTISE o similar, y el título grande con el nombre del pilar.' It is also the site's own pre-existing house convention, already shipped identically on every other block (services-teaser's 'Servicios' eyebrow, about-teaser's 'Nosotros' eyebrow, dna's numbered eyebrow) well before this task — not a new AI-SaaS-default reached for without deciding. hero-eyebrow-chip isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form."
       }
     ]
   }

@@ -1,0 +1,517 @@
+/*
+  Continental Media — service PILLAR PAGE block styles.
+  Namespaced under .cm-pillar. Depends on assets/css/tokens.css.
+  See pillar-page.html for the full direction-contract comment; this file
+  implements the "editorial row list" pattern: a short text hero, then a
+  list of full-width subservice rows divided by continuous thin vertical
+  rules, where hover/focus/scroll-centered activation paints the ENTIRE
+  active row full-bleed in the brand accent — never per-card, one row at
+  a time.
+*/
+
+.cm-pillar {
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+}
+
+/* ---------- Short text hero (no photo — page-hero is for the tall photo
+   banner pages like /nosotros; this page family needs a lighter, purely
+   typographic header that gets straight to the row list) ---------- */
+
+.cm-pillar-hero {
+  /* Clears the fixed site-header (~64-108px tall across its own clamps)
+     with comfortable margin at every viewport size. */
+  padding: clamp(7.5rem, 20vh, 10.5rem) var(--cm-gutter) clamp(2.5rem, 6vw, 4rem);
+}
+
+.cm-pillar-hero__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cm-pillar-hero__eyebrow {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* 0.5 alpha clears normal-text AA at ~5.3:1 on this near-black ground,
+     same pairing already used by every other block's eyebrow. */
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-pillar-hero__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+  transition-delay: 90ms;
+}
+
+.cm-pillar-hero__badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5em;
+  font-family: var(--cm-font-body);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.6rem + 0.4vw, 0.9375rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cm-color-on-accent);
+  background: var(--cm-color-accent);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.35em 0.65em;
+  line-height: 1;
+}
+
+.cm-pillar-hero__intro {
+  margin: 1.1em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: clamp(1rem, 0.93rem + 0.3vw, 1.1875rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 62ch;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+  transition-delay: 160ms;
+}
+
+.cm-pillar.is-visible .cm-pillar-hero__eyebrow,
+.cm-pillar.is-visible .cm-pillar-hero__title,
+.cm-pillar.is-visible .cm-pillar-hero__intro {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Row list ---------- */
+
+.cm-pillar-rows {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.cm-pillar-rows__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cm-pillar-row {
+  position: relative;
+  width: 100%;
+  cursor: default;
+  background-color: transparent;
+  will-change: background-color;
+  transition: background-color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover,
+.cm-pillar-row:focus-visible,
+.cm-pillar-row.is-active {
+  background-color: var(--cm-color-accent);
+}
+
+.cm-pillar-row:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: -4px;
+}
+
+.cm-pillar-row__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(2.25rem, 5.5vw, 3.75rem) var(--cm-gutter);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  transition: border-color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__inner,
+.cm-pillar-row:focus-visible .cm-pillar-row__inner,
+.cm-pillar-row.is-active .cm-pillar-row__inner {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cm-pillar-row__title-col {
+  min-width: 0;
+  padding-right: clamp(1.5rem, 4vw, 3rem);
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  transition: border-color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__title-col,
+.cm-pillar-row:focus-visible .cm-pillar-row__title-col,
+.cm-pillar-row.is-active .cm-pillar-row__title-col {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cm-pillar-row__index {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 0.6em;
+  transition: color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__index,
+.cm-pillar-row:focus-visible .cm-pillar-row__index,
+.cm-pillar-row.is-active .cm-pillar-row__index {
+  color: var(--cm-color-on-accent);
+}
+
+.cm-pillar-row__name {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.05rem + 2vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--cm-color-fg);
+  transition: color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__name,
+.cm-pillar-row:focus-visible .cm-pillar-row__name,
+.cm-pillar-row.is-active .cm-pillar-row__name {
+  color: var(--cm-color-on-accent);
+}
+
+.cm-pillar-row__content-col {
+  min-width: 0;
+}
+
+.cm-pillar-row__description {
+  margin: 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__description,
+.cm-pillar-row:focus-visible .cm-pillar-row__description,
+.cm-pillar-row.is-active .cm-pillar-row__description {
+  /* Solid, not a dimmed tint — verified 5.08:1 against the accent blue,
+     comfortably above the 4.5:1 AA floor for this normal-size body text
+     (a "dark" tone as literally requested cannot clear AA against this
+     specific saturated blue: black/#0a0b0d only reaches ~3.9:1 here — see
+     the block's own header comment for the full contrast rationale). */
+  color: var(--cm-color-on-accent);
+}
+
+/* Row-level extra sub-block (Relaciones Públicas row 1: Publifix Suite mention) */
+
+.cm-pillar-row__extra {
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  transition: border-color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__extra,
+.cm-pillar-row:focus-visible .cm-pillar-row__extra,
+.cm-pillar-row.is-active .cm-pillar-row__extra {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.cm-pillar-row__extra-label {
+  margin: 0;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__extra-label,
+.cm-pillar-row:focus-visible .cm-pillar-row__extra-label,
+.cm-pillar-row.is-active .cm-pillar-row__extra-label {
+  color: var(--cm-color-on-accent);
+}
+
+.cm-pillar-row__extra-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--cm-color-fg);
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.6em 1.1em;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pillar-row__extra-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--cm-color-fg);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__extra-link,
+.cm-pillar-row:focus-visible .cm-pillar-row__extra-link,
+.cm-pillar-row.is-active .cm-pillar-row__extra-link {
+  color: var(--cm-color-on-accent);
+  border-color: var(--cm-color-on-accent);
+}
+
+.cm-pillar-row:hover .cm-pillar-row__extra-link:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.cm-pillar-row__extra-link:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+/* Entrance stagger for the rows (same one-shot reveal-on-scroll house
+   pattern as every other block; independent of the hover/active state
+   above, which is why it animates opacity/transform, never color). */
+
+.cm-pillar-row {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.cm-pillar-row.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  /* The stagger delay (--cm-row-delay, set per nth-child below) only ever
+     applies to the one-shot entrance — background-color keeps its own
+     zero-delay transition so hover/focus/active response time never
+     inherits the entrance stagger after the row has already revealed. */
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out) var(--cm-row-delay, 0ms),
+    transform var(--cm-duration-base) var(--cm-ease-out) var(--cm-row-delay, 0ms),
+    background-color 280ms var(--cm-ease-out);
+}
+
+.cm-pillar-row:nth-child(1) { --cm-row-delay: 0ms; }
+.cm-pillar-row:nth-child(2) { --cm-row-delay: 70ms; }
+.cm-pillar-row:nth-child(3) { --cm-row-delay: 140ms; }
+.cm-pillar-row:nth-child(4) { --cm-row-delay: 210ms; }
+.cm-pillar-row:nth-child(5) { --cm-row-delay: 280ms; }
+.cm-pillar-row:nth-child(6) { --cm-row-delay: 350ms; }
+
+/* ---------- Pillar-level extra closing block (AI pillar: Publifix Suite) ---------- */
+
+.cm-pillar-extra {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding: clamp(2.5rem, 6vw, 4rem) var(--cm-gutter);
+}
+
+.cm-pillar-extra__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.cm-pillar-extra__label {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  letter-spacing: -0.01em;
+}
+
+.cm-pillar-extra__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--cm-radius-sm);
+  padding: 0.95em 1.75em;
+  cursor: pointer;
+  border: 1.5px solid var(--cm-color-accent);
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pillar-extra__link:hover {
+  background: var(--cm-color-accent-hover);
+  border-color: var(--cm-color-accent-hover);
+}
+
+.cm-pillar-extra__link:active {
+  transform: translateY(1px);
+}
+
+.cm-pillar-extra__link:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+/* ---------- Closing CTA ---------- */
+
+.cm-pillar-cta {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding: clamp(4.5rem, 12vh, 7rem) var(--cm-gutter);
+}
+
+.cm-pillar-cta__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cm-pillar-cta__title {
+  margin: 0 auto;
+  max-width: 26ch;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cm-pillar-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.875rem;
+  margin-top: 2rem;
+}
+
+.cm-pillar-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--cm-radius-sm);
+  padding: 0.95em 1.75em;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pillar-cta__button:active {
+  transform: translateY(1px);
+}
+
+.cm-pillar-cta__button--primary {
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  border-color: var(--cm-color-accent);
+}
+
+.cm-pillar-cta__button--primary:hover {
+  background: var(--cm-color-accent-hover);
+  border-color: var(--cm-color-accent-hover);
+}
+
+.cm-pillar-cta__button--secondary {
+  background: transparent;
+  color: var(--cm-color-fg);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.cm-pillar-cta__button--secondary:hover {
+  border-color: var(--cm-color-fg);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cm-pillar-cta__button:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-pillar-hero__eyebrow,
+  .cm-pillar-hero__title,
+  .cm-pillar-hero__intro,
+  .cm-pillar-row {
+    opacity: 1;
+    transform: none;
+    transition: background-color 280ms var(--cm-ease-out);
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .cm-pillar-row__inner {
+    grid-template-columns: 1fr;
+    row-gap: 1.25rem;
+  }
+
+  .cm-pillar-row__title-col {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .cm-pillar-cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cm-pillar-cta__button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-pillar-hero__title {
+    text-wrap: balance;
+  }
+
+  .cm-pillar-extra__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

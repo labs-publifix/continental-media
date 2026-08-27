@@ -1,0 +1,142 @@
+<!--
+  CONTINENTAL MEDIA — SERVICE PILLAR PAGE BLOCK (canonical source)
+  THESIS: an editorial index, not five duplicated landing pages — a short
+    typographic hero drops straight into a list of full-width subservice
+    rows divided by continuous thin rules (margin | title 40% | content
+    60%), where the row under the visitor's attention (hover, keyboard
+    focus, or — with no cursor — whichever row sits centered in the
+    viewport while scrolling) paints itself full-bleed in the brand
+    accent. Exactly one row is ever active.
+  OWN-WORLD: same near-black ground, same restrained blue accent, same
+    Space Grotesk display / Inter body pairing as every other block on
+    the site. The "Nuevo" badge and CTA buttons reuse the exact chip/
+    button language already shipped by services-teaser and about-teaser
+    — not a new visual vocabulary for this one page family.
+  FORM: THIS BLOCK IS DATA-DRIVEN, NOT HAND-DUPLICATED PER PAGE. Unlike
+    every other block on the site (which is copy-embedded by hand into
+    each consuming page), the 5 real pillar pages
+    (public/servicios/<slug>/index.html) are all generated from this one
+    template by scripts/generate-pillar-pages.mjs, which reads each
+    pillar's exact copy from scripts/pillar-data.mjs (one object per
+    pillar: slug, name, optional badge/intro, subservices[], optional
+    row-level and pillar-level "extra" closing blocks) and renders it
+    through a single template function. There is one row-rendering code
+    path for all 5 pages — editing a row's markup means editing the
+    generator once, then re-running `node scripts/generate-pillar-pages.mjs`
+    to regenerate every page, not hand-editing 5 files. The markup below
+    is illustrative only (Marketing Digital's real content, so it matches
+    what the generator actually outputs) — it documents the shape every
+    generated page shares; it is not itself linked from any page.
+  ACCESSIBILITY: each row (<li data-cm-pillar-row tabindex="0">) is a
+    real keyboard stop — Tab reaches it and :focus-visible triggers the
+    same full-bleed activation hover already gives mouse users, per the
+    brief's explicit "cada fila debe ser navegable y activable por
+    teclado" requirement. It's a real tabindex on a non-interactive
+    element (no href, no action) specifically because the effect it
+    exposes — the accent highlight — has no other focusable carrier
+    inside the row; this mirrors the same call already made for
+    presence's map pins (<g tabindex="0" role="img">). Active-row text
+    color is solid white (var(--cm-color-on-accent)), not the "dark tone"
+    a first read of the brief might suggest — verified via WCAG relative
+    luminance: white-on-#1e5fff clears 5.08:1 (comfortably past the
+    4.5:1 AA floor for the row's normal-size body copy), while black/
+    near-black on that same saturated blue only reaches ~3.9:1 and fails
+    AA for that text. Solid white is also the site's own established
+    --cm-color-on-accent token, already used everywhere else text sits
+    on this exact accent blue. Reveal-on-scroll (hero, then each row,
+    staggered) defaults to the final visible state; a <noscript> rule and
+    prefers-reduced-motion both force it independently of JS. The
+    scroll-driven "centered row" activation only runs on touch/no-hover
+    devices (matchMedia('(hover: none), (pointer: coarse)')) — desktop
+    keeps standard :hover/:focus-visible with no JS involved.
+
+  USAGE — canonical source for this block. To ship a new pillar or edit
+  an existing one:
+    1. Edit scripts/pillar-data.mjs (content) and/or this block's CSS/JS
+       (shared behavior/visuals) — never hand-edit a generated page.
+    2. Run `node scripts/generate-pillar-pages.mjs` from the repo root;
+       it rewrites all 5 public/servicios/<slug>/index.html files.
+    3. Each generated page links assets/css/tokens.css, then
+       blocks/pillar-page/pillar-page.css (relative depth adjusted for
+       its nesting), copies the site-header block first inside <body>
+       (see blocks/site-header/), then this block's markup inside
+       <main id="main-content">, then loads
+       blocks/pillar-page/pillar-page.js as a module.
+  Asset paths in generated pages are relative to that page's own nesting
+  depth (public/servicios/<slug>/index.html is two directories below
+  public/), never root-absolute — this project can deploy under a GitHub
+  Pages project subpath, where a leading "/" would silently 404.
+-->
+<section class="cm-pillar" data-cm-pillar aria-labelledby="cm-pillar-heading">
+  <noscript>
+    <style>
+      [data-cm-pillar] .cm-pillar-hero__eyebrow,
+      [data-cm-pillar] .cm-pillar-hero__title,
+      [data-cm-pillar] .cm-pillar-hero__intro,
+      [data-cm-pillar] [data-cm-pillar-row] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-pillar-hero">
+    <div class="cm-pillar-hero__inner">
+      <span class="cm-pillar-hero__eyebrow">Nuestra expertise</span>
+      <h1 class="cm-pillar-hero__title" id="cm-pillar-heading">Marketing Digital</h1>
+      <!-- Optional: only the AI Marketing Solutions pillar has a
+           <p class="cm-pillar-hero__intro"> here, and only that page's
+           <h1> carries a trailing <span class="cm-pillar-hero__badge">Nuevo</span>. -->
+    </div>
+  </div>
+
+  <div class="cm-pillar-rows">
+    <ol class="cm-pillar-rows__list">
+      <li class="cm-pillar-row" data-cm-pillar-row tabindex="0">
+        <div class="cm-pillar-row__inner">
+          <div class="cm-pillar-row__title-col">
+            <span class="cm-pillar-row__index">01</span>
+            <h2 class="cm-pillar-row__name">Gestión de Redes Sociales</h2>
+          </div>
+          <div class="cm-pillar-row__content-col">
+            <p class="cm-pillar-row__description">
+              Planificamos, creamos y gestionamos contenidos de forma estratégica para fortalecer
+              tu presencia digital, conectar con tu audiencia y construir comunidades activas en
+              Facebook, Instagram, LinkedIn, TikTok y YouTube. Desarrollamos calendarios
+              editoriales, definimos el tono y la voz de marca, producimos contenido nativo para
+              cada plataforma —incluyendo formatos verticales y tendencias de TikTok— y analizamos
+              métricas para optimizar el rendimiento de cada canal.
+            </p>
+            <!-- Optional: some rows (e.g. Relaciones Públicas row 1) also
+                 carry a <div class="cm-pillar-row__extra"> sub-block here
+                 with a support label + "Publifix Suite" link. -->
+          </div>
+        </div>
+      </li>
+      <!-- ...one <li class="cm-pillar-row"> per subservice, same shape,
+           index 02, 03... -->
+    </ol>
+  </div>
+
+  <!-- Optional: pillar-level closing block (AI Marketing Solutions only)
+       sits here, between the row list and the CTA:
+  <div class="cm-pillar-extra">
+    <div class="cm-pillar-extra__inner">
+      <p class="cm-pillar-extra__label">Conoce nuestra plataforma aliada:</p>
+      <a class="cm-pillar-extra__link" href="https://publifix.net" target="_blank" rel="noopener noreferrer">Publifix Suite</a>
+    </div>
+  </div>
+  -->
+
+  <div class="cm-pillar-cta">
+    <div class="cm-pillar-cta__inner">
+      <h2 class="cm-pillar-cta__title">¿Listo para que logremos juntos tus objetivos?</h2>
+      <div class="cm-pillar-cta__actions">
+        <a class="cm-pillar-cta__button cm-pillar-cta__button--primary" href="index.html#contacto">Contáctanos</a>
+        <a class="cm-pillar-cta__button cm-pillar-cta__button--secondary" href="index.html#servicios"
+          >Ver todos los servicios</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
