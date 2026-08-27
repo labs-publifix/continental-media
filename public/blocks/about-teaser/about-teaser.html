@@ -1,22 +1,23 @@
 <!--
   CONTINENTAL MEDIA — ABOUT ("NOSOTROS") TEASER BLOCK (canonical source)
   THESIS: a fully remote agency has no office to photograph, so the proof
-    of "team" is the team's own faces — a mosaic of real portraits,
-    unified in black-and-white so disparate photo shoots read as one
-    coherent series, with each portrait's real color (and the brand's
-    presence) reserved as a hover payoff rather than a permanent wash.
+    of "team" is the team's own faces — a clean 3x3 wall of portraits,
+    uniformly framed and full color, that reads as one confident, unified
+    group rather than a scrapbook of mismatched headshots.
   OWN-WORLD: inherits the site's established world — same near-black
     ground, same restrained blue accent, same Space Grotesk display /
     Inter body pairing as hero and the clients marquee.
-  FORM: precisely brief-pinned (exact copy, 50/50 split, specific photo
-    order, specific treatment options offered) — a local extension of
-    the established world per new-work.md, not a new concept exercise.
-  ACCESSIBILITY: every photo's identity lives in its <img alt>, not only
-    in the hover caption — the caption is a desktop/mouse enhancement
-    (hover:hover and pointer:fine), never the only way to learn who
-    someone is. Entrance reveals default to the final visible state and
-    are only animated where JS runs and motion is not reduced; a
-    <noscript> rule forces the visible state if JS never executes at all.
+  FORM: precisely brief-pinned (exact copy, 50/50 split, fixed photo
+    order, no name/role text on the photos) — a local extension of the
+    established world per new-work.md, not a new concept exercise.
+  ACCESSIBILITY: no name/role is shown on any photo (by design — this is
+    a portrait wall, not a directory), so each photo's <img alt> is the
+    only identity information and is written accordingly. The hover
+    effect is a pure visual embellishment (focus + depth), never the
+    carrier of information, so it needs no touch equivalent. Entrance
+    reveals default to the final visible state and are only animated
+    where JS runs and motion is not reduced; a <noscript> rule forces the
+    visible state if JS never executes at all.
 
   USAGE — canonical source for this block. To use it on a page:
     1. Link assets/css/tokens.css, then blocks/about-teaser/about-teaser.css.
@@ -64,148 +65,107 @@
     </div>
 
     <ul class="cm-about__grid" data-cm-about-grid aria-label="Equipo de Continental Media">
-      <!-- 1–2: real leadership, must lead the grid -->
+      <!-- 1–2: real leadership, must lead the grid. All 9 photos are
+           cropped to the same square framing/zoom so the wall reads as
+           one consistent set (see the image-processing note in
+           about-teaser.css). -->
       <li class="cm-about__photo" data-cm-about-photo>
         <img
           src="assets/images/team/rafael-aguirre.jpg"
-          alt="Rafa, Director General"
-          width="508"
-          height="430"
+          alt="Rafael Aguirre, Director General de Continental Media"
+          width="720"
+          height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Rafa</span>
-          <span class="cm-about__caption-role">Director General</span>
-        </span>
       </li>
       <li class="cm-about__photo" data-cm-about-photo>
         <img
           src="assets/images/team/pepe-bermudez.jpg"
-          alt="Pepe, Director Querétaro"
-          width="513"
-          height="462"
+          alt="Pepe Bermúdez, Director Querétaro de Continental Media"
+          width="720"
+          height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Pepe</span>
-          <span class="cm-about__caption-role">Director Querétaro</span>
-        </span>
       </li>
 
       <!--
-        PLACEHOLDER — items 3–7 (agent-1.jpg … agent-5.jpg) are stock
-        photos standing in for the rest of the team, with fictitious
-        names and agency-typical roles. None of these five people are
-        real Continental Media staff; swap for real photos/names/roles
-        as they become available.
+        PLACEHOLDER — items 3–9 (avatar-1.jpg … avatar-7.jpg) are
+        illustrative stock avatars standing in for the rest of the team,
+        not photos of real Continental Media staff. Swap for real team
+        photos as they become available; keep the square crop/framing
+        consistent with items 1–2 when doing so.
       -->
       <li class="cm-about__photo" data-cm-about-photo>
         <img
-          src="assets/images/team/agent-1.jpg"
-          alt="Fernanda, Directora de Cuentas (placeholder)"
+          src="assets/images/team/avatar-1.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
           width="720"
           height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Fernanda</span>
-          <span class="cm-about__caption-role">Directora de Cuentas</span>
-        </span>
       </li>
       <li class="cm-about__photo" data-cm-about-photo>
         <img
-          src="assets/images/team/agent-2.jpg"
-          alt="Camila, Estratega Digital (placeholder)"
+          src="assets/images/team/avatar-2.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
           width="720"
           height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Camila</span>
-          <span class="cm-about__caption-role">Estratega Digital</span>
-        </span>
       </li>
       <li class="cm-about__photo" data-cm-about-photo>
         <img
-          src="assets/images/team/agent-3.jpg"
-          alt="Diego, Diseñador Creativo (placeholder)"
+          src="assets/images/team/avatar-3.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
           width="720"
           height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Diego</span>
-          <span class="cm-about__caption-role">Diseñador Creativo</span>
-        </span>
       </li>
       <li class="cm-about__photo" data-cm-about-photo>
         <img
-          src="assets/images/team/agent-4.jpg"
-          alt="Valeria, Community Manager (placeholder)"
+          src="assets/images/team/avatar-4.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
           width="720"
           height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Valeria</span>
-          <span class="cm-about__caption-role">Community Manager</span>
-        </span>
       </li>
       <li class="cm-about__photo" data-cm-about-photo>
         <img
-          src="assets/images/team/agent-5.jpg"
-          alt="Mauricio, Especialista en Medios (placeholder)"
+          src="assets/images/team/avatar-5.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
           width="720"
           height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Mauricio</span>
-          <span class="cm-about__caption-role">Especialista en Medios</span>
-        </span>
-      </li>
-
-      <!--
-        TEMPORARY PREVIEW DUPLICATES — items 8–9 repeat agent-1.jpg and
-        agent-2.jpg (already used at items 3–4 above) purely to fill out a
-        complete 3x3 grid while the team only has 7 real/placeholder photos.
-        Remove these two <li> once a real 8th and 9th team member exist —
-        do not treat them as additional distinct people.
-      -->
-      <li class="cm-about__photo" data-cm-about-photo>
-        <img
-          src="assets/images/team/agent-1.jpg"
-          alt="Fernanda, Directora de Cuentas (placeholder, imagen duplicada temporalmente para completar la cuadrícula)"
-          width="720"
-          height="720"
-          loading="lazy"
-          decoding="async"
-        />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Fernanda</span>
-          <span class="cm-about__caption-role">Directora de Cuentas</span>
-        </span>
       </li>
       <li class="cm-about__photo" data-cm-about-photo>
         <img
-          src="assets/images/team/agent-2.jpg"
-          alt="Camila, Estratega Digital (placeholder, imagen duplicada temporalmente para completar la cuadrícula)"
+          src="assets/images/team/avatar-6.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
           width="720"
           height="720"
           loading="lazy"
           decoding="async"
         />
-        <span class="cm-about__caption" aria-hidden="true">
-          <span class="cm-about__caption-name">Camila</span>
-          <span class="cm-about__caption-role">Estratega Digital</span>
-        </span>
+      </li>
+      <li class="cm-about__photo" data-cm-about-photo>
+        <img
+          src="assets/images/team/avatar-7.jpg"
+          alt="Fotografía ilustrativa de un integrante del equipo de Continental Media (marcador de posición)"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
       </li>
     </ul>
   </div>

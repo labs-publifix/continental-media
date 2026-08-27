@@ -133,13 +133,23 @@
   gap: clamp(0.75rem, 1.6vw, 1.25rem);
 }
 
+/* All 9 source photos are pre-processed (see the pipeline note in
+   about-teaser.html's PLACEHOLDER comment) to the same square crop and
+   face zoom before export, so a plain 1:1 tile + object-fit:cover is
+   enough to keep the wall visually uniform — no per-card cropping logic
+   needed here. */
 .cm-about__photo {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: var(--cm-radius-sm);
   background: var(--cm-black);
   isolation: isolate;
+  transition:
+    transform var(--cm-duration-base) var(--cm-ease-out),
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    filter var(--cm-duration-base) var(--cm-ease-out),
+    box-shadow var(--cm-duration-base) var(--cm-ease-out);
 }
 
 .cm-about__photo img {
@@ -147,72 +157,34 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Grayscale at rest, fades to the real color photo on hover (see the
-     hover:hover media query below) — the color reveal itself is the
-     brand-blue accent's moment on this card, not a permanent tint. */
-  filter: grayscale(1) contrast(1.08) brightness(0.92);
-  transition: filter var(--cm-duration-base) var(--cm-ease-out);
+  transition: transform var(--cm-duration-slow) var(--cm-ease-out);
 }
 
-.cm-about__caption {
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15em;
-  padding: 1rem 0.9rem 0.85rem;
-  background: linear-gradient(to top, rgba(4, 5, 8, 0.92) 0%, rgba(4, 5, 8, 0.55) 60%, transparent 100%);
-  transform: translateY(100%);
-  opacity: 0;
-  transition:
-    transform var(--cm-duration-fast) var(--cm-ease-out),
-    opacity var(--cm-duration-fast) var(--cm-ease-out);
-}
-
-.cm-about__caption-name {
-  font-family: var(--cm-font-body);
-  font-weight: 600;
-  /* Reuses the site's existing 15px small-UI size (see nav links, CTAs)
-     rather than a new in-between size. */
-  font-size: 0.9375rem;
-  color: var(--cm-color-fg);
-  line-height: 1.3;
-}
-
-.cm-about__caption-role {
-  font-family: var(--cm-font-body);
-  font-weight: 400;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.3;
-}
-
-/* Hover reveal (both the full-color photo and the caption), desktop/mouse
-   only — gated so touch devices never get a stuck or fake-hover state. */
+/* "Spotlight" hover, desktop/mouse only: the whole wall dims and desaturates
+   slightly the moment the pointer enters the grid, and the one card under
+   the cursor lifts back to full color/scale with a brand-blue focus ring —
+   a group interaction (not a single-card tooltip) that reads as "this is a
+   real team, look closer" without needing any name/role text. Gated so
+   touch devices — which have no cursor to spotlight around — just see the
+   plain, fully-lit grid instead of a stuck hover state. */
 @media (hover: hover) and (pointer: fine) {
+  .cm-about__grid:hover .cm-about__photo:not(:hover) {
+    opacity: 0.55;
+    filter: saturate(0.55);
+    transform: scale(0.97);
+  }
+
+  .cm-about__photo:hover {
+    transform: scale(1.045);
+    box-shadow:
+      0 0 0 2px var(--cm-color-accent),
+      0 24px 44px -16px rgba(0, 0, 0, 0.6);
+    z-index: 2;
+  }
+
   .cm-about__photo:hover img {
-    filter: none;
+    transform: scale(1.08);
   }
-
-  .cm-about__photo:hover .cm-about__caption {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Touch equivalent of the hover reveal above: about-teaser.js toggles
-   .is-active on tap for devices with no real hover (touch), so a finger
-   gets the same full-color-photo + caption payoff a cursor gets for free.
-   The name/role is still carried by the <img alt> regardless — this is a
-   parity enhancement, not the only way to learn who someone is. */
-.cm-about__photo.is-active img {
-  filter: none;
-}
-
-.cm-about__photo.is-active .cm-about__caption {
-  transform: translateY(0);
-  opacity: 1;
 }
 
 /* ---------- Scroll-triggered entrance ---------- */
@@ -285,12 +257,12 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Mobile keeps a clean 4x2 grid (8 photos) rather than all 9: drop the
-     last item (one of the two temporary preview duplicates from the
-     desktop 3x3 — see the HTML comment above it) so nothing is orphaned
-     into a lopsided last row. */
+  /* Two-column grid, 9 photos: the last one is the odd one out — center
+     it under the pairs above it instead of leaving it pinned left. */
   .cm-about__photo:nth-child(9) {
-    display: none;
+    grid-column: 1 / -1;
+    max-width: calc(50% - clamp(0.5rem, 3vw, 0.75rem) / 2);
+    margin-inline: auto;
   }
 
   .cm-about__title {
