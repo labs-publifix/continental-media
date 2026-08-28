@@ -292,7 +292,18 @@ function renderMediaBox(sub, media, alt, extraClasses) {
     .filter(Boolean)
     .join(' ');
   const chromeBar = sub.mediaScreenshot ? renderChromeBar() : '';
-  return `<div class="cm-case-solution__media${modifiers ? ' ' + modifiers : ''}">${chromeBar}
+  // A screenshot's own content (buttons, copy, nav bars right at its
+  // edges) breaks if object-fit:cover has to crop it to fit a generic
+  // 4:3/16:10 box — unlike a photo, where a deliberate crop is part of
+  // the look. So a screenshot box sizes itself to that image's own real
+  // aspect-ratio (we already know it from media.width/height) instead
+  // of sharing a fixed ratio with every other slot; cover then has
+  // nothing left to crop.
+  const style =
+    sub.mediaScreenshot && media && media.width && media.height
+      ? ` style="aspect-ratio: ${media.width} / ${media.height};"`
+      : '';
+  return `<div class="cm-case-solution__media${modifiers ? ' ' + modifiers : ''}"${style}>${chromeBar}
             ${renderMedia(media, sub.mediaLabel || 'Imagen', alt)}
           </div>`;
 }
