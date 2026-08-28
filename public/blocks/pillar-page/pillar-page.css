@@ -219,23 +219,21 @@
   transition: color 280ms var(--cm-ease-out);
 }
 
-/* Desktop-only "reel settle" micro-motion: a quick, small vertical dip
-   and bounce-back on hover start — reads like a slot-machine reel
-   landing on the title, never a continuous spin/loop. One-shot per
-   hover-in, gated with the color change below so it never runs on
-   touch (where .is-active drives the row highlight instead — see the
-   block's own header comment). */
-@keyframes cm-pillar-reel-settle {
+/* Desktop-only title reveal: a top-to-bottom wipe (clip-path's bottom
+   inset shrinking from 100% to 0 uncovers the text starting at its own
+   top edge and growing down) paired with a small downward drift — the
+   title reads as freshly appearing, top-first, never a bounce/overshoot.
+   One-shot per hover-in, scoped to the title only (not the description),
+   gated with the color change below so it never runs on touch (where
+   .is-active drives the row highlight instead — see the block's own
+   header comment). */
+@keyframes cm-pillar-title-reveal {
   0% {
-    transform: translateY(0);
-  }
-  35% {
-    transform: translateY(-4px);
-  }
-  65% {
-    transform: translateY(1px);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
   }
   100% {
+    clip-path: inset(0 0 0% 0);
     transform: translateY(0);
   }
 }
@@ -244,7 +242,7 @@
   .cm-pillar-row:hover .cm-pillar-row__name,
   .cm-pillar-row:focus-visible .cm-pillar-row__name {
     color: var(--cm-color-on-accent);
-    animation: cm-pillar-reel-settle 420ms var(--cm-ease-out);
+    animation: cm-pillar-title-reveal 380ms var(--cm-ease-out);
   }
 }
 

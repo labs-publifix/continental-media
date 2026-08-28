@@ -55,10 +55,12 @@
     hover/focus on tap could leave more than one row lit at once (the
     JS-driven .is-active handles touch instead, and always clears every
     other row first, guaranteeing exactly one). Desktop also gets a
-    small extra: the row title plays a one-shot "reel settle" (a quick
-    ~4px vertical dip and bounce-back, @keyframes
-    cm-pillar-reel-settle) on hover-in — reads as a slot-machine reel
-    landing, never a continuous spin; prefers-reduced-motion disables it.
+    small extra, title only (not the description): a one-shot top-to-
+    bottom reveal on hover-in (@keyframes cm-pillar-title-reveal —
+    clip-path's bottom inset shrinks from 100% to 0, uncovering the text
+    from its own top edge downward, plus a small ~6px downward drift);
+    never a bounce/overshoot, never a loop; prefers-reduced-motion
+    disables it.
 
   USAGE — canonical source for this block. To ship a new pillar or edit
   an existing one:
