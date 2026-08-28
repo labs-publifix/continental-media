@@ -1,0 +1,278 @@
+<!--
+  CONTINENTAL MEDIA — CASE STUDY PAGE BLOCK (canonical source)
+  THESIS: editorial storytelling, not a corporate report — a full-impact
+    hero drops into one continuous scroll-revealed narrative (Resumen ->
+    Contexto -> Reto -> Enfoque -> Solución -> Resultado -> cierre), each
+    block entering as its own beat rather than the page just being "laid
+    out." The Reto block breaks into a full-bleed accent-color section
+    (the dramatic turn), and the Resultado block's headline fact gets the
+    single largest type on the page (the climax) — the two moments a
+    reader should feel, not just read.
+  OWN-WORLD: same near-black ground, same restrained blue accent, same
+    Space Grotesk display / Inter body pairing, same reveal-on-scroll and
+    hero-parallax techniques (literally reused from public/blocks/hero/)
+    as every other block on the site — a new page family, not a new
+    visual language. The Reto section's color-bleed transition
+    (case-study.css's .cm-case-challenge__fade) and the closing
+    "next project" card (reusing projects-teaser's solid-color-block
+    palette) are the only genuinely new mechanics here, and both are
+    built from tokens/values already established elsewhere.
+  FORM: THIS BLOCK IS DATA-DRIVEN, NOT HAND-DUPLICATED PER PAGE, per the
+    brief's explicit requirement that this first case (The Grand Lounge
+    Elite) double as the reusable template for the next 5. Every real
+    case-study page (public/proyectos/<slug>/index.html) is generated
+    from this one template by scripts/generate-case-study-pages.mjs,
+    which reads each case's exact copy from scripts/case-study-data.mjs
+    (client/industry/disciplines/duration, hero, summary, context,
+    challenge, approach items, solution subsections with their media,
+    result, next-project) and renders it through a single template
+    function — one rendering code path for every case, not N hand-built
+    pages. Add a new case's object to case-study-data.mjs and re-run the
+    generator; nothing here or in the generator itself needs to change
+    for ordinary content. The markup below is illustrative only (an
+    excerpt of Grand Lounge Elite's real, generated content) — it
+    documents the shape every generated page shares; it is not itself
+    linked from any page.
+
+  PLACEHOLDER ASSET INVENTORY (Grand Lounge Elite) — every image/video on
+  this page is a placeholder box today (dashed border, icon, bracketed
+  label + the real alt text already written for when it's replaced — see
+  ACCESSIBILITY below). 7 total: 6 images + 1 video.
+    1. Hero background image — full-bleed, 100vh/100svh (not an
+       aspect-ratio box; fills the viewport height at every width).
+       Alt: "The Grand Lounge Elite, sala VIP o momento icónico del
+       proyecto."
+    2. Contexto image — full-bleed, aspect-ratio 21/9 desktop, 4/3 mobile.
+       Alt: "Fachada o interior de una sala VIP The Grand Lounge Elite."
+    3. Identidad visual image — aspect-ratio 4/3, half-width in its
+       alternating row (desktop/tablet), full-width stacked on mobile.
+       Alt: "Manual de marca / sistema de identidad visual de The Grand
+       Lounge Elite."
+    4. Contenido y relaciones públicas image — aspect-ratio 4/3, same
+       layout as #3. Alt: "Ejemplo de contenido en redes sociales o
+       mención en medios de The Grand Lounge Elite."
+    5. Evento Lounge of the Year 2025 image/gallery — aspect-ratio 4/3,
+       same layout as #3. Alt: "Imagen o galería del evento Lounge of
+       the Year 2025 by Priority Pass."
+    6. Plataforma web mockup image — aspect-ratio 16/10 (device-mockup
+       proportions), same alternating layout as #3-5. Alt: "Mockup del
+       sitio web con módulo de reservaciones de The Grand Lounge Elite."
+    7. Producción audiovisual VIDEO — aspect-ratio 16/9, full-width
+       below its subsection's row (bigger/more prominent than the other
+       6 image placeholders, per the brief). Alt: "Reel de producción
+       audiovisual The Grand Lounge Elite." Ships with visible playback
+       controls and no autoplay once the real video replaces this box.
+  Re-run this inventory (or write a fresh one) for each subsequent case
+  study — the count and aspect ratios repeat exactly since they come
+  from the same template, but the alt text is different content each
+  time.
+
+  ACCESSIBILITY: each placeholder is a single element with role="img"
+    and an aria-label set to the REAL descriptive alt text (never the
+    bracketed developer-facing label) — that's the text meant to become
+    a real <img alt="..."> the moment the asset is swapped in, so
+    replacing content later never means rewriting accessibility copy.
+    The decorative icon inside is aria-hidden; role="img" already makes
+    the whole box read as one leaf to assistive tech, so the visible
+    "[PLACEHOLDER: ...]" text isn't announced twice. Every block's
+    reveal-on-scroll (hero, then each narrative block, the Enfoque list
+    staggered, each Solución media fading/scaling in) defaults to the
+    final visible state; a <noscript> rule and prefers-reduced-motion
+    both force it independently of JS — reduced motion also disables the
+    hero/context parallax entirely (see case-study.js). Every block
+    reachable by scroll is also reachable by keyboard: the hero's CTA,
+    each Solución/next-project link, and the closing "Contáctanos"
+    button all carry the site's standard 2px focus-visible outline (the
+    next-project card reads its outline color from that card's own
+    --cm-next-fg, the same "never a flat white on a light block" fix
+    already applied to the projects-teaser cards it reuses colors from).
+
+  USAGE — canonical source for this block. To ship a new case study or
+  edit an existing one:
+    1. Add or edit an entry in scripts/case-study-data.mjs (content)
+       and/or this block's CSS/JS (shared behavior/visuals) — never
+       hand-edit a generated page.
+    2. Run `node scripts/generate-case-study-pages.mjs` from the repo
+       root; it (re)writes public/proyectos/<slug>/index.html for every
+       entry in the data file.
+    3. Each generated page links assets/css/tokens.css, then
+       blocks/case-study/case-study.css (relative depth adjusted for its
+       nesting), copies the site-header block first inside <body> (see
+       blocks/site-header/ — NOT the --solid modifier here, since this
+       page's own hero should show through a transparent bar at the top,
+       same as the home hero), then this block's markup inside
+       <main id="main-content">, then loads
+       blocks/case-study/case-study.js as a module.
+  Asset paths in generated pages are relative to that page's own nesting
+  depth (public/proyectos/<slug>/index.html is two directories below
+  public/), never root-absolute — this project can deploy under a GitHub
+  Pages project subpath, where a leading "/" would silently 404.
+-->
+<article class="cm-case" data-cm-case aria-labelledby="cm-case-heading">
+  <noscript>
+    <style>
+      [data-cm-case] [data-cm-reveal],
+      [data-cm-case] [data-cm-case-reveal],
+      [data-cm-case] .cm-case-approach__item,
+      [data-cm-case] .cm-case-solution__media,
+      [data-cm-case] .cm-case-solution__video,
+      [data-cm-case] .cm-case-result__highlight {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <!-- BLOQUE 0 — hero -->
+  <section class="cm-case-hero" data-cm-case-hero>
+    <div class="cm-case-hero__media" data-cm-case-hero-media>
+      <div class="cm-case__placeholder" role="img" aria-label="The Grand Lounge Elite, sala VIP o momento icónico del proyecto">
+        <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <path d="M21 15l-5-5L5 21" />
+        </svg>
+        <span class="cm-case__placeholder-label"
+          >[PLACEHOLDER: Imagen hero — The Grand Lounge Elite, sala VIP o momento icónico del
+          proyecto]</span
+        >
+      </div>
+    </div>
+    <div class="cm-case-hero__overlay" aria-hidden="true"></div>
+
+    <div class="cm-case-hero__stage">
+      <div class="cm-case-hero__content">
+        <span class="cm-case-hero__label" data-cm-reveal>Caso de estudio</span>
+        <h1 class="cm-case-hero__title" id="cm-case-heading" data-cm-reveal>
+          Consolidar la red de salas VIP más importante en aeropuertos de México.
+        </h1>
+        <p class="cm-case-hero__meta" data-cm-reveal>
+          The Grand Lounge Elite · 2024–2026 · Branding, Redes Sociales, Relaciones Públicas,
+          Producción Audiovisual, Desarrollo Web
+        </p>
+        <dl class="cm-case-hero__facts" data-cm-reveal>
+          <div class="cm-case-hero__fact"><dt>Cliente</dt><dd>The Grand Lounge Elite</dd></div>
+          <div class="cm-case-hero__fact"><dt>Industria</dt><dd>Hospitalidad</dd></div>
+          <div class="cm-case-hero__fact">
+            <dt>Disciplinas</dt>
+            <dd>Branding, Redes Sociales, Relaciones Públicas, Producción Audiovisual, Desarrollo Web</dd>
+          </div>
+          <div class="cm-case-hero__fact"><dt>Duración</dt><dd>2024–2026 (proyecto activo)</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOQUE 01 — resumen -->
+  <section class="cm-case-summary" data-cm-case-reveal>
+    <div class="cm-case-summary__inner">
+      <p class="cm-case-summary__text">The Grand Lounge Elite opera 5 salas VIP premium…</p>
+    </div>
+  </section>
+
+  <!-- BLOQUE 02 — contexto (full-bleed image + narrow text, image has scroll parallax) -->
+  <section class="cm-case-context">
+    <div class="cm-case-context__media" data-cm-case-context-media>
+      <div class="cm-case-context__media-inner" data-cm-case-context-inner>
+        <!-- placeholder, same component as the hero's -->
+      </div>
+    </div>
+    <div class="cm-case-context__text" data-cm-case-reveal>
+      <span class="cm-case__eyebrow">Contexto</span>
+      <p class="cm-case-context__body">The Grand Lounge Elite es la red de salas VIP…</p>
+    </div>
+  </section>
+
+  <!-- BLOQUE 03 — reto (full-bleed accent color, soft gradient bleed at both edges) -->
+  <section class="cm-case-challenge" data-cm-case-reveal>
+    <div class="cm-case-challenge__fade cm-case-challenge__fade--top" aria-hidden="true"></div>
+    <div class="cm-case-challenge__inner">
+      <span class="cm-case__eyebrow cm-case__eyebrow--on-accent">Reto</span>
+      <p class="cm-case-challenge__text">El reto era igualar, en cada punto de contacto…</p>
+    </div>
+    <div class="cm-case-challenge__fade cm-case-challenge__fade--bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- BLOQUE 04 — enfoque (numbered list, one observer on the <ol>, children cascade via nth-child) -->
+  <section class="cm-case-approach">
+    <div class="cm-case-approach__inner">
+      <div class="cm-case-approach__intro" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">Enfoque</span>
+        <h2 class="cm-case-approach__title">Cuatro decisiones clave</h2>
+      </div>
+      <ol class="cm-case-approach__list" data-cm-case-approach-list>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">01</span>
+          <p class="cm-case-approach__text">Profesionalizar el manejo de redes sociales…</p>
+        </li>
+        <!-- ...02, 03, 04, same shape -->
+      </ol>
+    </div>
+  </section>
+
+  <!-- BLOQUE 05 — solución y proceso (4 subsections, alternating media/text sides; the 4th also
+       carries a full-width video block below its row, per the brief's "más grande/prominente") -->
+  <section class="cm-case-solution">
+    <div class="cm-case-solution__intro" data-cm-case-reveal>
+      <span class="cm-case__eyebrow">Solución y proceso</span>
+    </div>
+
+    <div class="cm-case-solution__section" data-cm-case-reveal>
+      <div class="cm-case-solution__row">
+        <div class="cm-case-solution__media"><!-- placeholder --></div>
+        <div class="cm-case-solution__text">
+          <h3>Identidad visual</h3>
+          <p>Rediseñamos la identidad visual de The Grand Lounge Elite desde cero…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2nd subsection: same shape, .cm-case-solution__row--reverse (media/text sides swapped) -->
+    <!-- 3rd subsection: back to the un-reversed side -->
+
+    <div class="cm-case-solution__section" data-cm-case-reveal>
+      <div class="cm-case-solution__row cm-case-solution__row--reverse">
+        <div class="cm-case-solution__media cm-case-solution__media--wide"><!-- mockup placeholder --></div>
+        <div class="cm-case-solution__text">
+          <h3>Plataforma web y producción audiovisual</h3>
+          <p>Desarrollamos también su sitio web…</p>
+        </div>
+      </div>
+      <div class="cm-case-solution__video-wrap">
+        <div class="cm-case-solution__video"><!-- video placeholder, larger than the image ones --></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOQUE 06 — resultado (paragraph, then the case's strongest fact isolated as the climax) -->
+  <section class="cm-case-result" data-cm-case-reveal>
+    <div class="cm-case-result__inner">
+      <span class="cm-case__eyebrow">Resultado</span>
+      <p class="cm-case-result__text">Con este trabajo, The Grand Lounge Elite consolidó…</p>
+      <p class="cm-case-result__highlight">Lounge of the Year 2025</p>
+      <p class="cm-case-result__attribution">Reconocimiento otorgado por Priority Pass</p>
+    </div>
+  </section>
+
+  <!-- BLOQUE FINAL — CTA + next project (never a dead end) -->
+  <section class="cm-case-close">
+    <div class="cm-case-close__cta" data-cm-case-reveal>
+      <h2 class="cm-case-close__cta-title">¿Quieres resultados como estos para tu marca?</h2>
+      <a class="cm-case-close__button" href="../../index.html#contacto">Contáctanos</a>
+    </div>
+
+    <a
+      class="cm-case-next"
+      href="../parroquia-veracruz/"
+      style="--cm-next-bg: #1b1d22; --cm-next-fg: #edebe4"
+      aria-label="Siguiente proyecto: La Parroquia de Veracruz — Patrimonio (Próximamente)"
+    >
+      <div class="cm-case-next__top">
+        <span class="cm-case-next__label">Siguiente proyecto</span>
+        <span class="cm-case-next__badge">Próximamente</span>
+      </div>
+      <span class="cm-case-next__category">Patrimonio</span>
+      <span class="cm-case-next__name">La Parroquia de Veracruz</span>
+    </a>
+  </section>
+</article>

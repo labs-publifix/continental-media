@@ -173,6 +173,87 @@
         ],
         "createdAt": "2026-08-27T16:11:51.044Z",
         "reason": "user's brief explicitly specified this exact structure by name for this page family: 'Hero corto de pilar: eyebrow NUESTRA EXPERTISE o similar, y el título grande con el nombre del pilar.' It is also the site's own pre-existing house convention, already shipped identically on every other block (services-teaser's 'Servicios' eyebrow, about-teaser's 'Nosotros' eyebrow, dna's numbered eyebrow) well before this task — not a new AI-SaaS-default reached for without deciding. hero-eyebrow-chip isn't in impeccable-config.mjs's directValueRules allowlist, so wildcard is the only self-serve form."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:21.083Z",
+        "reason": "Inter/Space Grotesk are the site-wide established typography system (tokens.css), used consistently across every page since project init — not a per-page choice to swap."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:21.137Z",
+        "reason": "Same site-wide type system as above (display face)."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "scripts/generate-case-study-pages.mjs"
+        ],
+        "createdAt": "2026-08-28T04:56:21.193Z",
+        "reason": "Inherits the site-wide Inter/Space Grotesk type system; not a per-file font choice."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "scripts/generate-pillar-pages.mjs"
+        ],
+        "createdAt": "2026-08-28T04:56:21.252Z",
+        "reason": "Inherits the site-wide Inter/Space Grotesk type system; not a per-file font choice."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:42.117Z",
+        "reason": "user's brief explicitly specified a small 'CASO DE ESTUDIO' label above the hero headline, and this eyebrow+headline shape is the site's own pre-existing house convention (home hero, pillar-page hero, already suppressed identically for public/servicios/*/index.html) — not an accidental generic AI default reached for without deciding."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:42.179Z",
+        "reason": "Verified false positive, same root cause as prior cramped-padding suppressions: .cm-case-solution__row and .cm-case-close both carry border-top plus their own padding-block of 48-88px (clamp-based, which the detector's resolveLengthPx() can't parse) before any text — content is not flush against the divider line. Confirmed by direct CSS read (case-study.css .cm-case-solution__row ~line 521, .cm-case-close__cta ~line 693)."
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:42.237Z",
+        "reason": "Verified false positive: .cm-case-context__media is an intentional full-bleed image crop container (overflow:hidden) wrapping a JS-driven parallax layer (inset:-10% bleed margin), not a tooltip/menu/popover that needs to escape its bounds."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:42.297Z",
+        "reason": "Verified false positive, same root cause as prior flat-type-hierarchy suppressions: the detector's static analyzer doesn't resolve clamp()+vw font-size expressions, so this page's fluid hero title (36-76px) and result highlight (36-80px) drop out of its scanned set, leaving only the small fixed label/meta tier (11-16px) to ratio against each other."
+      },
+      {
+        "rule": "em-dash-overuse",
+        "value": "*",
+        "files": [
+          "public/proyectos/grand-lounge-elite/index.html"
+        ],
+        "createdAt": "2026-08-28T04:56:42.353Z",
+        "reason": "Verified false positive: actual body prose (scripts/case-study-data.mjs) uses exactly 2 legitimate parenthetical em-dash pairs (4 characters total); the tool's count of 12 is inflated by HTML comments, generator doc-comments, and bracketed [PLACEHOLDER: ...] label text, none of which is body copy."
       }
     ]
   }

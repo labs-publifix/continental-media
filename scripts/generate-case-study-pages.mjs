@@ -1,0 +1,358 @@
+#!/usr/bin/env node
+/**
+ * Continental Media — case-study page generator.
+ *
+ * Reads scripts/case-study-data.mjs (the single content source for
+ * every project case study) and renders each entry through ONE template
+ * function into a real static HTML file at
+ * public/proyectos/<slug>/index.html — see
+ * public/blocks/case-study/case-study.html's header comment for the
+ * full rationale (one reusable template + data, not N hand-duplicated
+ * pages, mirroring the exact pattern already established for the 5
+ * /servicios pillar pages and scripts/generate-pillar-pages.mjs).
+ *
+ * Usage:  node scripts/generate-case-study-pages.mjs
+ *
+ * Only case studies actually present in case-study-data.mjs get a page
+ * — today that's just "grand-lounge-elite". Add the next project's
+ * object to that file and re-run this script to generate its page; no
+ * changes needed here.
+ *
+ * Output pages are two directories below public/ (public/proyectos/
+ * <slug>/index.html), so every asset/page reference in the template
+ * uses the REL ('../../') prefix rather than a root-absolute path —
+ * this project can deploy under a GitHub Pages project subpath, where a
+ * leading "/" would silently 404 (see page-hero.html's own note on the
+ * same constraint). A sibling case-study page (the "next project" card)
+ * is one directory up instead — '../<slug>/' — since both live at the
+ * same depth under public/proyectos/.
+ */
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { CASE_STUDIES } from './case-study-data.mjs';
+import { renderSiteHeader } from './lib/site-header-template.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = path.resolve(__dirname, '..');
+const REL = '../../';
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+const IMAGE_ICON = `<svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>`;
+
+const VIDEO_ICON = `<svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="9.25" />
+              <path d="M10 8.5l6 3.5-6 3.5v-7Z" />
+            </svg>`;
+
+function renderPlaceholder(label, altText, extraClass) {
+  const bracketText = `[PLACEHOLDER: ${label} — ${altText}]`;
+  return `<div class="cm-case__placeholder${extraClass ? ' ' + extraClass : ''}" role="img" aria-label="${escapeHtml(altText)}">
+            ${IMAGE_ICON}
+            <span class="cm-case__placeholder-label">${escapeHtml(bracketText)}</span>
+          </div>`;
+}
+
+function renderVideoPlaceholder(altText) {
+  const bracketText = `[PLACEHOLDER: Video — ${altText}, con controles de reproducción visibles, no autoplay]`;
+  return `<div class="cm-case__placeholder" role="img" aria-label="${escapeHtml(altText)}">
+              ${VIDEO_ICON}
+              <span class="cm-case__placeholder-label">${escapeHtml(bracketText)}</span>
+            </div>`;
+}
+
+function renderHead(caseStudy) {
+  return `<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(caseStudy.metaTitle)}</title>
+  <meta name="description" content="${escapeHtml(caseStudy.metaDescription)}" />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="${REL}assets/css/tokens.css" />
+  <link rel="stylesheet" href="${REL}blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="${REL}blocks/case-study/case-study.css" />
+
+  <style>
+    /* Minimal page shell — not a design system, just enough to view
+       these blocks in context. Same reset every page on the site uses. */
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>`;
+}
+
+function renderHero(caseStudy) {
+  const metaLine = `${caseStudy.client} · ${caseStudy.durationRange} · ${caseStudy.disciplines.join(', ')}`;
+  return `    <section class="cm-case-hero" data-cm-case-hero>
+      <div class="cm-case-hero__media" data-cm-case-hero-media>
+        ${renderPlaceholder('Imagen hero', caseStudy.hero.mediaAlt)}
+      </div>
+      <div class="cm-case-hero__overlay" aria-hidden="true"></div>
+
+      <div class="cm-case-hero__stage">
+        <div class="cm-case-hero__content">
+          <span class="cm-case-hero__label" data-cm-reveal>${escapeHtml(caseStudy.hero.label)}</span>
+          <h1 class="cm-case-hero__title" id="cm-case-heading" data-cm-reveal>${escapeHtml(caseStudy.hero.title)}</h1>
+          <p class="cm-case-hero__meta" data-cm-reveal>${escapeHtml(metaLine)}</p>
+          <dl class="cm-case-hero__facts" data-cm-reveal>
+            <div class="cm-case-hero__fact">
+              <dt>Cliente</dt>
+              <dd>${escapeHtml(caseStudy.client)}</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Industria</dt>
+              <dd>${escapeHtml(caseStudy.industry)}</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Disciplinas</dt>
+              <dd>${escapeHtml(caseStudy.disciplines.join(', '))}</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Duración</dt>
+              <dd>${escapeHtml(caseStudy.duration)}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderSummary(caseStudy) {
+  return `    <section class="cm-case-summary" data-cm-case-reveal>
+      <div class="cm-case-summary__inner">
+        <p class="cm-case-summary__text">${escapeHtml(caseStudy.summary)}</p>
+      </div>
+    </section>`;
+}
+
+function renderContext(caseStudy) {
+  const c = caseStudy.context;
+  return `    <section class="cm-case-context">
+      <div class="cm-case-context__media" data-cm-case-context-media>
+        <div class="cm-case-context__media-inner" data-cm-case-context-inner>
+          ${renderPlaceholder('Imagen', c.mediaAlt)}
+        </div>
+      </div>
+      <div class="cm-case-context__text" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">${escapeHtml(c.eyebrow)}</span>
+        <p class="cm-case-context__body">${escapeHtml(c.body)}</p>
+      </div>
+    </section>`;
+}
+
+function renderChallenge(caseStudy) {
+  const ch = caseStudy.challenge;
+  return `    <section class="cm-case-challenge" data-cm-case-reveal>
+      <div class="cm-case-challenge__fade cm-case-challenge__fade--top" aria-hidden="true"></div>
+      <div class="cm-case-challenge__inner">
+        <span class="cm-case__eyebrow cm-case__eyebrow--on-accent">${escapeHtml(ch.eyebrow)}</span>
+        <p class="cm-case-challenge__text">${escapeHtml(ch.body)}</p>
+      </div>
+      <div class="cm-case-challenge__fade cm-case-challenge__fade--bottom" aria-hidden="true"></div>
+    </section>`;
+}
+
+function renderApproach(caseStudy) {
+  const a = caseStudy.approach;
+  const items = a.items
+    .map(
+      (text, index) => `        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">${String(index + 1).padStart(2, '0')}</span>
+          <p class="cm-case-approach__text">${escapeHtml(text)}</p>
+        </li>`
+    )
+    .join('\n');
+
+  return `    <section class="cm-case-approach">
+      <div class="cm-case-approach__inner">
+        <div class="cm-case-approach__intro" data-cm-case-reveal>
+          <span class="cm-case__eyebrow">${escapeHtml(a.eyebrow)}</span>
+          <h2 class="cm-case-approach__title">${escapeHtml(a.title)}</h2>
+        </div>
+        <ol class="cm-case-approach__list" data-cm-case-approach-list>
+${items}
+        </ol>
+      </div>
+    </section>`;
+}
+
+function renderSolutionSubsection(sub, index) {
+  const reverse = index % 2 === 1;
+  const hasVideo = !!sub.video;
+  const mediaLabel = sub.mediaLabel || 'Imagen';
+  const mediaClass = hasVideo ? ' cm-case-solution__media--wide' : '';
+
+  const videoBlock = hasVideo
+    ? `
+      <div class="cm-case-solution__video-wrap">
+        <div class="cm-case-solution__video">
+          ${renderVideoPlaceholder(sub.video.alt)}
+        </div>
+      </div>`
+    : '';
+
+  return `      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row${reverse ? ' cm-case-solution__row--reverse' : ''}">
+          <div class="cm-case-solution__media${mediaClass}">
+            ${renderPlaceholder(mediaLabel, sub.mediaAlt)}
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>${escapeHtml(sub.title)}</h3>
+            <p>${escapeHtml(sub.body)}</p>
+          </div>
+        </div>${videoBlock}
+      </div>`;
+}
+
+function renderSolution(caseStudy) {
+  const s = caseStudy.solution;
+  const subsections = s.subsections.map(renderSolutionSubsection).join('\n');
+
+  return `    <section class="cm-case-solution">
+      <div class="cm-case-solution__intro" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">${escapeHtml(s.eyebrow)}</span>
+      </div>
+${subsections}
+    </section>`;
+}
+
+function renderResult(caseStudy) {
+  const r = caseStudy.result;
+  return `    <section class="cm-case-result" data-cm-case-reveal>
+      <div class="cm-case-result__inner">
+        <span class="cm-case__eyebrow">${escapeHtml(r.eyebrow)}</span>
+        <p class="cm-case-result__text">${escapeHtml(r.body)}</p>
+        <p class="cm-case-result__highlight">${escapeHtml(r.highlight)}</p>
+        <p class="cm-case-result__attribution">${escapeHtml(r.highlightAttribution)}</p>
+      </div>
+    </section>`;
+}
+
+function renderClose(caseStudy) {
+  const next = caseStudy.nextProject;
+  const nextExists = CASE_STUDIES.some((c) => c.slug === next.slug);
+  const badge = nextExists
+    ? ''
+    : `
+        <span class="cm-case-next__badge">Próximamente</span>`;
+  const ariaSuffix = nextExists ? '' : ' (Próximamente)';
+
+  return `    <section class="cm-case-close">
+      <div class="cm-case-close__cta" data-cm-case-reveal>
+        <h2 class="cm-case-close__cta-title">¿Quieres resultados como estos para tu marca?</h2>
+        <a class="cm-case-close__button" href="${REL}index.html#contacto">Contáctanos</a>
+      </div>
+
+      <a
+        class="cm-case-next"
+        href="../${next.slug}/"
+        style="--cm-next-bg: ${next.bg}; --cm-next-fg: ${next.fg};"
+        aria-label="Siguiente proyecto: ${escapeHtml(next.client)} — ${escapeHtml(next.category)}${ariaSuffix}"
+      >
+        <div class="cm-case-next__top">
+          <span class="cm-case-next__label">Siguiente proyecto</span>${badge}
+        </div>
+        <span class="cm-case-next__category">${escapeHtml(next.category)}</span>
+        <span class="cm-case-next__name">${escapeHtml(next.client)}</span>
+      </a>
+    </section>`;
+}
+
+function renderCaseStudySection(caseStudy) {
+  return `    <!-- ===== CASE STUDY BLOCK — see public/blocks/case-study/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — CASE STUDY PAGE BLOCK (canonical source)
+      This page is GENERATED — see public/blocks/case-study/case-study.html
+      for the full direction-contract comment (THESIS/OWN-WORLD/FORM/
+      ACCESSIBILITY/USAGE) and the placeholder-asset inventory. Content
+      lives in scripts/case-study-data.mjs; never hand-edit this file —
+      edit the data and/or the block's CSS/JS, then re-run
+      \`node scripts/generate-case-study-pages.mjs\`.
+    -->
+    <article class="cm-case" data-cm-case aria-labelledby="cm-case-heading">
+      <noscript>
+        <style>
+          [data-cm-case] [data-cm-reveal],
+          [data-cm-case] [data-cm-case-reveal],
+          [data-cm-case] .cm-case-approach__item,
+          [data-cm-case] .cm-case-solution__media,
+          [data-cm-case] .cm-case-solution__video,
+          [data-cm-case] .cm-case-result__highlight {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        </style>
+      </noscript>
+
+${renderHero(caseStudy)}
+
+${renderSummary(caseStudy)}
+
+${renderContext(caseStudy)}
+
+${renderChallenge(caseStudy)}
+
+${renderApproach(caseStudy)}
+
+${renderSolution(caseStudy)}
+
+${renderResult(caseStudy)}
+
+${renderClose(caseStudy)}
+    </article>
+    <!-- ===== /CASE STUDY BLOCK ===== -->`;
+}
+
+function renderPage(caseStudy) {
+  return `<!doctype html>
+<html lang="es">
+${renderHead(caseStudy)}
+<body>
+${renderSiteHeader(REL, { solid: false })}
+
+  <main id="main-content" tabindex="-1">
+${renderCaseStudySection(caseStudy)}
+  </main>
+
+  <script type="module" src="${REL}blocks/site-header/site-header.js"></script>
+  <script type="module" src="${REL}blocks/case-study/case-study.js"></script>
+</body>
+</html>
+`;
+}
+
+function main() {
+  CASE_STUDIES.forEach((caseStudy) => {
+    const dir = path.join(REPO_ROOT, 'public', 'proyectos', caseStudy.slug);
+    mkdirSync(dir, { recursive: true });
+    const outPath = path.join(dir, 'index.html');
+    writeFileSync(outPath, renderPage(caseStudy), 'utf8');
+    console.log('Wrote', path.relative(REPO_ROOT, outPath));
+  });
+}
+
+main();

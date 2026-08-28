@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Grand Lounge Elite — Casos de Éxito | Continental Media</title>
+  <meta name="description" content="Cómo Continental Media desarrolló la estrategia de marketing integral de The Grand Lounge Elite: branding, redes sociales, relaciones públicas, producción audiovisual y desarrollo web para la red de salas VIP más importante en aeropuertos de México." />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../../blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="../../blocks/case-study/case-study.css" />
+
+  <style>
+    /* Minimal page shell — not a design system, just enough to view
+       these blocks in context. Same reset every page on the site uses. */
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== SITE HEADER BLOCK — see public/blocks/site-header/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — SITE HEADER BLOCK (canonical source)
+    THESIS: the menu must always be one tap away — extracted from the home
+      hero (where it used to live as position:absolute, scrolling away with
+      it) into its own page-agnostic, always-reachable component.
+    OWN-WORLD: same near-black ground, same restrained blue accent, same
+      Space Grotesk display / Inter body pairing as every other block on
+      the site. The bar and the full-screen expandable menu are the exact
+      same markup/behavior the home hero shipped with (numbered links,
+      dividers, spotlight-dim-on-hover, social icons, hamburger-to-X morph)
+      — only namespaced and relocated, not redesigned.
+    FORM: position:fixed at all times (never absolute), so it survives
+      scroll on every page. Two visual states, both driven by
+      site-header.js:
+        - Default (home, at the very top): transparent bar over the hero
+          video, exactly as before.
+        - .is-scrolled (added once scrollY passes a small threshold): the
+          bar gets a solid/blurred dark background, tighter padding, and a
+          smaller logo — added via a class, not a position:absolute ->
+          fixed swap, so there is no layout jump at the transition.
+        - .cm-site-header--solid (set in markup, not by scroll): interior
+          pages without a hero video — like this one, which has no photo/
+          video to sit transparently over — get the same solid/compact
+          treatment permanently, from first paint, instead of starting
+          transparent over a background that can't guarantee contrast.
+    ACCESSIBILITY: the skip link targets #main-content (a landmark present
+      on every page that uses this header), not a hero-specific heading id,
+      so it works unmodified everywhere this block is used. Full-screen nav
+      is a disclosure (not a modal): Escape closes it, background scroll is
+      locked while open, first link receives focus on open, focus returns
+      to the toggle on close. See site-header.js's own header comment for
+      the rest.
+
+    USAGE — canonical source for this block. To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/site-header/site-header.css.
+      2. Copy the <header class="cm-site-header"> markup below as the very
+         first element inside <body>, before any other section. Add the
+         `cm-site-header--solid` modifier class for interior pages that
+         don't have a full-bleed video/photo hero to overlay transparently.
+      3. Load blocks/site-header/site-header.js as a module (drives the
+         menu disclosure and the scroll-triggered .is-scrolled toggle).
+    Asset paths are root-relative (no leading slash), matching every other
+    block on the site.
+  -->
+  <header class="cm-site-header" data-cm-site-header>
+    <a class="cm-site-header__skip" href="#main-content">Saltar al contenido</a>
+
+    <div class="cm-site-header__bar">
+      <a class="cm-site-header__logo-link" href="../../index.html" aria-label="Continental Media — ir al inicio">
+        <img
+          class="cm-site-header__logo"
+          src="../../assets/images/continental-media-logo-white.png"
+          alt="Continental Media"
+          width="380"
+          height="151"
+        />
+      </a>
+
+      <button
+        type="button"
+        class="cm-site-header__menu-toggle"
+        data-cm-site-header-menu-toggle
+        aria-expanded="false"
+        aria-controls="cm-site-header-nav"
+        aria-label="Abrir menú"
+      >
+        <span class="cm-site-header__menu-icon" aria-hidden="true">
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+        </span>
+        <span class="cm-site-header__menu-label" data-cm-site-header-menu-label>Menú</span>
+      </button>
+    </div>
+
+    <nav
+      class="cm-site-header__nav"
+      id="cm-site-header-nav"
+      data-cm-site-header-nav
+      aria-label="Menú principal"
+      hidden
+    >
+      <div class="cm-site-header__nav-inner">
+        <ol class="cm-site-header__nav-list">
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#top">
+              <span class="cm-site-header__nav-index">01</span>
+              <span class="cm-site-header__nav-text">Inicio</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../nosotros.html">
+              <span class="cm-site-header__nav-index">02</span>
+              <span class="cm-site-header__nav-text">Nosotros</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#servicios">
+              <span class="cm-site-header__nav-index">03</span>
+              <span class="cm-site-header__nav-text">Servicios</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#proyectos">
+              <span class="cm-site-header__nav-index">04</span>
+              <span class="cm-site-header__nav-text">Proyectos</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#blog">
+              <span class="cm-site-header__nav-index">05</span>
+              <span class="cm-site-header__nav-text">Blog</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#contacto">
+              <span class="cm-site-header__nav-index">06</span>
+              <span class="cm-site-header__nav-text">Contacto</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+        </ol>
+
+        <div class="cm-site-header__nav-aside">
+          <p class="cm-site-header__nav-tagline">
+            La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
+          </p>
+
+          <div class="cm-site-header__nav-social">
+            <span class="cm-site-header__nav-social-label">Síguenos</span>
+            <ul class="cm-site-header__nav-social-list">
+              <li>
+                <a
+                  href="https://www.facebook.com/ContinentalMkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Facebook (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M13.5 21v-7.2h2.1l.3-2.5h-2.4V9.6c0-.7.2-1.2 1.2-1.2h1.3V6.1c-.3 0-1.3-.1-2.1-.1-2.1 0-3.3 1.2-3.3 3.5v1.9H8.5v2.5h2.1V21" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/continental_mkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Instagram (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                    <circle cx="12" cy="12" r="4.2" />
+                    <circle class="cm-site-header__nav-social-dot" cx="16.9" cy="7.1" r="0.6" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en YouTube (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                    <path class="cm-site-header__nav-social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://mx.linkedin.com/company/continentalmkt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en LinkedIn (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
+                    <circle class="cm-site-header__nav-social-dot" cx="7.7" cy="8.3" r="1" />
+                    <path d="M7.7 11.2V17" />
+                    <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <p class="cm-site-header__nav-copyright">© 2026 Continental Media</p>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- ===== /SITE HEADER BLOCK ===== -->
+
+  <main id="main-content" tabindex="-1">
+    <!-- ===== CASE STUDY BLOCK — see public/blocks/case-study/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — CASE STUDY PAGE BLOCK (canonical source)
+      This page is GENERATED — see public/blocks/case-study/case-study.html
+      for the full direction-contract comment (THESIS/OWN-WORLD/FORM/
+      ACCESSIBILITY/USAGE) and the placeholder-asset inventory. Content
+      lives in scripts/case-study-data.mjs; never hand-edit this file —
+      edit the data and/or the block's CSS/JS, then re-run
+      `node scripts/generate-case-study-pages.mjs`.
+    -->
+    <article class="cm-case" data-cm-case aria-labelledby="cm-case-heading">
+      <noscript>
+        <style>
+          [data-cm-case] [data-cm-reveal],
+          [data-cm-case] [data-cm-case-reveal],
+          [data-cm-case] .cm-case-approach__item,
+          [data-cm-case] .cm-case-solution__media,
+          [data-cm-case] .cm-case-solution__video,
+          [data-cm-case] .cm-case-result__highlight {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        </style>
+      </noscript>
+
+    <section class="cm-case-hero" data-cm-case-hero>
+      <div class="cm-case-hero__media" data-cm-case-hero-media>
+        <div class="cm-case__placeholder" role="img" aria-label="The Grand Lounge Elite, sala VIP o momento icónico del proyecto">
+            <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="cm-case__placeholder-label">[PLACEHOLDER: Imagen hero — The Grand Lounge Elite, sala VIP o momento icónico del proyecto]</span>
+          </div>
+      </div>
+      <div class="cm-case-hero__overlay" aria-hidden="true"></div>
+
+      <div class="cm-case-hero__stage">
+        <div class="cm-case-hero__content">
+          <span class="cm-case-hero__label" data-cm-reveal>Caso de estudio</span>
+          <h1 class="cm-case-hero__title" id="cm-case-heading" data-cm-reveal>Consolidar la red de salas VIP más importante en aeropuertos de México.</h1>
+          <p class="cm-case-hero__meta" data-cm-reveal>The Grand Lounge Elite · 2024–2026 · Branding, Redes Sociales, Relaciones Públicas, Producción Audiovisual, Desarrollo Web</p>
+          <dl class="cm-case-hero__facts" data-cm-reveal>
+            <div class="cm-case-hero__fact">
+              <dt>Cliente</dt>
+              <dd>The Grand Lounge Elite</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Industria</dt>
+              <dd>Hospitalidad</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Disciplinas</dt>
+              <dd>Branding, Redes Sociales, Relaciones Públicas, Producción Audiovisual, Desarrollo Web</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Duración</dt>
+              <dd>2024–2026 (proyecto activo)</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="cm-case-summary" data-cm-case-reveal>
+      <div class="cm-case-summary__inner">
+        <p class="cm-case-summary__text">The Grand Lounge Elite opera 5 salas VIP premium en el Aeropuerto Internacional de la Ciudad de México y el Aeropuerto Internacional Felipe Ángeles. Entre 2024 y 2026 desarrollamos su estrategia de marketing integral —branding, redes sociales, relaciones públicas, producción audiovisual y desarrollo web— para que su comunicación estuviera a la altura de la experiencia premium que ofrecen en sala. El resultado: alianzas estratégicas con Visa, Priority Pass y LoungeKey, y el reconocimiento Lounge of the Year 2025 por Priority Pass.</p>
+      </div>
+    </section>
+
+    <section class="cm-case-context">
+      <div class="cm-case-context__media" data-cm-case-context-media>
+        <div class="cm-case-context__media-inner" data-cm-case-context-inner>
+          <div class="cm-case__placeholder" role="img" aria-label="Fachada o interior de una sala VIP The Grand Lounge Elite">
+            <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="cm-case__placeholder-label">[PLACEHOLDER: Imagen — Fachada o interior de una sala VIP The Grand Lounge Elite]</span>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-context__text" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">Contexto</span>
+        <p class="cm-case-context__body">The Grand Lounge Elite es la red de salas VIP más importante en aeropuertos de México, con presencia en dos de las terminales aéreas más relevantes del país. Nos buscaron para profesionalizar su comunicación en un momento de crecimiento, cuando la marca necesitaba una identidad y presencia digital que reflejara el mismo nivel de exclusividad que sus espacios físicos.</p>
+      </div>
+    </section>
+
+    <section class="cm-case-challenge" data-cm-case-reveal>
+      <div class="cm-case-challenge__fade cm-case-challenge__fade--top" aria-hidden="true"></div>
+      <div class="cm-case-challenge__inner">
+        <span class="cm-case__eyebrow cm-case__eyebrow--on-accent">Reto</span>
+        <p class="cm-case-challenge__text">El reto era igualar, en cada punto de contacto digital y de comunicación, la experiencia premium que The Grand Lounge Elite ya ofrecía en sus 5 salas VIP. Sin una estrategia de contenido definida, una identidad visual consistente entre canales ni presencia relevante en medios, la marca corría el riesgo de que su comunicación no estuviera a la altura de su producto.</p>
+      </div>
+      <div class="cm-case-challenge__fade cm-case-challenge__fade--bottom" aria-hidden="true"></div>
+    </section>
+
+    <section class="cm-case-approach">
+      <div class="cm-case-approach__inner">
+        <div class="cm-case-approach__intro" data-cm-case-reveal>
+          <span class="cm-case__eyebrow">Enfoque</span>
+          <h2 class="cm-case-approach__title">Cuatro decisiones clave</h2>
+        </div>
+        <ol class="cm-case-approach__list" data-cm-case-approach-list>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">01</span>
+          <p class="cm-case-approach__text">Profesionalizar el manejo de redes sociales mediante una estrategia basada en pilares de contenido y calendario editorial.</p>
+        </li>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">02</span>
+          <p class="cm-case-approach__text">Restructurar por completo la identidad visual, con manuales de marca que garantizaran consistencia en todos los canales.</p>
+        </li>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">03</span>
+          <p class="cm-case-approach__text">Posicionar a la marca en medios de comunicación relevantes de México y el extranjero mediante artículos orgánicos, distribuidos a través de nuestra red Publifix.</p>
+        </li>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">04</span>
+          <p class="cm-case-approach__text">Construir un sitio web moderno con módulo de reservaciones propio, pasarela de pago integrada y conexión con socios como Viator.</p>
+        </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="cm-case-solution">
+      <div class="cm-case-solution__intro" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">Solución y proceso</span>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row">
+          <div class="cm-case-solution__media">
+            <div class="cm-case__placeholder" role="img" aria-label="Manual de marca / sistema de identidad visual de The Grand Lounge Elite">
+            <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="cm-case__placeholder-label">[PLACEHOLDER: Imagen — Manual de marca / sistema de identidad visual de The Grand Lounge Elite]</span>
+          </div>
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Identidad visual</h3>
+            <p>Rediseñamos la identidad visual de The Grand Lounge Elite desde cero, con manuales de marca que unificaron su presencia en redes, sitio web y materiales impresos.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row cm-case-solution__row--reverse">
+          <div class="cm-case-solution__media">
+            <div class="cm-case__placeholder" role="img" aria-label="Ejemplo de contenido en redes sociales o mención en medios de The Grand Lounge Elite">
+            <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="cm-case__placeholder-label">[PLACEHOLDER: Imagen — Ejemplo de contenido en redes sociales o mención en medios de The Grand Lounge Elite]</span>
+          </div>
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Contenido y relaciones públicas</h3>
+            <p>En paralelo, implementamos una estrategia editorial con pilares de contenido definidos para sus redes sociales, y una estrategia de relaciones públicas que logró colocar menciones de la marca en medios relevantes de México y el extranjero a través de nuestra red Publifix.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row">
+          <div class="cm-case-solution__media">
+            <div class="cm-case__placeholder" role="img" aria-label="Imagen o galería del evento Lounge of the Year 2025 by Priority Pass">
+            <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="cm-case__placeholder-label">[PLACEHOLDER: Imagen/galería — Imagen o galería del evento Lounge of the Year 2025 by Priority Pass]</span>
+          </div>
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Evento Lounge of the Year 2025</h3>
+            <p>Organizamos junto con el cliente distintos eventos, entre ellos el más destacado: la entrega del reconocimiento Lounge of the Year 2025 por Priority Pass, donde estuvimos a cargo de la convocatoria de medios, el minuto a minuto del evento y la atención a personalidades VIP.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row cm-case-solution__row--reverse">
+          <div class="cm-case-solution__media cm-case-solution__media--wide">
+            <div class="cm-case__placeholder" role="img" aria-label="Mockup del sitio web con módulo de reservaciones de The Grand Lounge Elite">
+            <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="cm-case__placeholder-label">[PLACEHOLDER: Mockup — Mockup del sitio web con módulo de reservaciones de The Grand Lounge Elite]</span>
+          </div>
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Plataforma web y producción audiovisual</h3>
+            <p>Desarrollamos también su sitio web —trabajo que continúa vigente hasta la fecha— con módulo de reservaciones para cada una de sus salas VIP, comunicación transaccional, integración de pasarela de pago y conexión con APIs de socios como Viator. Adicionalmente, realizamos diversas producciones audiovisuales para la marca, cubriendo planeación de la producción, contratación de talento, edición y post-producción.</p>
+          </div>
+        </div>
+      <div class="cm-case-solution__video-wrap">
+        <div class="cm-case-solution__video">
+          <div class="cm-case__placeholder" role="img" aria-label="Reel de producción audiovisual The Grand Lounge Elite">
+              <svg class="cm-case__placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="9.25" />
+              <path d="M10 8.5l6 3.5-6 3.5v-7Z" />
+            </svg>
+              <span class="cm-case__placeholder-label">[PLACEHOLDER: Video — Reel de producción audiovisual The Grand Lounge Elite, con controles de reproducción visibles, no autoplay]</span>
+            </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="cm-case-result" data-cm-case-reveal>
+      <div class="cm-case-result__inner">
+        <span class="cm-case__eyebrow">Resultado</span>
+        <p class="cm-case-result__text">Con este trabajo, The Grand Lounge Elite consolidó alianzas estratégicas con actores clave de la industria como Visa, Priority Pass y LoungeKey, y obtuvo el reconocimiento Lounge of the Year 2025 por parte de Priority Pass, consolidándose como la red de salas VIP más importante en aeropuertos de México.</p>
+        <p class="cm-case-result__highlight">Lounge of the Year 2025</p>
+        <p class="cm-case-result__attribution">Reconocimiento otorgado por Priority Pass</p>
+      </div>
+    </section>
+
+    <section class="cm-case-close">
+      <div class="cm-case-close__cta" data-cm-case-reveal>
+        <h2 class="cm-case-close__cta-title">¿Quieres resultados como estos para tu marca?</h2>
+        <a class="cm-case-close__button" href="../../index.html#contacto">Contáctanos</a>
+      </div>
+
+      <a
+        class="cm-case-next"
+        href="../parroquia-veracruz/"
+        style="--cm-next-bg: #1b1d22; --cm-next-fg: #edebe4;"
+        aria-label="Siguiente proyecto: La Parroquia de Veracruz — Patrimonio (Próximamente)"
+      >
+        <div class="cm-case-next__top">
+          <span class="cm-case-next__label">Siguiente proyecto</span>
+        <span class="cm-case-next__badge">Próximamente</span>
+        </div>
+        <span class="cm-case-next__category">Patrimonio</span>
+        <span class="cm-case-next__name">La Parroquia de Veracruz</span>
+      </a>
+    </section>
+    </article>
+    <!-- ===== /CASE STUDY BLOCK ===== -->
+  </main>
+
+  <script type="module" src="../../blocks/site-header/site-header.js"></script>
+  <script type="module" src="../../blocks/case-study/case-study.js"></script>
+</body>
+</html>
