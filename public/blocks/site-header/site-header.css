@@ -479,6 +479,21 @@
 /* ---------- Responsive ---------- */
 
 @media (max-width: 640px) {
+  /* The base clamp() floors out at 32px on narrow screens already (4.2vw
+     stays under it below ~760px), and the scrolled/solid state's own
+     0.76 scale-down then shrinks that further to ~24px — too small next
+     to the menu label at this size. Raise the floor and ease the
+     scale-down specifically on mobile; desktop/tablet keep the original
+     clamp + 0.76 untouched. */
+  .cm-site-header__logo {
+    height: 40px;
+  }
+
+  .cm-site-header.is-scrolled .cm-site-header__logo,
+  .cm-site-header--solid .cm-site-header__logo {
+    transform: scale(0.9);
+  }
+
   .cm-site-header__menu-label {
     display: none;
   }

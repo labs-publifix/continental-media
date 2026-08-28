@@ -14,13 +14,18 @@
  *    background on desktop/keyboard for free via pillar-page.css's
  *    :hover / :focus-visible (the <li> itself carries tabindex="0" in
  *    markup so it's reachable and activatable by keyboard, per the
- *    brief). Touch has no hover step and no cursor to "point" at a row
- *    with, so on touch only (matchMedia('(hover: none), (pointer:
- *    coarse)')) this script drives the same .is-active class via
- *    scroll position instead: an IntersectionObserver watches a thin
- *    band at the vertical center of the viewport, and whichever row is
- *    closest to that center gets .is-active — exactly one at a time,
- *    matching the brief's "solo una fila puede estar activa a la vez".
+ *    brief) — those rules are scoped inside @media (hover: hover) and
+ *    (pointer: fine), so they never fire on touch at all. That gate
+ *    matters: some touch browsers synthesize a "sticky" :hover/:focus
+ *    on tap that never clears on its own, which is what used to leave
+ *    more than one row highlighted at once on mobile. Touch instead
+ *    gets .is-active driven purely by scroll position here: on touch
+ *    only (matchMedia('(hover: none), (pointer: coarse)')) this script
+ *    watches a thin band at the vertical center of the viewport via
+ *    IntersectionObserver, and whichever row is closest to that center
+ *    gets .is-active — applyActiveRow() always clears every other row
+ *    first, so exactly one is ever active, matching the brief's "solo
+ *    una fila puede estar activa a la vez".
  */
 (function () {
   'use strict';

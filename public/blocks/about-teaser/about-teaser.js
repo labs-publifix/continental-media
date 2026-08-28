@@ -1,7 +1,8 @@
 /**
- * Continental Media — "Nosotros" teaser: scroll reveal + touch spotlight.
+ * Continental Media — "Nosotros" teaser: scroll reveal + touch spotlight
+ * + photo skeleton loading.
  *
- * Two independent pieces:
+ * Three independent pieces:
  *
  * 1. Scroll reveal: adds .is-visible to the section the first time it
  *    enters the viewport, which about-teaser.css uses to stagger in the
@@ -19,6 +20,14 @@
  *    coarse)')), tapping a photo toggles the same .is-active/.has-active
  *    states the CSS already treats as equivalent to :hover; tapping the
  *    active photo again, or tapping outside the grid, clears it.
+ *
+ * 3. Photo skeleton: each <img loading="lazy"> only starts fetching once
+ *    it nears the viewport, so without this the tile just shows flat
+ *    black for a beat. Every photo gets .is-loaded (fading out its CSS
+ *    shimmer, fading in the <img>) the moment its image is ready — on
+ *    'load', on 'error' (so a broken image never shimmers forever), or
+ *    immediately if the browser already served it from cache (img.complete
+ *    is true before any listener could fire).
  */
 (function () {
   'use strict';
@@ -79,4 +88,24 @@
       }
     });
   }
+
+  // --- 3. Photo skeleton loading ---
+  section.querySelectorAll('[data-cm-about-photo]').forEach(function (photo) {
+    var img = photo.querySelector('img');
+    if (!img) return;
+
+    function markLoaded() {
+      photo.classList.add('is-loaded');
+    }
+
+    if (img.complete) {
+      // True once loading has finished either way (success or a
+      // pre-cached failure) — in both cases no further 'load'/'error'
+      // event will ever fire, so this is the only chance to catch it.
+      markLoaded();
+    } else {
+      img.addEventListener('load', markLoaded, { once: true });
+      img.addEventListener('error', markLoaded, { once: true });
+    }
+  });
 })();

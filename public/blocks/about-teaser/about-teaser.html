@@ -21,7 +21,13 @@
     touch has no cursor to hover with. Entrance reveals default to the
     final visible state and are only animated where JS runs and motion is
     not reduced; a <noscript> rule forces the visible state if JS never
-    executes at all.
+    executes at all. Each photo also carries a skeleton shimmer
+    (.cm-about__photo::before) that covers the tile until its <img>
+    reports loaded (about-teaser.js adds .is-loaded per-photo, checking
+    img.complete for already-cached photos too, and treating a load
+    error the same as loaded so a broken image never shimmers forever);
+    a <noscript> rule shows every photo at full opacity immediately with
+    no skeleton, since that fade-in never fires without JS.
 
   USAGE — canonical source for this block. To use it on a page:
     1. Link assets/css/tokens.css, then blocks/about-teaser/about-teaser.css.
@@ -39,6 +45,12 @@
       [data-cm-about] [data-cm-about-photo] {
         opacity: 1 !important;
         transform: none !important;
+      }
+      [data-cm-about] [data-cm-about-photo] img {
+        opacity: 1 !important;
+      }
+      [data-cm-about] [data-cm-about-photo]::before {
+        display: none !important;
       }
     </style>
   </noscript>

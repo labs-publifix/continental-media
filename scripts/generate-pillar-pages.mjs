@@ -313,6 +313,42 @@ function renderRow(pillar, sub, index) {
       </li>`;
 }
 
+function renderExtraBlock(extra) {
+  const subtitle = extra.subtitle
+    ? `\n      <p class="cm-pillar-extra__subtitle">${escapeHtml(extra.subtitle)}</p>`
+    : '';
+  const platforms = extra.platforms
+    .map(
+      (platform) => `
+        <li class="cm-pillar-extra__platform">
+          <a
+            class="cm-pillar-extra__platform-link"
+            href="${escapeHtml(platform.href)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="cm-pillar-extra__platform-name">${escapeHtml(platform.name)}</span>
+            <span class="cm-pillar-extra__platform-desc">${escapeHtml(platform.description)}</span>
+            <span class="cm-pillar-extra__platform-cta"
+              >Visitar sitio
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
+            </span>
+          </a>
+        </li>`
+    )
+    .join('');
+
+  return `
+  <div class="cm-pillar-extra">
+    <div class="cm-pillar-extra__inner">
+      <h2 class="cm-pillar-extra__title">${escapeHtml(extra.title)}</h2>${subtitle}
+      <ul class="cm-pillar-extra__platforms">${platforms}
+      </ul>
+    </div>
+  </div>
+`;
+}
+
 function renderPillarSection(pillar) {
   const badge = pillar.badge
     ? `<span class="cm-pillar-hero__badge">${escapeHtml(pillar.badge)}</span>`
@@ -323,22 +359,7 @@ function renderPillarSection(pillar) {
   const rows = pillar.subservices
     .map((sub, index) => renderRow(pillar, sub, index))
     .join('\n');
-  const extraBlock = pillar.extra
-    ? `
-  <div class="cm-pillar-extra">
-    <div class="cm-pillar-extra__inner">
-      <p class="cm-pillar-extra__label">${escapeHtml(pillar.extra.label)}</p>
-      <a
-        class="cm-pillar-extra__link"
-        href="${escapeHtml(pillar.extra.ctaHref)}"
-        target="_blank"
-        rel="noopener noreferrer"
-        >${escapeHtml(pillar.extra.ctaText)}</a
-      >
-    </div>
-  </div>
-`
-    : '';
+  const extraBlock = pillar.extra ? renderExtraBlock(pillar.extra) : '';
 
   return `    <!-- ===== PILLAR PAGE BLOCK — see public/blocks/pillar-page/ for the canonical source ===== -->
     <!--

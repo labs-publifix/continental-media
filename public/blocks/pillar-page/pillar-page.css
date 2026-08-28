@@ -123,8 +123,18 @@
   transition: background-color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover,
-.cm-pillar-row:focus-visible,
+/* Desktop/mouse only: touch has no real :hover, and some touch browsers
+   synthesize a "sticky" hover/focus on tap that never clears on its own
+   — gating this behind (hover: hover) and (pointer: fine) is what keeps
+   exactly one row active at a time on touch (see pillar-page.js's
+   scroll-driven .is-active, the touch equivalent, further down). */
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover,
+  .cm-pillar-row:focus-visible {
+    background-color: var(--cm-color-accent);
+  }
+}
+
 .cm-pillar-row.is-active {
   background-color: var(--cm-color-accent);
 }
@@ -147,8 +157,13 @@
   transition: border-color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__inner,
-.cm-pillar-row:focus-visible .cm-pillar-row__inner,
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__inner,
+  .cm-pillar-row:focus-visible .cm-pillar-row__inner {
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__inner {
   border-color: rgba(255, 255, 255, 0.35);
 }
@@ -160,8 +175,13 @@
   transition: border-color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__title-col,
-.cm-pillar-row:focus-visible .cm-pillar-row__title-col,
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__title-col,
+  .cm-pillar-row:focus-visible .cm-pillar-row__title-col {
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__title-col {
   border-color: rgba(255, 255, 255, 0.35);
 }
@@ -177,8 +197,13 @@
   transition: color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__index,
-.cm-pillar-row:focus-visible .cm-pillar-row__index,
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__index,
+  .cm-pillar-row:focus-visible .cm-pillar-row__index {
+    color: var(--cm-color-on-accent);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__index {
   color: var(--cm-color-on-accent);
 }
@@ -194,8 +219,35 @@
   transition: color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__name,
-.cm-pillar-row:focus-visible .cm-pillar-row__name,
+/* Desktop-only "reel settle" micro-motion: a quick, small vertical dip
+   and bounce-back on hover start — reads like a slot-machine reel
+   landing on the title, never a continuous spin/loop. One-shot per
+   hover-in, gated with the color change below so it never runs on
+   touch (where .is-active drives the row highlight instead — see the
+   block's own header comment). */
+@keyframes cm-pillar-reel-settle {
+  0% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-4px);
+  }
+  65% {
+    transform: translateY(1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__name,
+  .cm-pillar-row:focus-visible .cm-pillar-row__name {
+    color: var(--cm-color-on-accent);
+    animation: cm-pillar-reel-settle 420ms var(--cm-ease-out);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__name {
   color: var(--cm-color-on-accent);
 }
@@ -214,14 +266,19 @@
   transition: color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__description,
-.cm-pillar-row:focus-visible .cm-pillar-row__description,
+/* Solid, not a dimmed tint — verified 5.08:1 against the accent blue,
+   comfortably above the 4.5:1 AA floor for this normal-size body text
+   (a "dark" tone as literally requested cannot clear AA against this
+   specific saturated blue: black/#0a0b0d only reaches ~3.9:1 here — see
+   the block's own header comment for the full contrast rationale). */
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__description,
+  .cm-pillar-row:focus-visible .cm-pillar-row__description {
+    color: var(--cm-color-on-accent);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__description {
-  /* Solid, not a dimmed tint — verified 5.08:1 against the accent blue,
-     comfortably above the 4.5:1 AA floor for this normal-size body text
-     (a "dark" tone as literally requested cannot clear AA against this
-     specific saturated blue: black/#0a0b0d only reaches ~3.9:1 here — see
-     the block's own header comment for the full contrast rationale). */
   color: var(--cm-color-on-accent);
 }
 
@@ -238,8 +295,13 @@
   transition: border-color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__extra,
-.cm-pillar-row:focus-visible .cm-pillar-row__extra,
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__extra,
+  .cm-pillar-row:focus-visible .cm-pillar-row__extra {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__extra {
   border-color: rgba(255, 255, 255, 0.4);
 }
@@ -254,8 +316,13 @@
   transition: color 280ms var(--cm-ease-out);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__extra-label,
-.cm-pillar-row:focus-visible .cm-pillar-row__extra-label,
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__extra-label,
+  .cm-pillar-row:focus-visible .cm-pillar-row__extra-label {
+    color: var(--cm-color-on-accent);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__extra-label {
   color: var(--cm-color-on-accent);
 }
@@ -284,15 +351,21 @@
   border-color: var(--cm-color-fg);
 }
 
-.cm-pillar-row:hover .cm-pillar-row__extra-link,
-.cm-pillar-row:focus-visible .cm-pillar-row__extra-link,
+@media (hover: hover) and (pointer: fine) {
+  .cm-pillar-row:hover .cm-pillar-row__extra-link,
+  .cm-pillar-row:focus-visible .cm-pillar-row__extra-link {
+    color: var(--cm-color-on-accent);
+    border-color: var(--cm-color-on-accent);
+  }
+
+  .cm-pillar-row:hover .cm-pillar-row__extra-link:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+}
+
 .cm-pillar-row.is-active .cm-pillar-row__extra-link {
   color: var(--cm-color-on-accent);
   border-color: var(--cm-color-on-accent);
-}
-
-.cm-pillar-row:hover .cm-pillar-row__extra-link:hover {
-  background: rgba(255, 255, 255, 0.16);
 }
 
 .cm-pillar-row__extra-link:focus-visible {
@@ -329,63 +402,143 @@
 .cm-pillar-row:nth-child(5) { --cm-row-delay: 280ms; }
 .cm-pillar-row:nth-child(6) { --cm-row-delay: 350ms; }
 
-/* ---------- Pillar-level extra closing block (AI pillar: Publifix Suite) ---------- */
+/* ---------- Pillar-level extra closing block (AI pillar: sister platforms) ---------- */
 
 .cm-pillar-extra {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
-  padding: clamp(2.5rem, 6vw, 4rem) var(--cm-gutter);
+  background: rgba(255, 255, 255, 0.02);
+  padding: clamp(3.5rem, 8vw, 5.5rem) var(--cm-gutter);
 }
 
 .cm-pillar-extra__inner {
-  max-width: 1200px;
+  max-width: 1080px;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.25rem;
+  text-align: center;
 }
 
-.cm-pillar-extra__label {
-  margin: 0;
+.cm-pillar-extra__title {
+  margin: 0 auto;
+  max-width: 24ch;
   font-family: var(--cm-font-display);
   font-weight: 700;
-  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
-  letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
-.cm-pillar-extra__link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.cm-pillar-extra__subtitle {
+  margin: 0.85em auto 0;
+  max-width: 52ch;
   font-family: var(--cm-font-body);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  letter-spacing: 0.01em;
+  font-weight: 400;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.cm-pillar-extra__platforms {
+  list-style: none;
+  margin: clamp(2.25rem, 5vw, 3rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.cm-pillar-extra__platform-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   text-decoration: none;
+  color: var(--cm-color-fg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--cm-radius-sm);
-  padding: 0.95em 1.75em;
-  cursor: pointer;
-  border: 1.5px solid var(--cm-color-accent);
-  background: var(--cm-color-accent);
-  color: var(--cm-color-on-accent);
+  padding: 1.5rem 1.5rem 1.25rem;
   transition:
     background-color var(--cm-duration-fast) var(--cm-ease-out),
     border-color var(--cm-duration-fast) var(--cm-ease-out),
     transform var(--cm-duration-fast) var(--cm-ease-out);
 }
 
-.cm-pillar-extra__link:hover {
-  background: var(--cm-color-accent-hover);
-  border-color: var(--cm-color-accent-hover);
+.cm-pillar-extra__platform-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--cm-color-accent);
+  transform: translateY(-3px);
 }
 
-.cm-pillar-extra__link:active {
-  transform: translateY(1px);
-}
-
-.cm-pillar-extra__link:focus-visible {
+.cm-pillar-extra__platform-link:focus-visible {
   outline: 2px solid var(--cm-color-fg);
   outline-offset: 3px;
+}
+
+.cm-pillar-extra__platform-name {
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+}
+
+.cm-pillar-extra__platform-desc {
+  margin-top: 0.6em;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  flex-grow: 1;
+}
+
+.cm-pillar-extra__platform-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--cm-color-accent);
+  transition: color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pillar-extra__platform-link:hover .cm-pillar-extra__platform-cta {
+  color: var(--cm-blue-500);
+}
+
+.cm-pillar-extra__platform-cta svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pillar-extra__platform-link:hover .cm-pillar-extra__platform-cta svg {
+  transform: translate(2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-pillar-extra__platform-link,
+  .cm-pillar-extra__platform-cta,
+  .cm-pillar-extra__platform-cta svg {
+    transition: none;
+  }
+
+  .cm-pillar-extra__platform-link:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cm-pillar-extra__platforms {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------- Closing CTA ---------- */
@@ -479,6 +632,10 @@
     opacity: 1;
     transform: none;
     transition: background-color 280ms var(--cm-ease-out);
+  }
+
+  .cm-pillar-row__name {
+    animation: none !important;
   }
 }
 

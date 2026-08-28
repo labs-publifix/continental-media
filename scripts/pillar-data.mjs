@@ -95,9 +95,26 @@ export const PILLARS = [
       },
     ],
     extra: {
-      label: 'Conoce nuestra plataforma aliada:',
-      ctaText: 'Publifix Suite',
-      ctaHref: PUBLIFIX_URL,
+      title: 'Conoce nuestras plataformas hermanas',
+      subtitle:
+        'Un ecosistema de plataformas propias que extienden nuestras capacidades en comunicación, tecnología e inteligencia artificial.',
+      platforms: [
+        {
+          name: 'Publifix Suite',
+          description: 'Nuestra plataforma de distribución de Notas de Prensa',
+          href: 'https://suite.publifix.net',
+        },
+        {
+          name: 'Publifix LABS',
+          description: 'Nuestro brazo tecnológico para el desarrollo web y software a medida',
+          href: 'https://labs.publifix.net',
+        },
+        {
+          name: 'LABS Agents',
+          description: 'Nuestro software para la creación de Agentes de Inteligencia Artificial',
+          href: 'https://agents.publifix.net',
+        },
+      ],
     },
   },
 

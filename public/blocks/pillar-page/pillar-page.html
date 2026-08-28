@@ -48,7 +48,17 @@
     prefers-reduced-motion both force it independently of JS. The
     scroll-driven "centered row" activation only runs on touch/no-hover
     devices (matchMedia('(hover: none), (pointer: coarse)')) — desktop
-    keeps standard :hover/:focus-visible with no JS involved.
+    keeps standard :hover/:focus-visible with no JS involved. Every
+    :hover/:focus-visible rule that paints the accent background is
+    itself scoped inside @media (hover: hover) and (pointer: fine) —
+    without that gate, touch browsers that synthesize a "sticky"
+    hover/focus on tap could leave more than one row lit at once (the
+    JS-driven .is-active handles touch instead, and always clears every
+    other row first, guaranteeing exactly one). Desktop also gets a
+    small extra: the row title plays a one-shot "reel settle" (a quick
+    ~4px vertical dip and bounce-back, @keyframes
+    cm-pillar-reel-settle) on hover-in — reads as a slot-machine reel
+    landing, never a continuous spin; prefers-reduced-motion disables it.
 
   USAGE — canonical source for this block. To ship a new pillar or edit
   an existing one:
@@ -119,11 +129,24 @@
   </div>
 
   <!-- Optional: pillar-level closing block (AI Marketing Solutions only)
-       sits here, between the row list and the CTA:
+       sits here, between the row list and the CTA — a centered title +
+       optional subtitle above a 3-up grid of sister-platform cards (each
+       card is one big <a>, external, target="_blank" + rel="noopener
+       noreferrer"):
   <div class="cm-pillar-extra">
     <div class="cm-pillar-extra__inner">
-      <p class="cm-pillar-extra__label">Conoce nuestra plataforma aliada:</p>
-      <a class="cm-pillar-extra__link" href="https://publifix.net" target="_blank" rel="noopener noreferrer">Publifix Suite</a>
+      <h2 class="cm-pillar-extra__title">Conoce nuestras plataformas hermanas</h2>
+      <p class="cm-pillar-extra__subtitle">Optional supporting line.</p>
+      <ul class="cm-pillar-extra__platforms">
+        <li class="cm-pillar-extra__platform">
+          <a class="cm-pillar-extra__platform-link" href="https://suite.publifix.net" target="_blank" rel="noopener noreferrer">
+            <span class="cm-pillar-extra__platform-name">Publifix Suite</span>
+            <span class="cm-pillar-extra__platform-desc">Nuestra plataforma de distribución de Notas de Prensa</span>
+            <span class="cm-pillar-extra__platform-cta">Visitar sitio <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg></span>
+          </a>
+        </li>
+        <!-- ...one <li> per platform -->
+      </ul>
     </div>
   </div>
   -->
