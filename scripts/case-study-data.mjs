@@ -9,11 +9,11 @@
  * pages, mirroring the exact pattern already established for the 5
  * /servicios pillar pages).
  *
- * "grand-lounge-elite" and "bitali-desarrollos" are filled in so far.
- * The remaining 3 project slugs already live in the home page's
- * projects-teaser grid (public/blocks/projects-teaser/) and each still
- * shows a "Próximamente" badge; add an object here (and remove that
- * project's badge in projects-teaser) as each one is actually written.
+ * "grand-lounge-elite", "bitali-desarrollos" and "new-you-wellness" are
+ * filled in so far. The remaining 2 project slugs already live in the
+ * home page's projects-teaser grid (public/blocks/projects-teaser/) and
+ * each still shows a "Próximamente" badge; add an object here (and
+ * remove that project's badge in projects-teaser) as each is written.
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
@@ -225,6 +225,113 @@ export const CASE_STUDIES = [
       category: 'Educación',
       bg: '#0e2455',
       fg: '#c7d6ff',
+    },
+  },
+
+  {
+    slug: 'new-you-wellness',
+    client: 'New You Wellness Center',
+    industry: 'Bienestar / Salud',
+    disciplines: ['Marketing Digital', 'Desarrollo Web', 'AI Marketing Solutions'],
+    factFour: { label: 'Alcance', value: 'Tomball y Katy, Houston, TX' },
+    metaTitle: 'New You Wellness Center — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media construyó para New You Wellness Center una plataforma con quiz de perfilamiento por IA, blogs automatizados con Gemini, panel de administración de leads y constructor de landing pages propio.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'De un sitio de contacto a un motor de marketing con IA integrada.',
+      meta: 'New You Wellness Center · Marketing Digital y Desarrollo Web — Houston, TX',
+      mediaAlt: 'Equipo de New You Wellness Center en su clínica de bienestar en Houston, Texas',
+      media: { src: 'proyectos/new-you-wellness/hero.jpg', width: 1181, height: 787 },
+    },
+
+    summary:
+      'New You Wellness Center es una clínica de bienestar con sucursales en Tomball y Katy, en el área de Houston. Nos contrataron para el manejo de sus redes sociales, la configuración y seguimiento de sus campañas en Google Ads, y la creación de un sitio web completamente nuevo. Lo que entregamos fue más que un sitio: una plataforma con un quiz de perfilamiento impulsado por IA, un sistema de generación automática de blogs conectado a la API de Gemini, un panel de administración de leads y un constructor de landing pages propio. Hoy, New You Wellness Center no solo genera leads de mejor calidad, sino que cuenta con un motor de marketing capaz de automatizar sus esfuerzos de comunicación en distintos puntos de contacto.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Especialista de New You Wellness Center mostrando un tratamiento de la clínica junto al logo de la marca',
+      media: { src: 'proyectos/new-you-wellness/contexto.jpg', width: 1536, height: 1024 },
+      body: 'New You Wellness Center opera dos sucursales en el área de Houston, Texas: Tomball y Katy. Nos buscaron para reforzar su posicionamiento digital, alineando la imagen de bienestar que la clínica busca transmitir con una presencia en redes sociales, campañas de pauta y un sitio web a la altura de esa propuesta de valor.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'El reto era doble: por un lado, alinear la imagen de marca de la clínica en redes sociales para reforzar su posicionamiento en ambas sucursales; por otro, construir una presencia digital que fuera más allá de un sitio informativo, capaz de impulsar divisiones específicas de tratamientos y sostener un flujo constante de leads calificados sin depender exclusivamente de la pauta paga.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cuatro decisiones clave',
+      items: [
+        'Alinear la imagen de bienestar de la marca en redes sociales para reforzar el posicionamiento digital de ambas sucursales, Tomball y Katy.',
+        'Implementar y lanzar campañas de Google Ads asociadas a landing pages de tratamientos específicos, para impulsar divisiones particulares de la clínica.',
+        'Desarrollar una plataforma con un quiz de inteligencia artificial que perfila a cada usuario hacia el tratamiento con mejor fit para su caso particular.',
+        'Integrar una base de datos conectada a la API de Gemini para automatizar la generación y publicación diaria de contenido de blog, reforzando el posicionamiento orgánico del sitio.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Posicionamiento y campañas',
+          mediaAlt: 'Equipo de especialistas de New You Wellness Center frente al logo de la marca en su clínica',
+          media: { src: 'proyectos/new-you-wellness/posicionamiento.jpg', width: 1536, height: 1024 },
+          body: 'Comenzamos alineando la imagen de bienestar que la clínica busca transmitir en sus redes sociales, reforzando el posicionamiento digital de sus sucursales en Tomball y Katy. Con esa base construida, implementamos y lanzamos campañas de Google Ads asociadas a landing pages de tratamientos específicos, lo que permitió impulsar divisiones particulares de la clínica de forma independiente.',
+        },
+        {
+          title: 'Quiz de perfilamiento con IA',
+          mediaLabel: 'Mockup',
+          mediaAlt:
+            'Captura del quiz de perfilamiento con inteligencia artificial del sitio de New You Wellness Center, mostrando la pregunta "What matters most to you right now?" con opciones de objetivos de tratamiento',
+          mediaWide: true,
+          mediaScreenshot: true,
+          media: { src: 'proyectos/new-you-wellness/ai-quiz.png', width: 1228, height: 672 },
+          body: 'Construimos una plataforma que funciona no solo como punto de contacto, sino como un sistema integral de operaciones. Incluye un quiz con inteligencia artificial que perfila a cada usuario hacia el tratamiento que mejor se ajusta a su caso particular.',
+        },
+        {
+          title: 'Blogs automatizados con IA',
+          mediaLabel: 'Mockup',
+          mediaAlt:
+            'Captura del blog "The NYWC Journal" del sitio de New You Wellness Center, generado y publicado automáticamente mediante la API de Gemini',
+          mediaWide: true,
+          mediaScreenshot: true,
+          media: { src: 'proyectos/new-you-wellness/blog-ai.png', width: 1232, height: 762 },
+          body: 'Una base de datos conectada a la API de Gemini alimenta un backlog de temas asociados a los tratamientos de la clínica: un cron ejecuta la publicación diaria de blogs sin intervención humana, reforzando de forma constante el posicionamiento orgánico del sitio.',
+        },
+        {
+          title: 'Panel administrativo y constructor de landings',
+          mediaLabel: 'Mockup',
+          mediaAlt: 'Pantalla de acceso al panel de administración de New You Wellness Center, desde donde el equipo da seguimiento a los leads',
+          mediaWide: true,
+          mediaScreenshot: true,
+          media: { src: 'proyectos/new-you-wellness/admin-panel.png', width: 1228, height: 668 },
+          media2Alt:
+            'Constructor de landing pages de New You Wellness Center, mostrando el listado de landing pages creadas para distintos tratamientos',
+          media2: { src: 'proyectos/new-you-wellness/landing-builder.png', width: 1232, height: 671 },
+          body: 'Integramos también un módulo administrador desde donde el staff de la clínica da seguimiento a los leads generados tanto por el quiz de IA como por las campañas de Google, junto con un constructor de landing pages propio que permite crear nuevas landings en cuestión de minutos.',
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      body: 'Con estas herramientas, New You Wellness Center no solo ha mejorado la calidad de los leads generados por sus campañas, sino que hoy cuenta con un motor de marketing que le permite automatizar sus esfuerzos de comunicación en distintos puntos de contacto, sin depender de intervención manual constante.',
+      highlight: 'Un motor de marketing',
+      highlightAttribution: 'Automatiza la comunicación en distintos puntos de contacto, sin intervención manual constante',
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 6 = Indigo). Kept in sync by
+    // hand for now — see that block's own palette comment for the values.
+    nextProject: {
+      slug: 'mae-dunne',
+      client: 'Mae Dunne',
+      category: 'Restaurante',
+      bg: '#221d3e',
+      fg: '#dad6f5',
     },
   },
 ];

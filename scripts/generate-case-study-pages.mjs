@@ -268,28 +268,38 @@ ${items}
     </section>`;
 }
 
-function renderSolutionSubsection(sub, index) {
-  const reverse = index % 2 === 1;
-  const hasVideo = !!sub.video;
-  const mediaLabel = sub.mediaLabel || 'Imagen';
-  const mediaModifiers = [
+// A raw web screenshot reads as an unfinished artifact next to the other
+// subsections' styled photography/brand-deck slides — a minimal browser-
+// chrome bar (3 dots, no address bar/text so it never goes stale) frames
+// it as "this is a live site" instead.
+function renderChromeBar() {
+  return `
+            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>`;
+}
+
+// One media box: the shared aspect-ratio/entrance-reveal box, optionally
+// widened and/or given the screenshot browser-chrome treatment. Used both
+// for a subsection's single image and for each half of a dual-image pair.
+function renderMediaBox(sub, media, alt, extraClasses) {
+  const modifiers = [
     sub.mediaWide ? 'cm-case-solution__media--wide' : '',
     sub.mediaScreenshot ? 'cm-case-solution__media--screenshot' : '',
     sub.mediaPhone ? 'cm-case-solution__media--phone' : '',
+    ...(extraClasses || []),
   ]
     .filter(Boolean)
     .join(' ');
-  const mediaClass = mediaModifiers ? ' ' + mediaModifiers : '';
-  // A raw web screenshot reads as an unfinished artifact next to the
-  // other subsections' styled photography/brand-deck slides — a
-  // minimal browser-chrome bar (3 dots, no address bar/text so it
-  // never goes stale) frames it as "this is a live site" instead.
-  const chromeBar = sub.mediaScreenshot
-    ? `
-            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>`
-    : '';
+  const chromeBar = sub.mediaScreenshot ? renderChromeBar() : '';
+  return `<div class="cm-case-solution__media${modifiers ? ' ' + modifiers : ''}">${chromeBar}
+            ${renderMedia(media, sub.mediaLabel || 'Imagen', alt)}
+          </div>`;
+}
+
+function renderSolutionSubsection(sub, index) {
+  const reverse = index % 2 === 1;
+  const hasVideo = !!sub.video;
 
   const videoBlock = hasVideo
     ? `
@@ -301,16 +311,25 @@ function renderSolutionSubsection(sub, index) {
       </div>`
     : '';
 
-  // A subsection whose only visual is its video (no companion row
-  // image, e.g. when the reel itself is meant to be the whole slot's
-  // evidence) skips the media div entirely rather than rendering an
-  // empty/placeholder box next to the text.
-  const mediaBlock = sub.media
-    ? `
-          <div class="cm-case-solution__media${mediaClass}">${chromeBar}
-            ${renderMedia(sub.media, mediaLabel, sub.mediaAlt)}
-          </div>`
-    : '';
+  // A subsection whose only visual is its video (no companion row image,
+  // e.g. when the reel itself is meant to be the whole slot's evidence)
+  // skips the media div entirely rather than rendering an empty/
+  // placeholder box next to the text. A subsection with a second image
+  // (sub.media2) renders both as an even side-by-side pair sharing the
+  // row's one media slot instead — e.g. two product screenshots that
+  // belong together (admin panel + landing builder) rather than
+  // stretching a single lonely image across the whole column.
+  let mediaBlock = '';
+  if (sub.media && sub.media2) {
+    mediaBlock = `
+          <div class="cm-case-solution__media-dual">
+            ${renderMediaBox(sub, sub.media, sub.mediaAlt)}
+            ${renderMediaBox(sub, sub.media2, sub.media2Alt)}
+          </div>`;
+  } else if (sub.media) {
+    mediaBlock = `
+          ${renderMediaBox(sub, sub.media, sub.mediaAlt)}`;
+  }
 
   return `      <div class="cm-case-solution__section" data-cm-case-reveal>
         <div class="cm-case-solution__row${reverse ? ' cm-case-solution__row--reverse' : ''}">${mediaBlock}

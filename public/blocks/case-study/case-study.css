@@ -638,13 +638,30 @@
 }
 
 .cm-case-solution__media,
+.cm-case-solution__media-dual,
 .cm-case-solution__text {
   flex: 1 1 380px;
   min-width: 0;
 }
 
-.cm-case-solution__row--reverse .cm-case-solution__media {
+.cm-case-solution__row--reverse .cm-case-solution__media,
+.cm-case-solution__row--reverse .cm-case-solution__media-dual {
   order: 2;
+}
+
+/* Two images sharing the row's one media slot (e.g. a pair of product
+   screenshots that belong together) instead of one image stretched
+   across the whole column — each half is a full, independent
+   .cm-case-solution__media box (same aspect-ratio/reveal/modifier
+   rules as a single image), just at half width side by side. */
+.cm-case-solution__media-dual {
+  display: flex;
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.cm-case-solution__media-dual .cm-case-solution__media {
+  flex: 1 1 50%;
+  min-width: 0;
 }
 
 .cm-case-solution__media {
@@ -822,8 +839,13 @@
 }
 
 @media (max-width: 780px) {
-  .cm-case-solution__row--reverse .cm-case-solution__media {
+  .cm-case-solution__row--reverse .cm-case-solution__media,
+  .cm-case-solution__row--reverse .cm-case-solution__media-dual {
     order: 0;
+  }
+
+  .cm-case-solution__media-dual {
+    flex-direction: column;
   }
 }
 

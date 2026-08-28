@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New You Wellness Center — Casos de Éxito | Continental Media</title>
+  <meta name="description" content="Cómo Continental Media construyó para New You Wellness Center una plataforma con quiz de perfilamiento por IA, blogs automatizados con Gemini, panel de administración de leads y constructor de landing pages propio." />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../../blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="../../blocks/case-study/case-study.css" />
+
+  <style>
+    /* Minimal page shell — not a design system, just enough to view
+       these blocks in context. Same reset every page on the site uses. */
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== SITE HEADER BLOCK — see public/blocks/site-header/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — SITE HEADER BLOCK (canonical source)
+    THESIS: the menu must always be one tap away — extracted from the home
+      hero (where it used to live as position:absolute, scrolling away with
+      it) into its own page-agnostic, always-reachable component.
+    OWN-WORLD: same near-black ground, same restrained blue accent, same
+      Space Grotesk display / Inter body pairing as every other block on
+      the site. The bar and the full-screen expandable menu are the exact
+      same markup/behavior the home hero shipped with (numbered links,
+      dividers, spotlight-dim-on-hover, social icons, hamburger-to-X morph)
+      — only namespaced and relocated, not redesigned.
+    FORM: position:fixed at all times (never absolute), so it survives
+      scroll on every page. Two visual states, both driven by
+      site-header.js:
+        - Default (home, at the very top): transparent bar over the hero
+          video, exactly as before.
+        - .is-scrolled (added once scrollY passes a small threshold): the
+          bar gets a solid/blurred dark background, tighter padding, and a
+          smaller logo — added via a class, not a position:absolute ->
+          fixed swap, so there is no layout jump at the transition.
+        - .cm-site-header--solid (set in markup, not by scroll): interior
+          pages without a hero video — like this one, which has no photo/
+          video to sit transparently over — get the same solid/compact
+          treatment permanently, from first paint, instead of starting
+          transparent over a background that can't guarantee contrast.
+    ACCESSIBILITY: the skip link targets #main-content (a landmark present
+      on every page that uses this header), not a hero-specific heading id,
+      so it works unmodified everywhere this block is used. Full-screen nav
+      is a disclosure (not a modal): Escape closes it, background scroll is
+      locked while open, first link receives focus on open, focus returns
+      to the toggle on close. See site-header.js's own header comment for
+      the rest.
+
+    USAGE — canonical source for this block. To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/site-header/site-header.css.
+      2. Copy the <header class="cm-site-header"> markup below as the very
+         first element inside <body>, before any other section. Add the
+         `cm-site-header--solid` modifier class for interior pages that
+         don't have a full-bleed video/photo hero to overlay transparently.
+      3. Load blocks/site-header/site-header.js as a module (drives the
+         menu disclosure and the scroll-triggered .is-scrolled toggle).
+    Asset paths are root-relative (no leading slash), matching every other
+    block on the site.
+  -->
+  <header class="cm-site-header" data-cm-site-header>
+    <a class="cm-site-header__skip" href="#main-content">Saltar al contenido</a>
+
+    <div class="cm-site-header__bar">
+      <a class="cm-site-header__logo-link" href="../../index.html" aria-label="Continental Media — ir al inicio">
+        <img
+          class="cm-site-header__logo"
+          src="../../assets/images/continental-media-logo-white.png"
+          alt="Continental Media"
+          width="380"
+          height="151"
+        />
+      </a>
+
+      <button
+        type="button"
+        class="cm-site-header__menu-toggle"
+        data-cm-site-header-menu-toggle
+        aria-expanded="false"
+        aria-controls="cm-site-header-nav"
+        aria-label="Abrir menú"
+      >
+        <span class="cm-site-header__menu-icon" aria-hidden="true">
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+        </span>
+        <span class="cm-site-header__menu-label" data-cm-site-header-menu-label>Menú</span>
+      </button>
+    </div>
+
+    <nav
+      class="cm-site-header__nav"
+      id="cm-site-header-nav"
+      data-cm-site-header-nav
+      aria-label="Menú principal"
+      hidden
+    >
+      <div class="cm-site-header__nav-inner">
+        <ol class="cm-site-header__nav-list">
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#top">
+              <span class="cm-site-header__nav-index">01</span>
+              <span class="cm-site-header__nav-text">Inicio</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../nosotros.html">
+              <span class="cm-site-header__nav-index">02</span>
+              <span class="cm-site-header__nav-text">Nosotros</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#servicios">
+              <span class="cm-site-header__nav-index">03</span>
+              <span class="cm-site-header__nav-text">Servicios</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#proyectos">
+              <span class="cm-site-header__nav-index">04</span>
+              <span class="cm-site-header__nav-text">Proyectos</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#blog">
+              <span class="cm-site-header__nav-index">05</span>
+              <span class="cm-site-header__nav-text">Blog</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../index.html#contacto">
+              <span class="cm-site-header__nav-index">06</span>
+              <span class="cm-site-header__nav-text">Contacto</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+        </ol>
+
+        <div class="cm-site-header__nav-aside">
+          <p class="cm-site-header__nav-tagline">
+            La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
+          </p>
+
+          <div class="cm-site-header__nav-social">
+            <span class="cm-site-header__nav-social-label">Síguenos</span>
+            <ul class="cm-site-header__nav-social-list">
+              <li>
+                <a
+                  href="https://www.facebook.com/ContinentalMkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Facebook (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M13.5 21v-7.2h2.1l.3-2.5h-2.4V9.6c0-.7.2-1.2 1.2-1.2h1.3V6.1c-.3 0-1.3-.1-2.1-.1-2.1 0-3.3 1.2-3.3 3.5v1.9H8.5v2.5h2.1V21" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/continental_mkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Instagram (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                    <circle cx="12" cy="12" r="4.2" />
+                    <circle class="cm-site-header__nav-social-dot" cx="16.9" cy="7.1" r="0.6" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en YouTube (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                    <path class="cm-site-header__nav-social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://mx.linkedin.com/company/continentalmkt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en LinkedIn (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
+                    <circle class="cm-site-header__nav-social-dot" cx="7.7" cy="8.3" r="1" />
+                    <path d="M7.7 11.2V17" />
+                    <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <p class="cm-site-header__nav-copyright">© 2026 Continental Media</p>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- ===== /SITE HEADER BLOCK ===== -->
+
+  <main id="main-content" tabindex="-1">
+    <!-- ===== CASE STUDY BLOCK — see public/blocks/case-study/ for the canonical source ===== -->
+    <!--
+      CONTINENTAL MEDIA — CASE STUDY PAGE BLOCK (canonical source)
+      This page is GENERATED — see public/blocks/case-study/case-study.html
+      for the full direction-contract comment (THESIS/OWN-WORLD/FORM/
+      ACCESSIBILITY/USAGE) and the placeholder-asset inventory. Content
+      lives in scripts/case-study-data.mjs; never hand-edit this file —
+      edit the data and/or the block's CSS/JS, then re-run
+      `node scripts/generate-case-study-pages.mjs`.
+    -->
+    <article class="cm-case" data-cm-case aria-labelledby="cm-case-heading">
+      <noscript>
+        <style>
+          [data-cm-case] [data-cm-reveal],
+          [data-cm-case] [data-cm-case-reveal],
+          [data-cm-case] .cm-case-approach__item,
+          [data-cm-case] .cm-case-solution__media,
+          [data-cm-case] .cm-case-solution__video,
+          [data-cm-case] .cm-case-result__highlight {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        </style>
+      </noscript>
+
+    <section class="cm-case-hero" data-cm-case-hero>
+      <div class="cm-case-hero__media cm-case-hero__media--photo" data-cm-case-hero-media>
+        <img
+              class="cm-case-hero__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/hero.jpg"
+              width="1181"
+              height="787"
+              alt="Equipo de New You Wellness Center en su clínica de bienestar en Houston, Texas"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+      </div>
+      <div class="cm-case-hero__overlay" aria-hidden="true"></div>
+
+      <div class="cm-case-hero__stage">
+        <div class="cm-case-hero__content">
+          <span class="cm-case-hero__label" data-cm-reveal>Caso de estudio</span>
+          <h1 class="cm-case-hero__title" id="cm-case-heading" data-cm-reveal>De un sitio de contacto a un motor de marketing con IA integrada.</h1>
+          <p class="cm-case-hero__meta" data-cm-reveal>New You Wellness Center · Marketing Digital y Desarrollo Web — Houston, TX</p>
+          <ul class="cm-case-hero__disciplines" data-cm-reveal aria-label="Disciplinas">
+            <li class="cm-case-hero__discipline-pill">Marketing Digital</li>
+            <li class="cm-case-hero__discipline-pill">Desarrollo Web</li>
+            <li class="cm-case-hero__discipline-pill">AI Marketing Solutions</li>
+          </ul>
+          <dl class="cm-case-hero__facts" data-cm-reveal>
+            <div class="cm-case-hero__fact">
+              <dt>Cliente</dt>
+              <dd>New You Wellness Center</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Industria</dt>
+              <dd>Bienestar / Salud</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Disciplinas</dt>
+              <dd>Marketing Digital, Desarrollo Web, AI Marketing Solutions</dd>
+            </div>
+            <div class="cm-case-hero__fact">
+              <dt>Alcance</dt>
+              <dd>Tomball y Katy, Houston, TX</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="cm-case-summary" data-cm-case-reveal>
+      <div class="cm-case-summary__inner">
+        <p class="cm-case-summary__text">New You Wellness Center es una clínica de bienestar con sucursales en Tomball y Katy, en el área de Houston. Nos contrataron para el manejo de sus redes sociales, la configuración y seguimiento de sus campañas en Google Ads, y la creación de un sitio web completamente nuevo. Lo que entregamos fue más que un sitio: una plataforma con un quiz de perfilamiento impulsado por IA, un sistema de generación automática de blogs conectado a la API de Gemini, un panel de administración de leads y un constructor de landing pages propio. Hoy, New You Wellness Center no solo genera leads de mejor calidad, sino que cuenta con un motor de marketing capaz de automatizar sus esfuerzos de comunicación en distintos puntos de contacto.</p>
+      </div>
+    </section>
+
+    <section class="cm-case-context">
+      <div class="cm-case-context__media" data-cm-case-context-media>
+        <div class="cm-case-context__media-inner" data-cm-case-context-inner>
+          <img
+              class="cm-case__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/contexto.jpg"
+              width="1536"
+              height="1024"
+              alt="Especialista de New You Wellness Center mostrando un tratamiento de la clínica junto al logo de la marca"
+              loading="lazy"
+              decoding="async"
+            />
+        </div>
+      </div>
+      <div class="cm-case-context__text" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">Contexto</span>
+        <p class="cm-case-context__body">New You Wellness Center opera dos sucursales en el área de Houston, Texas: Tomball y Katy. Nos buscaron para reforzar su posicionamiento digital, alineando la imagen de bienestar que la clínica busca transmitir con una presencia en redes sociales, campañas de pauta y un sitio web a la altura de esa propuesta de valor.</p>
+      </div>
+    </section>
+
+    <section class="cm-case-challenge" data-cm-case-reveal>
+      <div class="cm-case-challenge__fade cm-case-challenge__fade--top" aria-hidden="true"></div>
+      <div class="cm-case-challenge__inner">
+        <span class="cm-case__eyebrow cm-case__eyebrow--on-accent">Reto</span>
+        <p class="cm-case-challenge__text">El reto era doble: por un lado, alinear la imagen de marca de la clínica en redes sociales para reforzar su posicionamiento en ambas sucursales; por otro, construir una presencia digital que fuera más allá de un sitio informativo, capaz de impulsar divisiones específicas de tratamientos y sostener un flujo constante de leads calificados sin depender exclusivamente de la pauta paga.</p>
+      </div>
+      <div class="cm-case-challenge__fade cm-case-challenge__fade--bottom" aria-hidden="true"></div>
+    </section>
+
+    <section class="cm-case-approach">
+      <div class="cm-case-approach__inner">
+        <div class="cm-case-approach__intro" data-cm-case-reveal>
+          <span class="cm-case__eyebrow">Enfoque</span>
+          <h2 class="cm-case-approach__title">Cuatro decisiones clave</h2>
+        </div>
+        <ol class="cm-case-approach__list" data-cm-case-approach-list>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">01</span>
+          <p class="cm-case-approach__text">Alinear la imagen de bienestar de la marca en redes sociales para reforzar el posicionamiento digital de ambas sucursales, Tomball y Katy.</p>
+        </li>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">02</span>
+          <p class="cm-case-approach__text">Implementar y lanzar campañas de Google Ads asociadas a landing pages de tratamientos específicos, para impulsar divisiones particulares de la clínica.</p>
+        </li>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">03</span>
+          <p class="cm-case-approach__text">Desarrollar una plataforma con un quiz de inteligencia artificial que perfila a cada usuario hacia el tratamiento con mejor fit para su caso particular.</p>
+        </li>
+        <li class="cm-case-approach__item">
+          <span class="cm-case-approach__index">04</span>
+          <p class="cm-case-approach__text">Integrar una base de datos conectada a la API de Gemini para automatizar la generación y publicación diaria de contenido de blog, reforzando el posicionamiento orgánico del sitio.</p>
+        </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="cm-case-solution">
+      <div class="cm-case-solution__intro" data-cm-case-reveal>
+        <span class="cm-case__eyebrow">Solución y proceso</span>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row">
+          <div class="cm-case-solution__media">
+            <img
+              class="cm-case__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/posicionamiento.jpg"
+              width="1536"
+              height="1024"
+              alt="Equipo de especialistas de New You Wellness Center frente al logo de la marca en su clínica"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Posicionamiento y campañas</h3>
+            <p>Comenzamos alineando la imagen de bienestar que la clínica busca transmitir en sus redes sociales, reforzando el posicionamiento digital de sus sucursales en Tomball y Katy. Con esa base construida, implementamos y lanzamos campañas de Google Ads asociadas a landing pages de tratamientos específicos, lo que permitió impulsar divisiones particulares de la clínica de forma independiente.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row cm-case-solution__row--reverse">
+          <div class="cm-case-solution__media cm-case-solution__media--wide cm-case-solution__media--screenshot">
+            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <img
+              class="cm-case__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/ai-quiz.png"
+              width="1228"
+              height="672"
+              alt="Captura del quiz de perfilamiento con inteligencia artificial del sitio de New You Wellness Center, mostrando la pregunta &quot;What matters most to you right now?&quot; con opciones de objetivos de tratamiento"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Quiz de perfilamiento con IA</h3>
+            <p>Construimos una plataforma que funciona no solo como punto de contacto, sino como un sistema integral de operaciones. Incluye un quiz con inteligencia artificial que perfila a cada usuario hacia el tratamiento que mejor se ajusta a su caso particular.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row">
+          <div class="cm-case-solution__media cm-case-solution__media--wide cm-case-solution__media--screenshot">
+            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <img
+              class="cm-case__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/blog-ai.png"
+              width="1232"
+              height="762"
+              alt="Captura del blog &quot;The NYWC Journal&quot; del sitio de New You Wellness Center, generado y publicado automáticamente mediante la API de Gemini"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Blogs automatizados con IA</h3>
+            <p>Una base de datos conectada a la API de Gemini alimenta un backlog de temas asociados a los tratamientos de la clínica: un cron ejecuta la publicación diaria de blogs sin intervención humana, reforzando de forma constante el posicionamiento orgánico del sitio.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row cm-case-solution__row--reverse">
+          <div class="cm-case-solution__media-dual">
+            <div class="cm-case-solution__media cm-case-solution__media--wide cm-case-solution__media--screenshot">
+            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <img
+              class="cm-case__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/admin-panel.png"
+              width="1228"
+              height="668"
+              alt="Pantalla de acceso al panel de administración de New You Wellness Center, desde donde el equipo da seguimiento a los leads"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+            <div class="cm-case-solution__media cm-case-solution__media--wide cm-case-solution__media--screenshot">
+            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <img
+              class="cm-case__media-img"
+              src="../../assets/images/proyectos/new-you-wellness/landing-builder.png"
+              width="1232"
+              height="671"
+              alt="Constructor de landing pages de New You Wellness Center, mostrando el listado de landing pages creadas para distintos tratamientos"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          </div>
+          <div class="cm-case-solution__text">
+            <h3>Panel administrativo y constructor de landings</h3>
+            <p>Integramos también un módulo administrador desde donde el staff de la clínica da seguimiento a los leads generados tanto por el quiz de IA como por las campañas de Google, junto con un constructor de landing pages propio que permite crear nuevas landings en cuestión de minutos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cm-case-result" data-cm-case-reveal>
+      <div class="cm-case-result__inner">
+        <span class="cm-case__eyebrow">Resultado</span>
+        <p class="cm-case-result__text">Con estas herramientas, New You Wellness Center no solo ha mejorado la calidad de los leads generados por sus campañas, sino que hoy cuenta con un motor de marketing que le permite automatizar sus esfuerzos de comunicación en distintos puntos de contacto, sin depender de intervención manual constante.</p>
+        <p class="cm-case-result__highlight">Un motor de marketing</p>
+        <p class="cm-case-result__attribution">Automatiza la comunicación en distintos puntos de contacto, sin intervención manual constante</p>
+      </div>
+    </section>
+
+    <section class="cm-case-close">
+      <div class="cm-case-close__cta" data-cm-case-reveal>
+        <h2 class="cm-case-close__cta-title">¿Quieres resultados como estos para tu marca?</h2>
+        <a class="cm-case-close__button" href="../../index.html#contacto">Contáctanos</a>
+      </div>
+
+      <a
+        class="cm-case-next"
+        href="../mae-dunne/"
+        style="--cm-next-bg: #221d3e; --cm-next-fg: #dad6f5;"
+        aria-label="Siguiente proyecto: Mae Dunne — Restaurante (Próximamente)"
+      >
+        <div class="cm-case-next__top">
+          <span class="cm-case-next__label">Siguiente proyecto</span>
+        <span class="cm-case-next__badge">Próximamente</span>
+        </div>
+        <span class="cm-case-next__category">Restaurante</span>
+        <span class="cm-case-next__name">Mae Dunne</span>
+      </a>
+    </section>
+    </article>
+    <!-- ===== /CASE STUDY BLOCK ===== -->
+  </main>
+
+  <script type="module" src="../../blocks/site-header/site-header.js"></script>
+  <script type="module" src="../../blocks/case-study/case-study.js"></script>
+</body>
+</html>
