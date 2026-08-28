@@ -44,6 +44,7 @@ export const CASE_STUDIES = [
       label: 'Caso de estudio',
       title: 'Consolidar la red de salas VIP más importante en aeropuertos de México.',
       mediaAlt: 'The Grand Lounge Elite, sala VIP o momento icónico del proyecto',
+      media: { src: 'proyectos/grand-lounge-elite/hero.jpg', width: 2048, height: 1365 },
     },
 
     summary:
@@ -52,6 +53,7 @@ export const CASE_STUDIES = [
     context: {
       eyebrow: 'Contexto',
       mediaAlt: 'Fachada o interior de una sala VIP The Grand Lounge Elite',
+      media: { src: 'proyectos/grand-lounge-elite/contexto-sala-vip.jpg', width: 1181, height: 787 },
       body: 'The Grand Lounge Elite es la red de salas VIP más importante en aeropuertos de México, con presencia en dos de las terminales aéreas más relevantes del país. Nos buscaron para profesionalizar su comunicación en un momento de crecimiento, cuando la marca necesitaba una identidad y presencia digital que reflejara el mismo nivel de exclusividad que sus espacios físicos.',
     },
 
@@ -77,26 +79,34 @@ export const CASE_STUDIES = [
         {
           title: 'Identidad visual',
           mediaAlt: 'Manual de marca / sistema de identidad visual de The Grand Lounge Elite',
+          media: { src: 'proyectos/grand-lounge-elite/identidad-visual.png', width: 1280, height: 798 },
           body: 'Rediseñamos la identidad visual de The Grand Lounge Elite desde cero, con manuales de marca que unificaron su presencia en redes, sitio web y materiales impresos.',
         },
         {
           title: 'Contenido y relaciones públicas',
           mediaAlt: 'Ejemplo de contenido en redes sociales o mención en medios de The Grand Lounge Elite',
+          media: { src: 'proyectos/grand-lounge-elite/redes-sociales.png', width: 1080, height: 1350 },
           body: 'En paralelo, implementamos una estrategia editorial con pilares de contenido definidos para sus redes sociales, y una estrategia de relaciones públicas que logró colocar menciones de la marca en medios relevantes de México y el extranjero a través de nuestra red Publifix.',
         },
         {
           title: 'Evento Lounge of the Year 2025',
           mediaLabel: 'Imagen/galería',
           mediaAlt: 'Imagen o galería del evento Lounge of the Year 2025 by Priority Pass',
+          media: { src: 'proyectos/grand-lounge-elite/evento-lounge-of-the-year.jpg', width: 1181, height: 787 },
           body: 'Organizamos junto con el cliente distintos eventos, entre ellos el más destacado: la entrega del reconocimiento Lounge of the Year 2025 por Priority Pass, donde estuvimos a cargo de la convocatoria de medios, el minuto a minuto del evento y la atención a personalidades VIP.',
         },
         {
           title: 'Plataforma web y producción audiovisual',
           mediaLabel: 'Mockup',
           mediaAlt: 'Mockup del sitio web con módulo de reservaciones de The Grand Lounge Elite',
+          media: { src: 'proyectos/grand-lounge-elite/plataforma-web.png', width: 1228, height: 666 },
           body: 'Desarrollamos también su sitio web —trabajo que continúa vigente hasta la fecha— con módulo de reservaciones para cada una de sus salas VIP, comunicación transaccional, integración de pasarela de pago y conexión con APIs de socios como Viator. Adicionalmente, realizamos diversas producciones audiovisuales para la marca, cubriendo planeación de la producción, contratación de talento, edición y post-producción.',
           video: {
             alt: 'Reel de producción audiovisual The Grand Lounge Elite',
+            src: 'proyectos/grand-lounge-elite/reel.mp4',
+            poster: 'proyectos/grand-lounge-elite/reel-poster.jpg',
+            width: 1600,
+            height: 900,
           },
         },
       ],

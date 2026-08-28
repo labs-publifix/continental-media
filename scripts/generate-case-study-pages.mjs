@@ -72,6 +72,43 @@ function renderVideoPlaceholder(altText) {
             </div>`;
 }
 
+// Real asset once it exists in scripts/case-study-data.mjs, placeholder
+// until then — the same template renders both so a case can be filled
+// in incrementally without ever touching this generator.
+function renderMedia(media, label, altText, extraClass) {
+  if (!media) return renderPlaceholder(label, altText, extraClass);
+  return `<img
+              class="cm-case__media-img${extraClass ? ' ' + extraClass : ''}"
+              src="${REL}assets/images/${media.src}"
+              width="${media.width}"
+              height="${media.height}"
+              alt="${escapeHtml(altText)}"
+              loading="lazy"
+              decoding="async"
+            />`;
+}
+
+function renderVideoMedia(video, altText) {
+  if (!video || !video.src) return renderVideoPlaceholder(altText);
+  return `<div class="cm-case-solution__video-inner" data-cm-case-video>
+                <video
+                  class="cm-case-solution__video-el"
+                  poster="${REL}assets/images/${video.poster}"
+                  width="${video.width}"
+                  height="${video.height}"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-hidden="true"
+                  tabindex="-1"
+                >
+                  <source src="${REL}assets/video/${video.src}" type="video/mp4" />
+                </video>
+              </div>`;
+}
+
 function renderHead(caseStudy) {
   return `<head>
   <meta charset="utf-8" />
@@ -107,9 +144,22 @@ function renderHead(caseStudy) {
 
 function renderHero(caseStudy) {
   const metaLine = `${caseStudy.client} · ${caseStudy.durationRange} · ${caseStudy.disciplines.join(', ')}`;
+  const hasMedia = !!caseStudy.hero.media;
+  const mediaMarkup = hasMedia
+    ? `<img
+              class="cm-case-hero__media-img"
+              src="${REL}assets/images/${caseStudy.hero.media.src}"
+              width="${caseStudy.hero.media.width}"
+              height="${caseStudy.hero.media.height}"
+              alt="${escapeHtml(caseStudy.hero.mediaAlt)}"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />`
+    : renderPlaceholder('Imagen hero', caseStudy.hero.mediaAlt);
   return `    <section class="cm-case-hero" data-cm-case-hero>
-      <div class="cm-case-hero__media" data-cm-case-hero-media>
-        ${renderPlaceholder('Imagen hero', caseStudy.hero.mediaAlt)}
+      <div class="cm-case-hero__media${hasMedia ? ' cm-case-hero__media--photo' : ''}" data-cm-case-hero-media>
+        ${mediaMarkup}
       </div>
       <div class="cm-case-hero__overlay" aria-hidden="true"></div>
 
@@ -154,7 +204,7 @@ function renderContext(caseStudy) {
   return `    <section class="cm-case-context">
       <div class="cm-case-context__media" data-cm-case-context-media>
         <div class="cm-case-context__media-inner" data-cm-case-context-inner>
-          ${renderPlaceholder('Imagen', c.mediaAlt)}
+          ${renderMedia(c.media, 'Imagen', c.mediaAlt)}
         </div>
       </div>
       <div class="cm-case-context__text" data-cm-case-reveal>
@@ -209,8 +259,8 @@ function renderSolutionSubsection(sub, index) {
   const videoBlock = hasVideo
     ? `
       <div class="cm-case-solution__video-wrap">
-        <div class="cm-case-solution__video">
-          ${renderVideoPlaceholder(sub.video.alt)}
+        <div class="cm-case-solution__video" data-cm-case-video-frame>
+          ${renderVideoMedia(sub.video, sub.video.alt)}
         </div>
       </div>`
     : '';
@@ -218,7 +268,7 @@ function renderSolutionSubsection(sub, index) {
   return `      <div class="cm-case-solution__section" data-cm-case-reveal>
         <div class="cm-case-solution__row${reverse ? ' cm-case-solution__row--reverse' : ''}">
           <div class="cm-case-solution__media${mediaClass}">
-            ${renderPlaceholder(mediaLabel, sub.mediaAlt)}
+            ${renderMedia(sub.media, mediaLabel, sub.mediaAlt)}
           </div>
           <div class="cm-case-solution__text">
             <h3>${escapeHtml(sub.title)}</h3>

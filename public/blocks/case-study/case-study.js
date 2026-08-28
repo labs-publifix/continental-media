@@ -24,6 +24,15 @@
  *    photo grid). If this script never runs, the page's own <noscript>
  *    rule forces every block to its final visible state; prefers-
  *    reduced-motion does the same via CSS regardless of JS.
+ *
+ * 4. Solution reel(s): once a case study has a real [data-cm-case-video]
+ *    (a <video> replacing that subsection's placeholder), the same
+ *    pause-off-screen / freeze-on-reduced-motion lifecycle as the home
+ *    hero's own background video (public/blocks/hero/hero.js), plus a
+ *    scroll-driven "grow a little" scale written to --cm-case-video-
+ *    scale — the same rAF-throttled getBoundingClientRect() progress
+ *    technique as the context image parallax above, just mapped to a
+ *    subtle 1 -> 1.08 scale instead of a translate.
  */
 (function () {
   'use strict';
@@ -131,6 +140,74 @@
     window.addEventListener('scroll', onContextScroll, { passive: true });
     window.addEventListener('resize', onContextScroll);
   }
+
+  // --- 4. Solution reel(s): visibility play/pause + scroll-driven grow ---
+  var videoFrames = article.querySelectorAll('[data-cm-case-video-frame]');
+  videoFrames.forEach(function (frame) {
+    var inner = frame.querySelector('[data-cm-case-video]');
+    var video = inner && inner.querySelector('video');
+    if (!inner || !video) return;
+
+    if (reduceMotionQuery.matches) {
+      video.pause();
+    } else if ('IntersectionObserver' in window) {
+      var videoVisibilityObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (reduceMotionQuery.matches) return;
+            if (entry.isIntersecting) {
+              video.play().catch(function () {
+                /* Autoplay can be blocked by the browser; poster covers it. */
+              });
+            } else {
+              video.pause();
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      videoVisibilityObserver.observe(frame);
+    }
+
+    reduceMotionQuery.addEventListener('change', function (event) {
+      if (event.matches) {
+        video.pause();
+      } else {
+        video.play().catch(function () {});
+      }
+    });
+
+    if (reduceMotionQuery.matches) return;
+
+    var VIDEO_MAX_SCALE = 1.08;
+    var videoTicking = false;
+
+    var applyVideoScale = function () {
+      videoTicking = false;
+      var rect = frame.getBoundingClientRect();
+      var viewportH = window.innerHeight;
+      // Same 0..1 span as the context parallax above: 0 when the frame's
+      // top just enters the viewport bottom, 1 when its bottom just
+      // leaves the viewport top.
+      var progress = (viewportH - rect.top) / (viewportH + rect.height);
+      if (progress < 0) progress = 0;
+      if (progress > 1) progress = 1;
+
+      var scale = (1 + progress * (VIDEO_MAX_SCALE - 1)).toFixed(4);
+      inner.style.setProperty('--cm-case-video-scale', scale);
+    };
+
+    var onVideoScroll = function () {
+      if (!videoTicking) {
+        videoTicking = true;
+        requestAnimationFrame(applyVideoScale);
+      }
+    };
+
+    applyVideoScale();
+    window.addEventListener('scroll', onVideoScroll, { passive: true });
+    window.addEventListener('resize', onVideoScroll);
+  });
 
   // --- 3. Scroll reveals ---
   var revealTargets = article.querySelectorAll('[data-cm-case-reveal]');

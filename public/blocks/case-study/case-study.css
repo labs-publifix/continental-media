@@ -54,6 +54,18 @@
   color: rgba(255, 255, 255, 0.58);
 }
 
+/* ---------- Shared: real media, once an asset replaces its placeholder ---------- */
+/* Every placeholder slot in this template is a fixed aspect-ratio box;
+   a real <img> or <video> just needs to fill that same box edge-to-edge
+   — the box itself (and the reveal/parallax transforms already applied
+   to it) never changes between the placeholder and final-asset state. */
+.cm-case__media-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ---------- Hero ---------- */
 
 .cm-case-hero {
@@ -81,6 +93,21 @@
   transform: translate3d(0, var(--cm-case-parallax-y, 0px), 0) scale(var(--cm-case-parallax-scale, 1.06));
   transform-origin: center;
   will-change: transform;
+}
+
+/* Once a real hero photo replaces the placeholder it should bleed to
+   every edge (no framing padding, nothing but the image + the gradient
+   overlay already in front of it), so the padding that keeps the
+   placeholder's own dashed box off the viewport edge is placeholder-only. */
+.cm-case-hero__media--photo {
+  padding: 0;
+}
+
+.cm-case-hero__media-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* The hero's text block anchors to the bottom of the viewport and can
@@ -577,12 +604,34 @@
 }
 
 .cm-case-solution__video {
+  position: relative;
+  overflow: hidden;
   aspect-ratio: 16 / 9;
   opacity: 0;
   transform: scale(0.96);
   transition:
     opacity var(--cm-duration-base) var(--cm-ease-out),
     transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+/* Real reel only: a second, independent scale layer nested inside the
+   entrance-reveal box above. It grows a little as the reel scrolls
+   through the viewport (case-study.js writes --cm-case-video-scale),
+   the frame's own overflow:hidden keeping that growth cropped to the
+   16:9 window instead of spilling past it. */
+.cm-case-solution__video-inner {
+  position: absolute;
+  inset: 0;
+  transform: scale(var(--cm-case-video-scale, 1));
+  transform-origin: center;
+  will-change: transform;
+}
+
+.cm-case-solution__video-el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 [data-cm-case-reveal].is-visible .cm-case-solution__video {
@@ -602,6 +651,10 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .cm-case-solution__video-inner {
+    transform: none;
   }
 }
 
