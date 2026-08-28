@@ -187,7 +187,7 @@ function renderHeader() {
           <li class="cm-site-header__nav-item">
             <a href="${REL}index.html#portafolio">
               <span class="cm-site-header__nav-index">04</span>
-              <span class="cm-site-header__nav-text">Portafolio</span>
+              <span class="cm-site-header__nav-text">Proyectos</span>
               <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
           </li>
