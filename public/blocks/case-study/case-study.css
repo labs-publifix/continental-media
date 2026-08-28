@@ -694,6 +694,43 @@
   background: rgba(255, 255, 255, 0.38);
 }
 
+/* A chat/product screenshot reads as real evidence, not a flat image,
+   inside a minimal device chassis — a dark bezel + a notch pill, sized
+   to a natural phone silhouette rather than stretched to fill the
+   slot's full column width. Scoped to this one modifier; the frame's
+   own aspect-ratio (not the image's) sets the shape, so it stays a
+   consistent device silhouette regardless of the screenshot's own
+   native size. */
+.cm-case-solution__media--phone {
+  position: relative;
+  aspect-ratio: 9 / 19.5;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 14px;
+  overflow: hidden;
+  background: #0c0d0f;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 2.25rem;
+  box-shadow: 0 40px 80px -32px rgba(0, 0, 0, 0.75);
+}
+
+.cm-case-solution__media--phone .cm-case__media-img {
+  border-radius: 1.5rem;
+}
+
+.cm-case-solution__media--phone::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  z-index: 1;
+  width: 84px;
+  height: 20px;
+  background: #0c0d0f;
+  border-radius: 0 0 12px 12px;
+  transform: translateX(-50%);
+}
+
 [data-cm-case-reveal].is-visible .cm-case-solution__media {
   opacity: 1;
   transform: scale(1);

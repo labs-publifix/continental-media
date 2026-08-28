@@ -90,6 +90,18 @@ function renderMedia(media, label, altText, extraClass) {
 
 function renderVideoMedia(video, altText) {
   if (!video || !video.src) return renderVideoPlaceholder(altText);
+  const videoUrl = `${REL}assets/video/${video.src}`;
+  // preload="none" alone doesn't reliably stop Chromium from eagerly
+  // fetching an autoplay+muted video regardless of the hint (verified:
+  // the browser starts downloading the full file on page load even
+  // with preload="none" here) — so the real source ships as
+  // data-cm-case-video-src instead of src, and case-study.js is what
+  // actually points the <source> at it once the block nears the
+  // viewport. <noscript> carries a second, real <source> with the
+  // genuine src: browsers render noscript content only when scripting
+  // is OFF, so this contributes nothing while JS is deferring the load,
+  // and becomes the only source (autoplaying immediately, same as
+  // before) if JS never runs at all.
   return `<div class="cm-case-solution__video-inner" data-cm-case-video>
                 <video
                   class="cm-case-solution__video-el"
@@ -100,11 +112,12 @@ function renderVideoMedia(video, altText) {
                   muted
                   loop
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-hidden="true"
                   tabindex="-1"
                 >
-                  <source src="${REL}assets/video/${video.src}" type="video/mp4" />
+                  <source data-cm-case-video-src="${videoUrl}" type="video/mp4" />
+                  <noscript><source src="${videoUrl}" type="video/mp4" /></noscript>
                 </video>
               </div>`;
 }
@@ -143,7 +156,6 @@ function renderHead(caseStudy) {
 }
 
 function renderHero(caseStudy) {
-  const metaLine = `${caseStudy.client} · ${caseStudy.durationRange}`;
   const disciplinePills = caseStudy.disciplines
     .map((d) => `<li class="cm-case-hero__discipline-pill">${escapeHtml(d)}</li>`)
     .join('\n            ');
@@ -170,7 +182,7 @@ function renderHero(caseStudy) {
         <div class="cm-case-hero__content">
           <span class="cm-case-hero__label" data-cm-reveal>${escapeHtml(caseStudy.hero.label)}</span>
           <h1 class="cm-case-hero__title" id="cm-case-heading" data-cm-reveal>${escapeHtml(caseStudy.hero.title)}</h1>
-          <p class="cm-case-hero__meta" data-cm-reveal>${escapeHtml(metaLine)}</p>
+          <p class="cm-case-hero__meta" data-cm-reveal>${escapeHtml(caseStudy.hero.meta)}</p>
           <ul class="cm-case-hero__disciplines" data-cm-reveal aria-label="Disciplinas">
             ${disciplinePills}
           </ul>
@@ -188,8 +200,8 @@ function renderHero(caseStudy) {
               <dd>${escapeHtml(caseStudy.disciplines.join(', '))}</dd>
             </div>
             <div class="cm-case-hero__fact">
-              <dt>Duración</dt>
-              <dd>${escapeHtml(caseStudy.duration)}</dd>
+              <dt>${escapeHtml(caseStudy.factFour.label)}</dt>
+              <dd>${escapeHtml(caseStudy.factFour.value)}</dd>
             </div>
           </dl>
         </div>
@@ -263,6 +275,7 @@ function renderSolutionSubsection(sub, index) {
   const mediaModifiers = [
     sub.mediaWide ? 'cm-case-solution__media--wide' : '',
     sub.mediaScreenshot ? 'cm-case-solution__media--screenshot' : '',
+    sub.mediaPhone ? 'cm-case-solution__media--phone' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -288,11 +301,19 @@ function renderSolutionSubsection(sub, index) {
       </div>`
     : '';
 
-  return `      <div class="cm-case-solution__section" data-cm-case-reveal>
-        <div class="cm-case-solution__row${reverse ? ' cm-case-solution__row--reverse' : ''}">
+  // A subsection whose only visual is its video (no companion row
+  // image, e.g. when the reel itself is meant to be the whole slot's
+  // evidence) skips the media div entirely rather than rendering an
+  // empty/placeholder box next to the text.
+  const mediaBlock = sub.media
+    ? `
           <div class="cm-case-solution__media${mediaClass}">${chromeBar}
             ${renderMedia(sub.media, mediaLabel, sub.mediaAlt)}
-          </div>
+          </div>`
+    : '';
+
+  return `      <div class="cm-case-solution__section" data-cm-case-reveal>
+        <div class="cm-case-solution__row${reverse ? ' cm-case-solution__row--reverse' : ''}">${mediaBlock}
           <div class="cm-case-solution__text">
             <h3>${escapeHtml(sub.title)}</h3>
             <p>${escapeHtml(sub.body)}</p>

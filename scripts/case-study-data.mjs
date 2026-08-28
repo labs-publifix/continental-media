@@ -9,8 +9,8 @@
  * pages, mirroring the exact pattern already established for the 5
  * /servicios pillar pages).
  *
- * Only "grand-lounge-elite" is filled in for now — it's the first case
- * study. The other 5 project slugs already live in the home page's
+ * "grand-lounge-elite" and "bitali-desarrollos" are filled in so far.
+ * The remaining 3 project slugs already live in the home page's
  * projects-teaser grid (public/blocks/projects-teaser/) and each still
  * shows a "Próximamente" badge; add an object here (and remove that
  * project's badge in projects-teaser) as each one is actually written.
@@ -31,11 +31,11 @@ export const CASE_STUDIES = [
       'Producción Audiovisual',
       'Desarrollo Web',
     ],
-    // Full form for the compact fact-sheet's "Duración" field; the hero
-    // meta line uses the shorter durationRange per the brief's own
-    // example ("The Grand Lounge Elite · 2024–2026 · Branding, ...").
-    duration: '2024–2026 (proyecto activo)',
-    durationRange: '2024–2026',
+    // The compact fact-sheet's 4th row is per-case (a duration here, a
+    // geographic scope for Bitali below) — factFour carries whichever
+    // label/value this case actually has, instead of the generator
+    // hardcoding "Duración" for every case.
+    factFour: { label: 'Duración', value: '2024–2026 (proyecto activo)' },
     metaTitle: 'The Grand Lounge Elite — Casos de Éxito | Continental Media',
     metaDescription:
       'Cómo Continental Media desarrolló la estrategia de marketing integral de The Grand Lounge Elite: branding, redes sociales, relaciones públicas, producción audiovisual y desarrollo web para la red de salas VIP más importante en aeropuertos de México.',
@@ -43,6 +43,7 @@ export const CASE_STUDIES = [
     hero: {
       label: 'Caso de estudio',
       title: 'Consolidar la red de salas VIP más importante en aeropuertos de México.',
+      meta: 'The Grand Lounge Elite · 2024–2026',
       mediaAlt: 'The Grand Lounge Elite, sala VIP o momento icónico del proyecto',
       media: { src: 'proyectos/grand-lounge-elite/hero.jpg', width: 2048, height: 1365 },
     },
@@ -136,6 +137,94 @@ export const CASE_STUDIES = [
       category: 'Patrimonio',
       bg: '#1b1d22',
       fg: '#edebe4',
+    },
+  },
+
+  {
+    slug: 'bitali-desarrollos',
+    client: 'Bitali Desarrollos',
+    industry: 'Inmobiliario',
+    disciplines: ['Agentes de IA para WhatsApp', 'Automatización de Marketing', 'CRM'],
+    factFour: { label: 'Alcance', value: 'Veracruz, México' },
+    metaTitle: 'Bitali Desarrollos — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media implementó agentes de inteligencia artificial para WhatsApp que atienden, clasifican y escalan los leads de Bitali Desarrollos en segundos, convirtiendo más de 60 conversaciones diarias en los prospectos que realmente importan.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'Convertir 60 conversaciones diarias en los leads que realmente importan.',
+      meta: 'Bitali Desarrollos · AI Marketing Solutions — Agentes de IA para WhatsApp',
+      mediaAlt: 'Persona consultando WhatsApp desde su celular, representando la atención inmediata que ofrecen los agentes de IA de Bitali Desarrollos',
+      media: { src: 'proyectos/bitali-desarrollos/hero.jpg', width: 2400, height: 1350 },
+    },
+
+    summary:
+      'Bitali Desarrollos es una desarrolladora inmobiliaria con más de 10 años de experiencia y más de 300 unidades vendidas en las zonas más exclusivas de Veracruz. Con 5 proyectos residenciales y comerciales a la venta de forma simultánea, su equipo comercial no lograba atender el volumen de leads generado por sus campañas en Meta. Implementamos agentes de inteligencia artificial que atienden, clasifican y escalan leads calificados en cuestión de segundos, las 24 horas del día. Hoy, de más de 60 conversaciones diarias, solo los prospectos con intención real de compra llegan al equipo de ventas.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Persona escribiendo un mensaje desde su celular, representando la atención inmediata que reciben los prospectos de Bitali Desarrollos',
+      media: { src: 'proyectos/bitali-desarrollos/contexto.jpg', width: 1600, height: 2400 },
+      body: 'Bitali Desarrollos desarrolla torres residenciales y plazas comerciales en las zonas más exclusivas de Veracruz, respaldada por más de 10 años de experiencia y más de 300 unidades vendidas. Nos buscaron en un momento de crecimiento acelerado: con 5 proyectos distintos a la venta de manera simultánea y campañas activas en Meta, el volumen de leads había superado la capacidad de respuesta de su equipo comercial.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'El equipo comercial de Bitali no se daba abasto para atender todos los leads generados por sus campañas en Meta. Sin un sistema de filtrado eficiente, resultaba imposible distinguir en tiempo real cuántos leads en el funnel eran prospectos genuinos y cuántos no calificaban, generando un cuello de botella que se traducía en pérdida real de oportunidades de venta.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cuatro decisiones clave',
+      items: [
+        'Integrar, dentro de nuestro propio software, un conjunto de agentes de inteligencia artificial con lenguaje natural y contexto completo de cada uno de los 5 proyectos de Bitali.',
+        'Diseñar una lógica de clasificación automática que distinga, en segundos, entre un lead real con intención genuina de compra y uno que no califica.',
+        'Automatizar el aviso inmediato al equipo de ventas vía WhatsApp en cuanto se detecta un lead calificado.',
+        'Conectar cada lead calificado directamente al CRM de Bitali, en paralelo al escalamiento humano, sin intervención manual.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Agentes de IA en acción',
+          mediaAlt:
+            'Captura de una conversación de ejemplo del agente de inteligencia artificial de Bitali Desarrollos atendiendo por WhatsApp a un prospecto interesado en departamentos',
+          mediaPhone: true,
+          media: { src: 'proyectos/bitali-desarrollos/chat-whatsapp.png', width: 390, height: 844 },
+          body: 'Implementamos agentes de inteligencia artificial que atienden a los leads provenientes de Meta las 24 horas del día, en cuestión de segundos, mediante lenguaje natural y con todo el contexto de cada proyecto de Bitali. Cada conversación es clasificada automáticamente: cuando un lead demuestra intención genuina de compra, el sistema avisa de inmediato al equipo de ventas vía WhatsApp.',
+        },
+        {
+          title: 'Flujo automatizado hacia el CRM',
+          body: 'En paralelo, además de escalar la conversación a un humano, el lead aterriza automáticamente en el CRM al que Bitali tiene acceso, sin pasos manuales de por medio. Todo el flujo —desde el primer mensaje del prospecto hasta la notificación al equipo comercial— ocurre sin intervención humana, garantizando que ningún lead calificado se pierda por tiempos de respuesta.',
+          video: {
+            alt: 'Flujo automatizado de leads de Bitali Desarrollos, desde la conversación por WhatsApp hasta su llegada al CRM',
+            src: 'proyectos/bitali-desarrollos/reel.mp4',
+            poster: 'proyectos/bitali-desarrollos/reel-poster.jpg',
+            width: 1168,
+            height: 768,
+          },
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      body: 'En un día promedio, los agentes de IA de Bitali atienden más de 60 conversaciones. De ese volumen, únicamente los leads y prospectos realmente interesados se canalizan en segundos al equipo comercial, permitiendo más cierres y más ventas sin ampliar la operación del equipo humano.',
+      highlight: '60 conversaciones diarias',
+      highlightAttribution: 'Solo los prospectos con intención real de compra llegan al equipo de ventas',
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 4 = Navy). Kept in sync by
+    // hand for now — see that block's own palette comment for the values.
+    nextProject: {
+      slug: 'the-anglo',
+      client: 'The Anglo',
+      category: 'Educación',
+      bg: '#0e2455',
+      fg: '#c7d6ff',
     },
   },
 ];

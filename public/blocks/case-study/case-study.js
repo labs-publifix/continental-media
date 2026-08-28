@@ -32,7 +32,13 @@
  *    scroll-driven "grow a little" scale written to --cm-case-video-
  *    scale — the same rAF-throttled getBoundingClientRect() progress
  *    technique as the context image parallax above, just mapped to a
- *    subtle 1 -> 1.08 scale instead of a translate.
+ *    subtle 1 -> 1.08 scale instead of a translate. The reel is often
+ *    the single heaviest asset on the page, so its markup ships with
+ *    preload="none" (nothing fetches on page load) and the visibility
+ *    observer below carries a generous rootMargin — the first .play()
+ *    call is what actually starts the download, and it fires while the
+ *    block is still ~400px below the viewport so playback is already
+ *    running by the time the user scrolls to it, not starting cold.
  */
 (function () {
   'use strict';
@@ -141,12 +147,24 @@
     window.addEventListener('resize', onContextScroll);
   }
 
-  // --- 4. Solution reel(s): visibility play/pause + scroll-driven grow ---
+  // --- 4. Solution reel(s): deferred source + visibility play/pause + scroll-driven grow ---
   var videoFrames = article.querySelectorAll('[data-cm-case-video-frame]');
   videoFrames.forEach(function (frame) {
     var inner = frame.querySelector('[data-cm-case-video]');
     var video = inner && inner.querySelector('video');
     if (!inner || !video) return;
+
+    // The <source> ships with data-cm-case-video-src instead of src (see
+    // generate-case-study-pages.mjs's own comment on renderVideoMedia) —
+    // nothing to fetch until this runs once, right before the first
+    // play() call.
+    var loadRealSource = function () {
+      var source = video.querySelector('source[data-cm-case-video-src]');
+      if (!source) return;
+      source.src = source.getAttribute('data-cm-case-video-src');
+      source.removeAttribute('data-cm-case-video-src');
+      video.load();
+    };
 
     if (reduceMotionQuery.matches) {
       video.pause();
@@ -156,6 +174,7 @@
           entries.forEach(function (entry) {
             if (reduceMotionQuery.matches) return;
             if (entry.isIntersecting) {
+              loadRealSource();
               video.play().catch(function () {
                 /* Autoplay can be blocked by the browser; poster covers it. */
               });
@@ -164,7 +183,7 @@
             }
           });
         },
-        { threshold: 0.1 }
+        { threshold: 0.1, rootMargin: '400px 0px' }
       );
       videoVisibilityObserver.observe(frame);
     }
@@ -173,6 +192,7 @@
       if (event.matches) {
         video.pause();
       } else {
+        loadRealSource();
         video.play().catch(function () {});
       }
     });
