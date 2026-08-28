@@ -27,6 +27,11 @@
     div+onClick), pointing at /proyectos/<slug>/ routes that don't exist
     yet in this task (see USAGE) — the destination pages and the
     /proyectos index are explicitly out of scope here, per the brief.
+    TEMPORARY: every card except The Grand Lounge Elite currently carries
+    a small "Próximamente" badge next to its category (.cm-projects__card-
+    badge, inside a new .cm-projects__card-top row) — remove one card's
+    badge (and its aria-label's trailing " (Próximamente)") the moment
+    that case-study page ships; nothing else about the card changes.
   ACCESSIBILITY: each card's <a> carries the accessible name via
     aria-label ("Ver caso de estudio: {cliente} — {categoría}") since the
     card's own visible text is split across three separate <span>s that
@@ -112,9 +117,12 @@
         <a
           class="cm-projects__card"
           href="proyectos/parroquia-veracruz/"
-          aria-label="Ver caso de estudio: La Parroquia de Veracruz — Patrimonio"
+          aria-label="Ver caso de estudio: La Parroquia de Veracruz — Patrimonio (Próximamente)"
         >
-          <span class="cm-projects__card-category">Patrimonio</span>
+          <span class="cm-projects__card-top">
+            <span class="cm-projects__card-category">Patrimonio</span>
+            <span class="cm-projects__card-badge">Próximamente</span>
+          </span>
           <span class="cm-projects__card-body">
             <span class="cm-projects__card-name">La Parroquia de Veracruz</span>
             <span class="cm-projects__card-desc"
@@ -129,9 +137,12 @@
         <a
           class="cm-projects__card"
           href="proyectos/bitali-desarrollos/"
-          aria-label="Ver caso de estudio: Bitali Desarrollos — Inmobiliario"
+          aria-label="Ver caso de estudio: Bitali Desarrollos — Inmobiliario (Próximamente)"
         >
-          <span class="cm-projects__card-category">Inmobiliario</span>
+          <span class="cm-projects__card-top">
+            <span class="cm-projects__card-category">Inmobiliario</span>
+            <span class="cm-projects__card-badge">Próximamente</span>
+          </span>
           <span class="cm-projects__card-body">
             <span class="cm-projects__card-name">Bitali Desarrollos</span>
             <span class="cm-projects__card-desc"
@@ -146,9 +157,12 @@
         <a
           class="cm-projects__card"
           href="proyectos/the-anglo/"
-          aria-label="Ver caso de estudio: The Anglo — Educación"
+          aria-label="Ver caso de estudio: The Anglo — Educación (Próximamente)"
         >
-          <span class="cm-projects__card-category">Educación</span>
+          <span class="cm-projects__card-top">
+            <span class="cm-projects__card-category">Educación</span>
+            <span class="cm-projects__card-badge">Próximamente</span>
+          </span>
           <span class="cm-projects__card-body">
             <span class="cm-projects__card-name">The Anglo</span>
             <span class="cm-projects__card-desc"
@@ -162,9 +176,12 @@
         <a
           class="cm-projects__card"
           href="proyectos/new-you-wellness/"
-          aria-label="Ver caso de estudio: New You Wellness Center — Bienestar, Houston, TX"
+          aria-label="Ver caso de estudio: New You Wellness Center — Bienestar, Houston, TX (Próximamente)"
         >
-          <span class="cm-projects__card-category">Bienestar · Houston, TX</span>
+          <span class="cm-projects__card-top">
+            <span class="cm-projects__card-category">Bienestar · Houston, TX</span>
+            <span class="cm-projects__card-badge">Próximamente</span>
+          </span>
           <span class="cm-projects__card-body">
             <span class="cm-projects__card-name">New You Wellness Center</span>
             <span class="cm-projects__card-desc"
@@ -178,9 +195,12 @@
         <a
           class="cm-projects__card"
           href="proyectos/mae-dunne/"
-          aria-label="Ver caso de estudio: Mae Dunne — Restaurante, San Antonio, TX"
+          aria-label="Ver caso de estudio: Mae Dunne — Restaurante, San Antonio, TX (Próximamente)"
         >
-          <span class="cm-projects__card-category">Restaurante · San Antonio, TX</span>
+          <span class="cm-projects__card-top">
+            <span class="cm-projects__card-category">Restaurante · San Antonio, TX</span>
+            <span class="cm-projects__card-badge">Próximamente</span>
+          </span>
           <span class="cm-projects__card-body">
             <span class="cm-projects__card-name">Mae Dunne</span>
             <span class="cm-projects__card-desc"
