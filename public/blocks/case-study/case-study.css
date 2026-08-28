@@ -190,6 +190,7 @@
 .cm-case-hero.is-ready .cm-case-hero__label { transition-delay: 40ms; }
 .cm-case-hero.is-ready .cm-case-hero__title { transition-delay: 120ms; }
 .cm-case-hero.is-ready .cm-case-hero__meta { transition-delay: 280ms; }
+.cm-case-hero.is-ready .cm-case-hero__disciplines { transition-delay: 340ms; }
 .cm-case-hero.is-ready .cm-case-hero__facts { transition-delay: 400ms; }
 
 .cm-case-hero__label {
@@ -225,6 +226,38 @@
   font-size: clamp(0.9375rem, 0.88rem + 0.25vw, 1.0625rem);
   color: rgba(255, 255, 255, 0.82);
   max-width: 60ch;
+}
+
+/* Discipline pills: the one deliberately-rounded shape in this page's
+   vocabulary (the rest of the site keeps --cm-radius-sm's near-sharp
+   corners) — a frosted glass-over-photo chip reads as its own distinct
+   "tag" affordance, which a wall of comma-separated words over a photo
+   doesn't. Kept small and quiet (no accent color, no hover state) so it
+   stays a supporting fact, not competing with the title for attention. */
+.cm-case-hero__disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 1.2em 0 0;
+  padding: 0;
+  max-width: 640px;
+}
+
+.cm-case-hero__discipline-pill {
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  white-space: nowrap;
 }
 
 .cm-case-hero__facts {
@@ -510,6 +543,56 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+/* Scroll-reactive divider: each item's own border sweeps to the accent
+   blue as it crosses the middle of the viewport (roughly when it's
+   being read), then eases back to its neutral color as it moves on —
+   a native scroll-driven animation tied to the item's own position
+   (animation-timeline: view()), not JS. Where the browser doesn't
+   support it yet, @supports simply never applies this block and the
+   border stays its plain neutral color — a safe, silent no-op rather
+   than a broken animation. */
+@supports (animation-timeline: view()) {
+  .cm-case-approach__item {
+    animation-name: cm-case-approach-line-sweep;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view(block);
+    animation-range: cover 0% cover 100%;
+  }
+
+  .cm-case-approach__item:last-child {
+    animation-name: cm-case-approach-line-sweep-last;
+  }
+
+  @keyframes cm-case-approach-line-sweep {
+    0%,
+    100% {
+      border-top-color: rgba(255, 255, 255, 0.14);
+    }
+    50% {
+      border-top-color: var(--cm-blue-500);
+    }
+  }
+
+  @keyframes cm-case-approach-line-sweep-last {
+    0%,
+    100% {
+      border-top-color: rgba(255, 255, 255, 0.14);
+      border-bottom-color: rgba(255, 255, 255, 0.14);
+    }
+    50% {
+      border-top-color: var(--cm-blue-500);
+      border-bottom-color: var(--cm-blue-500);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cm-case-approach__item {
+      animation: none;
+    }
+  }
+}
+
 .cm-case-approach__index {
   font-family: var(--cm-font-display);
   font-weight: 700;
@@ -577,6 +660,40 @@
   aspect-ratio: 16 / 10;
 }
 
+/* A raw web screenshot is the one asset in this row that isn't already
+   styled photography or a designed slide — rounded corners + a browser-
+   chrome bar frame it as "this is a live site" instead of a flat image
+   pasted into the page. Scoped to this one modifier only; every other
+   media slot keeps the site's plain, unrounded rectangle. */
+.cm-case-solution__media--screenshot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.6);
+}
+
+.cm-case-solution__browser-chrome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.7rem 0.9rem;
+  background: linear-gradient(to bottom, rgba(10, 11, 13, 0.7), transparent);
+  pointer-events: none;
+}
+
+.cm-case-solution__browser-chrome span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.38);
+}
+
 [data-cm-case-reveal].is-visible .cm-case-solution__media {
   opacity: 1;
   transform: scale(1);
@@ -601,6 +718,15 @@
 
 .cm-case-solution__video-wrap {
   padding-bottom: clamp(3rem, 8vw, 5.5rem);
+}
+
+.cm-case-solution__video-caption {
+  margin: 0.85rem 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.48);
 }
 
 .cm-case-solution__video {

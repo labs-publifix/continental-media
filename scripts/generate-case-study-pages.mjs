@@ -143,7 +143,10 @@ function renderHead(caseStudy) {
 }
 
 function renderHero(caseStudy) {
-  const metaLine = `${caseStudy.client} · ${caseStudy.durationRange} · ${caseStudy.disciplines.join(', ')}`;
+  const metaLine = `${caseStudy.client} · ${caseStudy.durationRange}`;
+  const disciplinePills = caseStudy.disciplines
+    .map((d) => `<li class="cm-case-hero__discipline-pill">${escapeHtml(d)}</li>`)
+    .join('\n            ');
   const hasMedia = !!caseStudy.hero.media;
   const mediaMarkup = hasMedia
     ? `<img
@@ -168,6 +171,9 @@ function renderHero(caseStudy) {
           <span class="cm-case-hero__label" data-cm-reveal>${escapeHtml(caseStudy.hero.label)}</span>
           <h1 class="cm-case-hero__title" id="cm-case-heading" data-cm-reveal>${escapeHtml(caseStudy.hero.title)}</h1>
           <p class="cm-case-hero__meta" data-cm-reveal>${escapeHtml(metaLine)}</p>
+          <ul class="cm-case-hero__disciplines" data-cm-reveal aria-label="Disciplinas">
+            ${disciplinePills}
+          </ul>
           <dl class="cm-case-hero__facts" data-cm-reveal>
             <div class="cm-case-hero__fact">
               <dt>Cliente</dt>
@@ -254,7 +260,23 @@ function renderSolutionSubsection(sub, index) {
   const reverse = index % 2 === 1;
   const hasVideo = !!sub.video;
   const mediaLabel = sub.mediaLabel || 'Imagen';
-  const mediaClass = hasVideo ? ' cm-case-solution__media--wide' : '';
+  const mediaModifiers = [
+    sub.mediaWide ? 'cm-case-solution__media--wide' : '',
+    sub.mediaScreenshot ? 'cm-case-solution__media--screenshot' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+  const mediaClass = mediaModifiers ? ' ' + mediaModifiers : '';
+  // A raw web screenshot reads as an unfinished artifact next to the
+  // other subsections' styled photography/brand-deck slides — a
+  // minimal browser-chrome bar (3 dots, no address bar/text so it
+  // never goes stale) frames it as "this is a live site" instead.
+  const chromeBar = sub.mediaScreenshot
+    ? `
+            <div class="cm-case-solution__browser-chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>`
+    : '';
 
   const videoBlock = hasVideo
     ? `
@@ -262,12 +284,13 @@ function renderSolutionSubsection(sub, index) {
         <div class="cm-case-solution__video" data-cm-case-video-frame>
           ${renderVideoMedia(sub.video, sub.video.alt)}
         </div>
+        ${sub.video.caption ? `<p class="cm-case-solution__video-caption">${escapeHtml(sub.video.caption)}</p>` : ''}
       </div>`
     : '';
 
   return `      <div class="cm-case-solution__section" data-cm-case-reveal>
         <div class="cm-case-solution__row${reverse ? ' cm-case-solution__row--reverse' : ''}">
-          <div class="cm-case-solution__media${mediaClass}">
+          <div class="cm-case-solution__media${mediaClass}">${chromeBar}
             ${renderMedia(sub.media, mediaLabel, sub.mediaAlt)}
           </div>
           <div class="cm-case-solution__text">

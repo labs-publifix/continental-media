@@ -299,22 +299,17 @@
 /* ---------- Click exit-transition overlay ---------- */
 
 .cm-projects__transition {
-  /* top/left/width/height are inert defaults — projects-teaser.js always
-     sets real pixel values (matching the clicked card's own rect)
-     immediately before activating this, then animates only `transform`
-     from there (see the block's own header comment for why not
-     width/height/top/left directly). */
+  /* Always exactly viewport-sized — projects-teaser.js only ever sets
+     `background` (to the clicked card's own color) and toggles
+     .is-active; no rect/geometry math, so there's no "mid-expansion"
+     state that can get stuck (see the block's own header comment). */
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
+  inset: 0;
   z-index: 200;
   pointer-events: none;
   opacity: 0;
   background: var(--cm-color-accent);
-  transform: scale(1);
-  transform-origin: 50% 50%;
+  transition: opacity 260ms ease-out;
 }
 
 .cm-projects__transition.is-active {

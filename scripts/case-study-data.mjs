@@ -79,6 +79,11 @@ export const CASE_STUDIES = [
         {
           title: 'Identidad visual',
           mediaAlt: 'Manual de marca / sistema de identidad visual de The Grand Lounge Elite',
+          // 1280x798 (~16:10) is a wide brand-deck slide, not a 4:3 photo —
+          // mediaWide keeps its own aspect-ratio box close enough to the
+          // asset's native ratio that the full cover crops cleanly with no
+          // logo/tagline cut off top or bottom.
+          mediaWide: true,
           media: { src: 'proyectos/grand-lounge-elite/identidad-visual.png', width: 1280, height: 798 },
           body: 'Rediseñamos la identidad visual de The Grand Lounge Elite desde cero, con manuales de marca que unificaron su presencia en redes, sitio web y materiales impresos.',
         },
@@ -99,6 +104,8 @@ export const CASE_STUDIES = [
           title: 'Plataforma web y producción audiovisual',
           mediaLabel: 'Mockup',
           mediaAlt: 'Mockup del sitio web con módulo de reservaciones de The Grand Lounge Elite',
+          mediaWide: true,
+          mediaScreenshot: true,
           media: { src: 'proyectos/grand-lounge-elite/plataforma-web.png', width: 1228, height: 666 },
           body: 'Desarrollamos también su sitio web —trabajo que continúa vigente hasta la fecha— con módulo de reservaciones para cada una de sus salas VIP, comunicación transaccional, integración de pasarela de pago y conexión con APIs de socios como Viator. Adicionalmente, realizamos diversas producciones audiovisuales para la marca, cubriendo planeación de la producción, contratación de talento, edición y post-producción.',
           video: {
@@ -107,6 +114,7 @@ export const CASE_STUDIES = [
             poster: 'proyectos/grand-lounge-elite/reel-poster.jpg',
             width: 1600,
             height: 900,
+            caption: 'Shooting de foto y video con Debora Hallal',
           },
         },
       ],

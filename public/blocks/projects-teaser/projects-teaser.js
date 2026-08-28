@@ -18,16 +18,21 @@
  *
  * 3. Click exit-transition: on a plain left-click (not a modified click
  *    that should open a new tab, and not under prefers-reduced-motion),
- *    the clicked card's own color "expands" to cover the viewport
- *    before the browser actually navigates, so the teaser and the
- *    (future) case-study page feel continuous instead of an abrupt cut.
- *    Implemented as a single fixed overlay sized/positioned to exactly
- *    match the clicked card's rect (a one-time layout write, not
- *    animated) and then scaled up via `transform` alone — the brief
- *    asks to prioritize animating transform/opacity, and a raw
- *    width/height/top/left animation would fight that. Every card's
- *    href is a real link throughout: a modified click, a middle click,
- *    or JS never loading all still navigate normally.
+ *    a full-viewport layer fades in to the clicked card's own color
+ *    before the browser actually navigates, so the jump to the
+ *    case-study page feels continuous instead of an abrupt cut.
+ *    Deliberately opacity-only on a layer that is always exactly
+ *    viewport-sized (no rect math, no transform/scale-from-the-card
+ *    geometry): an earlier version animated the clicked card's rect
+ *    expanding to cover the screen, but that geometry could get stuck
+ *    mid-expansion if the browser restored this page from its
+ *    back/forward cache (bfcache) after the user clicked "back" from
+ *    the case-study page — blocking the entire viewport with no click
+ *    able to reach anything under it. This version has no persistent
+ *    "mid-transition" state to get stuck in, and the pageshow listener
+ *    below resets it defensively regardless. Every card's href is a
+ *    real link throughout: a modified click, a middle click, or JS
+ *    never loading all still navigate normally.
  */
 (function () {
   'use strict';
@@ -89,7 +94,21 @@
   // --- 3. Click exit-transition ---
   var overlay = section.querySelector('[data-cm-projects-transition]');
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var TRANSITION_MS = 420;
+  var TRANSITION_MS = 260;
+
+  function resetTransitionOverlay() {
+    if (!overlay) return;
+    overlay.classList.remove('is-active');
+    overlay.style.background = '';
+  }
+
+  // Defensive reset regardless of which browser/scenario restores this
+  // page from bfcache (Safari and Firefox fire this even on a fresh
+  // load, with event.persisted false then) — guarantees the overlay is
+  // never left in its active state when this page becomes visible again.
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) resetTransitionOverlay();
+  });
 
   if (overlay) {
     section.querySelectorAll('.cm-projects__card').forEach(function (link) {
@@ -106,33 +125,8 @@
 
         event.preventDefault();
 
-        var rect = link.getBoundingClientRect();
-        var cardBg = getComputedStyle(link).backgroundColor;
-        var viewportDiagonal = Math.sqrt(
-          window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight
-        );
-        var cardDiagonal = Math.sqrt(rect.width * rect.width + rect.height * rect.height);
-        var scale = (viewportDiagonal / cardDiagonal) * 1.5;
-
-        overlay.style.transition = 'none';
-        overlay.style.top = rect.top + 'px';
-        overlay.style.left = rect.left + 'px';
-        overlay.style.width = rect.width + 'px';
-        overlay.style.height = rect.height + 'px';
-        overlay.style.background = cardBg;
-        overlay.style.transform = 'scale(1)';
+        overlay.style.background = getComputedStyle(link).backgroundColor;
         overlay.classList.add('is-active');
-
-        // Force a reflow so the "none" transition + starting transform
-        // above commit before switching to the real transition below —
-        // otherwise the browser could coalesce both into one frame and
-        // skip straight to the end state with no visible expansion.
-        void overlay.offsetWidth;
-
-        overlay.style.transition =
-          'transform ' + TRANSITION_MS + 'ms cubic-bezier(0.65, 0, 0.35, 1), ' +
-          'opacity ' + TRANSITION_MS + 'ms ease-out';
-        overlay.style.transform = 'scale(' + scale + ')';
 
         window.setTimeout(function () {
           window.location.href = href;
