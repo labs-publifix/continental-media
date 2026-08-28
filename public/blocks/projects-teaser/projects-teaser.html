@@ -1,0 +1,202 @@
+<!--
+  CONTINENTAL MEDIA — "PROYECTOS" TEASER BLOCK (canonical source)
+  THESIS: no client photography — the proof is the work itself, not a
+    stock-photo card grid. Six solid, flat color blocks with the client
+    name as the only "image" states creative confidence without leaning
+    on imagery, deliberately breaking from the site's own photo-grid
+    habit (clients marquee, about-teaser) the same way services-teaser
+    broke from a card grid into a typographic marquee — a local extension
+    of the established world, not a new concept exercise, and explicitly
+    NOT the reference's literal gradients (brief: "sin gradiente
+    decorativo") — every block here is one solid color.
+  OWN-WORLD: same Space Grotesk display / Inter body pairing, same
+    near-sharp radius (var(--cm-radius-sm), never pill), same
+    hover/focus/motion language (transform+opacity, one-shot scroll
+    reveal, cursor-follower reusing services-teaser's exact "pill that
+    tracks the pointer" technique) as every other block on the site. The
+    six card colors are new (this section's own palette, not global
+    tokens) but every one is a deliberate tint/shade of the brand accent
+    blue (--cm-blue-600 family) plus three neutrals (a charcoal darker
+    than the page background so it still reads as a distinct block, a
+    warm bone light neutral, and the page's existing near-black/white are
+    NOT reused directly — see ACCESSIBILITY for why) — never a color
+    outside that blue-plus-neutral family, per the brief's explicit ask.
+  FORM: precisely brief-pinned (exact copy, exact 6 clients/categories/
+    descriptions in that order, exact grid shape) — a local extension of
+    the established world. Cards are real <a href> elements (not
+    div+onClick), pointing at /proyectos/<slug>/ routes that don't exist
+    yet in this task (see USAGE) — the destination pages and the
+    /proyectos index are explicitly out of scope here, per the brief.
+  ACCESSIBILITY: each card's <a> carries the accessible name via
+    aria-label ("Ver caso de estudio: {cliente} — {categoría}") since the
+    card's own visible text is split across three separate <span>s that
+    would otherwise concatenate awkwardly for screen readers; the
+    category/name/description text is still real, selectable DOM text
+    for sighted users and search engines, not hidden. Every card's own
+    focus ring and its hover-dim/desaturate treatment reads its color
+    from that same card's --cm-proj-fg custom property (never a flat
+    site-wide white or black), specifically because the brief bans "un
+    tono... blanco genérico" — a literal var(--cm-color-fg) white outline
+    would nearly disappear against the two light cards (Bone, Periwinkle)
+    — see projects-teaser.css's palette block for the verified AA
+    contrast ratio (>=4.5:1) behind every one of the 6 bg/fg pairs.
+    Touch has no hover step, so on touch the description sits already
+    visible (opacity:1, no reveal-on-tap needed) and the cursor follower
+    is omitted entirely (matchMedia gates it in JS same as
+    services-teaser's). Reveal-on-scroll (intro, then the 6 cards
+    staggered) defaults to the final visible state; a <noscript> rule and
+    prefers-reduced-motion both force it independently of JS, and
+    prefers-reduced-motion also skips the click exit-transition (see
+    projects-teaser.js) in favor of an immediate navigation.
+
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then
+       blocks/projects-teaser/projects-teaser.css.
+    2. Copy the <section class="cm-projects"> markup below as-is.
+    3. Load blocks/projects-teaser/projects-teaser.js as a module (drives
+       the scroll-triggered stagger, the desktop cursor-follower, and the
+       click exit-transition; the <noscript> fallback and
+       prefers-reduced-motion both work without it — cards remain real,
+       working links either way).
+  Every card's href below is a placeholder route (proyectos/<slug>/) —
+  these pages don't exist yet; wire them up when /proyectos ships.
+  Asset paths are root-relative (no leading slash), matching every other
+  block on the site.
+-->
+<section id="proyectos" class="cm-projects" data-cm-projects aria-labelledby="cm-projects-heading">
+  <noscript>
+    <style>
+      [data-cm-projects] [data-cm-projects-reveal],
+      [data-cm-projects] [data-cm-projects-card] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      [data-cm-projects] [data-cm-projects-card] .cm-projects__card-desc {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-projects__inner">
+    <div class="cm-projects__intro" data-cm-projects-reveal>
+      <span class="cm-projects__eyebrow">Proyectos</span>
+      <h2 class="cm-projects__title" id="cm-projects-heading">
+        25 años de trabajo que hablan por sí solos.
+      </h2>
+      <p class="cm-projects__subtitle">
+        Exploración de proyectos reales, estrategias comprobadas e impacto medible para marcas en
+        México y Estados Unidos.
+      </p>
+    </div>
+
+    <ul class="cm-projects__grid" data-cm-projects-grid>
+      <li class="cm-projects__card-item" data-cm-projects-card>
+        <a
+          class="cm-projects__card"
+          href="proyectos/grand-lounge-elite/"
+          aria-label="Ver caso de estudio: The Grand Lounge Elite — Hospitalidad"
+        >
+          <span class="cm-projects__card-category">Hospitalidad</span>
+          <span class="cm-projects__card-body">
+            <span class="cm-projects__card-name">The Grand Lounge Elite</span>
+            <span class="cm-projects__card-desc"
+              >Marketing integral y desarrollo web para una experiencia premium en cada punto de
+              contacto.</span
+            >
+          </span>
+        </a>
+      </li>
+
+      <li class="cm-projects__card-item" data-cm-projects-card>
+        <a
+          class="cm-projects__card"
+          href="proyectos/parroquia-veracruz/"
+          aria-label="Ver caso de estudio: La Parroquia de Veracruz — Patrimonio"
+        >
+          <span class="cm-projects__card-category">Patrimonio</span>
+          <span class="cm-projects__card-body">
+            <span class="cm-projects__card-name">La Parroquia de Veracruz</span>
+            <span class="cm-projects__card-desc"
+              >Marketing integral para una marca con historia que necesitaba hablarle a una nueva
+              generación.</span
+            >
+          </span>
+        </a>
+      </li>
+
+      <li class="cm-projects__card-item" data-cm-projects-card>
+        <a
+          class="cm-projects__card"
+          href="proyectos/bitali-desarrollos/"
+          aria-label="Ver caso de estudio: Bitali Desarrollos — Inmobiliario"
+        >
+          <span class="cm-projects__card-category">Inmobiliario</span>
+          <span class="cm-projects__card-body">
+            <span class="cm-projects__card-name">Bitali Desarrollos</span>
+            <span class="cm-projects__card-desc"
+              >Agentes de IA en WhatsApp para vender metros cuadrados que todavía no
+              existen.</span
+            >
+          </span>
+        </a>
+      </li>
+
+      <li class="cm-projects__card-item" data-cm-projects-card>
+        <a
+          class="cm-projects__card"
+          href="proyectos/the-anglo/"
+          aria-label="Ver caso de estudio: The Anglo — Educación"
+        >
+          <span class="cm-projects__card-category">Educación</span>
+          <span class="cm-projects__card-body">
+            <span class="cm-projects__card-name">The Anglo</span>
+            <span class="cm-projects__card-desc"
+              >Planeación y compra de medios con un objetivo institucional medible.</span
+            >
+          </span>
+        </a>
+      </li>
+
+      <li class="cm-projects__card-item" data-cm-projects-card>
+        <a
+          class="cm-projects__card"
+          href="proyectos/new-you-wellness/"
+          aria-label="Ver caso de estudio: New You Wellness Center — Bienestar, Houston, TX"
+        >
+          <span class="cm-projects__card-category">Bienestar · Houston, TX</span>
+          <span class="cm-projects__card-body">
+            <span class="cm-projects__card-name">New You Wellness Center</span>
+            <span class="cm-projects__card-desc"
+              >Marketing digital y desarrollo web para fortalecer su presencia en Houston.</span
+            >
+          </span>
+        </a>
+      </li>
+
+      <li class="cm-projects__card-item" data-cm-projects-card>
+        <a
+          class="cm-projects__card"
+          href="proyectos/mae-dunne/"
+          aria-label="Ver caso de estudio: Mae Dunne — Restaurante, San Antonio, TX"
+        >
+          <span class="cm-projects__card-category">Restaurante · San Antonio, TX</span>
+          <span class="cm-projects__card-body">
+            <span class="cm-projects__card-name">Mae Dunne</span>
+            <span class="cm-projects__card-desc"
+              >Marketing digital para construir presencia de marca en el mercado gastronómico de
+              San Antonio.</span
+            >
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="cm-projects__cta-row" data-cm-projects-reveal>
+      <a class="cm-projects__cta" href="proyectos/">Ver todos los proyectos</a>
+    </div>
+  </div>
+
+  <div class="cm-projects__cursor" data-cm-projects-cursor aria-hidden="true">Ver caso</div>
+  <div class="cm-projects__transition" data-cm-projects-transition aria-hidden="true"></div>
+</section>

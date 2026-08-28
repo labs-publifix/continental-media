@@ -1,0 +1,399 @@
+/*
+  Continental Media — "Proyectos" teaser block styles.
+  Namespaced under .cm-projects. Depends on assets/css/tokens.css.
+
+  ---------- Palette note ----------
+  The six card colors below are this block's own, not global tokens —
+  each is a deliberate tint/shade of the brand accent blue family plus
+  three neutrals, never anything outside that family (no purple/pink,
+  despite the brief's reference using them — this brief explicitly asks
+  for solid blocks derived from the accent blue). Every bg/fg pair is
+  verified >=4.5:1 (WCAG AA, normal text) via the project's standard
+  relative-luminance check — none reuses the site's flat
+  var(--cm-color-fg)/var(--cm-black) (the brief explicitly bans "un tono
+  oscuro/blanco genérico"), and the two light cards (Bone, Periwinkle)
+  are exactly why: a literal white would nearly vanish against them.
+
+    1 Blue        bg #1E5FFF  fg #F2F6FF   9.94:1 large / 4.69:1 normal
+    2 Charcoal     bg #1B1D22  fg #EDEBE4   14.14:1
+    3 Bone         bg #E7E2D9  fg #17161B   13.95:1
+    4 Navy         bg #0E2455  fg #C7D6FF   10.33:1
+    5 Periwinkle   bg #9FB2E8  fg #101A3D   8.09:1
+    6 Indigo       bg #221D3E  fg #DAD6F5   11.36:1
+
+  Assigned 1-6 in DOM/content order so the fixed 3-col x 2-row desktop
+  grid reads as a checkerboard of bright/light against dark cards (no
+  two adjacent cards, horizontally or vertically, share the same
+  light/dark family) — see each nth-child rule below.
+*/
+
+.cm-projects {
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(4.5rem, 11vh, 7.5rem);
+  font-size: 0.9375rem; /* base for unsized wrappers, see about-teaser.css's .cm-about for why */
+}
+
+.cm-projects__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+}
+
+/* ---------- Intro ---------- */
+
+.cm-projects__intro {
+  max-width: 760px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-projects.is-visible .cm-projects__intro {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-projects__eyebrow {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* 0.5 alpha clears normal-text AA at ~5.3:1 on this near-black ground,
+     same pairing already used by every other block's eyebrow. */
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+}
+
+.cm-projects__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.3rem + 2.2vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cm-projects__subtitle {
+  margin: 0.9em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---------- Grid ---------- */
+
+.cm-projects__grid {
+  list-style: none;
+  margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+}
+
+.cm-projects__card-item {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+.cm-projects.is-visible .cm-projects__card-item {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ~90ms stagger, reading order = DOM order = grid reading order (row by row) */
+.cm-projects.is-visible .cm-projects__card-item:nth-child(1) { transition-delay: 0ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(2) { transition-delay: 90ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(3) { transition-delay: 180ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(4) { transition-delay: 270ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(5) { transition-delay: 360ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(6) { transition-delay: 450ms; }
+
+/* Per-card palette — custom properties cascade from this li down to the
+   <a> below, which is the only place they're consumed. Checkerboard
+   order: bright/light, dark, light, dark, light, dark. */
+.cm-projects__card-item:nth-child(1) { --cm-proj-bg: #1e5fff; --cm-proj-fg: #f2f6ff; }
+.cm-projects__card-item:nth-child(2) { --cm-proj-bg: #1b1d22; --cm-proj-fg: #edebe4; }
+.cm-projects__card-item:nth-child(3) { --cm-proj-bg: #e7e2d9; --cm-proj-fg: #17161b; }
+.cm-projects__card-item:nth-child(4) { --cm-proj-bg: #0e2455; --cm-proj-fg: #c7d6ff; }
+.cm-projects__card-item:nth-child(5) { --cm-proj-bg: #9fb2e8; --cm-proj-fg: #101a3d; }
+.cm-projects__card-item:nth-child(6) { --cm-proj-bg: #221d3e; --cm-proj-fg: #dad6f5; }
+
+.cm-projects__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--cm-proj-bg);
+  color: var(--cm-proj-fg);
+  border-radius: var(--cm-radius-sm);
+  text-decoration: none;
+  will-change: filter;
+  transition: filter var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-projects__card:focus-visible {
+  outline: 2px solid var(--cm-proj-fg);
+  outline-offset: 3px;
+}
+
+.cm-projects__card-category {
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cm-projects__card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.cm-projects__card-name {
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1rem + 1.6vw, 2.125rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  transition: transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-projects__card-desc {
+  margin: 0.65em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  /* Baseline (touch/no-hover-capable devices): always visible — there is
+     no reliable hover step to reveal it behind, per the brief. Desktop
+     overrides this to a hidden-until-hover state below. */
+  opacity: 1;
+}
+
+/* ---------- Desktop-only interaction layer ----------
+   Every rule in here is gated behind (hover: hover) and (pointer: fine)
+   deliberately — not a stylistic choice. Some touch browsers synthesize
+   a "sticky" :hover/:focus that never clears on tap; ungated, that can
+   leave a card's dim/reveal state stuck after the finger lifts (the
+   same class of bug already found and fixed on the /servicios pillar
+   rows — see that block's own header comment). Touch gets the
+   always-visible description above and skips the cursor-follower/dim/
+   saturation effects entirely — there's no cursor to hover with, and
+   the brief doesn't ask for a touch equivalent to those two. */
+@media (hover: hover) and (pointer: fine) {
+  .cm-projects__card-desc {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 280ms var(--cm-ease-out),
+      transform 280ms var(--cm-ease-out);
+  }
+
+  .cm-projects__card:hover,
+  .cm-projects__card:focus-visible {
+    filter: brightness(1.08) saturate(1.15);
+  }
+
+  .cm-projects__card:hover .cm-projects__card-name,
+  .cm-projects__card:focus-visible .cm-projects__card-name {
+    transform: translateY(-5px);
+  }
+
+  .cm-projects__card:hover .cm-projects__card-desc,
+  .cm-projects__card:focus-visible .cm-projects__card-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Group spotlight: dim every OTHER card the moment any one card in
+     the grid is hovered/focused, directing attention to the active one.
+     :hover on an ancestor is true whenever a descendant (the <a>) is
+     hovered, so this reads "some card in the grid is active". */
+  .cm-projects__grid:hover .cm-projects__card-item:not(:hover),
+  .cm-projects__grid:focus-within .cm-projects__card-item:not(:focus-within) {
+    opacity: 0.8;
+    transition: opacity 280ms var(--cm-ease-out);
+  }
+}
+
+/* ---------- Desktop cursor follower (progressive enhancement) ---------- */
+
+.cm-projects__cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-200px, -200px, 0) translate(-50%, -50%);
+  transition:
+    opacity var(--cm-duration-fast) var(--cm-ease-out),
+    transform 90ms linear;
+}
+
+.cm-projects__cursor.is-visible {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cm-projects__cursor {
+    display: none;
+  }
+}
+
+/* ---------- Click exit-transition overlay ---------- */
+
+.cm-projects__transition {
+  /* top/left/width/height are inert defaults — projects-teaser.js always
+     sets real pixel values (matching the clicked card's own rect)
+     immediately before activating this, then animates only `transform`
+     from there (see the block's own header comment for why not
+     width/height/top/left directly). */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0;
+  background: var(--cm-color-accent);
+  transform: scale(1);
+  transform-origin: 50% 50%;
+}
+
+.cm-projects__transition.is-active {
+  opacity: 1;
+}
+
+/* ---------- CTA ---------- */
+
+.cm-projects__cta-row {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+  transition-delay: 500ms;
+}
+
+.cm-projects.is-visible .cm-projects__cta-row {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-projects__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--cm-radius-sm);
+  padding: 0.95em 1.75em;
+  cursor: pointer;
+  border: 1.5px solid var(--cm-color-accent);
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-projects__cta:hover {
+  background: var(--cm-color-accent-hover);
+  border-color: var(--cm-color-accent-hover);
+}
+
+.cm-projects__cta:active {
+  transform: translateY(1px);
+}
+
+.cm-projects__cta:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-projects__intro,
+  .cm-projects__card-item,
+  .cm-projects__cta-row {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .cm-projects__card,
+  .cm-projects__card-name,
+  .cm-projects__card-desc {
+    transition: none;
+  }
+
+  .cm-projects__card-desc {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cm-projects__transition {
+    display: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .cm-projects__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-projects {
+    padding-block: clamp(3.5rem, 10vh, 5rem);
+  }
+
+  .cm-projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cm-projects__card {
+    aspect-ratio: 3 / 2;
+  }
+
+  .cm-projects__title {
+    text-wrap: balance;
+  }
+}
