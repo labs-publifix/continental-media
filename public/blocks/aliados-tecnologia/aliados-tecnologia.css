@@ -81,39 +81,28 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-}
-
-.cm-aliados__chip-list {
-  gap: 0.85rem;
-}
-
-.cm-aliados__logo-list {
   column-gap: clamp(2rem, 5vw, 3.75rem);
-  row-gap: 1.5rem;
+  row-gap: 1.25rem;
 }
 
 /* ---------- Row 1 — clickable chips (Plataformas propietarias) ---------- */
+/* Deliberately no box: no border, no background, no border-radius. The
+   wordmark inside (.cm-aliados__logo, shared with rows 2-3 below) is
+   styled exactly like an informational logo — same height, same
+   resting-opacity behavior — so it carries zero "this is a button"
+   signal on its own. The only thing that marks a chip as clickable at
+   rest is the small external-link arrow next to the name; the only
+   thing that marks it as *hovered* is the underline + arrow nudge
+   below, both gated to hover-capable pointers. */
 
 .cm-aliados__chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.6rem 1.15rem;
-  background: #ffffff;
-  border: 1px solid rgba(10, 11, 13, 0.14);
-  border-radius: var(--cm-radius-sm);
+  gap: 0.4rem;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.15em;
   text-decoration: none;
-  transition:
-    transform var(--cm-duration-fast) var(--cm-ease-out),
-    box-shadow var(--cm-duration-fast) var(--cm-ease-out),
-    border-color var(--cm-duration-fast) var(--cm-ease-out),
-    background-color var(--cm-duration-fast) var(--cm-ease-out);
-}
-
-.cm-aliados__chip-logo {
-  display: block;
-  height: clamp(18px, 2vw, 22px);
-  width: auto;
+  transition: border-color var(--cm-duration-fast) var(--cm-ease-out);
 }
 
 .cm-aliados__chip-arrow {
@@ -125,6 +114,10 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+  /* Always fully opaque, on every device — on touch there is no hover
+     to reveal it later, so it has to read as "clickable" permanently
+     on its own. */
+  opacity: 1;
   transition:
     transform var(--cm-duration-fast) var(--cm-ease-out),
     stroke var(--cm-duration-fast) var(--cm-ease-out);
@@ -132,10 +125,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .cm-aliados__chip:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(10, 11, 13, 0.12);
     border-color: var(--cm-blue-700);
-    background: #eef3ff;
   }
 
   .cm-aliados__chip:hover .cm-aliados__chip-arrow {
@@ -146,20 +136,21 @@
 
 .cm-aliados__chip:focus-visible {
   outline: 2px solid var(--cm-blue-700);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cm-aliados__chip:hover {
-    transform: none;
-  }
-
   .cm-aliados__chip:hover .cm-aliados__chip-arrow {
     transform: none;
   }
 }
 
-/* ---------- Rows 2-3 — informational logos, no card treatment ---------- */
+/* ---------- Logos — shared by all three rows ---------- */
+/* Same class on row 1's chip wordmarks and rows 2-3's informational
+   marks: identical height, identical resting/hover opacity treatment.
+   Rows 2-3 trigger their own :hover directly on the <img>; a chip's
+   logo brightens together with its arrow and underline when the
+   parent <a> is hovered, since logo+arrow is one clickable block. */
 
 .cm-aliados__logo {
   display: block;
@@ -179,14 +170,16 @@
     opacity: 0.75;
   }
 
-  .cm-aliados__logo:hover {
+  .cm-aliados__logo:hover,
+  .cm-aliados__chip:hover .cm-aliados__logo {
     opacity: 1;
     transform: scale(1.06);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cm-aliados__logo:hover {
+  .cm-aliados__logo:hover,
+  .cm-aliados__chip:hover .cm-aliados__logo {
     transform: none;
   }
 }

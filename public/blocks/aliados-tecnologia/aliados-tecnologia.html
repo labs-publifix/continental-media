@@ -13,17 +13,21 @@
     monochrome black with no color/light variant, so a black-on-black
     section is the only way to keep them legible regardless of whether
     the site ever ships a dark/light toggle. Same Inter body, same
-    --cm-radius-sm near-sharp corners, same --cm-blue-700 accent as
-    every other block, just recomposed for a light ground.
-  FORM: three stacked rows, never mixed. Row 1 ("Plataformas
+    --cm-blue-700 accent as every other block, just recomposed for a
+    light ground.
+  FORM: three stacked rows, never mixed, none of them boxed — every
+    logo in every row floats directly on the section background with
+    no card/border/radius treatment, and every logo shares one display
+    height per row so it reads as a single aligned line despite each
+    wordmark's own natural proportions. Row 1 ("Plataformas
     propietarias") is the only clickable row — two real Continental
-    Media products — rendered as bordered chips with an external-link
-    arrow, distinguishing them from the two purely-informational rows
-    below (Meta/Google/OpenAI/TikTok, then Anthropic/GitHub/Supabase/
-    Vercel), which float directly on the section background with no
-    card treatment. All logos in a row share one display height so the
-    row reads as a single aligned line despite each wordmark's own
-    natural proportions.
+    Media products — and looks visually identical to the two purely-
+    informational rows below (Meta/Google/OpenAI/TikTok, then
+    Anthropic/GitHub/Supabase/Vercel) except for one small external-
+    link arrow next to each name; clickability itself is communicated
+    only on hover (a border-bottom underline appears under logo+arrow,
+    and the arrow nudges toward the upper-right), so there is nothing
+    button-shaped anywhere in this row at rest.
   GOOGLE LOGO: the only source file that ships in brand color (blue/
     red/yellow/green) instead of monochrome black like its 9 neighbors.
     Forced solid black via `filter: brightness(0)` on the <img> itself
@@ -95,7 +99,7 @@
             aria-label="Publifix, se abre en una nueva pestaña"
           >
             <img
-              class="cm-aliados__chip-logo"
+              class="cm-aliados__logo"
               src="assets/images/aliados/publifix.png"
               alt=""
               width="1014"
@@ -117,7 +121,7 @@
             aria-label="LABS, se abre en una nueva pestaña"
           >
             <img
-              class="cm-aliados__chip-logo"
+              class="cm-aliados__logo"
               src="assets/images/aliados/labs.png"
               alt=""
               width="694"
