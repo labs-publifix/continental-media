@@ -1,0 +1,294 @@
+/*
+  Continental Media — "Aliados y Tecnología" block styles.
+  Namespaced under .cm-aliados. Depends on assets/css/tokens.css.
+  See aliados-tecnologia.html for the full direction-contract comment.
+
+  The one section on the page that pins its own fixed LIGHT background —
+  every logo asset is monochrome black with no color/light variant, so
+  this section cannot inherit the site's near-black --cm-color-bg. The
+  two local tokens below exist only inside .cm-aliados; nothing else on
+  the page should read them.
+
+  Contrast (verified, WCAG AA, against --cm-aliados-bg #f4f5f7):
+    - eyebrow / row-label text, black at 70% opacity  -> 7.28:1
+    - chip text/logos at full black                   -> 18.05:1
+    - --cm-blue-700 hover accent (border/icon)         -> 7.05:1
+  All comfortably clear of the 4.5:1 floor for normal text.
+*/
+
+.cm-aliados {
+  --cm-aliados-bg: #f4f5f7;
+  --cm-aliados-fg: #0a0b0d;
+  background: var(--cm-aliados-bg);
+  color: var(--cm-aliados-fg);
+  padding-block: clamp(3rem, 7vh, 4.5rem);
+}
+
+.cm-aliados__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+/* ---------- Eyebrow (the section's only heading — deliberately no
+   display-scale title, this is a trust seal, not a narrative block) ---------- */
+
+.cm-aliados__eyebrow {
+  margin: 0;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 11, 13, 0.7);
+  text-align: center;
+}
+
+/* ---------- Rows ---------- */
+
+.cm-aliados__row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.cm-aliados__row-label {
+  display: block;
+  font-family: var(--cm-font-body);
+  /* Sentence case, not uppercase: two of these three labels are full
+     5-6 word phrases (not a 1-2 word eyebrow tag), and all-caps at that
+     length hurts scanability — letters lose their word-shape cues.
+     Weight/tracking compensate so it still reads as a small label. */
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: rgba(10, 11, 13, 0.7);
+  text-align: center;
+}
+
+.cm-aliados__chip-list,
+.cm-aliados__logo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.cm-aliados__chip-list {
+  gap: 0.85rem;
+}
+
+.cm-aliados__logo-list {
+  column-gap: clamp(2rem, 5vw, 3.75rem);
+  row-gap: 1.5rem;
+}
+
+/* ---------- Row 1 — clickable chips (Plataformas propietarias) ---------- */
+
+.cm-aliados__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1.15rem;
+  background: #ffffff;
+  border: 1px solid rgba(10, 11, 13, 0.14);
+  border-radius: var(--cm-radius-sm);
+  text-decoration: none;
+  transition:
+    transform var(--cm-duration-fast) var(--cm-ease-out),
+    box-shadow var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    background-color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-aliados__chip-logo {
+  display: block;
+  height: clamp(18px, 2vw, 22px);
+  width: auto;
+}
+
+.cm-aliados__chip-arrow {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: rgba(10, 11, 13, 0.55);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    transform var(--cm-duration-fast) var(--cm-ease-out),
+    stroke var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-aliados__chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(10, 11, 13, 0.12);
+    border-color: var(--cm-blue-700);
+    background: #eef3ff;
+  }
+
+  .cm-aliados__chip:hover .cm-aliados__chip-arrow {
+    stroke: var(--cm-blue-700);
+    transform: translate(2px, -2px);
+  }
+}
+
+.cm-aliados__chip:focus-visible {
+  outline: 2px solid var(--cm-blue-700);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-aliados__chip:hover {
+    transform: none;
+  }
+
+  .cm-aliados__chip:hover .cm-aliados__chip-arrow {
+    transform: none;
+  }
+}
+
+/* ---------- Rows 2-3 — informational logos, no card treatment ---------- */
+
+.cm-aliados__logo {
+  display: block;
+  height: clamp(22px, 2.6vw, 28px);
+  width: auto;
+  opacity: 1;
+  transition:
+    opacity var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+/* Reduced resting opacity is a desktop/hover-capable nicety only — a
+   touch visitor gets every logo at full opacity from the start, since
+   there is no hover state to reveal it later. */
+@media (hover: hover) and (pointer: fine) {
+  .cm-aliados__logo {
+    opacity: 0.75;
+  }
+
+  .cm-aliados__logo:hover {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-aliados__logo:hover {
+    transform: none;
+  }
+}
+
+/* The only source logo that ships in brand color instead of monochrome
+   black — forced solid black to match its 9 neighbors. brightness(0)
+   multiplies every RGB channel to 0 while preserving the PNG's alpha,
+   so the wordmark stays crisp, just recolored. */
+.cm-aliados__logo--google {
+  filter: brightness(0);
+}
+
+/* ---------- Scroll-entrance cascade ---------- */
+/* Row order: intro -> chips -> platforms -> stack, ~110ms apart; within
+   a row, each item steps a further ~70ms. All --cm-duration-* already
+   collapse to 1ms under prefers-reduced-motion (tokens.css), so every
+   delay below is effectively instant there too. */
+
+.cm-aliados__eyebrow,
+.cm-aliados__row-label,
+.cm-aliados__chip-list > li,
+.cm-aliados__logo-list > li {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+.cm-aliados.is-visible .cm-aliados__eyebrow,
+.cm-aliados.is-visible .cm-aliados__row-label,
+.cm-aliados.is-visible .cm-aliados__chip-list > li,
+.cm-aliados.is-visible .cm-aliados__logo-list > li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-aliados__eyebrow {
+  transition-delay: 0ms;
+}
+
+.cm-aliados__row--chips .cm-aliados__row-label {
+  transition-delay: 100ms;
+}
+
+.cm-aliados__row--platforms .cm-aliados__row-label {
+  transition-delay: 210ms;
+}
+
+.cm-aliados__row--stack .cm-aliados__row-label {
+  transition-delay: 320ms;
+}
+
+.cm-aliados__row--chips .cm-aliados__chip-list > li:nth-child(1) {
+  transition-delay: 150ms;
+}
+
+.cm-aliados__row--chips .cm-aliados__chip-list > li:nth-child(2) {
+  transition-delay: 220ms;
+}
+
+.cm-aliados__row--platforms .cm-aliados__logo-list > li:nth-child(1) {
+  transition-delay: 260ms;
+}
+
+.cm-aliados__row--platforms .cm-aliados__logo-list > li:nth-child(2) {
+  transition-delay: 330ms;
+}
+
+.cm-aliados__row--platforms .cm-aliados__logo-list > li:nth-child(3) {
+  transition-delay: 400ms;
+}
+
+.cm-aliados__row--platforms .cm-aliados__logo-list > li:nth-child(4) {
+  transition-delay: 470ms;
+}
+
+.cm-aliados__row--stack .cm-aliados__logo-list > li:nth-child(1) {
+  transition-delay: 370ms;
+}
+
+.cm-aliados__row--stack .cm-aliados__logo-list > li:nth-child(2) {
+  transition-delay: 440ms;
+}
+
+.cm-aliados__row--stack .cm-aliados__logo-list > li:nth-child(3) {
+  transition-delay: 510ms;
+}
+
+.cm-aliados__row--stack .cm-aliados__logo-list > li:nth-child(4) {
+  transition-delay: 580ms;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .cm-aliados__row--platforms .cm-aliados__logo-list,
+  .cm-aliados__row--stack .cm-aliados__logo-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    column-gap: 1.75rem;
+    row-gap: 1.75rem;
+  }
+}

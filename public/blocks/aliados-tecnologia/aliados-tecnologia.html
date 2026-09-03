@@ -1,0 +1,156 @@
+<!--
+  CONTINENTAL MEDIA — "ALIADOS Y TECNOLOGÍA" BLOCK (canonical source)
+  THESIS: a trust seal, not a content section. Sits between Testimonios
+    and Contacto to close the "here's the proof" run with a quiet,
+    factual signal — Continental Media has its own platforms, runs paid
+    media on the platforms that matter, and builds on modern tooling —
+    without competing in visual weight with the narrative sections above
+    it. Deliberately small type, tight vertical rhythm, no big headline.
+  OWN-WORLD: the one deliberate break from every other block on this
+    page — every other section inherits the site's near-black ground;
+    this one pins a fixed light background (--cm-aliados-bg, local to
+    this block, not a global token) because all 10 source logo files are
+    monochrome black with no color/light variant, so a black-on-black
+    section is the only way to keep them legible regardless of whether
+    the site ever ships a dark/light toggle. Same Inter body, same
+    --cm-radius-sm near-sharp corners, same --cm-blue-700 accent as
+    every other block, just recomposed for a light ground.
+  FORM: three stacked rows, never mixed. Row 1 ("Plataformas
+    propietarias") is the only clickable row — two real Continental
+    Media products — rendered as bordered chips with an external-link
+    arrow, distinguishing them from the two purely-informational rows
+    below (Meta/Google/OpenAI/TikTok, then Anthropic/GitHub/Supabase/
+    Vercel), which float directly on the section background with no
+    card treatment. All logos in a row share one display height so the
+    row reads as a single aligned line despite each wordmark's own
+    natural proportions.
+  GOOGLE LOGO: the only source file that ships in brand color (blue/
+    red/yellow/green) instead of monochrome black like its 9 neighbors.
+    Forced solid black via `filter: brightness(0)` on the <img> itself
+    (aliados-tecnologia.css, .cm-aliados__logo--google) rather than by
+    re-exporting the asset, so the fix lives next to the one logo it
+    applies to and the source file stays untouched.
+  ACCESSIBILITY: each row is a real <ul> (informational rows) so a
+    screen reader announces "list of 4"; row 1's chips are plain <a>
+    elements (functional without JS) whose accessible name comes from
+    the link's own aria-label — "<Marca>, se abre en una nueva
+    pestaña" — so the state is announced without a redundant logo alt;
+    the logo <img> inside each chip is alt="" (decorative, name already
+    carried by the link). Rows 2-3's logos carry the brand name as real
+    alt text since nothing else names them. Contrast (verified, WCAG AA,
+    against --cm-aliados-bg #f4f5f7): eyebrow/row-label text at 70% black
+    = 7.28:1, chip text at full black = 18.05:1, the --cm-blue-700 hover
+    accent = 7.05:1 — all comfortably clear for normal text.
+  ANIMATION: one-shot scroll entrance (IntersectionObserver adds
+    .is-visible to the section) cascades intro → row 1 → row 2 → row 3,
+    ~110ms between rows and ~70ms between items within a row, all via
+    CSS transition-delay (no per-item JS). If aliados-tecnologia.js
+    never runs, the <noscript> rule below forces every row statically
+    visible with zero motion. --cm-duration-* already collapse to 1ms
+    under prefers-reduced-motion (tokens.css), so the cascade itself is
+    instant there; aliados-tecnologia.css additionally removes the
+    hover scale/lift transforms under that same query, per the same
+    rule already applied to every other block's motion.
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then
+       blocks/aliados-tecnologia/aliados-tecnologia.css.
+    2. Copy the <section class="cm-aliados"> markup below as-is,
+       between the Testimonios and Contacto sections on the home page.
+    3. Load blocks/aliados-tecnologia/aliados-tecnologia.js as a module
+       (drives only the scroll-entrance cascade; the <noscript> fallback
+       works without it).
+  Asset paths are root-relative (public/assets/images/aliados/<name>.png,
+  no leading slash), matching every other home-page asset at this depth.
+-->
+<section
+  id="aliados-tecnologia"
+  class="cm-aliados"
+  data-cm-aliados
+  aria-labelledby="cm-aliados-heading"
+>
+  <noscript>
+    <style>
+      [data-cm-aliados] [data-cm-aliados-reveal],
+      [data-cm-aliados] .cm-aliados__row-label,
+      [data-cm-aliados] .cm-aliados__chip-list > li,
+      [data-cm-aliados] .cm-aliados__logo-list > li {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-aliados__inner">
+    <h2 class="cm-aliados__eyebrow" id="cm-aliados-heading" data-cm-aliados-reveal>Aliados y tecnología</h2>
+
+    <div class="cm-aliados__row cm-aliados__row--chips" data-cm-aliados-reveal>
+      <span class="cm-aliados__row-label">Plataformas propietarias</span>
+      <ul class="cm-aliados__chip-list">
+        <li>
+          <a
+            class="cm-aliados__chip"
+            href="https://launch.publifix.net"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Publifix, se abre en una nueva pestaña"
+          >
+            <img
+              class="cm-aliados__chip-logo"
+              src="assets/images/aliados/publifix.png"
+              alt=""
+              width="1014"
+              height="240"
+              loading="lazy"
+              decoding="async"
+            />
+            <svg class="cm-aliados__chip-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            class="cm-aliados__chip"
+            href="https://agents.publifix.net"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LABS, se abre en una nueva pestaña"
+          >
+            <img
+              class="cm-aliados__chip-logo"
+              src="assets/images/aliados/labs.png"
+              alt=""
+              width="694"
+              height="215"
+              loading="lazy"
+              decoding="async"
+            />
+            <svg class="cm-aliados__chip-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cm-aliados__row cm-aliados__row--platforms" data-cm-aliados-reveal>
+      <span class="cm-aliados__row-label">Plataformas donde ejecutamos campañas</span>
+      <ul class="cm-aliados__logo-list">
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/meta.png" alt="Meta" width="400" height="95" loading="lazy" decoding="async" /></li>
+        <li><img class="cm-aliados__logo cm-aliados__logo--google" src="assets/images/aliados/google.png" alt="Google" width="677" height="240" loading="lazy" decoding="async" /></li>
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/openai.png" alt="OpenAI" width="790" height="240" loading="lazy" decoding="async" /></li>
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/tiktok.png" alt="TikTok" width="805" height="240" loading="lazy" decoding="async" /></li>
+      </ul>
+    </div>
+
+    <div class="cm-aliados__row cm-aliados__row--stack" data-cm-aliados-reveal>
+      <span class="cm-aliados__row-label">Tecnologías con las que construimos</span>
+      <ul class="cm-aliados__logo-list">
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/anthropic.png" alt="Anthropic" width="1636" height="240" loading="lazy" decoding="async" /></li>
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/github.png" alt="GitHub" width="765" height="240" loading="lazy" decoding="async" /></li>
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/supabase.png" alt="Supabase" width="1072" height="240" loading="lazy" decoding="async" /></li>
+        <li><img class="cm-aliados__logo" src="assets/images/aliados/vercel.png" alt="Vercel" width="940" height="240" loading="lazy" decoding="async" /></li>
+      </ul>
+    </div>
+  </div>
+</section>
