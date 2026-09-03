@@ -1,0 +1,262 @@
+<!--
+  ⚠️ MOCK CONTENT — NOT REAL CLIENT TESTIMONIALS ⚠️
+  The 3 quotes below (names, titles, and wording) are PLACEHOLDER copy
+  written for layout/design purposes, built on top of real, already-
+  shipped case studies. They have NOT been reviewed or approved by
+  Alan (The Grand Lounge Elite), Ana (Bitali Desarrollos), or Alejandra
+  (New You Wellness Center) — do not treat this as a quote any of them
+  actually said. Replace with real, client-validated testimonials
+  before this section goes live in production.
+
+  CONTINENTAL MEDIA — "TESTIMONIOS" BLOCK (canonical source)
+  THESIS: not a round-photo card carousel — the brief explicitly rejects
+    that pattern. Each testimonial pairs an editorial-scale quote with
+    the linked case study's own headline result, so the section argues
+    "here's the proof," not just "here's what they said." One slide
+    visible at a time (never a peek-at-the-neighbors carousel strip),
+    advanced by arrows/dots/keyboard/auto-advance.
+  OWN-WORLD: same Space Grotesk display / Inter body pairing, same
+    near-black ground and --cm-blue-500 accent (reusing case-study's own
+    verified 5.11:1 "big stat" color choice) as every other block. No
+    photography of any kind, per explicit brief — not even a placeholder
+    avatar — so nothing here should be read as depicting a real person.
+  FORM: 3 slides, all present in the DOM (so no-JS/search engines see
+    every quote as real text), CSS Grid-stacked in one cell so the
+    container always sizes to the tallest slide with zero JS height
+    measurement. Only .is-active is opaque/positioned normally; the
+    others sit faded a few px below, both entering and leaving through
+    that same state (a symmetric crossfade+slight-rise, not a directional
+    slide-in/out pair) per the brief's own description. The one numeric
+    stat (Bitali's "+60 conversaciones") counts up from 0 each time its
+    slide becomes active; the other two stats are short phrases, not
+    numbers, and simply fade in.
+  ACCESSIBILITY: the whole stage carries aria-roledescription="carousel".
+    The static markup itself has no aria-hidden/tabindex on any slide —
+    all 3 are real, fully reachable content by default (required for the
+    no-JS path, where every slide stays visible). testimonials.js is what
+    adds aria-hidden to inactive slides and tabindex="-1" to their "Ver
+    caso completo" link once it actually runs, so a keyboard user never
+    lands on hidden content when JS is driving the carousel, but nothing
+    is ever hidden from a no-JS visitor who can't dismiss it. A
+    visually-hidden aria-live="polite" status region (not the slide list
+    itself, to avoid double-announcing mid-crossfade) announces "Testimonio
+    X de 3: <cliente>" on every change. Dots are real <button>s with
+    aria-label "Testimonio N de 3: <cliente>" and aria-current="true" on
+    the active one; arrows are labeled "Testimonio anterior/siguiente".
+    Auto-advance pauses on hover or focus-within and stops entirely under
+    prefers-reduced-motion (manual navigation still works, instantly, no
+    slide/count animation) — matching the same auto-rotating-content
+    control requirement already applied to nothing else on this site
+    (this is the first auto-advancing block). <noscript> hides the now-
+    inert nav controls and forces every slide statically visible/stacked.
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/testimonials/testimonials.css.
+    2. Copy the <section class="cm-testimonials"> markup below as-is,
+       between the Proyectos and Contacto sections on the home page.
+    3. Load blocks/testimonials/testimonials.js as a module (drives
+       navigation, auto-advance, the live-region announcement, and the
+       count-up; the <noscript> fallback works without it).
+  Case-study hrefs below are root-relative (proyectos/<slug>/, no leading
+  slash), matching every other home-page link at this same page depth.
+-->
+<section id="testimonios" class="cm-testimonials" data-cm-testimonials aria-labelledby="cm-testimonials-heading">
+  <noscript>
+    <style>
+      [data-cm-testimonials] [data-cm-testimonials-reveal],
+      [data-cm-testimonials] [data-cm-testimonials-slide] {
+        opacity: 1 !important;
+        transform: none !important;
+        position: static !important;
+        pointer-events: auto !important;
+      }
+      [data-cm-testimonials] [data-cm-testimonials-list] {
+        display: block !important;
+      }
+      [data-cm-testimonials] [data-cm-testimonials-slide] {
+        margin-bottom: 4rem;
+      }
+      [data-cm-testimonials] [data-cm-testimonials-controls] {
+        display: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-testimonials__inner">
+    <div class="cm-testimonials__intro" data-cm-testimonials-reveal>
+      <span class="cm-testimonials__eyebrow">Testimonios</span>
+      <h2 class="cm-testimonials__title" id="cm-testimonials-heading">
+        Resultados que hablan a través de quienes los viven.
+      </h2>
+    </div>
+
+    <div
+      class="cm-testimonials__stage"
+      data-cm-testimonials-reveal
+      data-cm-testimonials-stage
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Testimonios de clientes"
+    >
+      <div class="cm-testimonials__sr-status" data-cm-testimonials-status role="status" aria-live="polite"></div>
+
+      <ul class="cm-testimonials__list" data-cm-testimonials-list>
+        <li
+          class="cm-testimonials__slide is-active"
+          data-cm-testimonials-slide
+          data-index="0"
+          data-client="The Grand Lounge Elite"
+          aria-roledescription="slide"
+          aria-label="1 de 3"
+        >
+          <div class="cm-testimonials__quote-col">
+            <blockquote class="cm-testimonials__quote">
+              <p>
+                “Continental Media entendió desde el inicio que nuestra comunicación tenía que
+                estar al mismo nivel que la experiencia en sala. Hoy somos Lounge of the Year, y
+                eso también se construyó desde la estrategia digital.”
+              </p>
+            </blockquote>
+            <p class="cm-testimonials__author">
+              <span class="cm-testimonials__author-name">Alan</span>
+              <span class="cm-testimonials__author-role">Director General, The Grand Lounge Elite</span>
+            </p>
+          </div>
+          <div class="cm-testimonials__stat-col">
+            <span class="cm-testimonials__stat-label">Resultado</span>
+            <p class="cm-testimonials__stat-value" data-cm-testimonials-stat>Lounge of the Year 2025</p>
+            <span class="cm-testimonials__stat-context">Priority Pass</span>
+            <a class="cm-testimonials__link" href="proyectos/grand-lounge-elite/">
+              Ver caso completo
+              <svg class="cm-testimonials__link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="cm-testimonials__slide"
+          data-cm-testimonials-slide
+          data-index="1"
+          data-client="Bitali Desarrollos"
+          aria-roledescription="slide"
+          aria-label="2 de 3"
+        >
+          <div class="cm-testimonials__quote-col">
+            <blockquote class="cm-testimonials__quote">
+              <p>
+                “Antes perdíamos tiempo filtrando leads manualmente. Ahora el equipo comercial
+                solo recibe a quien realmente tiene intención de compra, y eso se nota
+                directamente en más cierres.”
+              </p>
+            </blockquote>
+            <p class="cm-testimonials__author">
+              <span class="cm-testimonials__author-name">Ana</span>
+              <span class="cm-testimonials__author-role">Directora Comercial, Bitali Desarrollos</span>
+            </p>
+          </div>
+          <div class="cm-testimonials__stat-col">
+            <span class="cm-testimonials__stat-label">Resultado</span>
+            <p class="cm-testimonials__stat-value" data-cm-testimonials-stat
+              ><span class="cm-testimonials__stat-prefix">+</span
+              ><span class="cm-testimonials__stat-number" data-cm-testimonials-stat-number data-target="60">60</span
+              ><span class="cm-testimonials__stat-suffix"> conversaciones atendidas por día</span></p
+            >
+            <span class="cm-testimonials__stat-context">Agentes de IA para WhatsApp</span>
+            <a class="cm-testimonials__link" href="proyectos/bitali-desarrollos/">
+              Ver caso completo
+              <svg class="cm-testimonials__link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="cm-testimonials__slide"
+          data-cm-testimonials-slide
+          data-index="2"
+          data-client="New You Wellness Center"
+          aria-roledescription="slide"
+          aria-label="3 de 3"
+        >
+          <div class="cm-testimonials__quote-col">
+            <blockquote class="cm-testimonials__quote">
+              <p>
+                “No esperábamos que un sitio web se convirtiera en una herramienta de operación
+                diaria. Hoy el quiz y el panel de leads son parte de cómo trabajamos todos los
+                días.”
+              </p>
+            </blockquote>
+            <p class="cm-testimonials__author">
+              <span class="cm-testimonials__author-name">Alejandra</span>
+              <span class="cm-testimonials__author-role">Gerente de Operaciones, New You Wellness Center</span>
+            </p>
+          </div>
+          <div class="cm-testimonials__stat-col">
+            <span class="cm-testimonials__stat-label">Resultado</span>
+            <p class="cm-testimonials__stat-value" data-cm-testimonials-stat>Motor de marketing con automatización integrada</p>
+            <span class="cm-testimonials__stat-context">Quiz de IA · Blogs automatizados · Panel de leads</span>
+            <a class="cm-testimonials__link" href="proyectos/new-you-wellness/">
+              Ver caso completo
+              <svg class="cm-testimonials__link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="cm-testimonials__controls" data-cm-testimonials-controls>
+        <button
+          type="button"
+          class="cm-testimonials__arrow cm-testimonials__arrow--prev"
+          data-cm-testimonials-prev
+          aria-label="Testimonio anterior"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
+
+        <div class="cm-testimonials__dots" data-cm-testimonials-dots>
+          <button
+            type="button"
+            class="cm-testimonials__dot is-active"
+            data-cm-testimonials-dot
+            data-index="0"
+            aria-label="Testimonio 1 de 3: The Grand Lounge Elite"
+            aria-current="true"
+          ></button>
+          <button
+            type="button"
+            class="cm-testimonials__dot"
+            data-cm-testimonials-dot
+            data-index="1"
+            aria-label="Testimonio 2 de 3: Bitali Desarrollos"
+            aria-current="false"
+          ></button>
+          <button
+            type="button"
+            class="cm-testimonials__dot"
+            data-cm-testimonials-dot
+            data-index="2"
+            aria-label="Testimonio 3 de 3: New You Wellness Center"
+            aria-current="false"
+          ></button>
+        </div>
+
+        <button
+          type="button"
+          class="cm-testimonials__arrow cm-testimonials__arrow--next"
+          data-cm-testimonials-next
+          aria-label="Siguiente testimonio"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
