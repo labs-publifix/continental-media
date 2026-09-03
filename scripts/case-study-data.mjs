@@ -220,9 +220,9 @@ export const CASE_STUDIES = [
     // public/blocks/projects-teaser/ (card 4 = Navy). Kept in sync by
     // hand for now — see that block's own palette comment for the values.
     nextProject: {
-      slug: 'the-anglo',
-      client: 'The Anglo',
-      category: 'Educación',
+      slug: 'camino-real',
+      client: 'Camino Real',
+      category: 'Hospitalidad',
       bg: '#0e2455',
       fg: '#c7d6ff',
     },
@@ -327,9 +327,9 @@ export const CASE_STUDIES = [
     // public/blocks/projects-teaser/ (card 6 = Indigo). Kept in sync by
     // hand for now — see that block's own palette comment for the values.
     nextProject: {
-      slug: 'mae-dunne',
-      client: 'Mae Dunne',
-      category: 'Restaurante',
+      slug: 'u3m',
+      client: 'U3M',
+      category: 'Educación',
       bg: '#221d3e',
       fg: '#dad6f5',
     },

@@ -119,16 +119,27 @@
 .cm-projects.is-visible .cm-projects__card-item:nth-child(4) { transition-delay: 270ms; }
 .cm-projects.is-visible .cm-projects__card-item:nth-child(5) { transition-delay: 360ms; }
 .cm-projects.is-visible .cm-projects__card-item:nth-child(6) { transition-delay: 450ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(7) { transition-delay: 540ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(8) { transition-delay: 630ms; }
+.cm-projects.is-visible .cm-projects__card-item:nth-child(9) { transition-delay: 720ms; }
 
 /* Per-card palette — custom properties cascade from this li down to the
    <a> below, which is the only place they're consumed. Checkerboard
-   order: bright/light, dark, light, dark, light, dark. */
+   order: bright/light, dark, light, dark, light, dark, light, dark,
+   bright. 7-9 extend the same brand-blue + neutral formula as 1-6
+   (never a hue outside that family), each independently contrast-
+   checked at >=4.5:1 (see the palette's original verification note in
+   this block's own header comment history) — Mist 14.87:1, Midnight
+   12.68:1, Cornflower 5.9:1. */
 .cm-projects__card-item:nth-child(1) { --cm-proj-bg: #1e5fff; --cm-proj-fg: #f2f6ff; }
 .cm-projects__card-item:nth-child(2) { --cm-proj-bg: #1b1d22; --cm-proj-fg: #edebe4; }
 .cm-projects__card-item:nth-child(3) { --cm-proj-bg: #e7e2d9; --cm-proj-fg: #17161b; }
 .cm-projects__card-item:nth-child(4) { --cm-proj-bg: #0e2455; --cm-proj-fg: #c7d6ff; }
 .cm-projects__card-item:nth-child(5) { --cm-proj-bg: #9fb2e8; --cm-proj-fg: #101a3d; }
 .cm-projects__card-item:nth-child(6) { --cm-proj-bg: #221d3e; --cm-proj-fg: #dad6f5; }
+.cm-projects__card-item:nth-child(7) { --cm-proj-bg: #e7e9f0; --cm-proj-fg: #14161f; }
+.cm-projects__card-item:nth-child(8) { --cm-proj-bg: #0b1024; --cm-proj-fg: #c9d3f5; }
+.cm-projects__card-item:nth-child(9) { --cm-proj-bg: #3555cc; --cm-proj-fg: #f4f7ff; }
 
 .cm-projects__card {
   position: relative;
