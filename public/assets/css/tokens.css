@@ -36,6 +36,9 @@
   --cm-color-accent-hover: var(--cm-blue-700);
   --cm-color-accent-active: var(--cm-blue-700);
   --cm-color-on-accent: var(--cm-white);
+  /* First form on the site (Contacto) needs an error state; verified
+     7.09:1 against --cm-color-bg (#0a0b0d). */
+  --cm-color-error: #ff6b6b;
 
   /* Semantic — layout */
   --cm-gutter: clamp(1.25rem, 4vw, 4rem);

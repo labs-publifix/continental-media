@@ -1,0 +1,377 @@
+/*
+  Continental Media — "Contacto" block styles.
+  Namespaced under .cm-contact. Depends on assets/css/tokens.css,
+  including --cm-color-error (added there for this block — see
+  contact.html's direction-contract comment).
+*/
+
+.cm-contact {
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+  padding-block: clamp(5rem, 12vh, 8rem);
+  font-size: 0.9375rem;
+}
+
+.cm-contact__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: var(--cm-gutter);
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(3rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* ---------- Scroll-entrance cascade ---------- */
+/* Left column first, form column ~180ms later — one authored beat, not
+   a per-field stagger; this section is meant to read as two blocks
+   arriving in sequence, not a choreography piece. --cm-duration-*
+   already collapse to 1ms under prefers-reduced-motion (tokens.css). */
+
+.cm-contact__intro,
+.cm-contact__panel {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-contact.is-visible .cm-contact__intro {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-contact.is-visible .cm-contact__panel {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 180ms;
+}
+
+/* ---------- Left column ---------- */
+
+.cm-contact__eyebrow {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+}
+
+.cm-contact__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.3rem + 2.2vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cm-contact__subtitle {
+  margin: 1.25rem 0 0;
+  font-family: var(--cm-font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 36ch;
+}
+
+/* ---------- Form shell ---------- */
+
+.cm-contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+/* Author display:flex/none rules both win the cascade over the UA
+   [hidden] rule at equal specificity (author styles load after the UA
+   sheet) — without this, contact.js setting form.hidden/successEl.hidden
+   would silently do nothing and both would render at once. */
+.cm-contact__form[hidden],
+.cm-contact__success[hidden] {
+  display: none;
+}
+
+.cm-contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.cm-contact__label {
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.cm-contact__label-optional {
+  font-weight: 400;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-left: 0.3em;
+}
+
+.cm-contact__input {
+  width: 100%;
+  font-family: var(--cm-font-body);
+  font-size: 1rem;
+  color: var(--cm-color-fg);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.85rem 1rem;
+  transition:
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    box-shadow var(--cm-duration-fast) var(--cm-ease-out),
+    background-color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-contact__input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.cm-contact__textarea {
+  resize: vertical;
+  min-height: 9rem;
+  line-height: 1.5;
+}
+
+.cm-contact__input:focus-visible {
+  outline: none;
+  border-color: var(--cm-color-accent);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(30, 95, 255, 0.28);
+}
+
+.cm-contact__input[aria-invalid='true'] {
+  border-color: var(--cm-color-error);
+}
+
+.cm-contact__error {
+  margin: 0;
+  font-family: var(--cm-font-body);
+  font-size: 0.8125rem;
+  color: var(--cm-color-error);
+}
+
+/* ---------- Error summary ---------- */
+
+.cm-contact__summary {
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  background: rgba(255, 107, 107, 0.08);
+  border-radius: var(--cm-radius-sm);
+  padding: 1rem 1.25rem;
+}
+
+/* Focused programmatically (JS moves focus here after a failed submit,
+   never by pointer or Tab), so a plain :focus ring is used instead of
+   :focus-visible — some browsers' focus-visible heuristics do not
+   treat a scripted .focus() as keyboard-originated. */
+.cm-contact__summary:focus {
+  outline: 2px solid var(--cm-color-error);
+  outline-offset: 3px;
+}
+
+.cm-contact__summary-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--cm-color-fg);
+}
+
+.cm-contact__summary-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.cm-contact__summary-list a {
+  font-family: var(--cm-font-body);
+  font-size: 0.875rem;
+  color: var(--cm-color-error);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cm-contact__summary-list a:hover,
+.cm-contact__summary-list a:focus-visible {
+  color: var(--cm-color-fg);
+}
+
+/* ---------- Medio de contacto preferido — chip radio group ---------- */
+/* Native <fieldset>/radio inputs, visually hidden; the selected look is
+   driven entirely by :has(), so the whole group still works with zero
+   JS (unlike the form's submit flow, which has nowhere to send data
+   without a backend — see contact.html). */
+
+.cm-contact__chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.cm-contact__chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--cm-radius-sm);
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-contact__chip-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cm-contact__chip:has(.cm-contact__chip-input:checked) {
+  background: var(--cm-color-accent);
+  border-color: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+}
+
+.cm-contact__chip:has(.cm-contact__chip-input:focus-visible) {
+  outline: 2px solid var(--cm-color-accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-contact__chip:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cm-contact__chip:has(.cm-contact__chip-input:checked):hover {
+    background: var(--cm-color-accent-hover);
+    border-color: var(--cm-color-accent-hover);
+  }
+}
+
+/* ---------- Submit ---------- */
+
+.cm-contact__submit {
+  margin-top: 0.25rem;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  border: none;
+  border-radius: var(--cm-radius-sm);
+  background: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out),
+    opacity var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-contact__submit:hover:not(:disabled) {
+    background: var(--cm-color-accent-hover);
+  }
+}
+
+.cm-contact__submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.cm-contact__submit:focus-visible {
+  outline: 2px solid var(--cm-blue-500);
+  outline-offset: 3px;
+}
+
+.cm-contact__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ---------- Success state ---------- */
+
+.cm-contact__success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.cm-contact__success:focus {
+  outline: none;
+}
+
+.cm-contact__success-icon {
+  width: 46px;
+  height: 46px;
+  fill: none;
+  stroke: var(--cm-color-accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cm-contact__success-title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+}
+
+.cm-contact__success-text {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 36ch;
+  line-height: 1.55;
+}
+
+/* ---------- Reduced motion ---------- */
+/* --cm-duration-* already collapse to 1ms globally (tokens.css); this
+   just removes the residual translate for belt-and-suspenders clarity,
+   matching every other block. */
+@media (prefers-reduced-motion: reduce) {
+  .cm-contact__intro,
+  .cm-contact__panel {
+    transform: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .cm-contact__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .cm-contact__subtitle {
+    max-width: none;
+  }
+}

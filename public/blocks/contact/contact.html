@@ -1,0 +1,174 @@
+<!--
+  CONTINENTAL MEDIA — "CONTACTO" BLOCK (canonical source)
+  THESIS: the closing section of the home, right before the footer — a
+    clear, low-friction invitation to act, not another narrative beat.
+    A single simple form, not a multi-step scheduling flow: name, email,
+    company (optional), what they need, and how they'd rather be
+    reached. Two columns on desktop (~40/60): context on the left,
+    the form doing the work on the right.
+  OWN-WORLD: same Space Grotesk display title / Inter body pairing,
+    same near-black ground and --cm-blue-600 accent as every other
+    block. Nothing new visually — the one real addition is
+    --cm-color-error (tokens.css), the site's first form needing an
+    error state, verified 7.09:1 against --cm-color-bg.
+  NO REAL BACKEND YET: there is nothing to send this form to. Submitting
+    it runs contact.js's mockSubmitContactRequest(), which simulates a
+    network call (a fixed delay, always "succeeds") and is written as
+    the one function to replace with a real fetch() once a form backend
+    exists — see the comment above it in contact.js. The UI itself
+    (loading -> success) is real and final; only the transport is a
+    stub.
+  FORM (fields, in order): Nombre (required) · Correo electrónico
+    (required, validated) · Empresa (optional, labeled as such) · ¿Qué
+    necesitas? (required textarea) · Medio de contacto preferido — a
+    native <fieldset>/radio group of 3 chips (WhatsApp/Llamada/Correo),
+    not a dropdown, so the single-select semantics are free from the
+    browser and no ARIA role-playing is needed. Every other field is
+    required by omission, matching the one visually-marked exception
+    (Empresa) rather than marking four "*required" labels.
+  VALIDATION: submit-triggered (per brief), not per-keystroke. A failed
+    submit shows (a) a focusable, dismiss-free error summary at the top
+    of the form — role="alert", tabindex="-1", one link per invalid
+    field, focus moved to it — and (b) each invalid field's own inline
+    error text, connected via aria-describedby (present on every field
+    at all times, pointing at an error <p> that starts empty/hidden so
+    it contributes nothing to the accessible description until an error
+    actually fills it). Once a field has been marked invalid, contact.js
+    re-validates it live on input/change so its error clears the moment
+    it's fixed, without waiting for a second submit. A successful submit
+    replaces the <form> with a <div data-cm-contact-success>, focus
+    moved there too, rather than a self-clearing toast — matches the
+    "brief clear confirmation" requirement without inventing a fifth
+    live region.
+  ACCESSIBILITY: every field has a real <label for>, never a
+    placeholder standing in for one (the textarea's placeholder is
+    example content, in addition to its own <label>). The submit
+    button's own busy state is exposed via aria-busy + disabled, not
+    color alone. See VALIDATION above for the error-summary/inline-error
+    wiring.
+  ANIMATION: one-shot scroll entrance (IntersectionObserver adds
+    .is-visible to the section): the left column fades up first, the
+    form column follows on the same fade-up ~180ms later — both pure
+    CSS transition-delay, matching every other block's cascade
+    convention. --cm-duration-* already collapse to 1ms under
+    prefers-reduced-motion (tokens.css). If contact.js never runs, the
+    <noscript> rule below forces both columns statically visible; the
+    chip group's selected state is native :checked/:has()-driven CSS,
+    so it still works with zero JS — only the submit flow (validation,
+    loading, success swap) needs the script, since there is no backend
+    for a plain HTML POST to reach yet anyway (see NO REAL BACKEND
+    ABOVE).
+  USAGE — canonical source for this block. To use it on a page:
+    1. Link assets/css/tokens.css, then blocks/contact/contact.css.
+    2. Copy the <section class="cm-contact"> markup below as-is,
+       between the Aliados y Tecnología section and the footer.
+    3. Load blocks/contact/contact.js as a module (drives the scroll
+       entrance, the mock submit flow, and validation; see NO REAL
+       BACKEND above for what to change when a real endpoint exists).
+-->
+<section id="contacto" class="cm-contact" data-cm-contact aria-labelledby="cm-contact-heading">
+  <noscript>
+    <style>
+      [data-cm-contact] [data-cm-contact-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-contact__inner">
+    <div class="cm-contact__intro" data-cm-contact-reveal>
+      <span class="cm-contact__eyebrow">Contacto</span>
+      <h2 class="cm-contact__title" id="cm-contact-heading">Hablemos de lo que tu marca necesita.</h2>
+      <p class="cm-contact__subtitle">Cuéntanos qué necesitas — te contactamos en menos de 24 horas.</p>
+    </div>
+
+    <div class="cm-contact__panel" data-cm-contact-reveal>
+      <form class="cm-contact__form" data-cm-contact-form novalidate>
+        <div class="cm-contact__summary" data-cm-contact-summary role="alert" tabindex="-1" hidden>
+          <p class="cm-contact__summary-title">Revisa los campos marcados antes de continuar.</p>
+          <ul class="cm-contact__summary-list" data-cm-contact-summary-list></ul>
+        </div>
+
+        <div class="cm-contact__field">
+          <label class="cm-contact__label" for="contact-name">Nombre</label>
+          <input
+            class="cm-contact__input"
+            type="text"
+            id="contact-name"
+            name="name"
+            autocomplete="name"
+            required
+            aria-describedby="contact-name-error"
+          />
+          <p class="cm-contact__error" id="contact-name-error" data-cm-contact-error hidden></p>
+        </div>
+
+        <div class="cm-contact__field">
+          <label class="cm-contact__label" for="contact-email">Correo electrónico</label>
+          <input
+            class="cm-contact__input"
+            type="email"
+            id="contact-email"
+            name="email"
+            autocomplete="email"
+            required
+            aria-describedby="contact-email-error"
+          />
+          <p class="cm-contact__error" id="contact-email-error" data-cm-contact-error hidden></p>
+        </div>
+
+        <div class="cm-contact__field">
+          <label class="cm-contact__label" for="contact-company">Empresa <span class="cm-contact__label-optional">(opcional)</span></label>
+          <input class="cm-contact__input" type="text" id="contact-company" name="company" autocomplete="organization" />
+        </div>
+
+        <div class="cm-contact__field">
+          <label class="cm-contact__label" for="contact-message">¿Qué necesitas?</label>
+          <textarea
+            class="cm-contact__input cm-contact__textarea"
+            id="contact-message"
+            name="message"
+            rows="5"
+            required
+            placeholder="Cuéntanos sobre tu marca y qué te gustaría lograr"
+            aria-describedby="contact-message-error"
+          ></textarea>
+          <p class="cm-contact__error" id="contact-message-error" data-cm-contact-error hidden></p>
+        </div>
+
+        <fieldset class="cm-contact__field cm-contact__method" aria-describedby="contact-method-error">
+          <legend class="cm-contact__label">Medio de contacto preferido</legend>
+          <div class="cm-contact__chip-group" data-cm-contact-method-group>
+            <label class="cm-contact__chip">
+              <input class="cm-contact__chip-input" type="radio" name="contact-method" value="whatsapp" />
+              <span class="cm-contact__chip-text">WhatsApp</span>
+            </label>
+            <label class="cm-contact__chip">
+              <input class="cm-contact__chip-input" type="radio" name="contact-method" value="llamada" />
+              <span class="cm-contact__chip-text">Llamada</span>
+            </label>
+            <label class="cm-contact__chip">
+              <input class="cm-contact__chip-input" type="radio" name="contact-method" value="correo" />
+              <span class="cm-contact__chip-text">Correo</span>
+            </label>
+          </div>
+          <p class="cm-contact__error" id="contact-method-error" data-cm-contact-error hidden></p>
+        </fieldset>
+
+        <button class="cm-contact__submit" type="submit" data-cm-contact-submit>
+          <span data-cm-contact-submit-label>Enviar mensaje</span>
+        </button>
+      </form>
+
+      <div class="cm-contact__success" data-cm-contact-success role="status" tabindex="-1" hidden>
+        <svg class="cm-contact__success-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M8 12.5l2.5 2.5L16 9.5" />
+        </svg>
+        <h3 class="cm-contact__success-title">¡Mensaje enviado!</h3>
+        <p class="cm-contact__success-text">Gracias por escribirnos. Te contactamos en menos de 24 horas.</p>
+      </div>
+    </div>
+  </div>
+</section>
