@@ -10,11 +10,11 @@
  * /servicios pillar pages).
  *
  * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness",
- * "parroquia-veracruz" and "u3m" are filled in so far. The remaining 4
- * project slugs already live in the home page's projects-teaser grid
- * (public/blocks/projects-teaser/) and each still shows a
- * "Próximamente" badge; add an object here (and remove that project's
- * badge in projects-teaser) as each is written.
+ * "parroquia-veracruz", "u3m" and "amda-veracruz-tabasco" are filled in
+ * so far. The remaining 3 project slugs already live in the home page's
+ * projects-teaser grid (public/blocks/projects-teaser/) and each still
+ * shows a "Próximamente" badge; add an object here (and remove that
+ * project's badge in projects-teaser) as each is written.
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
@@ -517,11 +517,112 @@ export const CASE_STUDIES = [
     // public/blocks/projects-teaser/ (card 7 = Mist). Kept in sync by
     // hand for now — see that block's own palette comment for the values.
     nextProject: {
-      slug: 'amda',
-      client: 'AMDA',
+      slug: 'amda-veracruz-tabasco',
+      client: 'AMDA Veracruz Tabasco',
       category: 'Automotriz',
       bg: '#e7e9f0',
       fg: '#14161f',
+    },
+  },
+
+  {
+    slug: 'amda-veracruz-tabasco',
+    client: 'AMDA Veracruz Tabasco',
+    industry: 'Asociación / Sector Automotriz',
+    disciplines: ['Branding', 'Redes Sociales', 'Meta', 'Relaciones Públicas', 'Producción Audiovisual', 'Eventos'],
+    factFour: { label: 'Alcance', value: 'Veracruz y Tabasco · Colaboración activa desde mayo 2023' },
+    metaTitle: 'AMDA Veracruz Tabasco — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media construyó una presencia digital constante para AMDA Veracruz Tabasco: contenido, producción audiovisual y relaciones públicas que llevaron a la asociación a más de 8,900 seguidores en Facebook y presencia en Instagram.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'Presencia digital constante para la voz del sector automotriz.',
+      meta: 'AMDA Veracruz Tabasco · Branding, Redes Sociales, Meta, Relaciones Públicas, Producción Audiovisual, Eventos',
+      mediaAlt: 'Equipo de AMDA Veracruz Tabasco conversando bajo una carpa durante un evento del sector automotriz, con autos estacionados al fondo',
+      media: { src: 'proyectos/amda-veracruz-tabasco/hero.jpg', width: 1600, height: 1200 },
+    },
+
+    summary:
+      'AMDA Veracruz Tabasco es la Asociación Mexicana de Distribuidores de Automotores en Veracruz y Tabasco, que representa y agrupa a los distribuidores del sector automotriz en ambos estados. La relación con Continental Media es anterior a 2023, pero se retomó y formalizó con la renovación del contrato en mayo de ese año. Desde entonces desarrollamos una estrategia integral de contenido, producción audiovisual y relaciones públicas para mantener una comunicación constante con sus asociados y visibilizar el trabajo de la asociación en el sector. Hoy, AMDA Veracruz Tabasco mantiene una comunidad activa de más de 8,900 seguidores en Facebook y una presencia consolidada en Instagram, canal que antes no existía.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Equipo de Toyota Xalapa posando junto a una camioneta en una carpa de feria automotriz, con banderas y anuncios de la marca',
+      media: { src: 'proyectos/amda-veracruz-tabasco/contexto.jpg', width: 1600, height: 1200 },
+      body: 'AMDA Veracruz Tabasco forma parte de la representación regional de la Asociación Mexicana de Distribuidores de Automotores, y concentra su actividad en el sector automotriz de Veracruz y Tabasco. La relación con el cliente ya existía antes de la pandemia, pero las actividades se pausaron durante ese periodo. Con la reactivación del sector, la asociación retomó la colaboración con Continental Media y renovó su contrato en mayo de 2023.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'Uno de los principales retos era fortalecer la comunicación con los colaboradores de las agencias asociadas y contar con una presencia digital constante que permitiera comunicar con claridad la labor que realiza la asociación en favor de la industria automotriz. AMDA necesitaba estructurar y mantener una comunicación continua con sus asociados, además de aprovechar sus canales digitales para mostrar sus actividades, eventos e iniciativas, y reforzar la relevancia de su trabajo dentro del sector automotriz de la región.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cinco decisiones clave',
+      items: [
+        'Establecer una estrategia de contenidos para redes sociales que comunicara de forma constante las actividades, iniciativas y participación de AMDA Veracruz Tabasco en la industria automotriz.',
+        'Centralizar la planeación y producción de contenidos, desde los calendarios editoriales y materiales gráficos hasta la creación de piezas audiovisuales, programación y publicación.',
+        'Fortalecer la presencia digital de la asociación mediante la consolidación de Facebook y la creación de una presencia en Instagram, ampliando los canales de comunicación con los asociados y la audiencia del sector.',
+        'Integrar la comunicación digital con las actividades presenciales de la asociación —especialmente ferias y eventos— complementándolas con producción audiovisual y relaciones públicas con medios.',
+        'Generar dinámicas de interacción con los asociados, como sorteos y otras acciones de participación, para mantener activa la comunidad alrededor de la asociación.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Contenido y producción constante',
+          mediaAlt: 'Stand de Jetour Gruver en una feria automotriz, con banderas de marca, pantallas y personal atendiendo a visitantes',
+          media: { src: 'proyectos/amda-veracruz-tabasco/contenido-produccion.jpg', width: 1600, height: 1200 },
+          body: 'Desarrollamos y ejecutamos de manera continua la planeación y estrategia de contenidos para las redes sociales de AMDA Veracruz Tabasco: calendarios de contenido, diseño de materiales gráficos, creación de piezas audiovisuales, programación y publicación, además de la cobertura y comunicación de las actividades de la asociación.',
+        },
+        {
+          title: 'Ferias, eventos y relaciones públicas',
+          mediaAlt: 'Vocero de AMDA Veracruz Tabasco dirigiéndose a un grupo de asistentes con micrófono durante un evento del sector automotriz',
+          media: { src: 'proyectos/amda-veracruz-tabasco/ferias-eventos.jpg', width: 1280, height: 960 },
+          body: 'En paralelo, brindamos apoyo integral para sus ferias y eventos, incluyendo la planeación de la comunicación, relaciones públicas con medios, generación de materiales audiovisuales y difusión posterior en redes sociales. También desarrollamos dinámicas de participación para los asociados, como sorteos y acciones especiales de comunicación, para mantener activa la comunidad alrededor de la asociación.',
+        },
+        {
+          title: 'Presencia constante en Facebook e Instagram',
+          mediaAlt: 'Equipo de Foton Gruver posando junto a una unidad y material publicitario de marca en una feria automotriz',
+          media: { src: 'proyectos/amda-veracruz-tabasco/redes-sociales.jpg', width: 1600, height: 1200 },
+          body: 'La operación se articula principalmente a través de Facebook e Instagram, con una estrategia enfocada en mantener presencia constante y mostrar con claridad las actividades, eventos y aportaciones de AMDA Veracruz Tabasco al sector automotriz de la región.',
+          video: {
+            alt: 'Video de cobertura de actividades y presencia de AMDA Veracruz Tabasco en el sector automotriz, sin audio',
+            src: 'proyectos/amda-veracruz-tabasco/reel.mp4',
+            poster: 'proyectos/amda-veracruz-tabasco/reel-poster.jpg',
+            width: 1272,
+            height: 720,
+            caption: 'Cobertura en video de la presencia de AMDA Veracruz Tabasco en ferias y eventos del sector automotriz',
+          },
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      mediaAlt: 'Pieza de contenido de AMDA Veracruz Tabasco con la frase "Las grandes oportunidades nacen de conexiones sólidas" sobre un fondo de red de conexiones',
+      // Portrait content graphic (1080x1350) inside the 16:9/4:3 result
+      // banner: biased toward the text block's own vertical center so
+      // the message stays fully legible instead of being cut mid-line.
+      media: { src: 'proyectos/amda-veracruz-tabasco/resultado.jpg', width: 1080, height: 1350, position: '50% 55%' },
+      body: 'Como resultado de la estrategia de comunicación, AMDA Veracruz Tabasco cuenta hoy con presencia en Instagram —canal que antes no tenía— y una comunidad de más de 8,900 seguidores en Facebook, con más de 4,000 publicaciones acumuladas que documentan la actividad constante de la asociación en el sector. La colaboración, reactivada tras la pausa de la pandemia y formalizada en mayo de 2023, continúa activa hasta la fecha.',
+      highlight: '+8,900 seguidores',
+      highlightAttribution: 'Comunidad activa en Facebook, con presencia consolidada también en Instagram',
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 8 = Midnight). Kept in sync by
+    // hand for now — see that block's own palette comment for the values.
+    nextProject: {
+      slug: 'bosque-san-lucas',
+      client: 'Bosque San Lucas',
+      category: 'Inmobiliario',
+      bg: '#0b1024',
+      fg: '#c9d3f5',
     },
   },
 ];
