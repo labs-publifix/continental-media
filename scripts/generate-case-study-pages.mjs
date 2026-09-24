@@ -78,6 +78,13 @@ function renderVideoPlaceholder(altText) {
 // in incrementally without ever touching this generator.
 function renderMedia(media, label, altText, extraClass) {
   if (!media) return renderPlaceholder(label, altText, extraClass);
+  // Optional, per-image: object-fit: cover's default center crop can cut
+  // off the subject that matters (e.g. faces near the top of a group
+  // photo) — media.position overrides object-position without touching
+  // the shared CSS default every other image still relies on. Same
+  // mechanism as hero.mediaPosition, just on the media object itself
+  // since context/solution/result images all render through here.
+  const positionStyle = media.position ? ` style="object-position: ${media.position};"` : '';
   return `<img
               class="cm-case__media-img${extraClass ? ' ' + extraClass : ''}"
               src="${REL}assets/images/${media.src}"
@@ -85,7 +92,7 @@ function renderMedia(media, label, altText, extraClass) {
               height="${media.height}"
               alt="${escapeHtml(altText)}"
               loading="lazy"
-              decoding="async"
+              decoding="async"${positionStyle}
             />`;
 }
 
@@ -162,6 +169,12 @@ function renderHero(caseStudy) {
     .map((d) => `<li class="cm-case-hero__discipline-pill">${escapeHtml(d)}</li>`)
     .join('\n            ');
   const hasMedia = !!caseStudy.hero.media;
+  // Optional, per-case only: a portrait source photo cropped full-bleed
+  // behind a wide hero (object-fit: cover) can cut off the subject's
+  // face at the default center position — mediaPosition lets a case
+  // override object-position (e.g. biased toward the top) without
+  // touching the shared CSS default every other case still relies on.
+  const positionStyle = caseStudy.hero.mediaPosition ? ` style="object-position: ${caseStudy.hero.mediaPosition};"` : '';
   const mediaMarkup = hasMedia
     ? `<img
               class="cm-case-hero__media-img"
@@ -171,7 +184,7 @@ function renderHero(caseStudy) {
               alt="${escapeHtml(caseStudy.hero.mediaAlt)}"
               loading="eager"
               fetchpriority="high"
-              decoding="async"
+              decoding="async"${positionStyle}
             />`
     : renderPlaceholder('Imagen hero', caseStudy.hero.mediaAlt);
   return `    <section class="cm-case-hero" data-cm-case-hero>
@@ -382,7 +395,22 @@ ${subsections}
 
 function renderResult(caseStudy) {
   const r = caseStudy.result;
-  return `    <section class="cm-case-result" data-cm-case-reveal>
+  // Optional, per-case only: a case with a fitting closing image (e.g. a
+  // group/community shot that pays off the narrative) can set
+  // result.media/mediaAlt for a full-bleed banner above the text — same
+  // fade+scale reveal every solution image already uses (no placeholder
+  // when absent, unlike the mandatory hero/context slots: most cases
+  // won't set this, and an empty placeholder box here would just be
+  // clutter, not a "asset still pending" signal).
+  const mediaBlock = r.media
+    ? `
+      <div class="cm-case-result__media">
+        ${renderMedia(r.media, 'Imagen', r.mediaAlt)}
+      </div>`
+    : '';
+  const sectionClass = `cm-case-result${r.media ? ' cm-case-result--has-media' : ''}`;
+
+  return `    <section class="${sectionClass}" data-cm-case-reveal>${mediaBlock}
       <div class="cm-case-result__inner">
         <span class="cm-case__eyebrow">${escapeHtml(r.eyebrow)}</span>
         <p class="cm-case-result__text">${escapeHtml(r.body)}</p>
@@ -441,6 +469,7 @@ function renderCaseStudySection(caseStudy) {
           [data-cm-case] .cm-case-approach__item,
           [data-cm-case] .cm-case-solution__media,
           [data-cm-case] .cm-case-solution__video,
+          [data-cm-case] .cm-case-result__media,
           [data-cm-case] .cm-case-result__highlight {
             opacity: 1 !important;
             transform: none !important;

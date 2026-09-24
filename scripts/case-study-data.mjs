@@ -9,9 +9,9 @@
  * pages, mirroring the exact pattern already established for the 5
  * /servicios pillar pages).
  *
- * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness" and
- * "parroquia-veracruz" are filled in so far. The remaining 5 project
- * slugs already live in the home page's projects-teaser grid
+ * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness",
+ * "parroquia-veracruz" and "u3m" are filled in so far. The remaining 4
+ * project slugs already live in the home page's projects-teaser grid
  * (public/blocks/projects-teaser/) and each still shows a
  * "Próximamente" badge; add an object here (and remove that project's
  * badge in projects-teaser) as each is written.
@@ -427,6 +427,103 @@ export const CASE_STUDIES = [
       category: 'Inmobiliario',
       bg: '#e7e2d9',
       fg: '#17161b',
+    },
+  },
+
+  {
+    slug: 'u3m',
+    client: 'U3M — Universidad del Tercer Milenio',
+    industry: 'Educación',
+    disciplines: ['Redes Sociales', 'Desarrollo de Landing Page', 'Meta/Google/TikTok Ads', 'Diseño Gráfico'],
+    factFour: { label: 'Alcance', value: 'Puerto de Veracruz · Colaboración desde 2020' },
+    metaTitle: 'U3M — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media unificó y reactivó la comunicación de la Universidad del Tercer Milenio (U3M) en Veracruz: redes sociales, campañas en Meta, Google y TikTok, y diseño gráfico que generaron más de 400 inscripciones en más de 5 años de colaboración.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'De redes abandonadas a más de 400 nuevas inscripciones.',
+      meta: 'U3M · Universidad del Tercer Milenio · Redes Sociales, Meta/Google/TikTok Ads, Diseño Gráfico — Veracruz, México',
+      mediaAlt: 'Joven estudiante sonriendo al aire libre en el plantel de U3M, representando a la nueva generación de estudiantes de la universidad',
+      media: { src: 'proyectos/u3m/hero.jpg', width: 1467, height: 2200 },
+      // Portrait source (1467x2200): the default centered object-fit:cover
+      // crop cuts through the subject's eyes on wide desktop viewports.
+      // Biased toward the top so her face stays in frame.
+      mediaPosition: '50% 18%',
+    },
+
+    summary:
+      'La Universidad del Tercer Milenio (U3M) ofrece preparatoria y universidad, en modalidad escolarizada y sabatina, desde su único plantel en el Puerto de Veracruz. Trabajamos con ellos desde 2020, cuando sus redes sociales de prepa y universidad estaban separadas y abandonadas. Desde entonces hemos construido una estrategia integral de contenido, campañas publicitarias y diseño que llevó a U3M de ser una escuela conocida por algunos sectores de la ciudad a ocupar un lugar real en la mente de los jóvenes que buscan dónde estudiar. El resultado, sostenido durante más de 5 años de colaboración: más de 400 inscripciones generadas a través de nuestras campañas.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Estudiante de U3M sentada en un pasillo del plantel en el Puerto de Veracruz, con compañeros conversando de fondo',
+      media: { src: 'proyectos/u3m/contexto.jpg', width: 1467, height: 2200 },
+      body: 'Desde 2020, U3M trabaja de la mano con Continental Media con el objetivo de fortalecer su presencia en redes sociales y desarrollar estrategias digitales que no solo comunicaran su oferta educativa, sino que generaran resultados reales. Uno de los principales diferenciadores de U3M es su oferta de sistemas escolarizados y sabatinos, que se adapta a distintos estilos de vida — desde jóvenes que inician su formación hasta personas que combinan sus estudios con el trabajo.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: "U3M llegó con las redes sociales de la preparatoria y la universidad separadas y abandonadas. A pesar de contar con años de presencia en Veracruz y una oferta educativa competitiva, la institución no lograba el reconocimiento que su propuesta merecía. El reto no era únicamente generar leads: era construir presencia, reconocimiento y conversación alrededor de U3M, conectando con una audiencia joven a través de una comunicación más cercana, creativa y relevante que la llevara de ser 'una escuela conocida por algunos' a una opción presente en la mente de los jóvenes al momento de decidir dónde estudiar.",
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cuatro decisiones clave',
+      items: [
+        'Unificar y reactivar la comunicación de preparatoria y universidad bajo una estrategia de contenido consistente, en vez de operarlas como cuentas separadas y abandonadas.',
+        'Combinar publicidad digital, contenido y diseño publicitario para llevar la comunicación de U3M tanto al entorno digital como a los espacios físicos donde está su audiencia.',
+        'Desarrollar campañas publicitarias en Meta enfocadas en reconocimiento, interacción y generación de prospectos, sostenidas de forma continua a lo largo de los años.',
+        'Producir material gráfico y publicitario propio para expos, eventos educativos y campañas de inscripción, reforzando la presencia de la marca fuera de redes sociales.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Publicidad digital',
+          mediaAlt: 'Dos estudiantes de U3M sonriendo juntos en el plantel, representando el alcance de las campañas digitales de la universidad',
+          media: { src: 'proyectos/u3m/publicidad-digital.jpg', width: 1652, height: 2200 },
+          body: 'Desarrollamos una estrategia que combina publicidad digital, contenido y diseño publicitario, llevando la comunicación de U3M tanto al entorno digital como a los espacios físicos donde se encuentra su audiencia. En publicidad digital, gestionamos campañas en Meta Ads, Google Ads y TikTok Ads, enfocadas en reconocimiento de marca, interacción y generación de prospectos para preparatoria y universidad.',
+        },
+        {
+          title: 'Diseño y comunicación publicitaria',
+          mediaAlt: 'Estudiantes de U3M caminando por los pasillos del plantel en el Puerto de Veracruz',
+          media: { src: 'proyectos/u3m/diseno-comunicacion-1.jpg', width: 1652, height: 2200 },
+          media2Alt: 'Estudiante de U3M sonriendo junto a una columna del plantel, con mochila al hombro',
+          media2: { src: 'proyectos/u3m/diseno-comunicacion-2.jpg', width: 1652, height: 2200 },
+          body: 'En paralelo, desarrollamos diseño y comunicación publicitaria de forma constante: diseño de planes de estudio impresos, flyers y materiales promocionales, lonas publicitarias, material gráfico para campañas y promociones, y piezas para expos y eventos educativos en otras instituciones — todo pensado para apoyar directamente las campañas de inscripción.',
+        },
+        {
+          title: 'Presencia integral en cada punto de contacto',
+          mediaAlt: 'Estudiante de U3M sosteniendo un cuaderno con stickers en una de las áreas comunes del plantel',
+          media: { src: 'proyectos/u3m/presencia.jpg', width: 1652, height: 2200 },
+          body: 'Con esto, construimos una comunicación integral y consistente, haciendo que U3M estuviera presente no solo en redes sociales, sino en cada punto de contacto donde los futuros estudiantes podían conocer la institución.',
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      mediaAlt: 'Grupo de estudiantes de U3M reunidos y conversando en una mesa del plantel, representando a la comunidad que forma parte de la universidad hoy',
+      // Group photo: faces sit in the upper third, and the 16:9 result
+      // banner's default centered crop pushed most of them out of frame.
+      media: { src: 'proyectos/u3m/resultado.jpg', width: 2200, height: 1652, position: '50% 20%' },
+      body: 'Durante más de 5 años de colaboración, hemos acompañado a U3M en el crecimiento de su presencia digital y en la generación constante de prospectos. A través de una estrategia sostenida de contenido y campañas digitales, logramos impulsar el posicionamiento de U3M en Veracruz, haciendo que la institución ocupara un lugar real en la mente de los jóvenes que buscan dónde estudiar. El resultado se mide en generaciones completas de estudiantes que hoy forman parte de U3M después de encontrar a la universidad en redes sociales: más de 400 inscripciones generadas a través de nuestras campañas, sostenidas por más de 5 años de relación de trabajo continua.',
+      highlight: '+400 inscripciones',
+      highlightAttribution: 'Generadas a través de nuestras campañas, sostenidas por más de 5 años de colaboración',
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 7 = Mist). Kept in sync by
+    // hand for now — see that block's own palette comment for the values.
+    nextProject: {
+      slug: 'amda',
+      client: 'AMDA',
+      category: 'Automotriz',
+      bg: '#e7e9f0',
+      fg: '#14161f',
     },
   },
 ];

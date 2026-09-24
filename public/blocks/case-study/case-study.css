@@ -870,6 +870,47 @@
   padding-block: clamp(6rem, 16vh, 10rem);
 }
 
+/* Optional, per-case: a closing image above the text (e.g. a group/
+   community shot that pays off the narrative) — see
+   generate-case-study-pages.mjs's renderResult(). Only applied when
+   result.media is set; every case without one keeps the plain
+   padding-block above untouched. */
+.cm-case-result--has-media {
+  padding-top: 0;
+}
+
+.cm-case-result__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+}
+
+[data-cm-case-reveal].is-visible .cm-case-result__media {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cm-case-result--has-media .cm-case-result__inner {
+  padding-top: clamp(3.5rem, 9vh, 5.5rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-case-result__media {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .cm-case-result__media {
+    aspect-ratio: 4 / 3;
+  }
+}
+
 .cm-case-result__inner {
   max-width: 760px;
   margin: 0 auto;

@@ -416,6 +416,60 @@
         ],
         "createdAt": "2026-09-24T19:56:55.983Z",
         "reason": "Same root cause as the other case-study pages' suppressions: clamp()+vw font-size expressions read as near-identical static px values by the detector, not the real rendered scale."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/proyectos/u3m/index.html"
+        ],
+        "createdAt": "2026-09-24T21:33:15.010Z",
+        "reason": "Same site-wide typography (Inter/Space Grotesk) established for every prior case-study page; brief reuses the existing case-study template unchanged."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/proyectos/u3m/index.html"
+        ],
+        "createdAt": "2026-09-24T21:33:15.107Z",
+        "reason": "Same site-wide typography (Inter/Space Grotesk) established for every prior case-study page; brief reuses the existing case-study template unchanged."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "public/proyectos/u3m/index.html"
+        ],
+        "createdAt": "2026-09-24T21:33:15.202Z",
+        "reason": "Same eyebrow+headline house convention already verified and suppressed for the other 4 case-study pages — identical shared case-study.css markup, brief explicitly reuses the existing template unchanged."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/proyectos/u3m/index.html"
+        ],
+        "createdAt": "2026-09-24T21:33:15.270Z",
+        "reason": "Same shared case-study.css/footer.css classes already verified false-positive on the other 4 case-study pages: detector's static analyzer doesn't parse clamp()/vw padding expressions."
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "public/proyectos/u3m/index.html"
+        ],
+        "createdAt": "2026-09-24T21:33:15.326Z",
+        "reason": "cm-case-context__media is the same intentional full-bleed image crop container already verified false-positive on the other 4 case-study pages."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/proyectos/u3m/index.html"
+        ],
+        "createdAt": "2026-09-24T21:33:15.411Z",
+        "reason": "Same root cause as the other case-study pages' suppressions: clamp()+vw font-size expressions read as near-identical static px values by the detector, not the real rendered scale."
       }
     ]
   }
