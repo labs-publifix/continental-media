@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { PILLARS } from './pillar-data.mjs';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
+import { renderFooter } from './lib/footer-template.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -63,6 +64,7 @@ function renderHead(pillar) {
   <link rel="stylesheet" href="${REL}assets/css/tokens.css" />
   <link rel="stylesheet" href="${REL}blocks/site-header/site-header.css" />
   <link rel="stylesheet" href="${REL}blocks/pillar-page/pillar-page.css" />
+  <link rel="stylesheet" href="${REL}blocks/footer/footer.css" />
 
   <style>
     /* Minimal page shell — not a design system, just enough to view
@@ -224,6 +226,8 @@ ${renderHeader()}
   <main id="main-content" tabindex="-1">
 ${renderPillarSection(pillar)}
   </main>
+
+${renderFooter(REL)}
 
   <script type="module" src="${REL}blocks/site-header/site-header.js"></script>
   <script type="module" src="${REL}blocks/pillar-page/pillar-page.js"></script>

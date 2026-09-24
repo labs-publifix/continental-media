@@ -362,6 +362,60 @@
         ],
         "createdAt": "2026-08-28T14:49:36.390Z",
         "reason": "Same root cause as the other case-study pages: clamp()+vw font-size expressions (hero title 36-76px, result highlight up to ~80px) aren't resolved by the detector's static analyzer, leaving only the small fixed label/meta tier to ratio against itself."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/proyectos/parroquia-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-24T19:56:06.070Z",
+        "reason": "Same site-wide typography (Inter/Space Grotesk) established for every prior case-study page; brief reuses the existing case-study template unchanged."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/proyectos/parroquia-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-24T19:56:06.137Z",
+        "reason": "Same site-wide typography (Inter/Space Grotesk) established for every prior case-study page; brief reuses the existing case-study template unchanged."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "public/proyectos/parroquia-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-24T19:56:55.777Z",
+        "reason": "Same eyebrow+headline house convention already verified and suppressed for grand-lounge-elite/bitali-desarrollos/new-you-wellness — identical shared case-study.css markup, brief explicitly reuses the existing template unchanged."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/proyectos/parroquia-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-24T19:56:55.849Z",
+        "reason": "Same shared case-study.css/footer.css classes (cm-case-solution__row, cm-case-approach__item, cm-case-close, cm-footer__bottom) already verified false-positive on the other 3 case-study pages: detector's static analyzer doesn't parse clamp()/vw padding expressions."
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "public/proyectos/parroquia-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-24T19:56:55.916Z",
+        "reason": "cm-case-context__media is the same intentional full-bleed image crop container already verified false-positive on grand-lounge-elite/bitali-desarrollos/new-you-wellness."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/proyectos/parroquia-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-24T19:56:55.983Z",
+        "reason": "Same root cause as the other case-study pages' suppressions: clamp()+vw font-size expressions read as near-identical static px values by the detector, not the real rendered scale."
       }
     ]
   }

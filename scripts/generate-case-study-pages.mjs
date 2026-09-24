@@ -32,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { CASE_STUDIES } from './case-study-data.mjs';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
+import { renderFooter } from './lib/footer-template.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -140,6 +141,7 @@ function renderHead(caseStudy) {
   <link rel="stylesheet" href="${REL}assets/css/tokens.css" />
   <link rel="stylesheet" href="${REL}blocks/site-header/site-header.css" />
   <link rel="stylesheet" href="${REL}blocks/case-study/case-study.css" />
+  <link rel="stylesheet" href="${REL}blocks/footer/footer.css" />
 
   <style>
     /* Minimal page shell — not a design system, just enough to view
@@ -312,10 +314,24 @@ function renderSolutionSubsection(sub, index) {
   const reverse = index % 2 === 1;
   const hasVideo = !!sub.video;
 
+  // The box defaults to a 16:9 CSS aspect-ratio (right for every reel so
+  // far), but a real vertical/Reel-style video source needs its own box:
+  // forcing a 720x1280 portrait video into a 16:9 window via object-fit:
+  // cover would crop away most of the frame. Same fix as the screenshot
+  // box above — size the box from the asset's own known dimensions
+  // whenever we have them, so cover never has unwanted crop to do — plus
+  // a max-width cap (only when the video is actually taller than wide)
+  // so a portrait box reads as a prominent vertical centerpiece instead
+  // of stretching edge-to-edge into an oversized column.
+  const videoIsPortrait = hasVideo && sub.video.width && sub.video.height && sub.video.height > sub.video.width;
+  const videoFrameClass = `cm-case-solution__video${videoIsPortrait ? ' cm-case-solution__video--portrait' : ''}`;
+  const videoFrameStyle =
+    hasVideo && sub.video.width && sub.video.height ? ` style="aspect-ratio: ${sub.video.width} / ${sub.video.height};"` : '';
+
   const videoBlock = hasVideo
     ? `
       <div class="cm-case-solution__video-wrap">
-        <div class="cm-case-solution__video" data-cm-case-video-frame>
+        <div class="${videoFrameClass}" data-cm-case-video-frame${videoFrameStyle}>
           ${renderVideoMedia(sub.video, sub.video.alt)}
         </div>
         ${sub.video.caption ? `<p class="cm-case-solution__video-caption">${escapeHtml(sub.video.caption)}</p>` : ''}
@@ -461,6 +477,8 @@ ${renderSiteHeader(REL, { solid: false })}
   <main id="main-content" tabindex="-1">
 ${renderCaseStudySection(caseStudy)}
   </main>
+
+${renderFooter(REL)}
 
   <script type="module" src="${REL}blocks/site-header/site-header.js"></script>
   <script type="module" src="${REL}blocks/case-study/case-study.js"></script>

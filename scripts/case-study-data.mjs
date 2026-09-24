@@ -9,11 +9,12 @@
  * pages, mirroring the exact pattern already established for the 5
  * /servicios pillar pages).
  *
- * "grand-lounge-elite", "bitali-desarrollos" and "new-you-wellness" are
- * filled in so far. The remaining 2 project slugs already live in the
- * home page's projects-teaser grid (public/blocks/projects-teaser/) and
- * each still shows a "Próximamente" badge; add an object here (and
- * remove that project's badge in projects-teaser) as each is written.
+ * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness" and
+ * "parroquia-veracruz" are filled in so far. The remaining 5 project
+ * slugs already live in the home page's projects-teaser grid
+ * (public/blocks/projects-teaser/) and each still shows a
+ * "Próximamente" badge; add an object here (and remove that project's
+ * badge in projects-teaser) as each is written.
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
@@ -134,7 +135,7 @@ export const CASE_STUDIES = [
     nextProject: {
       slug: 'parroquia-veracruz',
       client: 'La Parroquia de Veracruz',
-      category: 'Patrimonio',
+      category: 'Café y Gastronomía',
       bg: '#1b1d22',
       fg: '#edebe4',
     },
@@ -332,6 +333,100 @@ export const CASE_STUDIES = [
       category: 'Educación',
       bg: '#221d3e',
       fg: '#dad6f5',
+    },
+  },
+
+  {
+    slug: 'parroquia-veracruz',
+    client: 'La Parroquia de Veracruz',
+    industry: 'Café y Gastronomía',
+    disciplines: ['Redes Sociales', 'Meta Ads', 'Producción Audiovisual'],
+    factFour: { label: 'Alcance', value: 'Nacional (origen en Veracruz)' },
+    metaTitle: 'La Parroquia de Veracruz — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media tradujo casi 100 años de historia de La Parroquia de Veracruz a una comunicación integral: redes sociales, producción audiovisual y campañas de Meta Ads para una marca de café y gastronomía con alcance nacional.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'Casi 100 años de historia, traducidos a una marca integral.',
+      meta: 'La Parroquia de Veracruz · Redes Sociales, Meta Ads, Producción Audiovisual — Alcance Nacional',
+      mediaAlt: 'Interior de La Parroquia de Veracruz lleno de comensales, con el letrero de la marca visible al fondo',
+      media: { src: 'proyectos/parroquia-veracruz/hero.jpg', width: 1467, height: 2200 },
+    },
+
+    summary:
+      'La Parroquia de Veracruz es una marca veracruzana con casi 100 años de trayectoria, que evolucionó de una cafetería tradicional a una propuesta integral de café y gastronomía, con cafeterías, restaurantes y una línea propia de productos de café. Nos buscaron para traducir esa evolución de negocio a una comunicación a la altura: capaz de honrar la identidad veracruzana que hizo grande a la marca, sin limitarla. Desde febrero de 2026 gestionamos su comunicación digital de forma integral —contenido, producción audiovisual y campañas de Meta Ads— consolidando una presencia consistente en cada línea de negocio.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Mujer con traje típico jarocho frente al letrero de La Parroquia de Veracruz, representando la identidad cultural de la marca',
+      media: { src: 'proyectos/parroquia-veracruz/contexto.jpg', width: 1467, height: 2200 },
+      body: 'La Parroquia de Veracruz es una de las marcas de café y restaurantes más reconocidas de Veracruz, con presencia nacional a través de su línea de productos de café. Nos buscaron en un momento clave de transformación de negocio: necesitaban una agencia capaz de comprender a profundidad su origen, historia e identidad veracruzana, pero con la visión y la capacidad de ejecución para acompañar su crecimiento hacia nuevos formatos y líneas de negocio.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'Comunicar únicamente una cafetería tradicional ya no era suficiente: la marca estaba ampliando su modelo de negocio hacia restaurantes y una línea propia de productos de café para consumo en casa. El reto de Continental Media era traducir esa transformación a una comunicación integral y consistente, sin perder los códigos y la identidad que hacen reconocible a La Parroquia desde hace casi un siglo — un equilibrio que exige tanto sensibilidad de marca como capacidad estratégica.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Tres decisiones clave',
+      items: [
+        'Tomar la historia, los códigos y los elementos reconocibles de La Parroquia de Veracruz como punto de partida, llevándolos a una comunicación actual sin que la tradición limitara la evolución de la marca.',
+        'Construir una comunicación capaz de presentar a La Parroquia como una marca integral, dando espacio propio a cada uno de sus modelos de negocio: restaurantes, cafeterías y productos de café para consumo en casa.',
+        'Convertir la historia, los rituales, los productos, las sucursales y la cultura alrededor de La Parroquia en fuentes constantes de contenido, en vez de reducir la comunicación a productos y promociones.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Contenido y producción',
+          mediaAlt:
+            "Pieza de menú de La Parroquia de Veracruz con ilustración de una bailarina jarocha y la frase 'Somos puerto, somos ritmo, somos sazón', junto a una bebida de la marca",
+          media: { src: 'proyectos/parroquia-veracruz/contenido-produccion.jpg', width: 1760, height: 2200 },
+          body: 'Desarrollamos y gestionamos de forma integral la comunicación digital de La Parroquia de Veracruz: planeación de contenidos, creación de piezas gráficas y audiovisuales, sesiones de foto y video, desarrollo de Reels, y comunicación de productos, promociones y sucursales — todo diseñado para reflejar la marca completa, no solo una parte de ella.',
+        },
+        {
+          title: 'Presencia en cada sucursal y línea de negocio',
+          mediaAlt: 'Plato de enfrijoladas con carne asada y una bebida de La Parroquia de Veracruz, en una de sus sucursales tipo restaurante',
+          media: { src: 'proyectos/parroquia-veracruz/sucursales-1.jpg', width: 1467, height: 2200 },
+          media2Alt: 'Plato de camarones empanizados con arroz en una de las sucursales de La Parroquia de Veracruz',
+          media2: { src: 'proyectos/parroquia-veracruz/sucursales-2.jpg', width: 1467, height: 2200 },
+          body: 'Cada pieza de contenido se adaptó a las distintas líneas de negocio de la marca: cafeterías, restaurantes y la línea de productos de café, manteniendo una narrativa consistente entre canales y puntos de venta.',
+        },
+        {
+          title: 'Campañas y coordinación continua',
+          body: 'En paralelo, configuramos, gestionamos y optimizamos campañas publicitarias en Meta, adaptando cada contenido a las distintas líneas de negocio de la marca. El trabajo se ejecutó de forma continua y estrechamente coordinada con el equipo de La Parroquia, ajustando la estrategia conforme la marca fue consolidando su propuesta integral en el mercado.',
+          video: {
+            alt: 'Video de campañas y presencia de La Parroquia de Veracruz en distintas sucursales y formatos de la marca, sin audio',
+            src: 'proyectos/parroquia-veracruz/reel.mp4',
+            poster: 'proyectos/parroquia-veracruz/reel-poster.jpg',
+            width: 720,
+            height: 1280,
+          },
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      body: 'Hoy, la comunicación de La Parroquia de Veracruz refleja lo que la marca realmente es: una propuesta integral de café y gastronomía, presente de forma consistente en cada línea de negocio y en cada punto de contacto digital. Restaurantes, cafeterías y productos de café dejaron de comunicarse como piezas sueltas para integrarse bajo una misma narrativa — la de una marca que honra casi un siglo de historia mientras sigue evolucionando.',
+      highlight: 'Una misma narrativa',
+      highlightAttribution: 'Restaurantes, cafeterías y productos de café, integrados en una sola marca',
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 3 = Bone). Kept in sync by
+    // hand for now — see that block's own palette comment for the values.
+    nextProject: {
+      slug: 'bitali-desarrollos',
+      client: 'Bitali Desarrollos',
+      category: 'Inmobiliario',
+      bg: '#e7e2d9',
+      fg: '#17161b',
     },
   },
 ];
