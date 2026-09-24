@@ -508,10 +508,6 @@ export const CASE_STUDIES = [
 
     result: {
       eyebrow: 'Resultado',
-      mediaAlt: 'Grupo de estudiantes de U3M reunidos y conversando en una mesa del plantel, representando a la comunidad que forma parte de la universidad hoy',
-      // Group photo: faces sit in the upper third, and the 16:9 result
-      // banner's default centered crop pushed most of them out of frame.
-      media: { src: 'proyectos/u3m/resultado.jpg', width: 2200, height: 1652, position: '50% 20%' },
       body: 'Durante más de 5 años de colaboración, hemos acompañado a U3M en el crecimiento de su presencia digital y en la generación constante de prospectos. A través de una estrategia sostenida de contenido y campañas digitales, logramos impulsar el posicionamiento de U3M en Veracruz, haciendo que la institución ocupara un lugar real en la mente de los jóvenes que buscan dónde estudiar. El resultado se mide en generaciones completas de estudiantes que hoy forman parte de U3M después de encontrar a la universidad en redes sociales: más de 400 inscripciones generadas a través de nuestras campañas, sostenidas por más de 5 años de relación de trabajo continua.',
       highlight: '+400 inscripciones',
       highlightAttribution: 'Generadas a través de nuestras campañas, sostenidas por más de 5 años de colaboración',
