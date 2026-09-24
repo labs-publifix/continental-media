@@ -438,40 +438,39 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Puerto de Veracruz · Colaboración desde 2020' },
     metaTitle: 'U3M — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media unificó y reactivó la comunicación de la Universidad del Tercer Milenio (U3M) en Veracruz: redes sociales, campañas en Meta, Google y TikTok, y diseño gráfico que generaron más de 400 inscripciones en más de 5 años de colaboración.',
+      'Cómo Continental Media construyó una comunicación integral para la Universidad del Tercer Milenio (U3M) en Veracruz: redes sociales, campañas en Meta, Google y TikTok, y diseño gráfico que generaron más de 400 inscripciones en más de 5 años de colaboración.',
 
     hero: {
       label: 'Caso de estudio',
-      title: 'De redes abandonadas a más de 400 nuevas inscripciones.',
+      title: 'Una alianza de más de 5 años que sigue formando generaciones.',
       meta: 'U3M · Universidad del Tercer Milenio · Redes Sociales, Meta/Google/TikTok Ads, Diseño Gráfico — Veracruz, México',
-      mediaAlt: 'Joven estudiante sonriendo al aire libre en el plantel de U3M, representando a la nueva generación de estudiantes de la universidad',
-      media: { src: 'proyectos/u3m/hero.jpg', width: 1467, height: 2200 },
-      // Portrait source (1467x2200): the default centered object-fit:cover
-      // crop cuts through the subject's eyes on wide desktop viewports.
-      // Biased toward the top so her face stays in frame.
-      mediaPosition: '50% 18%',
+      mediaAlt: 'Grupo de estudiantes de U3M reunidos y conversando junto a una mesa en el plantel del Puerto de Veracruz',
+      media: { src: 'proyectos/u3m/hero.jpg', width: 2200, height: 1652 },
     },
 
     summary:
-      'La Universidad del Tercer Milenio (U3M) ofrece preparatoria y universidad, en modalidad escolarizada y sabatina, desde su único plantel en el Puerto de Veracruz. Trabajamos con ellos desde 2020, cuando sus redes sociales de prepa y universidad estaban separadas y abandonadas. Desde entonces hemos construido una estrategia integral de contenido, campañas publicitarias y diseño que llevó a U3M de ser una escuela conocida por algunos sectores de la ciudad a ocupar un lugar real en la mente de los jóvenes que buscan dónde estudiar. El resultado, sostenido durante más de 5 años de colaboración: más de 400 inscripciones generadas a través de nuestras campañas.',
+      'La Universidad del Tercer Milenio (U3M) ofrece preparatoria y universidad, en modalidad escolarizada y sabatina, desde su único plantel en el Puerto de Veracruz. Trabajamos con ellos desde 2020, cuando sus redes sociales de prepa y universidad operaban de forma independiente, sin una estrategia que las conectara. Desde entonces hemos construido una comunicación integral de contenido, campañas publicitarias y diseño que llevó a U3M de ser una escuela conocida por algunos sectores de la ciudad a ocupar un lugar real en la mente de los jóvenes que buscan dónde estudiar. El resultado, sostenido durante más de 5 años de colaboración: más de 400 inscripciones generadas a través de nuestras campañas.',
 
     context: {
       eyebrow: 'Contexto',
-      mediaAlt: 'Estudiante de U3M sentada en un pasillo del plantel en el Puerto de Veracruz, con compañeros conversando de fondo',
-      media: { src: 'proyectos/u3m/contexto.jpg', width: 1467, height: 2200 },
+      mediaAlt: 'Dos estudiantes de U3M caminando por un pasillo con arcos del plantel en el Puerto de Veracruz, con compañeros conversando de fondo',
+      // Portrait source (1652x2200) inside a 21:9 full-bleed strip: the
+      // default centered crop only shows legs/floor. Biased toward the
+      // top so both students' faces and the archway stay in frame.
+      media: { src: 'proyectos/u3m/contexto.jpg', width: 1652, height: 2200, position: '50% 15%' },
       body: 'Desde 2020, U3M trabaja de la mano con Continental Media con el objetivo de fortalecer su presencia en redes sociales y desarrollar estrategias digitales que no solo comunicaran su oferta educativa, sino que generaran resultados reales. Uno de los principales diferenciadores de U3M es su oferta de sistemas escolarizados y sabatinos, que se adapta a distintos estilos de vida — desde jóvenes que inician su formación hasta personas que combinan sus estudios con el trabajo.',
     },
 
     challenge: {
       eyebrow: 'Reto',
-      body: "U3M llegó con las redes sociales de la preparatoria y la universidad separadas y abandonadas. A pesar de contar con años de presencia en Veracruz y una oferta educativa competitiva, la institución no lograba el reconocimiento que su propuesta merecía. El reto no era únicamente generar leads: era construir presencia, reconocimiento y conversación alrededor de U3M, conectando con una audiencia joven a través de una comunicación más cercana, creativa y relevante que la llevara de ser 'una escuela conocida por algunos' a una opción presente en la mente de los jóvenes al momento de decidir dónde estudiar.",
+      body: 'U3M contaba con años de presencia en Veracruz y una oferta educativa competitiva, pero sus redes sociales de preparatoria y universidad no compartían una estrategia común, lo que limitaba su alcance real. El reto no era únicamente generar leads: era construir presencia, reconocimiento y conversación alrededor de U3M, conectando con una audiencia joven a través de una comunicación más cercana, creativa y relevante que llevara a la institución de ser conocida por algunos sectores a convertirse en una opción presente en la mente de los jóvenes al momento de decidir dónde estudiar.',
     },
 
     approach: {
       eyebrow: 'Enfoque',
       title: 'Cuatro decisiones clave',
       items: [
-        'Unificar y reactivar la comunicación de preparatoria y universidad bajo una estrategia de contenido consistente, en vez de operarlas como cuentas separadas y abandonadas.',
+        'Unificar la comunicación de preparatoria y universidad bajo una estrategia de contenido consistente, en vez de operarlas de forma independiente entre sí.',
         'Combinar publicidad digital, contenido y diseño publicitario para llevar la comunicación de U3M tanto al entorno digital como a los espacios físicos donde está su audiencia.',
         'Desarrollar campañas publicitarias en Meta enfocadas en reconocimiento, interacción y generación de prospectos, sostenidas de forma continua a lo largo de los años.',
         'Producir material gráfico y publicitario propio para expos, eventos educativos y campañas de inscripción, reforzando la presencia de la marca fuera de redes sociales.',
@@ -489,8 +488,11 @@ export const CASE_STUDIES = [
         },
         {
           title: 'Diseño y comunicación publicitaria',
-          mediaAlt: 'Estudiantes de U3M caminando por los pasillos del plantel en el Puerto de Veracruz',
-          media: { src: 'proyectos/u3m/diseno-comunicacion-1.jpg', width: 1652, height: 2200 },
+          mediaAlt: 'Estudiante de U3M sonriendo en una terraza del plantel en el Puerto de Veracruz',
+          // Portrait close-up (1467x2200) inside the dual-media 4:3 box:
+          // the default centered crop drops her face below the frame.
+          // Biased toward the top so it stays in view.
+          media: { src: 'proyectos/u3m/diseno-comunicacion-1.jpg', width: 1467, height: 2200, position: '50% 15%' },
           media2Alt: 'Estudiante de U3M sonriendo junto a una columna del plantel, con mochila al hombro',
           media2: { src: 'proyectos/u3m/diseno-comunicacion-2.jpg', width: 1652, height: 2200 },
           body: 'En paralelo, desarrollamos diseño y comunicación publicitaria de forma constante: diseño de planes de estudio impresos, flyers y materiales promocionales, lonas publicitarias, material gráfico para campañas y promociones, y piezas para expos y eventos educativos en otras instituciones — todo pensado para apoyar directamente las campañas de inscripción.',
