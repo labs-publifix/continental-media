@@ -18,6 +18,14 @@
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
+ *
+ * RULE — hero.meta vs. disciplines: hero.meta (the hero's subtitle line)
+ * must never restate the case's own disciplines array — those already
+ * render as the pill list directly below it, so repeating them is a
+ * redundant duplicate on screen. hero.meta is for a short, genuinely
+ * different subtitle: client name plus either industry, a timeframe, or
+ * a geographic scope (`{client} · {industry or descriptor}` or
+ * `{client} · {descriptor} — {location}`) — never a list of services.
  */
 
 export const CASE_STUDIES = [
@@ -154,7 +162,7 @@ export const CASE_STUDIES = [
     hero: {
       label: 'Caso de estudio',
       title: 'Convertir 60 conversaciones diarias en los leads que realmente importan.',
-      meta: 'Bitali Desarrollos · AI Marketing Solutions — Agentes de IA para WhatsApp',
+      meta: 'Bitali Desarrollos · Inmobiliario — Veracruz, México',
       mediaAlt: 'Persona consultando WhatsApp desde su celular, representando la atención inmediata que ofrecen los agentes de IA de Bitali Desarrollos',
       media: { src: 'proyectos/bitali-desarrollos/hero.jpg', width: 2400, height: 1350 },
     },
@@ -242,7 +250,7 @@ export const CASE_STUDIES = [
     hero: {
       label: 'Caso de estudio',
       title: 'De un sitio de contacto a un motor de marketing con IA integrada.',
-      meta: 'New You Wellness Center · Marketing Digital y Desarrollo Web — Houston, TX',
+      meta: 'New You Wellness Center · Bienestar / Salud — Houston, TX',
       mediaAlt: 'Equipo de New You Wellness Center en su clínica de bienestar en Houston, Texas',
       media: { src: 'proyectos/new-you-wellness/hero.jpg', width: 1181, height: 787 },
     },
@@ -349,7 +357,7 @@ export const CASE_STUDIES = [
     hero: {
       label: 'Caso de estudio',
       title: 'Casi 100 años de historia, traducidos a una marca integral.',
-      meta: 'La Parroquia de Veracruz · Redes Sociales, Meta Ads, Producción Audiovisual — Alcance Nacional',
+      meta: 'La Parroquia de Veracruz · Café y Gastronomía — Alcance Nacional',
       mediaAlt: 'Interior de La Parroquia de Veracruz lleno de comensales, con el letrero de la marca visible al fondo',
       media: { src: 'proyectos/parroquia-veracruz/hero.jpg', width: 1467, height: 2200 },
     },
@@ -443,7 +451,7 @@ export const CASE_STUDIES = [
     hero: {
       label: 'Caso de estudio',
       title: 'Una alianza de más de 5 años que sigue formando generaciones.',
-      meta: 'U3M · Universidad del Tercer Milenio · Redes Sociales, Meta/Google/TikTok Ads, Diseño Gráfico — Veracruz, México',
+      meta: 'U3M · Universidad del Tercer Milenio — Puerto de Veracruz, México',
       mediaAlt: 'Grupo de estudiantes de U3M reunidos y conversando junto a una mesa en el plantel del Puerto de Veracruz',
       media: { src: 'proyectos/u3m/hero.jpg', width: 2200, height: 1652 },
     },
@@ -538,7 +546,7 @@ export const CASE_STUDIES = [
     hero: {
       label: 'Caso de estudio',
       title: 'Presencia digital constante para la voz del sector automotriz.',
-      meta: 'AMDA Veracruz Tabasco · Branding, Redes Sociales, Meta, Relaciones Públicas, Producción Audiovisual, Eventos',
+      meta: 'AMDA Veracruz Tabasco · Asociación Mexicana de Distribuidores de Automotores — Veracruz y Tabasco',
       mediaAlt: 'Equipo de AMDA Veracruz Tabasco conversando bajo una carpa durante un evento del sector automotriz, con autos estacionados al fondo',
       media: { src: 'proyectos/amda-veracruz-tabasco/hero.jpg', width: 1600, height: 1200 },
     },
