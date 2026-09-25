@@ -524,6 +524,60 @@
         ],
         "createdAt": "2026-09-24T22:50:40.527Z",
         "reason": "false positive from shared template's clamp()/vw CSS the static analyzer can't parse"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "public/proyectos/camino-real-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-25T00:48:44.892Z",
+        "reason": "shared case-study template font, already reviewed and accepted site-wide"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "public/proyectos/camino-real-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-25T00:48:44.973Z",
+        "reason": "shared case-study template font, already reviewed and accepted site-wide"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "public/proyectos/camino-real-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-25T00:48:45.055Z",
+        "reason": "shared case-study hero pattern, already reviewed and accepted site-wide"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/proyectos/camino-real-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-25T00:48:45.146Z",
+        "reason": "false positive from shared template's clamp()/vw CSS the static analyzer can't parse"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "public/proyectos/camino-real-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-25T00:48:45.225Z",
+        "reason": "false positive from shared template's clamp()/vw CSS the static analyzer can't parse"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "public/proyectos/camino-real-veracruz/index.html"
+        ],
+        "createdAt": "2026-09-25T00:48:45.300Z",
+        "reason": "false positive from shared template's clamp()/vw CSS the static analyzer can't parse"
       }
     ]
   }

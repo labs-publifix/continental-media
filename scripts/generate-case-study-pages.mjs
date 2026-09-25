@@ -410,13 +410,41 @@ function renderResult(caseStudy) {
     : '';
   const sectionClass = `cm-case-result${r.media ? ' cm-case-result--has-media' : ''}`;
 
+  // Optional, per-case only: two comparably-strong stats (result.highlights)
+  // render as independent value+label groups side by side instead of the
+  // single highlight/attribution pair — see that CSS rule's own comment
+  // for why. Mutually exclusive with highlight/highlightAttribution; a
+  // case sets one or the other, never both. Rendered as its own wider
+  // row AFTER (not inside) .cm-case-result__inner — that inner column is
+  // deliberately capped at 760px for the body paragraph's readability,
+  // which is too narrow to fit two large stat groups side by side; the
+  // single-stat path stays nested inside .cm-case-result__inner exactly
+  // as before, since one number never needed the extra width.
+  const highlightsRow = r.highlights
+    ? `
+      <div class="cm-case-result__highlights">
+        ${r.highlights
+          .map(
+            (h) => `
+        <div class="cm-case-result__highlight-group">
+          <p class="cm-case-result__highlight-value">${escapeHtml(h.value)}</p>
+          <p class="cm-case-result__highlight-label">${escapeHtml(h.label)}</p>
+        </div>`
+          )
+          .join('')}
+      </div>`
+    : '';
+  const singleHighlight = r.highlights
+    ? ''
+    : `
+        <p class="cm-case-result__highlight">${escapeHtml(r.highlight)}</p>
+        <p class="cm-case-result__attribution">${escapeHtml(r.highlightAttribution)}</p>`;
+
   return `    <section class="${sectionClass}" data-cm-case-reveal>${mediaBlock}
       <div class="cm-case-result__inner">
         <span class="cm-case__eyebrow">${escapeHtml(r.eyebrow)}</span>
-        <p class="cm-case-result__text">${escapeHtml(r.body)}</p>
-        <p class="cm-case-result__highlight">${escapeHtml(r.highlight)}</p>
-        <p class="cm-case-result__attribution">${escapeHtml(r.highlightAttribution)}</p>
-      </div>
+        <p class="cm-case-result__text">${escapeHtml(r.body)}</p>${singleHighlight}
+      </div>${highlightsRow}
     </section>`;
 }
 
@@ -470,7 +498,8 @@ function renderCaseStudySection(caseStudy) {
           [data-cm-case] .cm-case-solution__media,
           [data-cm-case] .cm-case-solution__video,
           [data-cm-case] .cm-case-result__media,
-          [data-cm-case] .cm-case-result__highlight {
+          [data-cm-case] .cm-case-result__highlight,
+          [data-cm-case] .cm-case-result__highlight-group {
             opacity: 1 !important;
             transform: none !important;
           }

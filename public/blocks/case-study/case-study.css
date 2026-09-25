@@ -970,8 +970,62 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+/* Optional, per-case only: a case with two comparably-strong stats (not
+   one dominant number) sets result.highlights instead of the single
+   highlight/attribution pair above — e.g. an Instagram figure and a
+   Facebook figure that both matter and would undersell each other if
+   only one got the climax treatment. Same display-type climax feel as
+   .cm-case-result__highlight, just sized to sit two across without
+   wrapping awkwardly, and stacked as independent value+label groups so
+   each stat keeps its own attribution instead of sharing one caption. */
+.cm-case-result__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(2rem, 6vw, 4.5rem);
+  max-width: 1100px;
+  margin: 0.9em auto 0;
+  padding-inline: var(--cm-gutter);
+  text-align: center;
+}
+
+.cm-case-result__highlight-group {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out),
+    transform var(--cm-duration-base) var(--cm-ease-out);
+  transition-delay: 180ms;
+}
+
+[data-cm-case-reveal].is-visible .cm-case-result__highlight-group {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-case-result__highlight-value {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.3rem + 3vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--cm-blue-500);
+}
+
+.cm-case-result__highlight-label {
+  margin: 0.6em 0 0;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .cm-case-result__highlight {
+  .cm-case-result__highlight,
+  .cm-case-result__highlight-group {
     opacity: 1;
     transform: none;
     transition: none;

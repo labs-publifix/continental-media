@@ -10,11 +10,12 @@
  * /servicios pillar pages).
  *
  * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness",
- * "parroquia-veracruz", "u3m" and "amda-veracruz-tabasco" are filled in
- * so far. The remaining 3 project slugs already live in the home page's
- * projects-teaser grid (public/blocks/projects-teaser/) and each still
- * shows a "Próximamente" badge; add an object here (and remove that
- * project's badge in projects-teaser) as each is written.
+ * "parroquia-veracruz", "u3m", "amda-veracruz-tabasco" and
+ * "camino-real-veracruz" are filled in so far. The remaining 2 project
+ * slugs already live in the home page's projects-teaser grid
+ * (public/blocks/projects-teaser/) and each still shows a
+ * "Próximamente" badge; add an object here (and remove that project's
+ * badge in projects-teaser) as each is written.
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
@@ -229,8 +230,8 @@ export const CASE_STUDIES = [
     // public/blocks/projects-teaser/ (card 4 = Navy). Kept in sync by
     // hand for now — see that block's own palette comment for the values.
     nextProject: {
-      slug: 'camino-real',
-      client: 'Camino Real',
+      slug: 'camino-real-veracruz',
+      client: 'Camino Real Veracruz',
       category: 'Hospitalidad',
       bg: '#0e2455',
       fg: '#c7d6ff',
@@ -631,6 +632,99 @@ export const CASE_STUDIES = [
       category: 'Inmobiliario',
       bg: '#0b1024',
       fg: '#c9d3f5',
+    },
+  },
+
+  {
+    slug: 'camino-real-veracruz',
+    client: 'Camino Real Veracruz',
+    industry: 'Hotelería',
+    disciplines: ['Redes Sociales', 'Producción Audiovisual'],
+    factFour: { label: 'Alcance', value: 'Veracruz, México · Colaboración activa desde febrero 2025' },
+    metaTitle: 'Camino Real Veracruz — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media construyó un proceso mensual de producción fotográfica y audiovisual para Camino Real Veracruz: contenido para redes sociales que llevó a la propiedad a un crecimiento sostenido en Instagram y Facebook.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'Contenido mensual que da vida a cada rincón del hotel.',
+      meta: 'Camino Real Veracruz · Hotelería — Veracruz, México',
+      mediaAlt: 'Comensal cortando un platillo mexicano acompañado de café, en uno de los restaurantes de Camino Real Veracruz',
+      media: { src: 'proyectos/camino-real-veracruz/hero.jpg', width: 1467, height: 2200 },
+    },
+
+    summary:
+      'Camino Real Veracruz forma parte de Grupo Camino Real, cadena con 32 hoteles en 21 destinos de México. Nuestro trabajo se concentra exclusivamente en la comunicación digital de la propiedad de Veracruz, con la que trabajamos desde febrero de 2025. El objetivo: fortalecer su presencia en redes sociales y dar visibilidad a sus centros de consumo mediante una estrategia de contenido constante, visualmente cuidada y alineada con la identidad de la marca. Desde entonces, hemos construido un proceso mensual de producción fotográfica y audiovisual que ha llevado a la comunidad digital del hotel a un crecimiento sostenido en Instagram y Facebook.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Alberca infinita de Camino Real Veracruz frente al mar, rodeada de palmeras y camastros con sombrillas',
+      media: { src: 'proyectos/camino-real-veracruz/contexto.jpg', width: 2200, height: 1467 },
+      body: 'Camino Real Veracruz forma parte de Grupo Camino Real, una de las cadenas hoteleras con mayor presencia en México. Nuestro trabajo se enfoca exclusivamente en la comunicación digital de esta propiedad, con quien colaboramos desde febrero de 2025 con el objetivo de fortalecer su presencia en redes sociales y dar mayor visibilidad a sus centros de consumo, mediante una estrategia de contenido constante y alineada con la identidad de marca.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'El reto principal estaba relacionado con la comunicación y el desempeño de la presencia del hotel en redes sociales. Existía una oportunidad clara para fortalecer la estrategia de contenido, mejorar la comunicación digital y generar una presencia más constante y atractiva que mostrara de forma efectiva la oferta del hotel — especialmente sus distintas áreas y centros de consumo, abiertos tanto a huéspedes como al público en general.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cuatro decisiones clave',
+      items: [
+        'Definir los formatos y tipos de contenido a partir de las tendencias actuales de redes sociales y de los contenidos con mayor potencial para la marca.',
+        'Establecer una planeación mensual enfocada en dar visibilidad estratégica a los diferentes espacios y centros de consumo del hotel.',
+        'Priorizar contenidos que no se limitaran a mostrar el hospedaje, sino que comunicaran experiencias y servicios disponibles también para el público en general.',
+        'Integrar la producción fotográfica y audiovisual como parte central de la estrategia, manteniendo una línea visual coherente con la identidad y personalidad de Camino Real.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Planeación mensual',
+          mediaAlt: 'Huésped registrándose en el mostrador de una cafetería de Camino Real Veracruz, atendida por personal del hotel',
+          media: { src: 'proyectos/camino-real-veracruz/planeacion-mensual.jpg', width: 1467, height: 2200 },
+          body: 'El trabajo se desarrolla mediante una estrategia mensual de contenidos para las redes sociales de Camino Real Veracruz. Como primer paso, elaboramos un moodboard mensual que permite visualizar y presentar al cliente la propuesta de contenido, definiendo cómo se destacarán los diferentes espacios, servicios y centros de consumo del hotel.',
+        },
+        {
+          title: 'Producción fotográfica y audiovisual',
+          mediaAlt: 'Montaje de mesa elegante para un evento privado en uno de los salones de Camino Real Veracruz',
+          media: { src: 'proyectos/camino-real-veracruz/produccion-fotografica-1.jpg', width: 1467, height: 2200 },
+          media2Alt: 'Habitación de Camino Real Veracruz con cama king size, cabecera de madera y lámparas colgantes de fibra natural',
+          media2: { src: 'proyectos/camino-real-veracruz/produccion-fotografica-2.jpg', width: 2200, height: 1652 },
+          body: 'A partir de esa planeación, realizamos mensualmente una sesión de levantamiento de contenido fotográfico y audiovisual dentro de las instalaciones del hotel, contemplando fotografía y video para los distintos formatos de redes sociales, incluyendo contenido estático y reels. Después, hacemos una selección detallada del material producido y un proceso de edición cuidado, procurando mantener coherencia con la identidad visual y la personalidad de la marca.',
+        },
+        {
+          title: 'Publicación y presencia constante',
+          mediaAlt: 'Huésped disfrutando de una taza de café envuelto en una bata de baño con el monograma de Camino Real',
+          media: { src: 'proyectos/camino-real-veracruz/publicacion-presencia.jpg', width: 1467, height: 2200 },
+          body: 'Finalmente, gestionamos la publicación y operación de los contenidos en las redes sociales del hotel, dando seguimiento a los espacios y temas que se buscan comunicar en cada periodo, manteniendo una presencia digital constante que da visibilidad a las distintas experiencias y servicios de Camino Real Veracruz.',
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      mediaAlt: 'Mesas puestas con copas azules en el restaurante de palapa de Camino Real Veracruz, uno de sus centros de consumo frente al mar',
+      media: { src: 'proyectos/camino-real-veracruz/resultado.jpg', width: 1652, height: 2200 },
+      body: 'Desde el inicio de la relación en febrero de 2025, la comunidad digital de Camino Real Veracruz ha registrado crecimiento sostenido. En Instagram, la cuenta pasó de aproximadamente 90 seguidores al inicio de la gestión a 686 seguidores actualmente. En Facebook, la página pasó de 6,397 fans en febrero de 2025 a 7,477 fans, un incremento de más de 1,000 seguidores. El proyecto continúa activo, con una operación constante de producción, publicación y gestión de contenidos que sigue fortaleciendo la presencia digital del hotel.',
+      highlights: [
+        { value: '686 seguidores', label: 'Instagram — desde ~90 seguidores al inicio de la gestión' },
+        { value: '7,477 fans', label: 'Facebook — +1,000 seguidores desde febrero de 2025' },
+      ],
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 5 = Periwinkle). Kept in sync
+    // by hand for now — see that block's own palette comment for values.
+    nextProject: {
+      slug: 'new-you-wellness',
+      client: 'New You Wellness Center',
+      category: 'Bienestar · Houston, TX',
+      bg: '#9fb2e8',
+      fg: '#101a3d',
     },
   },
 ];
