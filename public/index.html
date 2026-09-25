@@ -766,11 +766,12 @@
         div+onClick), pointing at /proyectos/<slug>/ routes that don't exist
         yet in this task (see USAGE) — the destination pages and the
         /proyectos index are explicitly out of scope here, per the brief.
-        TEMPORARY: every card except The Grand Lounge Elite currently carries
-        a small "Próximamente" badge next to its category (.cm-projects__card-
-        badge, inside a new .cm-projects__card-top row) — remove one card's
-        badge (and its aria-label's trailing " (Próximamente)") the moment
-        that case-study page ships; nothing else about the card changes.
+        All 9 cards now point at real, shipped case-study pages — the
+        "Próximamente" badge (.cm-projects__card-badge, inside a
+        .cm-projects__card-top row) and its aria-label's trailing
+        " (Próximamente)") were removed card-by-card as each page shipped;
+        the badge markup itself stays available in case a future card is
+        added ahead of its own case-study page going live.
       ACCESSIBILITY: each card's <a> carries the accessible name via
         aria-label ("Ver caso de estudio: {cliente} — {categoría}") since the
         card's own visible text is split across three separate <span>s that
@@ -979,16 +980,13 @@
             <a
               class="cm-projects__card"
               href="proyectos/punta-tiburon/"
-              aria-label="Ver caso de estudio: Punta Tiburón — Eventos (Próximamente)"
+              aria-label="Ver caso de estudio: Punta Tiburón — Eventos"
             >
-              <span class="cm-projects__card-top">
-                <span class="cm-projects__card-category">Eventos</span>
-                <span class="cm-projects__card-badge">Próximamente</span>
-              </span>
+              <span class="cm-projects__card-category">Eventos</span>
               <span class="cm-projects__card-body">
                 <span class="cm-projects__card-name">Punta Tiburón</span>
                 <span class="cm-projects__card-desc"
-                  >Marketing digital y presencia de marca para un espacio de eventos único.</span
+                  >Más de una década construyendo la identidad de su Torneo Anual de Golf.</span
                 >
               </span>
             </a>

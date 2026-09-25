@@ -11,11 +11,11 @@
  *
  * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness",
  * "parroquia-veracruz", "u3m", "amda-veracruz-tabasco",
- * "camino-real-veracruz" and "bosque-residencial-san-lucas" are filled
- * in so far. The remaining project slug already lives in the home
- * page's projects-teaser grid (public/blocks/projects-teaser/) and
- * still shows a "Próximamente" badge; add an object here (and remove
- * that project's badge in projects-teaser) once it's written.
+ * "camino-real-veracruz", "bosque-residencial-san-lucas" and
+ * "punta-tiburon" are filled in — every project slug in the home
+ * page's projects-teaser grid (public/blocks/projects-teaser/) now has
+ * a real case-study page; none of the 9 cards should show a
+ * "Próximamente" badge anymore.
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
@@ -819,6 +819,105 @@ export const CASE_STUDIES = [
       category: 'Eventos',
       bg: '#3555cc',
       fg: '#f4f7ff',
+    },
+  },
+
+  {
+    slug: 'punta-tiburon',
+    client: 'Punta Tiburón',
+    industry: 'Desarrollo Residencial / Club Deportivo',
+    disciplines: ['Branding', 'Relaciones Públicas', 'Eventos'],
+    factFour: { label: 'Alcance', value: 'Riviera Veracruzana, Veracruz · Colaboración activa desde 2014' },
+    metaTitle: 'Punta Tiburón — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media ha construido, desde 2014, la identidad y comunicación del Torneo Anual de Golf de Punta Tiburón: branding, relaciones públicas y producción de evento, edición tras edición, durante más de una década.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'Más de una década construyendo la identidad de un torneo.',
+      meta: 'Punta Tiburón · Branding, Relaciones Públicas, Eventos',
+      mediaAlt: 'Vista aérea del campo de golf y desarrollo residencial de Punta Tiburón en la Riviera Veracruzana, con casas, lago y bunkers de arena entre los fairways',
+      media: { src: 'proyectos/punta-tiburon/hero.jpg', width: 1920, height: 1080 },
+    },
+
+    summary:
+      'Punta Tiburón es un desarrollo residencial y club privado en la Riviera Veracruzana, con espacios y servicios orientados a una comunidad que busca una experiencia residencial y deportiva. Desde 2014 acompañamos a Punta Tiburón en la planeación, organización y comunicación de su Torneo Anual de Golf, integrando branding, relaciones públicas y producción del evento en un mismo proceso. Más de una década después, seguimos siendo su aliado recurrente para cada edición.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Vista aérea de la casa club de Punta Tiburón con albercas, terrazas y el campo de golf de fondo, junto al desarrollo urbano de Veracruz',
+      media: { src: 'proyectos/punta-tiburon/contexto.jpg', width: 1920, height: 1080 },
+      body: 'Punta Tiburón se acercó a Continental Media en 2014 para contar con un equipo que pudiera apoyar en la planeación y ejecución de su Torneo Anual de Golf. Desde entonces, la relación se ha mantenido de forma continua, participando cada año en la organización y comunicación del evento.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'El reto era desarrollar un torneo anual que no solo estuviera correctamente organizado, sino que contara con una identidad propia y una experiencia consistente para participantes, patrocinadores e invitados. Cada edición requería coordinar múltiples elementos —patrocinadores, proveedores, comunicación, materiales y premiación— bajo una misma identidad. La oportunidad estaba en profesionalizar y fortalecer la experiencia del torneo, haciendo que cada edición tuviera una imagen propia y una comunicación coherente.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cuatro decisiones clave',
+      items: [
+        'Crear una identidad propia para cada edición, desarrollando concepto, nombre e identidad visual del torneo.',
+        'Integrar organización, branding y relaciones públicas dentro de un mismo proceso para mantener una experiencia coherente.',
+        'Fortalecer la participación de patrocinadores y aliados, mediante la búsqueda, gestión y coordinación de proveedores y socios estratégicos.',
+        'Cuidar cada punto de contacto del evento, desde la comunicación previa hasta los uniformes, materiales, trofeos y reconocimientos.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Identidad y materiales de cada edición',
+          mediaAlt:
+            'Material gráfico del Torneo Anual Punta Tiburón 2023, con logotipo de la 10ª edición, fechas, categorías de premiación y patrocinadores del evento',
+          media: { src: 'proyectos/punta-tiburon/identidad-edicion.jpg', width: 1424, height: 2200 },
+          body: 'Nos encargamos anualmente de la planeación, organización y comunicación del Torneo Anual de Golf de Punta Tiburón. El trabajo incluye el desarrollo de la identidad visual de cada edición, diseño de materiales de comunicación, uniformes, trofeos y reconocimientos.',
+        },
+        {
+          title: 'Patrocinadores y proveedores',
+          mediaAlt: 'Material promocional del evento "KIA Golf Day" en Punta Tiburón, con un golfista, su bolsa de palos y un vehículo Kia patrocinador sobre el campo',
+          media: { src: 'proyectos/punta-tiburon/patrocinadores.jpg', width: 1424, height: 2200 },
+          body: 'Como parte del proceso, gestionamos la búsqueda y coordinación de patrocinadores y proveedores, fortaleciendo cada edición con nuevos aliados estratégicos y garantizando la calidad de cada punto de contacto del evento.',
+        },
+        {
+          title: 'El torneo en acción',
+          mediaAlt: 'Material de patrocinio del Torneo Anual Punta Tiburón, con fotografía del hoyo 18 del campo diseñado por Greg Norman y detalles de la marca del club',
+          media: { src: 'proyectos/punta-tiburon/torneo-apoyo.jpg', width: 1700, height: 2200 },
+          body: 'El proceso se realiza de manera coordinada con el equipo de Punta Tiburón, integrando branding, relaciones públicas y producción del evento para lograr una ejecución consistente en cada edición — año tras año, sin perder la identidad que distingue al torneo.',
+          video: {
+            alt: 'Video de cobertura del Torneo Anual de Golf de Punta Tiburón, con stands de patrocinadores y la ceremonia de premiación, sin audio',
+            src: 'proyectos/punta-tiburon/reel.mp4',
+            poster: 'proyectos/punta-tiburon/reel-poster.jpg',
+            width: 360,
+            height: 640,
+            caption: 'Cobertura en video del Torneo Anual de Golf de Punta Tiburón: stands de patrocinadores y ceremonia de premiación',
+          },
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      mediaAlt: 'Pieza gráfica de un evento de Punta Tiburón Country Club con una bailarina y telas de colores en movimiento, celebrando el Día Internacional de la Danza',
+      media: { src: 'proyectos/punta-tiburon/resultado.jpg', width: 1424, height: 2200, position: '50% 65%' },
+      body: 'Desde 2014 hasta la actualidad, Continental Media ha participado de manera continua en la organización de los Torneos Anuales de Golf de Punta Tiburón, convirtiéndose en un aliado recurrente para el desarrollo de cada edición. La relación se ha mantenido durante más de una década, con participación anual en la planeación, organización, identidad y comunicación del torneo — la prueba más clara de una colaboración que sigue funcionando edición tras edición.',
+      highlight: 'Más de una década',
+      highlightAttribution: 'De colaboración continua, edición tras edición, desde 2014',
+    },
+
+    // Closes the projects-teaser cycle: this is the last card in the
+    // catalog (card 9 = Cornflower), so its own "next project" wraps
+    // back around to the first card instead of pointing further down a
+    // list that ends here.
+    nextProject: {
+      slug: 'grand-lounge-elite',
+      client: 'The Grand Lounge Elite',
+      category: 'Hospitalidad',
+      bg: '#1e5fff',
+      fg: '#f2f6ff',
     },
   },
 ];
