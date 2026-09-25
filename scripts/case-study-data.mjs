@@ -10,12 +10,12 @@
  * /servicios pillar pages).
  *
  * "grand-lounge-elite", "bitali-desarrollos", "new-you-wellness",
- * "parroquia-veracruz", "u3m", "amda-veracruz-tabasco" and
- * "camino-real-veracruz" are filled in so far. The remaining 2 project
- * slugs already live in the home page's projects-teaser grid
- * (public/blocks/projects-teaser/) and each still shows a
- * "Próximamente" badge; add an object here (and remove that project's
- * badge in projects-teaser) as each is written.
+ * "parroquia-veracruz", "u3m", "amda-veracruz-tabasco",
+ * "camino-real-veracruz" and "bosque-residencial-san-lucas" are filled
+ * in so far. The remaining project slug already lives in the home
+ * page's projects-teaser grid (public/blocks/projects-teaser/) and
+ * still shows a "Próximamente" badge; add an object here (and remove
+ * that project's badge in projects-teaser) once it's written.
  *
  * Copy is transcribed verbatim from the brief (not summarized or
  * paraphrased) — keep it that way on any future edit.
@@ -627,8 +627,8 @@ export const CASE_STUDIES = [
     // public/blocks/projects-teaser/ (card 8 = Midnight). Kept in sync by
     // hand for now — see that block's own palette comment for the values.
     nextProject: {
-      slug: 'bosque-san-lucas',
-      client: 'Bosque San Lucas',
+      slug: 'bosque-residencial-san-lucas',
+      client: 'Bosque Residencial San Lucas',
       category: 'Inmobiliario',
       bg: '#0b1024',
       fg: '#c9d3f5',
@@ -723,6 +723,102 @@ export const CASE_STUDIES = [
       category: 'Bienestar · Houston, TX',
       bg: '#9fb2e8',
       fg: '#101a3d',
+    },
+  },
+
+  {
+    slug: 'bosque-residencial-san-lucas',
+    client: 'Bosque Residencial San Lucas',
+    industry: 'Desarrollo Inmobiliario',
+    disciplines: [
+      'Redes Sociales',
+      'Meta Ads',
+      'Gestión de Comunidad',
+      'Capacitación Comercial',
+      'Producción de Materiales Publicitarios',
+    ],
+    factFour: { label: 'Alcance', value: 'Coatepec, Veracruz' },
+    metaTitle: 'Bosque Residencial San Lucas — Casos de Éxito | Continental Media',
+    metaDescription:
+      'Cómo Continental Media construyó una estrategia digital integral para Bosque Residencial San Lucas: contenido, gestión de comunidad, Meta Ads y capacitación comercial que conecta cada etapa del proceso de venta bajo una misma visión.',
+
+    hero: {
+      label: 'Caso de estudio',
+      title: 'Una estrategia digital que conecta con el equipo comercial.',
+      meta: 'Bosque Residencial San Lucas · Desarrollo Inmobiliario — Coatepec, Veracruz',
+      mediaAlt: 'Salón lounge de Bosque Residencial San Lucas con mesa comunal de madera, lámparas cálidas y una exhibición decorativa de vajillas antiguas en la pared',
+      media: { src: 'proyectos/bosque-residencial-san-lucas/hero.jpg', width: 1238, height: 2200 },
+    },
+
+    summary:
+      'Bosque Residencial San Lucas es un desarrollo inmobiliario que busca conectar con potenciales compradores e inversionistas a través de una comunicación que combina las características del proyecto, su conexión con el entorno y el estilo de vida que propone. Construimos y fortalecemos su presencia digital con una estrategia integral: contenido, gestión de comunidad, pauta en Meta Ads, análisis de desempeño, capacitación al equipo comercial y materiales de apoyo para publicidad exterior y eventos.',
+
+    context: {
+      eyebrow: 'Contexto',
+      mediaAlt: 'Mesa de banquete con sándwiches, panes dulces y flores en un evento de activación de marca de Bosque Residencial San Lucas',
+      media: { src: 'proyectos/bosque-residencial-san-lucas/contexto.jpg', width: 2200, height: 1238 },
+      body: 'Bosque Residencial San Lucas es un desarrollo enfocado en atraer compradores e inversionistas mediante una propuesta que va más allá de la vivienda: comunica un estilo de vida conectado con el entorno. Nos buscaron para construir una estrategia digital que combinara comunicación comercial, información del proyecto y contenido de valor, capaz de generar reconocimiento, interés y consideración real entre su audiencia objetivo.',
+    },
+
+    challenge: {
+      eyebrow: 'Reto',
+      body: 'Bosque Residencial San Lucas necesitaba una comunicación capaz de ir más allá de mostrar un desarrollo inmobiliario: debía transmitir el estilo de vida y la conexión con el entorno que hacen distinto al proyecto, y traducir ese interés generado en redes sociales en oportunidades reales para el equipo comercial. El reto no era solo generar visibilidad digital, sino construir un puente sólido entre el interés que se genera en línea y las citas y conversiones que cierra el equipo de ventas en el terreno.',
+    },
+
+    approach: {
+      eyebrow: 'Enfoque',
+      title: 'Cuatro decisiones clave',
+      items: [
+        'Diseñar una estrategia de contenidos para redes sociales alineada con los objetivos de comunicación y posicionamiento de la marca.',
+        'Implementar gestión de comunidad y social listening, dando seguimiento activo a conversaciones, mensajes, comentarios y oportunidades comerciales.',
+        'Desarrollar campañas de Meta Ads, desde la planeación hasta la definición de objetivos, públicos y contenidos orientados a resultados.',
+        'Capacitar y acompañar al equipo comercial del cliente, con estrategias para mejorar el contacto con prospectos y favorecer la conversión de oportunidades en citas.',
+      ],
+    },
+
+    solution: {
+      eyebrow: 'Solución y proceso',
+      subsections: [
+        {
+          title: 'Contenido y gestión de comunidad',
+          mediaAlt:
+            'Pieza de contenido de Bosque Residencial San Lucas con la frase "Un nuevo comienzo", vista aérea de un auto circulando por un camino rodeado de viñedos rumbo a Coatepec, Veracruz',
+          media: { src: 'proyectos/bosque-residencial-san-lucas/contenido-comunidad.jpg', width: 1080, height: 1440 },
+          body: 'Desarrollamos contenido que combina comunicación comercial, información del proyecto y contenido de valor, diseñado para generar reconocimiento, interés y consideración entre potenciales compradores e inversionistas. Este trabajo se sostiene con gestión de comunidad activa y social listening, dando seguimiento constante a conversaciones, mensajes, comentarios y oportunidades que surgen en los canales digitales del desarrollo.',
+        },
+        {
+          title: 'Campañas y análisis de desempeño',
+          mediaAlt:
+            'Anuncio publicitario de Bosque Residencial San Lucas con la frase "Tu inversión, segura y con propósito" y llamado a la acción "Agenda tu cita hoy", mostrando a una familia caminando hacia una puerta iluminada en un bosque',
+          media: { src: 'proyectos/bosque-residencial-san-lucas/campanas-desempeno.jpg', width: 1760, height: 2200 },
+          body: 'En paralelo, implementamos estrategias de pauta en Meta Ads —desde la planeación de campañas hasta la definición de públicos y objetivos— acompañadas de análisis y reportes de desempeño que nos permiten identificar oportunidades y optimizar continuamente la comunicación.',
+        },
+        {
+          title: 'Capacitación comercial y materiales de apoyo',
+          mediaAlt:
+            'Material publicitario de Bosque Residencial San Lucas anunciando las canchas de pádel del desarrollo, con vista aérea de la estructura y sus jardines',
+          media: { src: 'proyectos/bosque-residencial-san-lucas/capacitacion-materiales.jpg', width: 1080, height: 1350 },
+          body: 'Una parte diferenciadora de nuestro trabajo es la capacitación directa al equipo comercial de Bosque Residencial San Lucas, fortaleciendo su capacidad de contacto con prospectos y de conversión de oportunidades en citas reales. Complementamos esta estrategia con materiales publicitarios y de apoyo comercial, incluyendo piezas para publicidad exterior y materiales para eventos y activaciones especiales.',
+        },
+      ],
+    },
+
+    result: {
+      eyebrow: 'Resultado',
+      body: 'Hoy, Bosque Residencial San Lucas cuenta con una operación digital integral que cubre todo el recorrido del prospecto: desde el contenido que genera reconocimiento e interés, pasando por la gestión de comunidad que da seguimiento a cada conversación, hasta la pauta en Meta Ads que atrae nuevas oportunidades y la capacitación directa al equipo comercial para convertir ese interés en citas. Esta estrategia integral —poco común en desarrollos inmobiliarios, donde la comunicación digital y el equipo de ventas suelen operar de forma separada— conecta cada etapa del proceso comercial bajo una misma visión.',
+      highlight: 'Conecta cada etapa del proceso comercial',
+      highlightAttribution: 'Una estrategia integral, poco común en desarrollos inmobiliarios, bajo una misma visión',
+    },
+
+    // Matches the checkerboard color already assigned to this project in
+    // public/blocks/projects-teaser/ (card 9 = Cornflower). Kept in sync
+    // by hand for now — see that block's own palette comment for values.
+    nextProject: {
+      slug: 'punta-tiburon',
+      client: 'Punta Tiburón',
+      category: 'Eventos',
+      bg: '#3555cc',
+      fg: '#f4f7ff',
     },
   },
 ];
