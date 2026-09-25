@@ -1,0 +1,183 @@
+<!--
+  CONTINENTAL MEDIA — "/PROYECTOS" INDEX PAGE BLOCK (canonical source)
+  THESIS: the deliberate opposite of the home page's own Proyectos
+    teaser. That block's whole point is "no client photography — the
+    proof is the work itself" (a 3x3 grid of solid color blocks). This
+    page exists precisely because 9 real case studies now have real hero
+    photography, so the index leans all the way into it: an editorial
+    numbered list (structurally the same full-width divided-row pattern
+    pillar-page.css already established for /servicios — index | name |
+    one-line body, continuous thin rules) where each row's thumbnail
+    expands on hover instead of pillar-page's full-bleed accent-fill.
+    Not a card grid, not a re-skin of the home teaser's component — a
+    genuinely different navigation experience to the same 9 destinations.
+  OWN-WORLD: same near-black ground, same restrained blue accent, same
+    Space Grotesk display / Inter body pairing as every other block on
+    the site. The short typographic hero (eyebrow/title/subtitle, no
+    photo) reuses pillar-hero's exact shape and copy continuity with the
+    home teaser's own intro (same title/subtitle verbatim, on purpose).
+  FORM: THIS PAGE IS GENERATED, NOT HAND-AUTHORED. Unlike /nosotros or
+    the home page (which hand-embed every block's markup directly), this
+    one file (public/proyectos/index.html) is built by
+    scripts/generate-projects-index.mjs, which renders the shared
+    site-header/footer templates (scripts/lib/site-header-template.mjs,
+    footer-template.mjs — the same two every case-study and pillar page
+    already use) plus this block's own row list from a small PROJECTS
+    array hardcoded in that script (there's exactly one /proyectos index,
+    so a full data-file-plus-generator split the way case-study-data.mjs
+    works wasn't worth the extra indirection — but keeping even a single
+    page behind a generator, rather than hand-transcribing header/footer
+    a third time, is what the footer template's own header comment calls
+    out as the exact mistake that once silently deleted the footer from
+    every case-study page). Re-run
+    `node scripts/generate-projects-index.mjs` after editing that array.
+    The markup below is illustrative only (real copy for row 1, so it
+    matches what the generator actually outputs) — it documents the
+    shape the generated page carries; it is not itself linked from any
+    page.
+  ROW HOVER MECHANIC: at rest, a small fixed-aspect-ratio thumbnail sits
+    at the row's right edge. On hover/focus-within (desktop only): the
+    image scales up via `transform: scale()` — never width/height, so
+    the box's own layout footprint never changes while the image visibly
+    spills over neighboring rows (every ancestor up to
+    .cm-pindex-list stays overflow: visible for exactly this reason) —
+    a dark overlay over the thumbnail deepens slightly, the row's
+    description (always in the DOM, always given its own reserved
+    line-height so no row's resting height depends on hover state at
+    all) fades/rises in, and the client name recolors to the accent.
+  SIBLING DIMMING: "other rows dim while one is hovered" needs knowledge
+    of every row at once, which a single row's own :hover can't express
+    — implemented in projects-index.js (mouseenter/focusin toggles
+    .is-row-active on the list + .is-hovered on the target row) rather
+    than a CSS :has() selector, matching this site's established
+    convention of JS-driven interaction-state classes (pillar-page's
+    .is-active is the same shape) over leaning on very recent selector
+    support for a purely cosmetic effect. Gated to
+    (hover: hover) and (pointer: fine) in the JS itself — touch never
+    attaches these listeners, since mobile already shows every row's
+    thumbnail and description directly, with nothing to reveal.
+  FILTER CHIPS: exactly one active at a time — real <button> elements
+    with aria-pressed, not a custom ARIA radiogroup (which would obligate
+    arrow-key navigation this markup doesn't implement). A filtered-out
+    row fades first (CSS opacity/transform), then projects-index.js sets
+    `hidden` once that transition ends — collapsing its layout space and
+    pulling it out of the tab order, not just visually fading in place.
+    A row's own 01-09 index is that project's fixed identity in the
+    list, never renumbered by which chip happens to be active.
+  ACCESSIBILITY: each row is a real <a> wrapping its full content (not a
+    div+onClick, and not pillar-page's non-interactive
+    tabindex="0" — every row here has a genuine destination) with its own
+    aria-label ("Ver caso de estudio: {cliente} — {categoría}") so
+    assistive tech announces one clean name instead of the row's own
+    split spans concatenating awkwardly — the same call already made for
+    projects-teaser's cards. The thumbnail <img> still carries its own
+    descriptive alt (client + category) for completeness even though the
+    parent's aria-label is what a screen reader actually announces.
+    Reveal-on-scroll (hero, filters, then rows staggered) defaults to the
+    final visible state; a <noscript> rule and prefers-reduced-motion
+    both force it independently of JS.
+
+  USAGE — canonical source for this block. To ship or edit the page:
+    1. Edit the PROJECTS/FILTERS arrays in
+       scripts/generate-projects-index.mjs (content) and/or this block's
+       CSS/JS (shared behavior/visuals) — never hand-edit the generated
+       public/proyectos/index.html directly.
+    2. Run `node scripts/generate-projects-index.mjs` from the repo root;
+       it rewrites that one file.
+    3. The generated page links assets/css/tokens.css, then
+       blocks/site-header/site-header.css, then
+       blocks/projects-index/projects-index.css, then
+       blocks/footer/footer.css, copies the site-header block first
+       inside <body>, then this block's markup inside
+       <main id="main-content">, then the footer, then loads
+       blocks/site-header/site-header.js and
+       blocks/projects-index/projects-index.js as modules.
+  Asset paths in the generated page are relative to its own nesting depth
+  (public/proyectos/index.html is one directory below public/), never
+  root-absolute — this project can deploy under a GitHub Pages project
+  subpath, where a leading "/" would silently 404.
+-->
+<section class="cm-pindex" data-cm-pindex aria-labelledby="cm-pindex-heading">
+  <noscript>
+    <style>
+      [data-cm-pindex] .cm-pindex-hero__eyebrow,
+      [data-cm-pindex] .cm-pindex-hero__title,
+      [data-cm-pindex] .cm-pindex-hero__subtitle,
+      [data-cm-pindex] .cm-pindex-filters,
+      [data-cm-pindex] .cm-pindex-row {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      [data-cm-pindex] .cm-pindex-row__description {
+        opacity: 1 !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-pindex-hero">
+    <div class="cm-pindex-hero__inner">
+      <span class="cm-pindex-hero__eyebrow">Proyectos</span>
+      <h1 class="cm-pindex-hero__title" id="cm-pindex-heading">25 años de trabajo que hablan por sí solos.</h1>
+      <p class="cm-pindex-hero__subtitle">
+        Exploración de proyectos reales, estrategias comprobadas e impacto medible para marcas en
+        México y Estados Unidos.
+      </p>
+    </div>
+  </div>
+
+  <div class="cm-pindex-filters" role="group" aria-label="Filtrar proyectos por industria">
+    <div class="cm-pindex-filters__inner">
+      <button type="button" class="cm-pindex-filters__chip is-active" data-cm-pindex-filter="all" aria-pressed="true">
+        Todos
+      </button>
+      <button type="button" class="cm-pindex-filters__chip" data-cm-pindex-filter="hospitalidad" aria-pressed="false">
+        Hospitalidad
+      </button>
+      <!-- ...one chip per remaining filter key: cafe-gastronomia,
+           inmobiliario, hoteleria, bienestar, educacion, asociacion,
+           desarrollo-residencial (see generate-projects-index.mjs's own
+           FILTERS array for the full, exact list). -->
+    </div>
+  </div>
+
+  <div class="cm-pindex-list">
+    <ol class="cm-pindex-list__inner" data-cm-pindex-rows>
+      <li class="cm-pindex-row" data-cm-pindex-row data-filter="hospitalidad">
+        <a
+          class="cm-pindex-row__link"
+          href="grand-lounge-elite/"
+          data-cm-pindex-row-link
+          aria-label="Ver caso de estudio: The Grand Lounge Elite — Hospitalidad"
+        >
+          <span class="cm-pindex-row__index">01</span>
+          <span class="cm-pindex-row__text">
+            <span class="cm-pindex-row__category">Hospitalidad</span>
+            <span class="cm-pindex-row__name">The Grand Lounge Elite</span>
+            <span class="cm-pindex-row__description"
+              >Consolidar la red de salas VIP más importante en aeropuertos de México.</span
+            >
+          </span>
+          <span class="cm-pindex-row__media">
+            <span class="cm-pindex-row__media-frame">
+              <img
+                class="cm-pindex-row__media-img"
+                src="assets/images/proyectos/grand-lounge-elite/hero.jpg"
+                width="2048"
+                height="1365"
+                alt="The Grand Lounge Elite — Hospitalidad"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <!-- ...one <li class="cm-pindex-row"> per remaining project, same
+           shape, index 02-09 — see generate-projects-index.mjs's own
+           PROJECTS array for the full, exact content and order. -->
+    </ol>
+  </div>
+
+  <div class="cm-pindex-transition" data-cm-pindex-transition aria-hidden="true"></div>
+</section>

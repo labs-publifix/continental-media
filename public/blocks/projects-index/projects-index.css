@@ -1,0 +1,492 @@
+/*
+  Continental Media — "/proyectos" INDEX PAGE block styles.
+  Namespaced under .cm-pindex. Depends on assets/css/tokens.css.
+
+  Deliberately NOT projects-teaser's solid-color-block grid — that block's
+  whole thesis is "no client photography, the proof is the work itself"
+  (see projects-teaser.css's own header). This page is the opposite move
+  on purpose: now that 9 real case studies exist with real hero photography,
+  the index becomes an editorial numbered list (structurally the same
+  full-width divided-row pattern pillar-page.css already established for
+  /servicios — index | name | one-line body, continuous thin rules, one
+  row addressed at a time) adapted for a photo thumbnail that expands on
+  hover instead of pillar-page's full-bleed accent-fill.
+
+  ---------- Row hover mechanic ----------
+  At rest: a small (fixed aspect-ratio box) thumbnail sits at the row's
+  right edge. On hover/focus-within: the thumbnail image scales up via
+  `transform: scale()` (never width/height — the brief's own explicit
+  "prioriza animar transform y opacity" perf note, and transform is what
+  lets the box's own layout footprint stay untouched while the image
+  visually spills over neighboring rows) with `transform-origin: right
+  center` so it grows toward the row's own content instead of off-page;
+  the row's description (always in the DOM, always taking up its own
+  reserved line-height so no row's resting height ever depends on hover
+  state) fades/rises in; the client name recolors to the accent. Getting
+  the enlarged image to visually overlap neighbouring rows at all requires
+  every ancestor up to .cm-pindex-list to allow overflow — a single
+  `overflow: hidden` anywhere in that chain would clip the effect, so
+  none of them set it.
+
+  ---------- Sibling dimming ----------
+  "Other rows dim to 75-85% opacity while one is hovered" needs knowledge
+  of ALL rows at once, which a single row's own :hover cannot express on
+  its own — implemented in projects-index.js (mouseenter/focusin toggles
+  .is-row-active on the list + .is-hovered on the target row), not CSS
+  :has() — matching this site's established convention of JS-driven
+  interaction state classes (pillar-page's .is-active is the same shape)
+  over relying on very recent selector support for a purely cosmetic
+  effect. The row's OWN local hover effects (thumbnail scale, description
+  reveal, name color) stay pure CSS :hover/:focus-within regardless, so
+  they still work even if JS never loads.
+
+  ---------- Filter chips ----------
+  Exactly one chip active at a time (a single-select, not independent
+  toggles) — real <button> elements with aria-pressed rather than a
+  custom ARIA radiogroup, which would obligate arrow-key navigation this
+  markup doesn't implement. Filtering hides non-matching rows via a
+  fade (opacity/transform, 250-300ms) then `hidden` (set by JS once the
+  transition ends) so a filtered-out row also leaves the tab order —
+  never renumbered: each row's 01-09 is that project's fixed identity in
+  the list, not a live rank of what happens to be visible.
+*/
+
+.cm-pindex {
+  background: var(--cm-color-bg);
+  color: var(--cm-color-fg);
+}
+
+/* ---------- Short text hero (mirrors pillar-hero's shape: no photo,
+   just clears the fixed site-header and gets straight to content) ---------- */
+
+.cm-pindex-hero {
+  padding: clamp(7.5rem, 20vh, 10.5rem) var(--cm-gutter) clamp(2.5rem, 6vw, 4rem);
+}
+
+.cm-pindex-hero__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.cm-pindex-hero__eyebrow {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.9em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+}
+
+.cm-pindex-hero__title {
+  margin: 0;
+  max-width: 20ch;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+  transition-delay: 90ms;
+}
+
+.cm-pindex-hero__subtitle {
+  margin: 1.1em 0 0;
+  max-width: 640px;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: clamp(1rem, 0.93rem + 0.3vw, 1.1875rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+  transition-delay: 160ms;
+}
+
+.cm-pindex.is-visible .cm-pindex-hero__eyebrow,
+.cm-pindex.is-visible .cm-pindex-hero__title,
+.cm-pindex.is-visible .cm-pindex-hero__subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Filter chips ---------- */
+
+.cm-pindex-filters {
+  padding: 0 var(--cm-gutter) clamp(2.5rem, 6vw, 3.5rem);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--cm-duration-slow) var(--cm-ease-out),
+    transform var(--cm-duration-slow) var(--cm-ease-out);
+  transition-delay: 220ms;
+}
+
+.cm-pindex.is-visible .cm-pindex-filters {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cm-pindex-filters__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.cm-pindex-filters__chip {
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.68);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.55em 1em;
+  cursor: pointer;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pindex-filters__chip:hover {
+  color: var(--cm-color-fg);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.cm-pindex-filters__chip:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 2px;
+}
+
+.cm-pindex-filters__chip.is-active {
+  color: var(--cm-color-on-accent);
+  background: var(--cm-color-accent);
+  border-color: var(--cm-color-accent);
+}
+
+.cm-pindex-filters__chip.is-active:hover {
+  border-color: var(--cm-color-accent);
+}
+
+/* ---------- Row list ---------- */
+
+.cm-pindex-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  /* Never overflow:hidden anywhere in this chain — the hovered
+     thumbnail's transform: scale() has to be free to spill past its own
+     row's box to read as "overlapping the row," per the block comment
+     above. */
+  overflow: visible;
+}
+
+.cm-pindex-list__inner {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.cm-pindex-row {
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--cm-duration-base) var(--cm-ease-out) var(--cm-row-delay, 0ms),
+    transform var(--cm-duration-base) var(--cm-ease-out) var(--cm-row-delay, 0ms),
+    max-height 320ms var(--cm-ease-out),
+    margin 320ms var(--cm-ease-out);
+}
+
+.cm-pindex-row:nth-child(1) { --cm-row-delay: 0ms; }
+.cm-pindex-row:nth-child(2) { --cm-row-delay: 80ms; }
+.cm-pindex-row:nth-child(3) { --cm-row-delay: 160ms; }
+.cm-pindex-row:nth-child(4) { --cm-row-delay: 240ms; }
+.cm-pindex-row:nth-child(5) { --cm-row-delay: 320ms; }
+.cm-pindex-row:nth-child(6) { --cm-row-delay: 400ms; }
+.cm-pindex-row:nth-child(7) { --cm-row-delay: 480ms; }
+.cm-pindex-row:nth-child(8) { --cm-row-delay: 560ms; }
+.cm-pindex-row:nth-child(9) { --cm-row-delay: 640ms; }
+
+.cm-pindex.is-visible .cm-pindex-row {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Filtered-out: fades first, then projects-index.js sets `hidden` once
+   this transition ends (collapsing layout + removing it from the tab
+   order) — see the block comment's "Filter chips" section. */
+.cm-pindex-row.is-filtered-out {
+  opacity: 0 !important;
+  transform: translateY(10px) !important;
+  transition:
+    opacity 240ms var(--cm-ease-out),
+    transform 240ms var(--cm-ease-out);
+}
+
+.cm-pindex-row__link {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--cm-gutter);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cm-pindex-row__link:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: -4px;
+}
+
+.cm-pindex-row__index {
+  flex: 0 0 auto;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 2ch;
+}
+
+.cm-pindex-row__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cm-pindex-row__category {
+  order: -1;
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 0.5em;
+}
+
+.cm-pindex-row__name {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1.05rem + 1.5vw, 2.375rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--cm-color-fg);
+  transition: color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pindex-row__description {
+  margin: 0.5em 0 0;
+  max-width: 52ch;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.68);
+  /* Always occupies its own space (min-height reserved for two lines) so
+     no row's resting height ever changes on hover — only opacity/
+     transform animate, matching the perf note in the brief. */
+  min-height: 2.85em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-pindex-row__media {
+  flex: 0 0 auto;
+  position: relative;
+  width: clamp(96px, 11vw, 152px);
+  aspect-ratio: 4 / 3;
+  overflow: visible;
+  border-radius: var(--cm-radius-sm);
+}
+
+.cm-pindex-row__media-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--cm-radius-sm);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform-origin: right center;
+  transition:
+    box-shadow var(--cm-duration-fast) var(--cm-ease-out),
+    transform 320ms var(--cm-ease-out);
+  will-change: transform;
+}
+
+.cm-pindex-row__media-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cm-pindex-row__media-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 11, 13, 0.22);
+  transition: background-color 320ms var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-pindex-row__link:hover .cm-pindex-row__name,
+  .cm-pindex-row__link:focus-visible .cm-pindex-row__name {
+    color: var(--cm-color-accent);
+  }
+
+  .cm-pindex-row__link:hover .cm-pindex-row__description,
+  .cm-pindex-row__link:focus-visible .cm-pindex-row__description {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cm-pindex-row__link:hover .cm-pindex-row__media-frame,
+  .cm-pindex-row__link:focus-visible .cm-pindex-row__media-frame {
+    transform: scale(2.5);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.14),
+      0 40px 70px -24px rgba(0, 0, 0, 0.7);
+  }
+
+  .cm-pindex-row__link:hover .cm-pindex-row__media-overlay,
+  .cm-pindex-row__link:focus-visible .cm-pindex-row__media-overlay {
+    background: rgba(10, 11, 13, 0.32);
+  }
+
+  .cm-pindex-row__media {
+    z-index: 1;
+  }
+
+  .cm-pindex-row__link:hover .cm-pindex-row__media,
+  .cm-pindex-row__link:focus-visible .cm-pindex-row__media {
+    z-index: 3;
+  }
+}
+
+/* Sibling dimming — JS-driven (see block comment), never on touch since
+   projects-index.js only attaches these listeners under
+   (hover: hover) and (pointer: fine). */
+.cm-pindex-list__inner.is-row-active .cm-pindex-row:not(.is-hovered) {
+  opacity: 0.8;
+  transition: opacity 280ms var(--cm-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-pindex-hero__eyebrow,
+  .cm-pindex-hero__title,
+  .cm-pindex-hero__subtitle,
+  .cm-pindex-filters,
+  .cm-pindex-row {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cm-pindex-row__media-frame,
+  .cm-pindex-list__inner.is-row-active .cm-pindex-row:not(.is-hovered) {
+    transition: none;
+  }
+}
+
+/* ---------- Responsive: mobile shows the thumbnail + description
+   directly, no hover available to reveal them ---------- */
+
+@media (max-width: 720px) {
+  .cm-pindex-row__link {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cm-pindex-row__media {
+    width: 76px;
+    order: 1;
+  }
+
+  .cm-pindex-row__media-overlay {
+    background: rgba(10, 11, 13, 0.1);
+  }
+
+  .cm-pindex-row__name {
+    font-size: clamp(1.125rem, 1rem + 2vw, 1.5rem);
+  }
+
+  .cm-pindex-row__description {
+    opacity: 1;
+    transform: none;
+    min-height: 0;
+    -webkit-line-clamp: 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .cm-pindex-row__link {
+    flex-wrap: wrap;
+  }
+
+  .cm-pindex-row__index {
+    order: -1;
+    width: 100%;
+  }
+
+  .cm-pindex-row__media {
+    width: 64px;
+  }
+}
+
+/* ---------- Click exit-transition overlay ---------- */
+
+.cm-pindex-transition {
+  /* Same "always exactly viewport-sized, opacity only" shape as
+     projects-teaser__transition — no rect/geometry animation, so there
+     is no mid-transition state that can get stuck if the browser
+     restores this page from bfcache after a "back" navigation. */
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 260ms var(--cm-ease-out);
+}
+
+.cm-pindex-transition::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 11, 13, 0.55);
+}
+
+.cm-pindex-transition.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-pindex-transition {
+    display: none;
+  }
+}

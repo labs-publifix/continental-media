@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyectos — Continental Media | Casos de éxito reales</title>
+  <meta
+    name="description"
+    content="Explora los casos de éxito de Continental Media: 9 proyectos reales, estrategias comprobadas e impacto medible para marcas en México y Estados Unidos."
+  />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="../blocks/projects-index/projects-index.css" />
+  <link rel="stylesheet" href="../blocks/footer/footer.css" />
+
+  <style>
+    /* Minimal page shell — not a design system, just enough to view
+       these blocks in context. Same reset every page on the site uses. */
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== SITE HEADER BLOCK — see public/blocks/site-header/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — SITE HEADER BLOCK (canonical source)
+    THESIS: the menu must always be one tap away — extracted from the home
+      hero (where it used to live as position:absolute, scrolling away with
+      it) into its own page-agnostic, always-reachable component.
+    OWN-WORLD: same near-black ground, same restrained blue accent, same
+      Space Grotesk display / Inter body pairing as every other block on
+      the site. The bar and the full-screen expandable menu are the exact
+      same markup/behavior the home hero shipped with (numbered links,
+      dividers, spotlight-dim-on-hover, social icons, hamburger-to-X morph)
+      — only namespaced and relocated, not redesigned.
+    FORM: position:fixed at all times (never absolute), so it survives
+      scroll on every page. Two visual states, both driven by
+      site-header.js:
+        - Default (home, at the very top): transparent bar over the hero
+          video, exactly as before.
+        - .is-scrolled (added once scrollY passes a small threshold): the
+          bar gets a solid/blurred dark background, tighter padding, and a
+          smaller logo — added via a class, not a position:absolute ->
+          fixed swap, so there is no layout jump at the transition.
+        - .cm-site-header--solid (set in markup, not by scroll): interior
+          pages without a hero video — like this one, which has no photo/
+          video to sit transparently over — get the same solid/compact
+          treatment permanently, from first paint, instead of starting
+          transparent over a background that can't guarantee contrast.
+    ACCESSIBILITY: the skip link targets #main-content (a landmark present
+      on every page that uses this header), not a hero-specific heading id,
+      so it works unmodified everywhere this block is used. Full-screen nav
+      is a disclosure (not a modal): Escape closes it, background scroll is
+      locked while open, first link receives focus on open, focus returns
+      to the toggle on close. See site-header.js's own header comment for
+      the rest.
+
+    USAGE — canonical source for this block. To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/site-header/site-header.css.
+      2. Copy the <header class="cm-site-header"> markup below as the very
+         first element inside <body>, before any other section. Add the
+         `cm-site-header--solid` modifier class for interior pages that
+         don't have a full-bleed video/photo hero to overlay transparently.
+      3. Load blocks/site-header/site-header.js as a module (drives the
+         menu disclosure and the scroll-triggered .is-scrolled toggle).
+    Asset paths are root-relative (no leading slash), matching every other
+    block on the site.
+  -->
+  <header class="cm-site-header cm-site-header--solid" data-cm-site-header>
+    <a class="cm-site-header__skip" href="#main-content">Saltar al contenido</a>
+
+    <div class="cm-site-header__bar">
+      <a class="cm-site-header__logo-link" href="../index.html" aria-label="Continental Media — ir al inicio">
+        <img
+          class="cm-site-header__logo"
+          src="../assets/images/continental-media-logo-white.png"
+          alt="Continental Media"
+          width="380"
+          height="151"
+        />
+      </a>
+
+      <button
+        type="button"
+        class="cm-site-header__menu-toggle"
+        data-cm-site-header-menu-toggle
+        aria-expanded="false"
+        aria-controls="cm-site-header-nav"
+        aria-label="Abrir menú"
+      >
+        <span class="cm-site-header__menu-icon" aria-hidden="true">
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+        </span>
+        <span class="cm-site-header__menu-label" data-cm-site-header-menu-label>Menú</span>
+      </button>
+    </div>
+
+    <nav
+      class="cm-site-header__nav"
+      id="cm-site-header-nav"
+      data-cm-site-header-nav
+      aria-label="Menú principal"
+      hidden
+    >
+      <div class="cm-site-header__nav-inner">
+        <ol class="cm-site-header__nav-list">
+          <li class="cm-site-header__nav-item">
+            <a href="../index.html#top">
+              <span class="cm-site-header__nav-index">01</span>
+              <span class="cm-site-header__nav-text">Inicio</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../nosotros.html">
+              <span class="cm-site-header__nav-index">02</span>
+              <span class="cm-site-header__nav-text">Nosotros</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../index.html#servicios">
+              <span class="cm-site-header__nav-index">03</span>
+              <span class="cm-site-header__nav-text">Servicios</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../index.html#proyectos">
+              <span class="cm-site-header__nav-index">04</span>
+              <span class="cm-site-header__nav-text">Proyectos</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../index.html#blog">
+              <span class="cm-site-header__nav-index">05</span>
+              <span class="cm-site-header__nav-text">Blog</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../index.html#contacto">
+              <span class="cm-site-header__nav-index">06</span>
+              <span class="cm-site-header__nav-text">Contacto</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+        </ol>
+
+        <div class="cm-site-header__nav-aside">
+          <p class="cm-site-header__nav-tagline">
+            La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
+          </p>
+
+          <div class="cm-site-header__nav-social">
+            <span class="cm-site-header__nav-social-label">Síguenos</span>
+            <ul class="cm-site-header__nav-social-list">
+              <li>
+                <a
+                  href="https://www.facebook.com/ContinentalMkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Facebook (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M13.5 21v-7.2h2.1l.3-2.5h-2.4V9.6c0-.7.2-1.2 1.2-1.2h1.3V6.1c-.3 0-1.3-.1-2.1-.1-2.1 0-3.3 1.2-3.3 3.5v1.9H8.5v2.5h2.1V21" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/continental_mkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Instagram (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                    <circle cx="12" cy="12" r="4.2" />
+                    <circle class="cm-site-header__nav-social-dot" cx="16.9" cy="7.1" r="0.6" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en YouTube (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                    <path class="cm-site-header__nav-social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://mx.linkedin.com/company/continentalmkt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en LinkedIn (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
+                    <circle class="cm-site-header__nav-social-dot" cx="7.7" cy="8.3" r="1" />
+                    <path d="M7.7 11.2V17" />
+                    <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <p class="cm-site-header__nav-copyright">© 2026 Continental Media</p>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- ===== /SITE HEADER BLOCK ===== -->
+
+  <main id="main-content" tabindex="-1">
+    <section class="cm-pindex" data-cm-pindex aria-labelledby="cm-pindex-heading">
+      <noscript>
+        <style>
+          [data-cm-pindex] .cm-pindex-hero__eyebrow,
+          [data-cm-pindex] .cm-pindex-hero__title,
+          [data-cm-pindex] .cm-pindex-hero__subtitle,
+          [data-cm-pindex] .cm-pindex-filters,
+          [data-cm-pindex] .cm-pindex-row {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          [data-cm-pindex] .cm-pindex-row__description {
+            opacity: 1 !important;
+          }
+        </style>
+      </noscript>
+
+      <div class="cm-pindex-hero">
+        <div class="cm-pindex-hero__inner">
+          <span class="cm-pindex-hero__eyebrow">Proyectos</span>
+          <h1 class="cm-pindex-hero__title" id="cm-pindex-heading">25 años de trabajo que hablan por sí solos.</h1>
+          <p class="cm-pindex-hero__subtitle">
+            Exploración de proyectos reales, estrategias comprobadas e impacto medible para marcas en
+            México y Estados Unidos.
+          </p>
+        </div>
+      </div>
+
+      <div class="cm-pindex-filters" role="group" aria-label="Filtrar proyectos por industria">
+        <div class="cm-pindex-filters__inner">
+          <button
+            type="button"
+            class="cm-pindex-filters__chip is-active"
+            data-cm-pindex-filter="all"
+            aria-pressed="true"
+          >
+            Todos
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="hospitalidad"
+            aria-pressed="false"
+          >
+            Hospitalidad
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="cafe-gastronomia"
+            aria-pressed="false"
+          >
+            Café y Gastronomía
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="inmobiliario"
+            aria-pressed="false"
+          >
+            Inmobiliario
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="hoteleria"
+            aria-pressed="false"
+          >
+            Hotelería
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="bienestar"
+            aria-pressed="false"
+          >
+            Bienestar
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="educacion"
+            aria-pressed="false"
+          >
+            Educación
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="asociacion"
+            aria-pressed="false"
+          >
+            Asociación
+          </button>
+          <button
+            type="button"
+            class="cm-pindex-filters__chip"
+            data-cm-pindex-filter="desarrollo-residencial"
+            aria-pressed="false"
+          >
+            Desarrollo Residencial
+          </button>
+        </div>
+      </div>
+
+      <div class="cm-pindex-list">
+        <ol class="cm-pindex-list__inner" data-cm-pindex-rows>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="hospitalidad">
+          <a
+            class="cm-pindex-row__link"
+            href="grand-lounge-elite/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: The Grand Lounge Elite — Hospitalidad"
+          >
+            <span class="cm-pindex-row__index">01</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Hospitalidad</span>
+              <span class="cm-pindex-row__name">The Grand Lounge Elite</span>
+              <span class="cm-pindex-row__description">Consolidar la red de salas VIP más importante en aeropuertos de México.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/grand-lounge-elite/hero.jpg"
+                  width="2048"
+                  height="1365"
+                  alt="The Grand Lounge Elite — Hospitalidad"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="cafe-gastronomia">
+          <a
+            class="cm-pindex-row__link"
+            href="parroquia-veracruz/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: La Parroquia de Veracruz — Café y Gastronomía"
+          >
+            <span class="cm-pindex-row__index">02</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Café y Gastronomía</span>
+              <span class="cm-pindex-row__name">La Parroquia de Veracruz</span>
+              <span class="cm-pindex-row__description">Casi 100 años de historia, traducidos a una marca integral.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/parroquia-veracruz/hero.jpg"
+                  width="1467"
+                  height="2200"
+                  alt="La Parroquia de Veracruz — Café y Gastronomía"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="inmobiliario">
+          <a
+            class="cm-pindex-row__link"
+            href="bitali-desarrollos/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: Bitali Desarrollos — Inmobiliario"
+          >
+            <span class="cm-pindex-row__index">03</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Inmobiliario</span>
+              <span class="cm-pindex-row__name">Bitali Desarrollos</span>
+              <span class="cm-pindex-row__description">Convertir 60 conversaciones diarias en los leads que realmente importan.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/bitali-desarrollos/hero.jpg"
+                  width="2400"
+                  height="1350"
+                  alt="Bitali Desarrollos — Inmobiliario"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="hoteleria">
+          <a
+            class="cm-pindex-row__link"
+            href="camino-real-veracruz/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: Camino Real Veracruz — Hotelería"
+          >
+            <span class="cm-pindex-row__index">04</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Hotelería</span>
+              <span class="cm-pindex-row__name">Camino Real Veracruz</span>
+              <span class="cm-pindex-row__description">Contenido mensual que da vida a cada rincón del hotel.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/camino-real-veracruz/hero.jpg"
+                  width="1467"
+                  height="2200"
+                  alt="Camino Real Veracruz — Hotelería"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="bienestar">
+          <a
+            class="cm-pindex-row__link"
+            href="new-you-wellness/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: New You Wellness Center — Bienestar · Houston, TX"
+          >
+            <span class="cm-pindex-row__index">05</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Bienestar · Houston, TX</span>
+              <span class="cm-pindex-row__name">New You Wellness Center</span>
+              <span class="cm-pindex-row__description">De un sitio de contacto a un motor de marketing con IA integrada.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/new-you-wellness/hero.jpg"
+                  width="1181"
+                  height="787"
+                  alt="New You Wellness Center — Bienestar · Houston, TX"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="educacion">
+          <a
+            class="cm-pindex-row__link"
+            href="u3m/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: U3M — Universidad del Tercer Milenio — Educación"
+          >
+            <span class="cm-pindex-row__index">06</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Educación</span>
+              <span class="cm-pindex-row__name">U3M — Universidad del Tercer Milenio</span>
+              <span class="cm-pindex-row__description">Una alianza de más de 5 años que sigue formando generaciones.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/u3m/hero.jpg"
+                  width="2200"
+                  height="1652"
+                  alt="U3M — Universidad del Tercer Milenio — Educación"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="asociacion">
+          <a
+            class="cm-pindex-row__link"
+            href="amda-veracruz-tabasco/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: AMDA Veracruz Tabasco — Asociación / Sector Automotriz"
+          >
+            <span class="cm-pindex-row__index">07</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Asociación / Sector Automotriz</span>
+              <span class="cm-pindex-row__name">AMDA Veracruz Tabasco</span>
+              <span class="cm-pindex-row__description">Presencia digital constante para la voz del sector automotriz.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/amda-veracruz-tabasco/hero.jpg"
+                  width="1600"
+                  height="1200"
+                  alt="AMDA Veracruz Tabasco — Asociación / Sector Automotriz"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="desarrollo-residencial">
+          <a
+            class="cm-pindex-row__link"
+            href="bosque-residencial-san-lucas/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: Bosque Residencial San Lucas — Desarrollo Inmobiliario"
+          >
+            <span class="cm-pindex-row__index">08</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Desarrollo Inmobiliario</span>
+              <span class="cm-pindex-row__name">Bosque Residencial San Lucas</span>
+              <span class="cm-pindex-row__description">Una estrategia digital que conecta con el equipo comercial.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/bosque-residencial-san-lucas/hero.jpg"
+                  width="1238"
+                  height="2200"
+                  alt="Bosque Residencial San Lucas — Desarrollo Inmobiliario"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="cm-pindex-row" data-cm-pindex-row data-filter="desarrollo-residencial">
+          <a
+            class="cm-pindex-row__link"
+            href="punta-tiburon/"
+            data-cm-pindex-row-link
+            aria-label="Ver caso de estudio: Punta Tiburón — Desarrollo Residencial / Club Deportivo"
+          >
+            <span class="cm-pindex-row__index">09</span>
+            <span class="cm-pindex-row__text">
+              <span class="cm-pindex-row__category">Desarrollo Residencial / Club Deportivo</span>
+              <span class="cm-pindex-row__name">Punta Tiburón</span>
+              <span class="cm-pindex-row__description">Más de una década construyendo la identidad de un torneo.</span>
+            </span>
+            <span class="cm-pindex-row__media">
+              <span class="cm-pindex-row__media-frame">
+                <img
+                  class="cm-pindex-row__media-img"
+                  src="../assets/images/proyectos/punta-tiburon/hero.jpg"
+                  width="1920"
+                  height="1080"
+                  alt="Punta Tiburón — Desarrollo Residencial / Club Deportivo"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cm-pindex-row__media-overlay" aria-hidden="true"></span>
+              </span>
+            </span>
+          </a>
+        </li>
+        </ol>
+      </div>
+
+      <div class="cm-pindex-transition" data-cm-pindex-transition aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER — see public/blocks/footer/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — GLOBAL FOOTER BLOCK (canonical source)
+    THESIS: the site's one constant reference zone, not a fifth narrative
+      section. Every page ends here — home and every internal Nosotros/
+      Servicios/Proyectos page — so it has to orient ("where else can I
+      go") without competing for attention with whatever content sits
+      above it. Dark ground (--cm-color-bg, the same near-black as the
+      hero) gives the home page a deliberate light-to-dark close right
+      after Contacto's light "trust seal" background.
+    FORM: 4 columns (Identidad, Sitio, Servicios, Contacto) above one
+      thin-divider bottom bar (copyright + legal placeholders). Column 1
+      is deliberately wider and carries zero location copy — the brief
+      is explicit that the agency's México + Estados Unidos reach should
+      never read as scoped to one city. Columns 2-3 are real <nav>
+      landmarks (aria-label carries the same text as their visual title,
+      which is aria-hidden to avoid a second identical accessible name);
+      column 4 mixes two contact links with the same 4 social icons
+      already shipped in site-header's mobile nav panel — same hrefs,
+      same SVG paths, reused verbatim rather than re-sourced, per the
+      brief's own instruction not to fork a second copy of that data.
+    NO JS: unlike every other block on this page, this one ships no
+      footer.js and loads no <script> tag. The brief is explicit that the
+      footer is a static, utilitarian, "constant reference" zone with no
+      scroll-entrance animation and no complex interaction — every control
+      here is a plain <a>, every hover is plain CSS (:hover/:focus-visible)
+      — so there is nothing for a script to do. Shipping an empty file just
+      to match the pattern would be the exact network-request waste the
+      brief's own performance note argues against.
+    ACCESSIBILITY: heading hierarchy stays local to the footer landmark —
+      <footer> is an implicit contentinfo region, and its own <h2>s do not
+      compete with each page's real content headings above it. The
+      WhatsApp link's aria-label states the number AND that it opens in a
+      new tab; social icons keep their aria-label on the <a> and
+      aria-hidden="true" on the decorative <svg>, exactly like
+      site-header's own social list. Every link has a visible
+      :focus-visible outline against the dark ground.
+    ROUTING NOTE: "Servicios" and "Proyectos" in the Sitio column point at
+      index.html#servicios / index.html#proyectos, not at standalone
+      /servicios or /proyectos pages — those pages don't exist yet (only
+      individual pillar and case-study pages do), and this matches
+      site-header's own nav exactly. "Aviso de Privacidad" and "Términos y
+      Condiciones" are real placeholder routes (aviso-de-privacidad.html,
+      terminos-y-condiciones.html) that don't resolve to a built page yet,
+      per the brief's explicit instruction not to block on their absence.
+    USAGE — canonical source for this block. This file is written at
+      HOME-PAGE PATH DEPTH (asset/internal links with no "../" prefix,
+      matching index.html and nosotros.html, which sit at the same
+      depth). To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/footer/footer.css.
+      2. Copy the <footer class="cm-footer"> markup below as the last
+         thing inside <body>, immediately after </main> and before any
+         <script> tags.
+      3. On a page one level deeper than the site root (every
+         servicios/<pillar>/ and proyectos/<caso>/ page), prefix every
+         href/src below that points at another site page or a root asset
+         with "../../" — exactly the same adjustment site-header's own
+         canonical markup already needs at that depth. mailto:/https:
+         links (email, WhatsApp, social) need no prefix at any depth.
+      No footer.js to load — see NO JS above.
+  -->
+  <footer class="cm-footer" data-cm-footer>
+    <div class="cm-footer__inner">
+      <div class="cm-footer__grid">
+        <div class="cm-footer__col cm-footer__col--identity">
+          <a class="cm-footer__logo-link" href="../index.html" aria-label="Continental Media — ir al inicio">
+            <img
+              class="cm-footer__logo"
+              src="../assets/images/continental-media-logo-white.png"
+              alt="Continental Media"
+              width="190"
+              height="76"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <p class="cm-footer__tagline">Agencia de publicidad y comunicación 360°</p>
+        </div>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-site-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-site-title">Sitio</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="../nosotros.html">Nosotros</a></li>
+            <li><a href="../index.html#servicios">Servicios</a></li>
+            <li><a href="../index.html#proyectos">Proyectos</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-services-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-services-title">Servicios</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="../servicios/marketing-digital/">Marketing Digital</a></li>
+            <li><a href="../servicios/ai-marketing-solutions/">AI Marketing Solutions</a></li>
+            <li><a href="../servicios/marketing-tradicional/">Marketing Tradicional</a></li>
+            <li><a href="../servicios/relaciones-publicas/">Relaciones Públicas</a></li>
+            <li><a href="../servicios/produccion/">Producción</a></li>
+          </ul>
+        </nav>
+
+        <div class="cm-footer__col">
+          <h2 class="cm-footer__col-title">Contacto</h2>
+          <ul class="cm-footer__contact-list">
+            <li><a href="mailto:contacto@continentalmedia.com.mx">contacto@continentalmedia.com.mx</a></li>
+            <li>
+              <a
+                href="https://wa.me/522292100926"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp de Continental Media, 229 210 0926, se abre en una nueva pestaña"
+              >
+                229 210 0926
+              </a>
+            </li>
+          </ul>
+
+          <ul class="cm-footer__social-list" aria-label="Redes sociales de Continental Media">
+            <li>
+              <a
+                href="https://www.facebook.com/ContinentalMkt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en Facebook (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path
+                    d="M13.5 21v-7.2h2.1l.3-2.5h-2.4V9.6c0-.7.2-1.2 1.2-1.2h1.3V6.1c-.3 0-1.3-.1-2.1-.1-2.1 0-3.3 1.2-3.3 3.5v1.9H8.5v2.5h2.1V21"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/continental_mkt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en Instagram (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                  <circle cx="12" cy="12" r="4.2" />
+                  <circle class="cm-footer__social-dot" cx="16.9" cy="7.1" r="0.6" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en YouTube (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                  <path class="cm-footer__social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://mx.linkedin.com/company/continentalmkt"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en LinkedIn (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
+                  <circle class="cm-footer__social-dot" cx="7.7" cy="8.3" r="1" />
+                  <path d="M7.7 11.2V17" />
+                  <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cm-footer__bottom">
+        <p class="cm-footer__copyright">© 2026 Continental Media. Todos los derechos reservados.</p>
+        <ul class="cm-footer__legal-list">
+          <li><a href="../aviso-de-privacidad.html">Aviso de Privacidad</a></li>
+          <li><a href="../terminos-y-condiciones.html">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <!-- ===== /FOOTER ===== -->
+
+  <script type="module" src="../blocks/site-header/site-header.js"></script>
+  <script type="module" src="../blocks/projects-index/projects-index.js"></script>
+</body>
+</html>
