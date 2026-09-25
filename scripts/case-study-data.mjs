@@ -709,11 +709,9 @@ export const CASE_STUDIES = [
       eyebrow: 'Resultado',
       mediaAlt: 'Mesas puestas con copas azules en el restaurante de palapa de Camino Real Veracruz, uno de sus centros de consumo frente al mar',
       media: { src: 'proyectos/camino-real-veracruz/resultado.jpg', width: 1652, height: 2200 },
-      body: 'Desde el inicio de la relación en febrero de 2025, la comunidad digital de Camino Real Veracruz ha registrado crecimiento sostenido. En Instagram, la cuenta pasó de aproximadamente 90 seguidores al inicio de la gestión a 686 seguidores actualmente. En Facebook, la página pasó de 6,397 fans en febrero de 2025 a 7,477 fans, un incremento de más de 1,000 seguidores. El proyecto continúa activo, con una operación constante de producción, publicación y gestión de contenidos que sigue fortaleciendo la presencia digital del hotel.',
-      highlights: [
-        { value: '686 seguidores', label: 'Instagram — desde ~90 seguidores al inicio de la gestión' },
-        { value: '7,477 fans', label: 'Facebook — +1,000 seguidores desde febrero de 2025' },
-      ],
+      body: 'Desde febrero de 2025, Camino Real Veracruz ha mantenido una operación de contenido mensual ininterrumpida: moodboard, producción fotográfica y audiovisual, selección, edición y publicación, mes tras mes, sin pausas. Esa constancia ha permitido que el hotel cuente hoy con un archivo creciente de contenido propio que retrata cada uno de sus espacios y centros de consumo, con una línea visual coherente y alineada a la identidad de la marca. El proyecto continúa activo, sostenido por el mismo proceso disciplinado que lo hizo posible desde el primer mes de colaboración.',
+      highlight: 'Operación de contenido mensual ininterrumpida',
+      highlightAttribution: 'Moodboard, producción, edición y publicación, mes tras mes, desde febrero de 2025',
     },
 
     // Matches the checkerboard color already assigned to this project in
