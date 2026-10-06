@@ -49,20 +49,28 @@ import { dirname, resolve } from 'node:path';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
 import { renderOrganizationSchema } from './lib/seo-schema.mjs';
+import { renderFavicons, renderSeoMeta } from './lib/seo-meta.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REL = '';
+const TITLE = 'Contacto — Continental Media | Hablemos de tu marca';
+const DESCRIPTION =
+  'Escríbenos y cuéntanos qué necesita tu marca. Te contactamos en menos de 24 horas por WhatsApp, llamada o correo — agencia de marketing y RP potenciada por IA.';
 
 function renderHead() {
   return `<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contacto — Continental Media | Hablemos de tu marca</title>
+  <title>${TITLE}</title>
   <meta
     name="description"
-    content="Escríbenos y cuéntanos qué necesita tu marca. Te contactamos en menos de 24 horas por WhatsApp, llamada o correo — Continental Media, agencia de marketing, comunicación y RP potenciada por IA."
+    content="${DESCRIPTION}"
   />
   <meta name="theme-color" content="#0a0b0d" />
+
+${renderFavicons(REL)}
+
+${renderSeoMeta({ rel: REL, canonicalPath: 'contacto.html', title: TITLE, description: DESCRIPTION })}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

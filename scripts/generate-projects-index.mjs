@@ -19,6 +19,7 @@ import { dirname, resolve } from 'node:path';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
 import { renderOrganizationSchema } from './lib/seo-schema.mjs';
+import { renderFavicons, renderSeoMeta } from './lib/seo-meta.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REL = '../';
@@ -241,6 +242,16 @@ function renderPage() {
     content="Explora los casos de éxito de Continental Media: 9 proyectos reales, estrategias comprobadas e impacto medible para marcas en México y Estados Unidos."
   />
   <meta name="theme-color" content="#0a0b0d" />
+
+${renderFavicons(REL)}
+
+${renderSeoMeta({
+    rel: REL,
+    canonicalPath: 'proyectos/',
+    title: 'Proyectos — Continental Media | Casos de éxito reales',
+    description:
+      'Explora los casos de éxito de Continental Media: 9 proyectos reales, estrategias comprobadas e impacto medible para marcas en México y Estados Unidos.',
+  })}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -34,6 +34,7 @@ import { CASE_STUDIES } from './case-study-data.mjs';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
 import { renderOrganizationSchema } from './lib/seo-schema.mjs';
+import { renderFavicons, renderSeoMeta } from './lib/seo-meta.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -138,6 +139,15 @@ function renderHead(caseStudy) {
   <title>${escapeHtml(caseStudy.metaTitle)}</title>
   <meta name="description" content="${escapeHtml(caseStudy.metaDescription)}" />
   <meta name="theme-color" content="#0a0b0d" />
+
+${renderFavicons(REL)}
+
+${renderSeoMeta({
+    rel: REL,
+    canonicalPath: `proyectos/${caseStudy.slug}/`,
+    title: escapeHtml(caseStudy.metaTitle),
+    description: escapeHtml(caseStudy.metaDescription),
+  })}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

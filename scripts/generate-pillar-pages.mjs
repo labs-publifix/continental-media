@@ -25,6 +25,7 @@ import { PILLARS } from './pillar-data.mjs';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
 import { renderOrganizationSchema } from './lib/seo-schema.mjs';
+import { renderFavicons, renderSeoMeta } from './lib/seo-meta.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -54,6 +55,15 @@ function renderHead(pillar) {
   <title>${escapeHtml(pillar.metaTitle)}</title>
   <meta name="description" content="${escapeHtml(pillar.metaDescription)}" />
   <meta name="theme-color" content="#0a0b0d" />
+
+${renderFavicons(REL)}
+
+${renderSeoMeta({
+    rel: REL,
+    canonicalPath: `servicios/${pillar.slug}/`,
+    title: escapeHtml(pillar.metaTitle),
+    description: escapeHtml(pillar.metaDescription),
+  })}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

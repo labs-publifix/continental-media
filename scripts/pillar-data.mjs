@@ -59,7 +59,7 @@ export const PILLARS = [
     badge: 'Nuevo',
     metaTitle: 'AI Marketing Solutions — Servicios | Continental Media',
     metaDescription:
-      'Agentes de IA, blogs automáticos, quizzes interactivos, producción de video con IA, automatización de marketing y campañas en la red de OpenAI: AI Marketing Solutions de Continental Media.',
+      'Agentes de IA, blogs automáticos, quizzes interactivos y producción de video con IA: AI Marketing Solutions de Continental Media.',
     intro:
       'Integramos inteligencia artificial de forma estratégica en los procesos de marketing y comunicación de tu marca. No se trata solo de automatización: se trata de usar IA como una ventaja competitiva real que mejora la toma de decisiones, personaliza la experiencia del cliente y acelera el crecimiento del negocio.',
     subservices: [

@@ -48,7 +48,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Duración', value: '2024–2026 (proyecto activo)' },
     metaTitle: 'The Grand Lounge Elite — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media desarrolló la estrategia de marketing integral de The Grand Lounge Elite: branding, redes sociales, relaciones públicas, producción audiovisual y desarrollo web para la red de salas VIP más importante en aeropuertos de México.',
+      'Cómo Continental Media desarrolló la estrategia integral de The Grand Lounge Elite: branding, RP y producción para su red de salas VIP aeroportuaria.',
 
     hero: {
       label: 'Caso de estudio',
@@ -158,7 +158,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Veracruz, México' },
     metaTitle: 'Bitali Desarrollos — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media implementó agentes de inteligencia artificial para WhatsApp que atienden, clasifican y escalan los leads de Bitali Desarrollos en segundos, convirtiendo más de 60 conversaciones diarias en los prospectos que realmente importan.',
+      'Cómo Continental Media implementó agentes de IA en WhatsApp que atienden y escalan los leads de Bitali Desarrollos en segundos, hasta 60 al día.',
 
     hero: {
       label: 'Caso de estudio',
@@ -246,7 +246,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Tomball y Katy, Houston, TX' },
     metaTitle: 'New You Wellness Center — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media construyó para New You Wellness Center una plataforma con quiz de perfilamiento por IA, blogs automatizados con Gemini, panel de administración de leads y constructor de landing pages propio.',
+      'Cómo Continental Media construyó para New You Wellness Center un quiz de perfilamiento por IA, blogs automatizados y un panel propio de leads.',
 
     hero: {
       label: 'Caso de estudio',
@@ -353,7 +353,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Nacional (origen en Veracruz)' },
     metaTitle: 'La Parroquia de Veracruz — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media tradujo casi 100 años de historia de La Parroquia de Veracruz a una comunicación integral: redes sociales, producción audiovisual y campañas de Meta Ads para una marca de café y gastronomía con alcance nacional.',
+      'Cómo Continental Media tradujo casi 100 años de historia de La Parroquia de Veracruz a una comunicación integral: redes sociales y campañas de Meta Ads.',
 
     hero: {
       label: 'Caso de estudio',
@@ -447,7 +447,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Puerto de Veracruz · Colaboración desde 2020' },
     metaTitle: 'U3M — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media construyó una comunicación integral para la Universidad del Tercer Milenio (U3M) en Veracruz: redes sociales, campañas en Meta, Google y TikTok, y diseño gráfico que generaron más de 400 inscripciones en más de 5 años de colaboración.',
+      'Cómo Continental Media construyó la comunicación de la Universidad del Tercer Milenio (U3M): redes, campañas en Meta, Google y TikTok, más de 400 inscripciones.',
 
     hero: {
       label: 'Caso de estudio',
@@ -542,7 +542,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Veracruz y Tabasco · Colaboración activa desde mayo 2023' },
     metaTitle: 'AMDA Veracruz Tabasco — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media construyó una presencia digital constante para AMDA Veracruz Tabasco: contenido, producción audiovisual y relaciones públicas que llevaron a la asociación a más de 8,900 seguidores en Facebook y presencia en Instagram.',
+      'Cómo Continental Media construyó presencia digital constante para AMDA Veracruz Tabasco: contenido y RP que la llevaron a más de 8,900 seguidores en Facebook.',
 
     hero: {
       label: 'Caso de estudio',
@@ -643,7 +643,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Veracruz, México · Colaboración activa desde febrero 2025' },
     metaTitle: 'Camino Real Veracruz — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media construyó un proceso mensual de producción fotográfica y audiovisual para Camino Real Veracruz: contenido para redes sociales que llevó a la propiedad a un crecimiento sostenido en Instagram y Facebook.',
+      'Cómo Continental Media construyó un proceso mensual de producción fotográfica y audiovisual para Camino Real Veracruz, con crecimiento sostenido en redes.',
 
     hero: {
       label: 'Caso de estudio',
@@ -738,9 +738,9 @@ export const CASE_STUDIES = [
       'Producción de Materiales Publicitarios',
     ],
     factFour: { label: 'Alcance', value: 'Coatepec, Veracruz' },
-    metaTitle: 'Bosque Residencial San Lucas — Casos de Éxito | Continental Media',
+    metaTitle: 'Bosque Residencial San Lucas | Continental Media',
     metaDescription:
-      'Cómo Continental Media construyó una estrategia digital integral para Bosque Residencial San Lucas: contenido, gestión de comunidad, Meta Ads y capacitación comercial que conecta cada etapa del proceso de venta bajo una misma visión.',
+      'Cómo Continental Media construyó la estrategia digital de Bosque Residencial San Lucas: contenido, comunidad, Meta Ads y capacitación comercial.',
 
     hero: {
       label: 'Caso de estudio',
@@ -830,7 +830,7 @@ export const CASE_STUDIES = [
     factFour: { label: 'Alcance', value: 'Riviera Veracruzana, Veracruz · Colaboración activa desde 2014' },
     metaTitle: 'Punta Tiburón — Casos de Éxito | Continental Media',
     metaDescription:
-      'Cómo Continental Media ha construido, desde 2014, la identidad y comunicación del Torneo Anual de Golf de Punta Tiburón: branding, relaciones públicas y producción de evento, edición tras edición, durante más de una década.',
+      'Cómo Continental Media construye, desde 2014, la identidad y comunicación del Torneo Anual de Golf de Punta Tiburón: branding, RP y producción.',
 
     hero: {
       label: 'Caso de estudio',
