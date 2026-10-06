@@ -20,8 +20,9 @@
     no card/border/radius treatment, and every logo shares one display
     height per row so it reads as a single aligned line despite each
     wordmark's own natural proportions. Row 1 ("Plataformas
-    propietarias") is the only clickable row — two real Continental
-    Media products — and looks visually identical to the two purely-
+    propietarias") is the only clickable row — Publifix and LABS (two
+    real Continental Media products) plus Viviendo Vino (an allied
+    brand's Instagram) — and looks visually identical to the two purely-
     informational rows below (Meta/Google/OpenAI/TikTok, then
     Anthropic/GitHub/Supabase/Vercel) except for one small external-
     link arrow next to each name; clickability itself is communicated
@@ -29,7 +30,7 @@
     and the arrow nudges toward the upper-right), so there is nothing
     button-shaped anywhere in this row at rest.
   GOOGLE LOGO: the only source file that ships in brand color (blue/
-    red/yellow/green) instead of monochrome black like its 9 neighbors.
+    red/yellow/green) instead of monochrome black like its 10 neighbors.
     Forced solid black via `filter: brightness(0)` on the <img> itself
     (aliados-tecnologia.css, .cm-aliados__logo--google) rather than by
     re-exporting the asset, so the fix lives next to the one logo it
@@ -90,6 +91,28 @@
     <div class="cm-aliados__row cm-aliados__row--chips" data-cm-aliados-reveal>
       <span class="cm-aliados__row-label">Plataformas propietarias</span>
       <ul class="cm-aliados__chip-list">
+        <li>
+          <a
+            class="cm-aliados__chip"
+            href="https://www.instagram.com/viviendovino/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Viviendo Vino, se abre en una nueva pestaña"
+          >
+            <img
+              class="cm-aliados__logo"
+              src="assets/images/aliados/viviendo-vino.png"
+              alt=""
+              width="648"
+              height="236"
+              loading="lazy"
+              decoding="async"
+            />
+            <svg class="cm-aliados__chip-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </a>
+        </li>
         <li>
           <a
             class="cm-aliados__chip"
