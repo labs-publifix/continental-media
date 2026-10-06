@@ -147,6 +147,7 @@
 .cm-footer__contact-list a {
   color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
+  overflow-wrap: break-word;
   transition: color var(--cm-duration-fast) var(--cm-ease-out);
 }
 
