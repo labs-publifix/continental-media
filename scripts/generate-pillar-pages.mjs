@@ -24,6 +24,7 @@ import path from 'node:path';
 import { PILLARS } from './pillar-data.mjs';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
+import { renderOrganizationSchema } from './lib/seo-schema.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -65,6 +66,8 @@ function renderHead(pillar) {
   <link rel="stylesheet" href="${REL}blocks/site-header/site-header.css" />
   <link rel="stylesheet" href="${REL}blocks/pillar-page/pillar-page.css" />
   <link rel="stylesheet" href="${REL}blocks/footer/footer.css" />
+
+${renderOrganizationSchema(REL)}
 
   <style>
     /* Minimal page shell — not a design system, just enough to view
@@ -203,7 +206,7 @@ ${extraBlock}
         <div class="cm-pillar-cta__inner">
           <h2 class="cm-pillar-cta__title">¿Listo para que logremos juntos tus objetivos?</h2>
           <div class="cm-pillar-cta__actions">
-            <a class="cm-pillar-cta__button cm-pillar-cta__button--primary" href="${REL}index.html#contacto"
+            <a class="cm-pillar-cta__button cm-pillar-cta__button--primary" href="${REL}contacto.html"
               >Contáctanos</a
             >
             <a class="cm-pillar-cta__button cm-pillar-cta__button--secondary" href="${REL}index.html#servicios"

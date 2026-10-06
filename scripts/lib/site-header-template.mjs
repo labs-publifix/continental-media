@@ -138,7 +138,7 @@ export function renderSiteHeader(rel, options = {}) {
             </a>
           </li>
           <li class="cm-site-header__nav-item">
-            <a href="${rel}index.html#contacto">
+            <a href="${rel}contacto.html">
               <span class="cm-site-header__nav-index">06</span>
               <span class="cm-site-header__nav-text">Contacto</span>
               <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>

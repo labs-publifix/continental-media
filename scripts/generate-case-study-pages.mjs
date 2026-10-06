@@ -33,6 +33,7 @@ import path from 'node:path';
 import { CASE_STUDIES } from './case-study-data.mjs';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
+import { renderOrganizationSchema } from './lib/seo-schema.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -149,6 +150,8 @@ function renderHead(caseStudy) {
   <link rel="stylesheet" href="${REL}blocks/site-header/site-header.css" />
   <link rel="stylesheet" href="${REL}blocks/case-study/case-study.css" />
   <link rel="stylesheet" href="${REL}blocks/footer/footer.css" />
+
+${renderOrganizationSchema(REL)}
 
   <style>
     /* Minimal page shell — not a design system, just enough to view
@@ -460,7 +463,7 @@ function renderClose(caseStudy) {
   return `    <section class="cm-case-close">
       <div class="cm-case-close__cta" data-cm-case-reveal>
         <h2 class="cm-case-close__cta-title">¿Quieres resultados como estos para tu marca?</h2>
-        <a class="cm-case-close__button" href="${REL}index.html#contacto">Contáctanos</a>
+        <a class="cm-case-close__button" href="${REL}contacto.html">Contáctanos</a>
       </div>
 
       <a

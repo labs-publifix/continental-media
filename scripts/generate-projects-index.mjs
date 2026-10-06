@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { renderSiteHeader } from './lib/site-header-template.mjs';
 import { renderFooter } from './lib/footer-template.mjs';
+import { renderOrganizationSchema } from './lib/seo-schema.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REL = '../';
@@ -252,6 +253,8 @@ function renderPage() {
   <link rel="stylesheet" href="${REL}blocks/site-header/site-header.css" />
   <link rel="stylesheet" href="${REL}blocks/projects-index/projects-index.css" />
   <link rel="stylesheet" href="${REL}blocks/footer/footer.css" />
+
+${renderOrganizationSchema(REL)}
 
   <style>
     /* Minimal page shell — not a design system, just enough to view

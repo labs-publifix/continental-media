@@ -19,6 +19,25 @@
   <link rel="stylesheet" href="../../blocks/case-study/case-study.css" />
   <link rel="stylesheet" href="../../blocks/footer/footer.css" />
 
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Continental Media",
+  "url": "https://continentalmedia.com.mx/",
+  "logo": "https://continentalmedia.com.mx/assets/images/continental-media-logo-white.png",
+  "description": "Agencia de marketing, comunicación y relaciones públicas potenciada por Inteligencia Artificial, con presencia en Veracruz y Querétaro.",
+  "email": "contacto@continentalmedia.com.mx",
+  "telephone": "+52-229-210-0926",
+  "sameAs": [
+    "https://www.facebook.com/ContinentalMkt/",
+    "https://www.instagram.com/continental_mkt/",
+    "https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow",
+    "https://mx.linkedin.com/company/continentalmkt"
+  ]
+}
+  </script>
+
   <style>
     /* Minimal page shell — not a design system, just enough to view
        these blocks in context. Same reset every page on the site uses. */
@@ -153,7 +172,7 @@
             </a>
           </li>
           <li class="cm-site-header__nav-item">
-            <a href="../../index.html#contacto">
+            <a href="../../contacto.html">
               <span class="cm-site-header__nav-index">06</span>
               <span class="cm-site-header__nav-text">Contacto</span>
               <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
@@ -439,7 +458,7 @@
     <section class="cm-case-close">
       <div class="cm-case-close__cta" data-cm-case-reveal>
         <h2 class="cm-case-close__cta-title">¿Quieres resultados como estos para tu marca?</h2>
-        <a class="cm-case-close__button" href="../../index.html#contacto">Contáctanos</a>
+        <a class="cm-case-close__button" href="../../contacto.html">Contáctanos</a>
       </div>
 
       <a
@@ -462,24 +481,37 @@
   <!-- ===== FOOTER — see public/blocks/footer/ for the canonical source ===== -->
   <!--
     CONTINENTAL MEDIA — GLOBAL FOOTER BLOCK (canonical source)
-    THESIS: the site's one constant reference zone, not a fifth narrative
-      section. Every page ends here — home and every internal Nosotros/
-      Servicios/Proyectos page — so it has to orient ("where else can I
-      go") without competing for attention with whatever content sits
-      above it. Dark ground (--cm-color-bg, the same near-black as the
-      hero) gives the home page a deliberate light-to-dark close right
-      after Contacto's light "trust seal" background.
-    FORM: 4 columns (Identidad, Sitio, Servicios, Contacto) above one
+    THESIS: the site's one constant reference zone — and, since the 2026
+      redesign, its final conversion moment too. Every page ends here, so
+      it does two jobs in sequence: close with intent (a real "talk to us"
+      beat, not a mid-pivot into silence) and then orient ("where else can
+      I go") without competing with whatever content sits above it. Dark
+      ground (--cm-color-bg, the same near-black as the hero) gives the
+      home page a deliberate light-to-dark close right after Contacto's
+      light "trust seal" background.
+    FORM: a closing CTA band (eyebrow, headline, one primary button to
+      contacto.html) above a thin divider, then 5 columns (Identidad,
+      Sitio, Servicios, Proyectos recientes, Contacto), then one more
       thin-divider bottom bar (copyright + legal placeholders). Column 1
-      is deliberately wider and carries zero location copy — the brief
-      is explicit that the agency's México + Estados Unidos reach should
-      never read as scoped to one city. Columns 2-3 are real <nav>
+      is deliberately wider and carries zero location copy — the brief is
+      explicit that the agency's México + Estados Unidos reach should
+      never read as scoped to one city. Columns 2-4 are real <nav>
       landmarks (aria-label carries the same text as their visual title,
       which is aria-hidden to avoid a second identical accessible name);
-      column 4 mixes two contact links with the same 4 social icons
-      already shipped in site-header's mobile nav panel — same hrefs,
-      same SVG paths, reused verbatim rather than re-sourced, per the
-      brief's own instruction not to fork a second copy of that data.
+      column 5 mixes two contact links with the same 4 social icons
+      already shipped in site-header's mobile nav panel — same hrefs, same
+      SVG paths, reused verbatim rather than re-sourced, per the brief's
+      own instruction not to fork a second copy of that data.
+    SEO: this is the one footer whose link choices were made with search
+      in mind, not just navigation — every link resolves to a real,
+      crawlable URL (no anchor-only fragment pointing at another page's
+      mid-scroll section), and "Proyectos recientes" exists specifically
+      to push internal-link equity at three deep case-study pages from
+      every single page on the site, not just from /proyectos itself. The
+      matching Organization JSON-LD (name, logo, sameAs, contact point)
+      that makes this footer's own NAP/social data machine-readable lives
+      in each page's <head> — see scripts/lib/seo-schema.mjs — since
+      structured data has no visual footprint of its own.
     NO JS: unlike every other block on this page, this one ships no
       footer.js and loads no <script> tag. The brief is explicit that the
       footer is a static, utilitarian, "constant reference" zone with no
@@ -496,14 +528,16 @@
       aria-hidden="true" on the decorative <svg>, exactly like
       site-header's own social list. Every link has a visible
       :focus-visible outline against the dark ground.
-    ROUTING NOTE: "Servicios" and "Proyectos" in the Sitio column point at
-      index.html#servicios / index.html#proyectos, not at standalone
-      /servicios or /proyectos pages — those pages don't exist yet (only
-      individual pillar and case-study pages do), and this matches
-      site-header's own nav exactly. "Aviso de Privacidad" and "Términos y
-      Condiciones" are real placeholder routes (aviso-de-privacidad.html,
-      terminos-y-condiciones.html) that don't resolve to a built page yet,
-      per the brief's explicit instruction not to block on their absence.
+    ROUTING NOTE: "Proyectos" and "Contacto" in the Sitio column point at
+      the real proyectos/ and contacto.html pages (not at home-page anchor
+      fragments) now that both exist; "Servicios" still points at
+      index.html#servicios since there is no standalone /servicios index
+      page, only individual pillar pages (already linked directly in the
+      Servicios column) — this matches site-header's own nav exactly.
+      "Aviso de Privacidad" and "Términos y Condiciones" are real
+      placeholder routes (aviso-de-privacidad.html, terminos-y-
+      condiciones.html) that don't resolve to a built page yet, per the
+      brief's explicit instruction not to block on their absence.
     USAGE — canonical source for this block. This file is written at
       HOME-PAGE PATH DEPTH (asset/internal links with no "../" prefix,
       matching index.html and nosotros.html, which sit at the same
@@ -522,6 +556,19 @@
   -->
   <footer class="cm-footer" data-cm-footer>
     <div class="cm-footer__inner">
+      <div class="cm-footer__cta">
+        <p class="cm-footer__cta-eyebrow">Hablemos</p>
+        <h2 class="cm-footer__cta-title">¿Listos para el siguiente paso de tu marca?</h2>
+        <a class="cm-footer__cta-button" href="../../contacto.html">
+          Cuéntanos tu proyecto
+          <svg class="cm-footer__cta-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="cm-footer__divider" aria-hidden="true"></div>
+
       <div class="cm-footer__grid">
         <div class="cm-footer__col cm-footer__col--identity">
           <a class="cm-footer__logo-link" href="../../index.html" aria-label="Continental Media — ir al inicio">
@@ -543,8 +590,8 @@
           <ul class="cm-footer__link-list">
             <li><a href="../../nosotros.html">Nosotros</a></li>
             <li><a href="../../index.html#servicios">Servicios</a></li>
-            <li><a href="../../index.html#proyectos">Proyectos</a></li>
-            <li><a href="../../index.html#contacto">Contacto</a></li>
+            <li><a href="../../proyectos/">Proyectos</a></li>
+            <li><a href="../../contacto.html">Contacto</a></li>
           </ul>
         </nav>
 
@@ -556,6 +603,23 @@
             <li><a href="../../servicios/marketing-tradicional/">Marketing Tradicional</a></li>
             <li><a href="../../servicios/relaciones-publicas/">Relaciones Públicas</a></li>
             <li><a href="../../servicios/produccion/">Producción</a></li>
+          </ul>
+        </nav>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-recent-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-recent-title">Proyectos recientes</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="../../proyectos/camino-real-veracruz/">Camino Real Veracruz</a></li>
+            <li><a href="../../proyectos/bosque-residencial-san-lucas/">Bosque Residencial San Lucas</a></li>
+            <li><a href="../../proyectos/punta-tiburon/">Punta Tiburón</a></li>
+            <li>
+              <a class="cm-footer__link-list-more" href="../../proyectos/">
+                Ver todos los proyectos
+                <svg class="cm-footer__link-list-more-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M7 17 17 7M9 7h8v8" />
+                </svg>
+              </a>
+            </li>
           </ul>
         </nav>
 

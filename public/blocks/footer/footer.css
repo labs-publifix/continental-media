@@ -25,12 +25,103 @@
   padding: clamp(3.5rem, 8vh, 5.5rem) var(--cm-gutter) clamp(2rem, 5vh, 3rem);
 }
 
+/* ---------- Closing CTA band ---------- */
+
+.cm-footer__cta {
+  max-width: 640px;
+  margin: 0 0 clamp(2.5rem, 6vh, 3.5rem);
+}
+
+.cm-footer__cta-eyebrow {
+  margin: 0 0 0.9em;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cm-footer__cta-title {
+  margin: 0 0 1.75rem;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.cm-footer__cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  color: var(--cm-color-on-accent);
+  background: var(--cm-color-accent);
+  border: 1.5px solid var(--cm-color-accent);
+  border-radius: var(--cm-radius-sm);
+  padding: 0.95em 1.5em;
+  text-decoration: none;
+  transition:
+    background-color var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out),
+    transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-footer__cta-arrow {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-footer__cta-button:hover {
+    background: var(--cm-color-accent-hover);
+    border-color: var(--cm-color-accent-hover);
+  }
+
+  .cm-footer__cta-button:hover .cm-footer__cta-arrow {
+    transform: translate(2px, -2px);
+  }
+}
+
+.cm-footer__cta-button:focus-visible {
+  outline: 2px solid var(--cm-color-fg);
+  outline-offset: 3px;
+}
+
+.cm-footer__cta-button:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-footer__cta-button:hover .cm-footer__cta-arrow {
+    transform: none;
+  }
+}
+
+.cm-footer__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  margin-bottom: clamp(2.5rem, 6vh, 3.5rem);
+}
+
 /* ---------- Column grid ---------- */
 
 .cm-footer__grid {
   display: grid;
-  grid-template-columns: minmax(200px, 1.3fr) repeat(3, minmax(140px, 1fr));
-  gap: clamp(2.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(200px, 1.15fr) repeat(4, minmax(120px, 1fr));
+  gap: clamp(1.75rem, 3.5vw, 3rem);
 }
 
 .cm-footer__col-title {
@@ -69,6 +160,41 @@
 .cm-footer__logo-link:focus-visible {
   outline: 2px solid var(--cm-blue-500);
   outline-offset: 3px;
+}
+
+/* "Ver todos los proyectos" — the one list item that leaves its column
+   (Proyectos recientes names 3 deep links, this one points at the
+   /proyectos index itself), so it carries its own small arrow affordance
+   and a bolder weight rather than reading as a 4th sibling project. */
+.cm-footer__link-list-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.cm-footer__link-list-more-arrow {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-footer__link-list-more:hover .cm-footer__link-list-more-arrow {
+    transform: translate(1px, -1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-footer__link-list-more:hover .cm-footer__link-list-more-arrow {
+    transform: none;
+  }
 }
 
 /* ---------- Column 1 — Identidad ---------- */
@@ -205,8 +331,9 @@
 }
 
 /* ---------- Responsive ---------- */
-/* 4 columns -> 2x2 -> 1 column, always in source order (Identidad,
-   Sitio, Servicios, Contacto), per the brief's explicit ordering. */
+/* 5 columns -> identity (full width) + 2x2 -> 1 column, always in
+   source order (Identidad, Sitio, Servicios, Proyectos recientes,
+   Contacto), per the brief's explicit ordering. */
 
 @media (max-width: 860px) {
   .cm-footer__grid {

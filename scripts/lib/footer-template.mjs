@@ -1,42 +1,81 @@
 /**
  * Continental Media — shared footer template for generated pages.
  *
- * scripts/generate-pillar-pages.mjs and scripts/generate-case-study-pages.mjs
- * both render this exact footer markup (see public/blocks/footer/ for the
- * canonical source and its own direction-contract comment) — factored out
- * once here, mirroring site-header-template.mjs's own pattern, so a
- * generator run can never again silently drop the footer the way an
- * earlier regeneration did (the footer was hand-spliced into each already-
- * generated page's HTML directly, but the generator itself never learned
- * about it — the next `node scripts/generate-*.mjs` run overwrote those
- * pages from a template with no footer at all, deleting it from every
- * page that script owns).
+ * scripts/generate-pillar-pages.mjs, scripts/generate-case-study-pages.mjs
+ * and scripts/generate-projects-index.mjs all render this exact footer
+ * markup (see public/blocks/footer/ for the canonical source and its own
+ * direction-contract comment) — factored out once here, mirroring
+ * site-header-template.mjs's own pattern, so a generator run can never
+ * again silently drop the footer the way an earlier regeneration did (the
+ * footer was hand-spliced into each already-generated page's HTML
+ * directly, but the generator itself never learned about it — the next
+ * `node scripts/generate-*.mjs` run overwrote those pages from a template
+ * with no footer at all, deleting it from every page that script owns).
  *
  * @param {string} rel - relative path prefix back to public/ from the
  *   generated page's own directory (e.g. '../../').
+ * @param {{ showCta?: boolean }} [options] - showCta: false omits the
+ *   closing CTA band + divider. Only home and contacto.html itself pass
+ *   this — both already show the real Contacto form directly above the
+ *   footer, so a second "let's talk" band immediately under a form the
+ *   visitor is already looking at (and, on contacto.html, a button that
+ *   would just link back to the page they're on) reads as a mistake, not
+ *   emphasis. Every other page (nosotros, case studies, pillar pages,
+ *   the proyectos index) keeps it — default true.
  */
-export function renderFooter(rel) {
+export function renderFooter(rel, options = {}) {
+  const showCta = options.showCta !== false;
+  const ctaBlock = showCta
+    ? `
+      <div class="cm-footer__cta">
+        <p class="cm-footer__cta-eyebrow">Hablemos</p>
+        <h2 class="cm-footer__cta-title">¿Listos para el siguiente paso de tu marca?</h2>
+        <a class="cm-footer__cta-button" href="${rel}contacto.html">
+          Cuéntanos tu proyecto
+          <svg class="cm-footer__cta-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="cm-footer__divider" aria-hidden="true"></div>
+`
+    : '';
+
   return `  <!-- ===== FOOTER — see public/blocks/footer/ for the canonical source ===== -->
   <!--
     CONTINENTAL MEDIA — GLOBAL FOOTER BLOCK (canonical source)
-    THESIS: the site's one constant reference zone, not a fifth narrative
-      section. Every page ends here — home and every internal Nosotros/
-      Servicios/Proyectos page — so it has to orient ("where else can I
-      go") without competing for attention with whatever content sits
-      above it. Dark ground (--cm-color-bg, the same near-black as the
-      hero) gives the home page a deliberate light-to-dark close right
-      after Contacto's light "trust seal" background.
-    FORM: 4 columns (Identidad, Sitio, Servicios, Contacto) above one
+    THESIS: the site's one constant reference zone — and, since the 2026
+      redesign, its final conversion moment too. Every page ends here, so
+      it does two jobs in sequence: close with intent (a real "talk to us"
+      beat, not a mid-pivot into silence) and then orient ("where else can
+      I go") without competing with whatever content sits above it. Dark
+      ground (--cm-color-bg, the same near-black as the hero) gives the
+      home page a deliberate light-to-dark close right after Contacto's
+      light "trust seal" background.
+    FORM: a closing CTA band (eyebrow, headline, one primary button to
+      contacto.html) above a thin divider, then 5 columns (Identidad,
+      Sitio, Servicios, Proyectos recientes, Contacto), then one more
       thin-divider bottom bar (copyright + legal placeholders). Column 1
-      is deliberately wider and carries zero location copy — the brief
-      is explicit that the agency's México + Estados Unidos reach should
-      never read as scoped to one city. Columns 2-3 are real <nav>
+      is deliberately wider and carries zero location copy — the brief is
+      explicit that the agency's México + Estados Unidos reach should
+      never read as scoped to one city. Columns 2-4 are real <nav>
       landmarks (aria-label carries the same text as their visual title,
       which is aria-hidden to avoid a second identical accessible name);
-      column 4 mixes two contact links with the same 4 social icons
-      already shipped in site-header's mobile nav panel — same hrefs,
-      same SVG paths, reused verbatim rather than re-sourced, per the
-      brief's own instruction not to fork a second copy of that data.
+      column 5 mixes two contact links with the same 4 social icons
+      already shipped in site-header's mobile nav panel — same hrefs, same
+      SVG paths, reused verbatim rather than re-sourced, per the brief's
+      own instruction not to fork a second copy of that data.
+    SEO: this is the one footer whose link choices were made with search
+      in mind, not just navigation — every link resolves to a real,
+      crawlable URL (no anchor-only fragment pointing at another page's
+      mid-scroll section), and "Proyectos recientes" exists specifically
+      to push internal-link equity at three deep case-study pages from
+      every single page on the site, not just from /proyectos itself. The
+      matching Organization JSON-LD (name, logo, sameAs, contact point)
+      that makes this footer's own NAP/social data machine-readable lives
+      in each page's <head> — see scripts/lib/seo-schema.mjs — since
+      structured data has no visual footprint of its own.
     NO JS: unlike every other block on this page, this one ships no
       footer.js and loads no <script> tag. The brief is explicit that the
       footer is a static, utilitarian, "constant reference" zone with no
@@ -53,14 +92,16 @@ export function renderFooter(rel) {
       aria-hidden="true" on the decorative <svg>, exactly like
       site-header's own social list. Every link has a visible
       :focus-visible outline against the dark ground.
-    ROUTING NOTE: "Servicios" and "Proyectos" in the Sitio column point at
-      index.html#servicios / index.html#proyectos, not at standalone
-      /servicios or /proyectos pages — those pages don't exist yet (only
-      individual pillar and case-study pages do), and this matches
-      site-header's own nav exactly. "Aviso de Privacidad" and "Términos y
-      Condiciones" are real placeholder routes (aviso-de-privacidad.html,
-      terminos-y-condiciones.html) that don't resolve to a built page yet,
-      per the brief's explicit instruction not to block on their absence.
+    ROUTING NOTE: "Proyectos" and "Contacto" in the Sitio column point at
+      the real proyectos/ and contacto.html pages (not at home-page anchor
+      fragments) now that both exist; "Servicios" still points at
+      index.html#servicios since there is no standalone /servicios index
+      page, only individual pillar pages (already linked directly in the
+      Servicios column) — this matches site-header's own nav exactly.
+      "Aviso de Privacidad" and "Términos y Condiciones" are real
+      placeholder routes (aviso-de-privacidad.html, terminos-y-
+      condiciones.html) that don't resolve to a built page yet, per the
+      brief's explicit instruction not to block on their absence.
     USAGE — canonical source for this block. This file is written at
       HOME-PAGE PATH DEPTH (asset/internal links with no "../" prefix,
       matching index.html and nosotros.html, which sit at the same
@@ -78,7 +119,7 @@ export function renderFooter(rel) {
       No footer.js to load — see NO JS above.
   -->
   <footer class="cm-footer" data-cm-footer>
-    <div class="cm-footer__inner">
+    <div class="cm-footer__inner">${ctaBlock}
       <div class="cm-footer__grid">
         <div class="cm-footer__col cm-footer__col--identity">
           <a class="cm-footer__logo-link" href="${rel}index.html" aria-label="Continental Media — ir al inicio">
@@ -100,8 +141,8 @@ export function renderFooter(rel) {
           <ul class="cm-footer__link-list">
             <li><a href="${rel}nosotros.html">Nosotros</a></li>
             <li><a href="${rel}index.html#servicios">Servicios</a></li>
-            <li><a href="${rel}index.html#proyectos">Proyectos</a></li>
-            <li><a href="${rel}index.html#contacto">Contacto</a></li>
+            <li><a href="${rel}proyectos/">Proyectos</a></li>
+            <li><a href="${rel}contacto.html">Contacto</a></li>
           </ul>
         </nav>
 
@@ -113,6 +154,23 @@ export function renderFooter(rel) {
             <li><a href="${rel}servicios/marketing-tradicional/">Marketing Tradicional</a></li>
             <li><a href="${rel}servicios/relaciones-publicas/">Relaciones Públicas</a></li>
             <li><a href="${rel}servicios/produccion/">Producción</a></li>
+          </ul>
+        </nav>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-recent-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-recent-title">Proyectos recientes</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="${rel}proyectos/camino-real-veracruz/">Camino Real Veracruz</a></li>
+            <li><a href="${rel}proyectos/bosque-residencial-san-lucas/">Bosque Residencial San Lucas</a></li>
+            <li><a href="${rel}proyectos/punta-tiburon/">Punta Tiburón</a></li>
+            <li>
+              <a class="cm-footer__link-list-more" href="${rel}proyectos/">
+                Ver todos los proyectos
+                <svg class="cm-footer__link-list-more-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M7 17 17 7M9 7h8v8" />
+                </svg>
+              </a>
+            </li>
           </ul>
         </nav>
 
