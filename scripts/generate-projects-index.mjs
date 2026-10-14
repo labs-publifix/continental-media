@@ -90,7 +90,7 @@ const PROJECTS = [
     category: 'Asociación / Sector Automotriz',
     filter: 'asociacion',
     description: 'Presencia digital constante para la voz del sector automotriz.',
-    media: { src: 'proyectos/amda-veracruz-tabasco/hero.jpg', width: 1600, height: 1200 },
+    media: { src: 'proyectos/amda-veracruz-tabasco/hero.jpg', width: 1280, height: 960 },
   },
   {
     index: '08',

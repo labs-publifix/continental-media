@@ -462,11 +462,12 @@ export const CASE_STUDIES = [
 
     context: {
       eyebrow: 'Contexto',
-      mediaAlt: 'Dos estudiantes de U3M caminando por un pasillo con arcos del plantel en el Puerto de Veracruz, con compañeros conversando de fondo',
-      // Portrait source (1652x2200) inside a 21:9 full-bleed strip: the
-      // default centered crop only shows legs/floor. Biased toward the
-      // top so both students' faces and the archway stay in frame.
-      media: { src: 'proyectos/u3m/contexto.jpg', width: 1652, height: 2200, position: '50% 15%' },
+      mediaAlt: 'Dos estudiantes de U3M sonriendo frente a los arcos del plantel en el Puerto de Veracruz',
+      // 1447x1087 source inside a 21:9 full-bleed strip: the box is far
+      // wider than the source, so object-fit: cover crops aggressively
+      // top/bottom regardless — biased toward the upper third to keep
+      // both faces in frame instead of the default vertical center.
+      media: { src: 'proyectos/u3m/contexto.jpg', width: 1447, height: 1087, position: '50% 25%' },
       body: 'Desde 2020, U3M trabaja de la mano con Continental Media con el objetivo de fortalecer su presencia en redes sociales y desarrollar estrategias digitales que no solo comunicaran su oferta educativa, sino que generaran resultados reales. Uno de los principales diferenciadores de U3M es su oferta de sistemas escolarizados y sabatinos, que se adapta a distintos estilos de vida — desde jóvenes que inician su formación hasta personas que combinan sus estudios con el trabajo.',
     },
 
@@ -548,8 +549,8 @@ export const CASE_STUDIES = [
       label: 'Caso de estudio',
       title: 'Presencia digital constante para la voz del sector automotriz.',
       meta: 'AMDA Veracruz Tabasco · Asociación Mexicana de Distribuidores de Automotores — Veracruz y Tabasco',
-      mediaAlt: 'Equipo de AMDA Veracruz Tabasco conversando bajo una carpa durante un evento del sector automotriz, con autos estacionados al fondo',
-      media: { src: 'proyectos/amda-veracruz-tabasco/hero.jpg', width: 1600, height: 1200 },
+      mediaAlt: 'Carpas de distintas marcas automotrices (Dodge, Toyota, GAC Motor, Hyundai) con autos exhibidos durante una feria del sector automotriz',
+      media: { src: 'proyectos/amda-veracruz-tabasco/hero.jpg', width: 1280, height: 960 },
     },
 
     summary:
@@ -613,11 +614,8 @@ export const CASE_STUDIES = [
 
     result: {
       eyebrow: 'Resultado',
-      mediaAlt: 'Pieza de contenido de AMDA Veracruz Tabasco con la frase "Las grandes oportunidades nacen de conexiones sólidas" sobre un fondo de red de conexiones',
-      // Portrait content graphic (1080x1350) inside the 16:9/4:3 result
-      // banner: biased toward the text block's own vertical center so
-      // the message stays fully legible instead of being cut mid-line.
-      media: { src: 'proyectos/amda-veracruz-tabasco/resultado.jpg', width: 1080, height: 1350, position: '50% 55%' },
+      mediaAlt: 'Personal de un stand sonriendo y haciendo la señal de pulgares arriba junto a un auto Nissan Sentra durante una feria del sector automotriz',
+      media: { src: 'proyectos/amda-veracruz-tabasco/resultado.jpg', width: 1280, height: 960 },
       body: 'Como resultado de la estrategia de comunicación, AMDA Veracruz Tabasco cuenta hoy con presencia en Instagram —canal que antes no tenía— y una comunidad de más de 8,900 seguidores en Facebook, con más de 4,000 publicaciones acumuladas que documentan la actividad constante de la asociación en el sector. La colaboración, reactivada tras la pausa de la pandemia y formalizada en mayo de 2023, continúa activa hasta la fecha.',
       highlight: '+8,900 seguidores',
       highlightAttribution: 'Comunidad activa en Facebook, con presencia consolidada también en Instagram',
@@ -871,21 +869,20 @@ export const CASE_STUDIES = [
       subsections: [
         {
           title: 'Identidad y materiales de cada edición',
-          mediaAlt:
-            'Material gráfico del Torneo Anual Punta Tiburón 2023, con logotipo de la 10ª edición, fechas, categorías de premiación y patrocinadores del evento',
-          media: { src: 'proyectos/punta-tiburon/identidad-edicion.jpg', width: 1424, height: 2200 },
+          mediaAlt: 'Participantes del Torneo Anual de Golf de Punta Tiburón conviviendo juntos al final de la jornada',
+          media: { src: 'proyectos/punta-tiburon/identidad-edicion.jpg', width: 2200, height: 1236 },
           body: 'Nos encargamos anualmente de la planeación, organización y comunicación del Torneo Anual de Golf de Punta Tiburón. El trabajo incluye el desarrollo de la identidad visual de cada edición, diseño de materiales de comunicación, uniformes, trofeos y reconocimientos.',
         },
         {
           title: 'Patrocinadores y proveedores',
-          mediaAlt: 'Material promocional del evento "KIA Golf Day" en Punta Tiburón, con un golfista, su bolsa de palos y un vehículo Kia patrocinador sobre el campo',
-          media: { src: 'proyectos/punta-tiburon/patrocinadores.jpg', width: 1424, height: 2200 },
+          mediaAlt: 'Vehículo Toyota patrocinador exhibido sobre el campo de golf de Punta Tiburón, con bandera publicitaria de la marca junto a un carrito de golf',
+          media: { src: 'proyectos/punta-tiburon/patrocinadores.jpg', width: 2200, height: 1467 },
           body: 'Como parte del proceso, gestionamos la búsqueda y coordinación de patrocinadores y proveedores, fortaleciendo cada edición con nuevos aliados estratégicos y garantizando la calidad de cada punto de contacto del evento.',
         },
         {
           title: 'El torneo en acción',
-          mediaAlt: 'Material de patrocinio del Torneo Anual Punta Tiburón, con fotografía del hoyo 18 del campo diseñado por Greg Norman y detalles de la marca del club',
-          media: { src: 'proyectos/punta-tiburon/torneo-apoyo.jpg', width: 1700, height: 2200 },
+          mediaAlt: 'Golfista realizando un putt en el green durante el Torneo Anual de Golf de Punta Tiburón, acompañado por su caddie y otro jugador',
+          media: { src: 'proyectos/punta-tiburon/torneo-apoyo.jpg', width: 2200, height: 1236 },
           body: 'El proceso se realiza de manera coordinada con el equipo de Punta Tiburón, integrando branding, relaciones públicas y producción del evento para lograr una ejecución consistente en cada edición — año tras año, sin perder la identidad que distingue al torneo.',
           video: {
             alt: 'Video de cobertura del Torneo Anual de Golf de Punta Tiburón, con stands de patrocinadores y la ceremonia de premiación, sin audio',
@@ -901,8 +898,9 @@ export const CASE_STUDIES = [
 
     result: {
       eyebrow: 'Resultado',
-      mediaAlt: 'Pieza gráfica de un evento de Punta Tiburón Country Club con una bailarina y telas de colores en movimiento, celebrando el Día Internacional de la Danza',
-      media: { src: 'proyectos/punta-tiburon/resultado.jpg', width: 1424, height: 2200, position: '50% 65%' },
+      mediaAlt:
+        'Ganadores del Torneo Anual de Golf de Punta Tiburón sosteniendo sus trofeos en forma de aleta de tiburón durante la ceremonia de premiación',
+      media: { src: 'proyectos/punta-tiburon/resultado.jpg', width: 2200, height: 1467 },
       body: 'Desde 2014 hasta la actualidad, Continental Media ha participado de manera continua en la organización de los Torneos Anuales de Golf de Punta Tiburón, convirtiéndose en un aliado recurrente para el desarrollo de cada edición. La relación se ha mantenido durante más de una década, con participación anual en la planeación, organización, identidad y comunicación del torneo — la prueba más clara de una colaboración que sigue funcionando edición tras edición.',
       highlight: 'Más de una década',
       highlightAttribution: 'De colaboración continua, edición tras edición, desde 2014',
