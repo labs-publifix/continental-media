@@ -30,7 +30,14 @@
  *   faqs          [{ q, a }] — 3-5 entries, rendered as visible FAQs + FAQPage schema
  *   cruces        backlog IDs this article should link to (only ones already published get a live link)
  *   servicio      /servicios/<slug>/ override — defaults to the pillar's own mapping
- *   pdf           { filename, pageCount } — guides only
+ *   pdf           guides only — { pageCount, filename?, title?, subtitle?, sections }.
+ *                 pageCount is the AUTHORED/declared value shown on cards/article
+ *                 before the PDF exists; scripts/blog/generate-pdfs.mjs computes the
+ *                 real page count and warns if it no longer matches. filename
+ *                 defaults to '<slug>.pdf'; title/subtitle default to the post's own.
+ *                 sections is the PDF's actual content — see
+ *                 scripts/blog/pdf-template.mjs for the 4 block types
+ *                 (text/checklist/steps/table) and generate-pdfs.mjs for the generator.
  *   status        mirrors the backlog Estado at the time this file was last touched (display/debug only — the xlsx remains authoritative for workflow)
  * Body: Markdown, H2/H3 only (no H1 — the title front matter field is the
  *   page's one <h1>). Every H2/H3 gets an auto-generated id (see the
