@@ -79,7 +79,7 @@ pdf:
         - ["5. Calendario y presupuesto", "Cuándo y con cuánto", "¿Qué se publica o ejecuta cada mes, y a qué costo?"]
         - ["6. Métricas", "Cómo vas a saber si funcionó", "¿Qué meta numérica tiene cada objetivo?"]
         - ["7. Ejecución", "Quién hace qué y para cuándo", "¿Quién es responsable de cada pieza del calendario?"]
-status: "En revisión"
+status: Publicado
 ---
 ## Qué hace que un plan de marketing funcione (y por qué la mayoría termina sin usarse)
 
