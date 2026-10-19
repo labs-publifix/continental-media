@@ -13,6 +13,9 @@
  *
  * Usage:
  *   node scripts/blog/generate-og-images.mjs
+ *   node scripts/blog/generate-og-images.mjs --drafts   (content/blog/drafts/*.md,
+ *     isolated at public/assets/images/blog/og/_drafts/<slug>.jpg — gitignored,
+ *     same isolation as generate-blog.mjs's --drafts)
  */
 import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -20,13 +23,16 @@ import { dirname, resolve, join } from 'node:path';
 import os from 'node:os';
 import { chromium } from 'playwright-core';
 
-import { buildAllCards } from '../lib/blog-cards.mjs';
+import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
 import { tipoLabels } from '../lib/blog-format.mjs';
 import { renderOgHtml } from './og-template.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
-const OUT_DIR = join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og');
+const isDrafts = process.argv.includes('--drafts');
+const OUT_DIR = isDrafts
+  ? join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og', '_drafts')
+  : join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og');
 const LOGO_ABS_PATH = pathToFileURL(
   join(REPO_ROOT, 'public', 'assets', 'images', 'continental-media-logo-white.png')
 ).href;
@@ -50,11 +56,11 @@ function isDark(hex) {
 }
 
 async function main() {
-  const all = buildAllCards();
+  const all = isDrafts ? buildDraftCards() : buildAllCards();
   mkdirSync(OUT_DIR, { recursive: true });
 
   if (all.length === 0) {
-    console.log('No published posts — nothing to render.');
+    console.log(isDrafts ? 'No drafts in content/blog/drafts/ — nothing to render.' : 'No published posts — nothing to render.');
     return;
   }
 
@@ -83,7 +89,7 @@ async function main() {
 
     const outPath = join(OUT_DIR, `${post.slug}.jpg`);
     await page.screenshot({ path: outPath, type: 'jpeg', quality: 90 });
-    console.log('Wrote', `assets/images/blog/og/${post.slug}.jpg`);
+    console.log('Wrote', `assets/images/blog/og/${isDrafts ? '_drafts/' : ''}${post.slug}.jpg`);
   }
 
   await browser.close();

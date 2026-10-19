@@ -186,6 +186,12 @@ function renderArticlePage(entry, all, byId, basePath = 'blog') {
   const dirPath = `${basePath}/${post.slug}`;
   const rel = relForDepth(dirPath);
   const { isGuia } = tipoLabels(post.tipo);
+  // Drafts' OG images/PDFs live under their own _drafts/ subfolder
+  // (see generate-og-images.mjs / generate-pdfs.mjs's own --drafts
+  // flag) — basePath is 'blog/_drafts' for a draft page, 'blog'
+  // otherwise, so this mirrors that same split for the asset paths
+  // this page links to.
+  const assetSubdir = basePath === 'blog' ? '' : '_drafts/';
 
   const canonicalPath = `${dirPath}/`;
   const fullTitle = post.metaTitle || post.title;
@@ -195,7 +201,7 @@ function renderArticlePage(entry, all, byId, basePath = 'blog') {
     ? {
         title: post.pdf.title || post.title,
         meta: `PDF · ${post.pdf.pageCount} página${post.pdf.pageCount === 1 ? '' : 's'}`,
-        href: `${rel}assets/pdfs/blog/${post.slug}.pdf`,
+        href: `${rel}assets/pdfs/blog/${assetSubdir}${post.slug}.pdf`,
       }
     : null;
 
@@ -253,7 +259,7 @@ function renderArticlePage(entry, all, byId, basePath = 'blog') {
   });
 
   const keywords = [post.primaryKeyword, ...(post.secondaryKeywords || [])].filter(Boolean);
-  const ogImagePath = `assets/images/blog/og/${post.slug}.jpg`;
+  const ogImagePath = `assets/images/blog/og/${assetSubdir}${post.slug}.jpg`;
 
   const head = `<head>
   <meta charset="utf-8" />

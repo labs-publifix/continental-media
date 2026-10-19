@@ -20,6 +20,9 @@
  *
  * Usage:
  *   node scripts/blog/generate-pdfs.mjs
+ *   node scripts/blog/generate-pdfs.mjs --drafts   (content/blog/drafts/*.md,
+ *     isolated at public/assets/pdfs/blog/_drafts/<slug>.pdf — gitignored,
+ *     same isolation as generate-blog.mjs's --drafts)
  */
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -28,13 +31,16 @@ import os from 'node:os';
 import { chromium } from 'playwright-core';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
-import { buildAllCards } from '../lib/blog-cards.mjs';
+import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
 import { formatDateEs } from '../lib/blog-format.mjs';
 import { renderCoverHtml, renderContentHtml, renderHeaderTemplate, renderFooterTemplate } from './pdf-template.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
-const OUT_DIR = join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog');
+const isDrafts = process.argv.includes('--drafts');
+const OUT_DIR = isDrafts
+  ? join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog', '_drafts')
+  : join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog');
 const LOGO_ABS_PATH = pathToFileURL(
   join(REPO_ROOT, 'public', 'assets', 'images', 'continental-media-logo-white.png')
 ).href;
@@ -152,11 +158,15 @@ async function buildGuidePdf(browser, entry) {
 }
 
 async function main() {
-  const all = buildAllCards();
+  const all = isDrafts ? buildDraftCards() : buildAllCards();
   const guides = all.filter((e) => e.post.tipo === 'Guía práctica' && e.post.pdf && e.post.pdf.sections);
 
   if (guides.length === 0) {
-    console.log('No published guides with pdf.sections — nothing to render.');
+    console.log(
+      isDrafts
+        ? 'No draft guides with pdf.sections in content/blog/drafts/ — nothing to render.'
+        : 'No published guides with pdf.sections — nothing to render.'
+    );
     return;
   }
 
