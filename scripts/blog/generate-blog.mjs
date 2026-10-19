@@ -25,10 +25,10 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
-import { loadPosts, publishedPosts, extractToc } from '../lib/blog-content.mjs';
-import { pillarByCodigo, PILLARS, SERVICIO_NAMES } from '../lib/blog-pillars.mjs';
-import { authorBySlug } from '../lib/blog-authors.mjs';
+import { extractToc } from '../lib/blog-content.mjs';
+import { PILLARS, SERVICIO_NAMES } from '../lib/blog-pillars.mjs';
 import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
+import { relForDepth, buildAllCards, buildByIdMap, withRel } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
 import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderSiteHeader } from '../lib/site-header-template.mjs';
@@ -48,65 +48,6 @@ const REPO_ROOT = resolve(__dirname, '..', '..');
 const PUBLIC_DIR = join(REPO_ROOT, 'public');
 const PAGE_SIZE = 10;
 const RELATED_COUNT = 3;
-
-function relForDepth(dirPath) {
-  const depth = dirPath.split('/').filter(Boolean).length;
-  return '../'.repeat(depth);
-}
-
-/** Builds the card view-model list for every published post, newest
- *  first, with a stable consecutive number assigned across the WHOLE
- *  archive (not reset per page/filter) — so "artículo #37" always
- *  means the same post regardless of which filtered page you found it
- *  on. */
-function buildAllCards() {
-  const posts = publishedPosts(loadPosts());
-  return posts.map((post, index) => {
-    const pillar = pillarByCodigo(post.pilar);
-    const author = authorBySlug(post.author);
-    if (!pillar) throw new Error(`Post "${post.slug}" has unknown pilar "${post.pilar}"`);
-    if (!author) throw new Error(`Post "${post.slug}" has unknown author "${post.author}"`);
-
-    return {
-      post,
-      pillar,
-      author,
-      tipo: post.tipo,
-      number: index + 1,
-      card: {
-        href: `blog/${post.slug}/`, // REL prefixed later per output page
-        tipo: post.tipo,
-        pilarNombre: pillar.nombre,
-        pilarSlug: pillar.slug,
-        bg: pillar.bg,
-        fg: pillar.fg,
-        number: index + 1,
-        title: post.title,
-        excerpt: post.excerpt,
-        authorName: author.nombre,
-        authorAvatar: author.avatar, // REL prefixed later
-        dateLabel: formatDateEs(post.publishDate),
-        hasPdf: Boolean(post.pdf),
-        readingMin: post.readingMin,
-      },
-    };
-  });
-}
-
-function buildByIdMap(all) {
-  const map = new Map();
-  all.forEach((entry) => map.set(entry.post.id, entry));
-  return map;
-}
-
-function withRel(card, rel, featured) {
-  return {
-    ...card,
-    href: `${rel}${card.href}`,
-    authorAvatar: `${rel}${card.authorAvatar}`,
-    featured: Boolean(featured),
-  };
-}
 
 function renderIndexPage({ dirPath, basePath, cards, pageNum, totalPages, typeFilter, pillarFilter, title, description, featuredFirst }) {
   const rel = relForDepth(dirPath);

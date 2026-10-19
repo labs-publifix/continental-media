@@ -4,7 +4,8 @@
   "description": "Static site build tooling (generators, blog system). No bundler/runtime dependency — public/ is deployed as-is; see .github/workflows/deploy-pages.yml. These are dev-time scripts run locally with `node scripts/...`.",
   "type": "module",
   "scripts": {
-    "blog:build": "node scripts/blog/generate-blog.mjs"
+    "blog:build": "node scripts/blog/generate-blog.mjs",
+    "blog:og": "node scripts/blog/generate-og-images.mjs"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
