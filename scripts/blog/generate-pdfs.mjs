@@ -6,13 +6,14 @@
  * exact path the article template's PDF card/TOC button already link
  * to (see generate-blog.mjs).
  *
- * Two separate Chromium print-to-PDF passes, merged with pdf-lib:
+ * Three separate Chromium print-to-PDF passes, merged with pdf-lib:
  *   1. the cover (full-bleed pillar color, no header/footer chrome)
  *   2. the content pages (white background, repeating branded
- *      header/footer via Playwright's native displayHeaderFooter,
- *      which also gives real "page X / Y" numbering for free)
+ *      header/footer via Playwright's native displayHeaderFooter)
+ *   3. a back cover (constant brand-blue, no header/footer chrome —
+ *      see pdf-template.mjs's renderBackCoverHtml)
  * — see scripts/blog/pdf-template.mjs's header comment for why this
- * needs two passes instead of one. Content flows with ordinary HTML
+ * needs three passes instead of one. Content flows with ordinary HTML
  * pagination (page-break-inside: avoid on every list item/table row,
  * nothing manually sized to a fixed page height), so Chromium's own
  * print engine decides how many pages a guide needs — never a
@@ -33,7 +34,13 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
 import { formatDateEs } from '../lib/blog-format.mjs';
-import { renderCoverHtml, renderContentHtml, renderHeaderTemplate, renderFooterTemplate } from './pdf-template.mjs';
+import {
+  renderCoverHtml,
+  renderContentHtml,
+  renderBackCoverHtml,
+  renderHeaderTemplate,
+  renderFooterTemplate,
+} from './pdf-template.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
@@ -47,11 +54,14 @@ const LOGO_ABS_PATH = pathToFileURL(
 const TMP_DIR = join(os.tmpdir(), 'cm-pdf-render');
 
 /** Stamps the true "N / Total" page number (bottom-right, matching the
- *  footer template's own 0.6in right inset) on every content page —
- *  skips page 0, the cover, which has no footer at all. See
- *  pdf-template.mjs's renderFooterTemplate for why this can't just be
- *  Playwright's native pageNumber/totalPages tokens. */
-async function stampPageNumbers(pdfDoc) {
+ *  footer template's own 0.6in right inset) on the content pages only
+ *  — the cover (always index 0) and the back cover (always the last
+ *  page) have no footer at all, so neither gets a stamp.
+ *  @param {number} contentStart - first content page index (0-based).
+ *  @param {number} contentCount - how many content pages there are.
+ *  See pdf-template.mjs's renderFooterTemplate for why this can't just
+ *  be Playwright's native pageNumber/totalPages tokens. */
+async function stampPageNumbers(pdfDoc, contentStart, contentCount) {
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const size = 7.5;
   const total = pdfDoc.getPageCount();
@@ -59,7 +69,7 @@ async function stampPageNumbers(pdfDoc) {
   const rightInset = 0.6 * 72;
   const bottomY = 0.26 * 72;
 
-  for (let i = 1; i < total; i++) {
+  for (let i = contentStart; i < contentStart + contentCount; i++) {
     const page = pdfDoc.getPage(i);
     const { width } = page.getSize();
     const label = `${i + 1} / ${total}`;
@@ -130,17 +140,28 @@ async function buildGuidePdf(browser, entry) {
     margin: { top: '0.5in', bottom: '0.55in', left: '0.6in', right: '0.6in' },
   });
 
+  const backCoverBuffer = await renderOnePdf(page, renderBackCoverHtml({ logoAbsPath: LOGO_ABS_PATH }), `${post.slug}-back.html`, {
+    width: '8.5in',
+    height: '11in',
+    margin: { top: 0, bottom: 0, left: 0, right: 0 },
+    printBackground: true,
+  });
+
   await page.close();
 
   const merged = await PDFDocument.create();
   const coverDoc = await PDFDocument.load(coverBuffer);
   const contentDoc = await PDFDocument.load(contentBuffer);
+  const backCoverDoc = await PDFDocument.load(backCoverBuffer);
+
   const [coverPage] = await merged.copyPages(coverDoc, [0]);
   merged.addPage(coverPage);
   const contentPages = await merged.copyPages(contentDoc, contentDoc.getPageIndices());
   contentPages.forEach((p) => merged.addPage(p));
+  const [backPage] = await merged.copyPages(backCoverDoc, [0]);
+  merged.addPage(backPage);
 
-  await stampPageNumbers(merged);
+  await stampPageNumbers(merged, 1, contentPages.length);
 
   merged.setTitle(post.pdf.title || post.title);
   merged.setAuthor(author.nombre);

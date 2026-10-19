@@ -30,7 +30,7 @@ faqs:
 cruces: []
 servicio: ai-marketing-solutions
 pdf:
-  pageCount: 3
+  pageCount: 4
   title: "Checklist de lanzamiento — Agente de IA en WhatsApp"
   subtitle: "Todo lo que necesitas definir antes, durante y después de lanzar tu agente de IA en WhatsApp."
   sections:
