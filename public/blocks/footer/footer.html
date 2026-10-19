@@ -57,12 +57,13 @@
     aria-hidden="true" on the decorative <svg>, exactly like
     site-header's own social list. Every link has a visible
     :focus-visible outline against the dark ground.
-  ROUTING NOTE: "Proyectos" and "Contacto" in the Sitio column point at
-    the real proyectos/ and contacto.html pages (not at home-page anchor
-    fragments) now that both exist; "Servicios" still points at
-    index.html#servicios since there is no standalone /servicios index
-    page, only individual pillar pages (already linked directly in the
-    Servicios column) — this matches site-header's own nav exactly.
+  ROUTING NOTE: "Proyectos", "Blog" and "Contacto" in the Sitio column
+    point at the real proyectos/, blog/ and contacto.html pages (not at
+    home-page anchor fragments) now that all three exist; "Servicios"
+    still points at index.html#servicios since there is no standalone
+    /servicios index page, only individual pillar pages (already linked
+    directly in the Servicios column) — this matches site-header's own
+    nav exactly.
     "Aviso de Privacidad" and "Términos y Condiciones" are real
     placeholder routes (aviso-de-privacidad.html, terminos-y-
     condiciones.html) that don't resolve to a built page yet, per the
@@ -120,6 +121,7 @@
           <li><a href="nosotros.html">Nosotros</a></li>
           <li><a href="index.html#servicios">Servicios</a></li>
           <li><a href="proyectos/">Proyectos</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </nav>

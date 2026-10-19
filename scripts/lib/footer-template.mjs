@@ -142,6 +142,7 @@ export function renderFooter(rel, options = {}) {
             <li><a href="${rel}nosotros.html">Nosotros</a></li>
             <li><a href="${rel}index.html#servicios">Servicios</a></li>
             <li><a href="${rel}proyectos/">Proyectos</a></li>
+            <li><a href="${rel}blog/">Blog</a></li>
             <li><a href="${rel}contacto.html">Contacto</a></li>
           </ul>
         </nav>
