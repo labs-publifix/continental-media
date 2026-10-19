@@ -6,7 +6,14 @@
     <atom:link href="https://continentalmedia.com.mx/blog/rss.xml" rel="self" type="application/rss+xml" />
     <description>Artículos y guías prácticas de Continental Media sobre marketing digital, contenido, redes sociales, relaciones públicas e inteligencia artificial.</description>
     <language>es-mx</language>
-    <lastBuildDate>Mon, 19 Oct 2026 19:40:53 GMT</lastBuildDate>
-
+    <lastBuildDate>Mon, 19 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Tendencias de marketing 2027: lo que las marcas deben preparar desde hoy</title>
+      <link>https://continentalmedia.com.mx/blog/tendencias-marketing-2027/</link>
+      <guid isPermaLink="true">https://continentalmedia.com.mx/blog/tendencias-marketing-2027/</guid>
+      <pubDate>Mon, 19 Oct 2026 12:00:00 GMT</pubDate>
+      <description>Búsqueda con IA, datos propios, contenido auténtico y comunidades reales: las tendencias que van a definir el marketing en 2027, y qué puede hacer tu marca al respecto desde hoy.</description>
+      <category>Estrategia de marketing y contenidos</category>
+    </item>
   </channel>
 </rss>
