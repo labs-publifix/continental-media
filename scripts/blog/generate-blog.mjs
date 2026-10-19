@@ -129,15 +129,44 @@ ${renderFooter(rel)}
 `;
 }
 
-/** Builds the "Te puede interesar" rail: other published posts from the
- *  same pillar first (newest first), then backfilled with the newest
- *  posts overall if the pillar doesn't have enough — never empty
- *  unless this is the only published post. */
+/**
+ * Internal cross-link engine for the "Te puede interesar" rail — this
+ * IS the backlog's Cruces wiring, per the brief: "enlazado interno
+ * usando los Cruces del backlog (solo a artículos ya publicados, y al
+ * publicar uno nuevo, agregar enlaces retroactivos desde artículos ya
+ * publicados que lo referencian)".
+ *
+ * Priority order:
+ *   1. OUTGOING — posts this article's own `cruces` front matter lists,
+ *      already published (an unpublished cruce target is silently
+ *      skipped, never a broken link).
+ *   2. INCOMING ("retroactive") — already-published posts whose OWN
+ *      `cruces` list THIS post. Never requires editing that older
+ *      post's file: since generate-blog.mjs regenerates every article
+ *      page on every run, the older post's rail picks up the new
+ *      cross-link automatically the next time the build runs — the
+ *      "retroactive" link appears without any retroactive file edit.
+ *   3. Same pillar (newest first), then anything else (newest first),
+ *      backfilled only if 1-2 don't fill RELATED_COUNT slots.
+ * Never empty unless this is the only published post.
+ */
 function pickRelated(entry, all) {
   const others = all.filter((e) => e.post.slug !== entry.post.slug);
-  const samePillar = others.filter((e) => e.pillar.slug === entry.pillar.slug);
-  const rest = others.filter((e) => e.pillar.slug !== entry.pillar.slug);
-  return [...samePillar, ...rest].slice(0, RELATED_COUNT);
+  const myCruces = new Set(entry.post.cruces || []);
+
+  const outgoing = others.filter((e) => myCruces.has(e.post.id));
+  const outgoingSlugs = new Set(outgoing.map((e) => e.post.slug));
+  const incoming = others.filter(
+    (e) => !outgoingSlugs.has(e.post.slug) && (e.post.cruces || []).includes(entry.post.id)
+  );
+  const crossLinked = [...outgoing, ...incoming];
+  const crossLinkedSlugs = new Set(crossLinked.map((e) => e.post.slug));
+
+  const remaining = others.filter((e) => !crossLinkedSlugs.has(e.post.slug));
+  const samePillar = remaining.filter((e) => e.pillar.slug === entry.pillar.slug);
+  const rest = remaining.filter((e) => e.pillar.slug !== entry.pillar.slug);
+
+  return [...crossLinked, ...samePillar, ...rest].slice(0, RELATED_COUNT);
 }
 
 /** First cruce (backlog ID) that resolves to an already-published guide
