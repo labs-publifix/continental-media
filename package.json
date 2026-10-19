@@ -8,6 +8,7 @@
     "blog:og": "node scripts/blog/generate-og-images.mjs",
     "blog:pdf": "node scripts/blog/generate-pdfs.mjs",
     "blog:rss": "node scripts/blog/generate-rss.mjs",
+    "blog:redirects": "node scripts/blog/generate-redirects.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs"
   },
   "devDependencies": {

@@ -34,6 +34,7 @@ import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderBlogTeaserSection } from '../lib/blog-teaser-template.mjs';
 import { generateSitemap } from '../generate-sitemap.mjs';
 import { generateRss } from './generate-rss.mjs';
+import { generateRedirects } from './generate-redirects.mjs';
 import { renderSiteHeader } from '../lib/site-header-template.mjs';
 import { renderFooter } from '../lib/footer-template.mjs';
 import { renderOrganizationSchema } from '../lib/seo-schema.mjs';
@@ -424,8 +425,9 @@ function main() {
   injectHomeTeaser(all);
   generateSitemap();
   generateRss();
+  generateRedirects();
 
-  console.log(`\n${all.length} published post(s). (301 redirects are a later build step.)`);
+  console.log(`\n${all.length} published post(s).`);
 }
 
 main();
