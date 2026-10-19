@@ -1,3 +1,7 @@
 node_modules/
 __pycache__/
 .DS_Store
+
+# Draft/test blog article previews (scripts/blog/generate-blog.mjs --drafts)
+# — never part of the production build, never committed.
+public/blog/_drafts/

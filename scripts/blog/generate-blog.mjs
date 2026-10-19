@@ -28,7 +28,7 @@ import { dirname, resolve, join } from 'node:path';
 import { extractToc } from '../lib/blog-content.mjs';
 import { PILLARS, SERVICIO_NAMES } from '../lib/blog-pillars.mjs';
 import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
-import { relForDepth, buildAllCards, buildByIdMap, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
+import { relForDepth, buildAllCards, buildDraftCards, buildByIdMap, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
 import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderBlogTeaserSection } from '../lib/blog-teaser-template.mjs';
@@ -181,9 +181,9 @@ function pickPdfPromo(entry, byId) {
   return null;
 }
 
-function renderArticlePage(entry, all, byId) {
+function renderArticlePage(entry, all, byId, basePath = 'blog') {
   const { post, pillar, author } = entry;
-  const dirPath = `blog/${post.slug}`;
+  const dirPath = `${basePath}/${post.slug}`;
   const rel = relForDepth(dirPath);
   const { isGuia } = tipoLabels(post.tipo);
 
@@ -457,6 +457,35 @@ function main() {
   generateRedirects();
 
   console.log(`\n${all.length} published post(s).`);
+
+  if (process.argv.includes('--drafts')) {
+    buildDrafts();
+  }
+}
+
+/**
+ * Renders content/blog/drafts/*.md (test-only articles used to QA the
+ * template system — see blog-content.mjs's loadDrafts()) to an
+ * isolated public/blog/_drafts/<slug>/ path. Never touches the
+ * index/sitemap/RSS/home teaser and never mixes with buildAllCards()'s
+ * published list — a draft's own "Te puede interesar" rail and PDF
+ * promo only ever consider OTHER drafts, never real posts, so nothing
+ * here can leak a draft link into production or vice versa.
+ */
+function buildDrafts() {
+  const drafts = buildDraftCards();
+  if (drafts.length === 0) {
+    console.log('\nNo drafts in content/blog/drafts/ — nothing to preview.');
+    return;
+  }
+
+  const byId = buildByIdMap(drafts);
+  drafts.forEach((entry) => {
+    const html = renderArticlePage(entry, drafts, byId, 'blog/_drafts');
+    writePage(`blog/_drafts/${entry.post.slug}`, html);
+  });
+
+  console.log(`\n${drafts.length} draft(s) rendered to public/blog/_drafts/ (preview only — never linked from production).`);
 }
 
 main();
