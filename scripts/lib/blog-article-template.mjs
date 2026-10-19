@@ -39,24 +39,33 @@ function renderPdfCard(pdf) {
   </div>`;
 }
 
-function renderToc(toc, pdf, isGuide) {
+function renderToc(toc, pdf, isGuide, pillarBg, pillarFg) {
   const items = toc
-    .map((h) => `          <li><a href="#${h.id}">${escapeHtml(h.text)}</a></li>`)
+    .map(
+      (h, i) => `          <li>
+            <a href="#${h.id}">
+              <span class="cm-blog-article__toc-num" style="--cm-blog-article-bg:${pillarBg};--cm-blog-article-fg:${pillarFg}">${String(i + 1).padStart(2, '0')}</span>
+              <span class="cm-blog-article__toc-label">${escapeHtml(h.text)}</span>
+            </a>
+          </li>`
+    )
     .join('\n');
   const pdfLink = pdf
     ? `
-        <a class="cm-blog-article__toc-pdf" href="${escapeHtml(pdf.href)}" download>
-          Descargar PDF
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v12m0 0 4-4m-4 4-4-4M5 20h14" /></svg>
-        </a>`
+          <a class="cm-blog-article__toc-pdf" href="${escapeHtml(pdf.href)}" download>
+            Descargar PDF
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v12m0 0 4-4m-4 4-4-4M5 20h14" /></svg>
+          </a>`
     : '';
 
   return `    <aside class="cm-blog-article__toc">
       <nav aria-label="${isGuide ? 'En esta guía' : 'En este artículo'}">
-        <p class="cm-blog-article__toc-title">${isGuide ? 'En esta guía' : 'En este artículo'}</p>
-        <ol class="cm-blog-article__toc-list">
+        <div class="cm-blog-article__toc-card">
+          <p class="cm-blog-article__toc-title">${isGuide ? 'En esta guía' : 'En este artículo'}</p>
+          <ol class="cm-blog-article__toc-list">
 ${items}
-        </ol>${pdfLink}
+          </ol>${pdfLink}
+        </div>
       </nav>
     </aside>`;
 }
@@ -95,7 +104,7 @@ ${items}
 export function renderBlogArticleSection(view) {
   const badgeLabel = view.isGuide ? 'Guía' : 'Artículo';
 
-  return `<article class="cm-blog-article" data-cm-blog-article>
+  return `<article class="cm-blog-article" data-cm-blog-article style="--cm-blog-article-bg:${view.badgeBg};--cm-blog-article-fg:${view.badgeFg};--cm-blog-article-accent:${view.accent}">
   <noscript>
     <style>
       [data-cm-blog-article] [data-cm-blog-article-reveal] {
@@ -109,7 +118,7 @@ export function renderBlogArticleSection(view) {
     <div class="cm-blog-article__hero-inner" data-cm-blog-article-reveal>
 ${renderBreadcrumbs(view.breadcrumbs)}
 
-      <span class="cm-blog-article__badge" style="--cm-blog-article-bg:${view.badgeBg};--cm-blog-article-fg:${view.badgeFg}">${badgeLabel}</span>
+      <span class="cm-blog-article__badge">${badgeLabel}</span>
 
       <h1 class="cm-blog-article__title">${escapeHtml(view.title)}</h1>
       <p class="cm-blog-article__subtitle">${escapeHtml(view.subtitle)}</p>
@@ -136,47 +145,49 @@ ${renderBreadcrumbs(view.breadcrumbs)}
     </div>
   </header>
 
-  <div class="cm-blog-article__summary" data-cm-blog-article-reveal>
-    <h2 class="cm-blog-article__summary-title">En pocas palabras</h2>
-    <ul class="cm-blog-article__summary-list">
+  <div class="cm-blog-article__paper">
+    <div class="cm-blog-article__summary" data-cm-blog-article-reveal>
+      <h2 class="cm-blog-article__summary-title">En pocas palabras</h2>
+      <ul class="cm-blog-article__summary-list">
 ${view.resumen.map((item) => `      <li>${escapeHtml(item)}</li>`).join('\n')}
-    </ul>
-  </div>
+      </ul>
+    </div>
 ${renderPdfCard(view.pdf)}
 
-  <div class="cm-blog-article__layout">
-${renderToc(view.toc, view.pdf, view.isGuide)}
+    <div class="cm-blog-article__layout">
+${renderToc(view.toc, view.pdf, view.isGuide, view.badgeBg, view.badgeFg)}
 
-    <div class="cm-blog-article__content">
-      <div class="cm-blog-article__body">
+      <div class="cm-blog-article__content">
+        <div class="cm-blog-article__body">
 ${view.bodyHtml}
-      </div>
+        </div>
 ${renderPromo(view.promo)}
 ${renderFaqs(view.faqs)}
 
-      <div class="cm-blog-article__service-cta">
-        <p class="cm-blog-article__service-cta-text">${escapeHtml(view.serviceCta.text)}</p>
-        <a class="cm-blog-article__service-cta-link" href="${escapeHtml(view.serviceCta.href)}">
-          ${escapeHtml(view.serviceCta.label)}
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
-        </a>
-      </div>
+        <div class="cm-blog-article__service-cta">
+          <p class="cm-blog-article__service-cta-text">${escapeHtml(view.serviceCta.text)}</p>
+          <a class="cm-blog-article__service-cta-link" href="${escapeHtml(view.serviceCta.href)}">
+            ${escapeHtml(view.serviceCta.label)}
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </a>
+        </div>
 
-      <div class="cm-blog-article__author-box">
-        <img
-          class="cm-blog-article__author-box-avatar"
-          src="${escapeHtml(view.author.avatar)}"
-          alt=""
-          width="96"
-          height="96"
-          loading="lazy"
-          decoding="async"
-        />
-        <div class="cm-blog-article__author-box-text">
-          <p class="cm-blog-article__author-box-label">Escrito por</p>
-          <p class="cm-blog-article__author-box-name">${escapeHtml(view.author.name)}</p>
-          <p class="cm-blog-article__author-box-bio">${escapeHtml(view.author.bio)}</p>
-          <a class="cm-blog-article__author-box-link" href="${escapeHtml(view.author.teamHref)}">Conoce al equipo</a>
+        <div class="cm-blog-article__author-box">
+          <img
+            class="cm-blog-article__author-box-avatar"
+            src="${escapeHtml(view.author.avatar)}"
+            alt=""
+            width="96"
+            height="96"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="cm-blog-article__author-box-text">
+            <p class="cm-blog-article__author-box-label">Escrito por</p>
+            <p class="cm-blog-article__author-box-name">${escapeHtml(view.author.name)}</p>
+            <p class="cm-blog-article__author-box-bio">${escapeHtml(view.author.bio)}</p>
+            <a class="cm-blog-article__author-box-link" href="${escapeHtml(view.author.teamHref)}">Conoce al equipo</a>
+          </div>
         </div>
       </div>
     </div>

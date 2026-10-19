@@ -25,6 +25,7 @@ import { chromium } from 'playwright-core';
 
 import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
 import { tipoLabels } from '../lib/blog-format.mjs';
+import { isDarkHex } from '../lib/blog-pillars.mjs';
 import { renderOgHtml } from './og-template.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -42,18 +43,6 @@ const LOGO_ABS_PATH = pathToFileURL(
 // visited with page.goto(), same fix already needed for the earlier
 // blog-card/blog-index Playwright previews in this build.
 const TMP_DIR = join(os.tmpdir(), 'cm-og-render');
-
-/** Relative luminance of a hex color (WCAG formula) — decides whether
- *  the light-on-transparent logo needs the brightness(0) dark-recolor
- *  (see og-template.mjs) for this pillar's bg/fg pair. */
-function isDark(hex) {
-  const n = parseInt(hex.replace('#', ''), 16);
-  const r = (n >> 16) & 255;
-  const g = (n >> 8) & 255;
-  const b = n & 255;
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance < 0.5;
-}
 
 async function main() {
   const all = isDrafts ? buildDraftCards() : buildAllCards();
@@ -79,7 +68,7 @@ async function main() {
       number,
       bg: pillar.bg,
       fg: pillar.fg,
-      needsDarkLogo: isDark(pillar.fg),
+      needsDarkLogo: isDarkHex(pillar.fg),
       logoAbsPath: LOGO_ABS_PATH,
     });
 

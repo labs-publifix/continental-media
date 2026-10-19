@@ -5,11 +5,20 @@
     two things an article doesn't need (a PDF download card up top, a
     "Descargar PDF" in its table-of-contents box) rather than forking
     into two unrelated page types.
-  OWN-WORLD: same dark ground / Space Grotesk display / Inter body
-    pairing as every page; no photography anywhere on the page (per the
-    blog's whole visual language) — the one color note is the pillar
-    color on the type badge and the PDF/related-guide promo card, tying
-    the article back to its own blog-card without needing a photo.
+  OWN-WORLD: dark ground for the hero and the closing "Te puede
+    interesar" rail — Space Grotesk display / Inter body, same as every
+    page — but the reading area in between (summary through author box,
+    wrapped in .cm-blog-article__paper) is a warm cream "paper" surface
+    with near-black text, so the page reads as dark-hero-opens →
+    light-paper-to-read → dark-rail-closes rather than one flat black
+    slab top to bottom. No photography anywhere (per the blog's whole
+    visual language) — color comes from the article's own pillar:
+    the badge, the TOC's numbered item badges, every H2/H3/link/
+    blockquote accent on the paper (computed via pillarAccent() so it's
+    always readable on cream), and a colored halo-ring (box-shadow, not
+    border — respects border-radius:50% reliably) on every author
+    avatar — hero byline ring in the pillar's raw bg (still on dark),
+    author-box ring in that computed accent (now on paper).
   FORM, top to bottom: breadcrumbs (Blog / {pilar} / current, the last
     a non-link) -> type badge -> H1 -> subtitle (the excerpt) -> byline
     (author photo+name+role) -> "Publicado el... Actualizado el... N
@@ -47,7 +56,7 @@
   optional block at once); a plain article omits the PDF card and the
   "Llévate la guía" promo.
 -->
-<article class="cm-blog-article" data-cm-blog-article>
+<article class="cm-blog-article" data-cm-blog-article style="--cm-blog-article-bg:#e7e2d9;--cm-blog-article-fg:#17161b;--cm-blog-article-accent:#17161b">
   <noscript>
     <style>
       [data-cm-blog-article] [data-cm-blog-article-reveal] {
@@ -67,7 +76,7 @@
         </ol>
       </nav>
 
-      <span class="cm-blog-article__badge" style="--cm-blog-article-bg:#e7e2d9;--cm-blog-article-fg:#17161b">Guía</span>
+      <span class="cm-blog-article__badge">Guía</span>
 
       <h1 class="cm-blog-article__title">Cómo implementar agentes de IA en WhatsApp para tu equipo de ventas</h1>
       <p class="cm-blog-article__subtitle">
@@ -97,96 +106,115 @@
     </div>
   </header>
 
-  <div class="cm-blog-article__summary" data-cm-blog-article-reveal>
-    <h2 class="cm-blog-article__summary-title">En pocas palabras</h2>
-    <ul class="cm-blog-article__summary-list">
-      <li>Un agente de IA en WhatsApp responde y califica leads 24/7 sin reemplazar a tu equipo.</li>
-      <li>El lanzamiento toma entre 2 y 4 semanas si defines bien las conversaciones clave.</li>
-      <li>Esta guía incluye un checklist descargable para planear tu propio lanzamiento.</li>
-    </ul>
-  </div>
-
-  <div class="cm-blog-article__pdf-card" data-cm-blog-article-reveal>
-    <div class="cm-blog-article__pdf-card-text">
-      <span class="cm-blog-article__pdf-card-eyebrow">Descarga incluida</span>
-      <p class="cm-blog-article__pdf-card-title">Checklist de lanzamiento — Agente de IA en WhatsApp</p>
-      <p class="cm-blog-article__pdf-card-meta">PDF · 10 páginas</p>
+  <div class="cm-blog-article__paper">
+    <div class="cm-blog-article__summary" data-cm-blog-article-reveal>
+      <h2 class="cm-blog-article__summary-title">En pocas palabras</h2>
+      <ul class="cm-blog-article__summary-list">
+        <li>Un agente de IA en WhatsApp responde y califica leads 24/7 sin reemplazar a tu equipo.</li>
+        <li>El lanzamiento toma entre 2 y 4 semanas si defines bien las conversaciones clave.</li>
+        <li>Esta guía incluye un checklist descargable para planear tu propio lanzamiento.</li>
+      </ul>
     </div>
-    <a class="cm-blog-article__pdf-card-button" href="../../assets/pdfs/blog/ejemplo-guia.pdf" download>
-      Descargar PDF
-    </a>
-  </div>
 
-  <div class="cm-blog-article__layout">
-    <aside class="cm-blog-article__toc">
-      <nav aria-label="En esta guía">
-        <p class="cm-blog-article__toc-title">En esta guía</p>
-        <ol class="cm-blog-article__toc-list">
-          <li><a href="#que-es-un-agente-de-ia-en-whatsapp">Qué es un agente de IA en WhatsApp</a></li>
-          <li><a href="#antes-de-empezar">Antes de empezar</a></li>
-          <li><a href="#paso-a-paso-del-lanzamiento">Paso a paso del lanzamiento</a></li>
-        </ol>
-        <a class="cm-blog-article__toc-pdf" href="../../assets/pdfs/blog/ejemplo-guia.pdf" download>
-          Descargar PDF
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v12m0 0 4-4m-4 4-4-4M5 20h14" /></svg>
-        </a>
-      </nav>
-    </aside>
-
-    <div class="cm-blog-article__content">
-      <div class="cm-blog-article__body">
-        <h2 id="que-es-un-agente-de-ia-en-whatsapp">Qué es un agente de IA en WhatsApp</h2>
-        <p>Contenido de ejemplo del cuerpo del artículo…</p>
+    <div class="cm-blog-article__pdf-card" data-cm-blog-article-reveal>
+      <div class="cm-blog-article__pdf-card-text">
+        <span class="cm-blog-article__pdf-card-eyebrow">Descarga incluida</span>
+        <p class="cm-blog-article__pdf-card-title">Checklist de lanzamiento — Agente de IA en WhatsApp</p>
+        <p class="cm-blog-article__pdf-card-meta">PDF · 10 páginas</p>
       </div>
+      <a class="cm-blog-article__pdf-card-button" href="../../assets/pdfs/blog/ejemplo-guia.pdf" download>
+        Descargar PDF
+      </a>
+    </div>
 
-      <div class="cm-blog-article__promo" style="--cm-blog-article-bg:#1e5fff;--cm-blog-article-fg:#f2f6ff">
-        <p class="cm-blog-article__promo-eyebrow">Guía relacionada</p>
-        <p class="cm-blog-article__promo-title">Llévate la guía en PDF, gratis</p>
-        <a class="cm-blog-article__promo-link" href="../otra-guia-relacionada/">
-          Ver guía
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
-        </a>
-      </div>
+    <div class="cm-blog-article__layout">
+      <aside class="cm-blog-article__toc">
+        <nav aria-label="En esta guía">
+          <div class="cm-blog-article__toc-card">
+            <p class="cm-blog-article__toc-title">En esta guía</p>
+            <ol class="cm-blog-article__toc-list">
+              <li>
+                <a href="#que-es-un-agente-de-ia-en-whatsapp">
+                  <span class="cm-blog-article__toc-num" style="--cm-blog-article-bg:#e7e2d9;--cm-blog-article-fg:#17161b">01</span>
+                  <span class="cm-blog-article__toc-label">Qué es un agente de IA en WhatsApp</span>
+                </a>
+              </li>
+              <li>
+                <a href="#antes-de-empezar">
+                  <span class="cm-blog-article__toc-num" style="--cm-blog-article-bg:#e7e2d9;--cm-blog-article-fg:#17161b">02</span>
+                  <span class="cm-blog-article__toc-label">Antes de empezar</span>
+                </a>
+              </li>
+              <li>
+                <a href="#paso-a-paso-del-lanzamiento">
+                  <span class="cm-blog-article__toc-num" style="--cm-blog-article-bg:#e7e2d9;--cm-blog-article-fg:#17161b">03</span>
+                  <span class="cm-blog-article__toc-label">Paso a paso del lanzamiento</span>
+                </a>
+              </li>
+            </ol>
+            <a class="cm-blog-article__toc-pdf" href="../../assets/pdfs/blog/ejemplo-guia.pdf" download>
+              Descargar PDF
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v12m0 0 4-4m-4 4-4-4M5 20h14" /></svg>
+            </a>
+          </div>
+        </nav>
+      </aside>
 
-      <section class="cm-blog-article__faqs" aria-labelledby="cm-blog-article-faqs-heading">
-        <h2 id="cm-blog-article-faqs-heading">Preguntas frecuentes</h2>
-        <details class="cm-blog-article__faq">
-          <summary>¿Cuánto cuesta implementar un agente de IA en WhatsApp?</summary>
-          <p>El costo varía según el volumen de conversaciones y las integraciones necesarias…</p>
-        </details>
-        <details class="cm-blog-article__faq">
-          <summary>¿Reemplaza a mi equipo de ventas?</summary>
-          <p>No — la IA no reemplaza a tu equipo, lo multiplica: filtra y prepara cada conversación.</p>
-        </details>
-      </section>
+      <div class="cm-blog-article__content">
+        <div class="cm-blog-article__body">
+          <h2 id="que-es-un-agente-de-ia-en-whatsapp">Qué es un agente de IA en WhatsApp</h2>
+          <p>Contenido de ejemplo del cuerpo del artículo…</p>
+        </div>
 
-      <div class="cm-blog-article__service-cta">
-        <p class="cm-blog-article__service-cta-text">¿Quieres que te ayudemos a implementarlo?</p>
-        <a class="cm-blog-article__service-cta-link" href="../../servicios/ai-marketing-solutions/">
-          Conoce AI Marketing Solutions
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
-        </a>
-      </div>
+        <div class="cm-blog-article__promo" style="--cm-blog-article-bg:#1e5fff;--cm-blog-article-fg:#f2f6ff">
+          <p class="cm-blog-article__promo-eyebrow">Guía relacionada</p>
+          <p class="cm-blog-article__promo-title">Llévate la guía en PDF, gratis</p>
+          <a class="cm-blog-article__promo-link" href="../otra-guia-relacionada/">
+            Ver guía
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </a>
+        </div>
 
-      <div class="cm-blog-article__author-box">
-        <img
-          class="cm-blog-article__author-box-avatar"
-          src="../../assets/images/blog/authors/rafael-aguirre.webp"
-          alt=""
-          width="96"
-          height="96"
-          loading="lazy"
-          decoding="async"
-        />
-        <div class="cm-blog-article__author-box-text">
-          <p class="cm-blog-article__author-box-label">Escrito por</p>
-          <p class="cm-blog-article__author-box-name">Rafael Aguirre</p>
-          <p class="cm-blog-article__author-box-bio">
-            Fundador y director de Continental Media. Más de 25 años de experiencia en marketing
-            digital y comunicación, ayudando a marcas a conectar con sus audiencias en cada etapa
-            de su crecimiento.
-          </p>
-          <a class="cm-blog-article__author-box-link" href="../../nosotros.html">Conoce al equipo</a>
+        <section class="cm-blog-article__faqs" aria-labelledby="cm-blog-article-faqs-heading">
+          <h2 id="cm-blog-article-faqs-heading">Preguntas frecuentes</h2>
+          <details class="cm-blog-article__faq">
+            <summary>¿Cuánto cuesta implementar un agente de IA en WhatsApp?</summary>
+            <p>El costo varía según el volumen de conversaciones y las integraciones necesarias…</p>
+          </details>
+          <details class="cm-blog-article__faq">
+            <summary>¿Reemplaza a mi equipo de ventas?</summary>
+            <p>No — la IA no reemplaza a tu equipo, lo multiplica: filtra y prepara cada conversación.</p>
+          </details>
+        </section>
+
+        <div class="cm-blog-article__service-cta">
+          <p class="cm-blog-article__service-cta-text">¿Quieres que te ayudemos a implementarlo?</p>
+          <a class="cm-blog-article__service-cta-link" href="../../servicios/ai-marketing-solutions/">
+            Conoce AI Marketing Solutions
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </a>
+        </div>
+
+        <div class="cm-blog-article__author-box">
+          <img
+            class="cm-blog-article__author-box-avatar"
+            src="../../assets/images/blog/authors/rafael-aguirre.webp"
+            alt=""
+            width="96"
+            height="96"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="cm-blog-article__author-box-text">
+            <p class="cm-blog-article__author-box-label">Escrito por</p>
+            <p class="cm-blog-article__author-box-name">Rafael Aguirre</p>
+            <p class="cm-blog-article__author-box-bio">
+              Fundador y director de Continental Media. Más de 25 años de experiencia en marketing
+              digital y comunicación, ayudando a marcas a conectar con sus audiencias en cada etapa
+              de su crecimiento.
+            </p>
+            <a class="cm-blog-article__author-box-link" href="../../nosotros.html">Conoce al equipo</a>
+          </div>
         </div>
       </div>
     </div>

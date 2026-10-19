@@ -214,6 +214,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--cm-blog-card-bg), 0 0 0 3.5px var(--cm-blog-card-fg);
 }
 
 .cm-blog-card__author-name {

@@ -131,3 +131,24 @@ export function pillarByNombre(nombre) {
 export function pillarBySlug(slug) {
   return PILLARS.find((p) => p.slug === slug) || null;
 }
+
+/** WCAG relative-luminance check — true when `hex` reads as a dark
+ *  color. Shared by the PDF generator (cover/content accent) and the
+ *  web article template (paper-section accent) so both pick the same
+ *  "is this light pillar actually dark enough for small text" answer. */
+export function isDarkHex(hex) {
+  const n = parseInt(hex.replace('#', ''), 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 < 0.5;
+}
+
+/** The text-safe color for a pillar on a light/paper background: a
+ *  light pillar's own bg (Bone/Periwinkle/Mist) is too pale to read as
+ *  text, so fall back to that pillar's (always dark) fg instead. Never
+ *  use this for a FILLED shape's background — there, use the pillar's
+ *  own verified bg/fg pair together, not accent+white. */
+export function pillarAccent(pillar) {
+  return isDarkHex(pillar.bg) ? pillar.bg : pillar.fg;
+}

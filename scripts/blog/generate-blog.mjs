@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
 import { extractToc } from '../lib/blog-content.mjs';
-import { PILLARS, SERVICIO_NAMES } from '../lib/blog-pillars.mjs';
+import { PILLARS, SERVICIO_NAMES, pillarAccent } from '../lib/blog-pillars.mjs';
 import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
 import { relForDepth, buildAllCards, buildDraftCards, buildByIdMap, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
@@ -230,6 +230,7 @@ function renderArticlePage(entry, all, byId, basePath = 'blog') {
     isGuide: isGuia,
     badgeBg: pillar.bg,
     badgeFg: pillar.fg,
+    accent: pillarAccent(pillar),
     title: post.title,
     subtitle: post.excerpt,
     authorName: author.nombre,

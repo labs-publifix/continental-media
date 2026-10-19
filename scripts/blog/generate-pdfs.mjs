@@ -34,6 +34,7 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
 import { formatDateEs } from '../lib/blog-format.mjs';
+import { isDarkHex, pillarAccent } from '../lib/blog-pillars.mjs';
 import {
   renderCoverHtml,
   renderContentHtml,
@@ -78,14 +79,6 @@ async function stampPageNumbers(pdfDoc, contentStart, contentCount) {
   }
 }
 
-function isDark(hex) {
-  const n = parseInt(hex.replace('#', ''), 16);
-  const r = (n >> 16) & 255;
-  const g = (n >> 8) & 255;
-  const b = n & 255;
-  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 < 0.5;
-}
-
 async function renderOnePdf(page, html, tmpName, pdfOptions) {
   const tmpPath = join(TMP_DIR, tmpName);
   writeFileSync(tmpPath, html, 'utf8');
@@ -105,15 +98,13 @@ async function buildGuidePdf(browser, entry) {
     dateLabel: formatDateEs(post.publishDate, { long: true }),
     bg: pillar.bg,
     fg: pillar.fg,
-    needsDarkLogo: isDark(pillar.fg),
+    needsDarkLogo: isDarkHex(pillar.fg),
     logoAbsPath: LOGO_ABS_PATH,
   });
 
-  // Print-safe accent for text/borders on the white content pages — a
-  // light pillar's own bg (Bone/Periwinkle/Mist) is too pale to read
-  // as heading text on paper, so fall back to that pillar's (always
-  // dark) fg instead. See pdf-template.mjs's renderContentHtml doc.
-  const accent = isDark(pillar.bg) ? pillar.bg : pillar.fg;
+  // Print-safe accent for text/borders on the white content pages — see
+  // pillarAccent() in blog-pillars.mjs and pdf-template.mjs's renderContentHtml doc.
+  const accent = pillarAccent(pillar);
 
   const contentHtml = renderContentHtml({
     title: post.pdf.title || post.title,

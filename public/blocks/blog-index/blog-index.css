@@ -14,7 +14,7 @@
 /* ---------- Hero (no photography — text only, like Proyectos) ---------- */
 
 .cm-blog-index-hero {
-  padding-block: clamp(5rem, 14vh, 8rem) clamp(3rem, 7vh, 4.5rem);
+  padding-block: clamp(7.5rem, 20vh, 10.5rem) clamp(3rem, 7vh, 4.5rem);
 }
 
 .cm-blog-index-hero__inner {
