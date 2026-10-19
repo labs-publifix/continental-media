@@ -6,7 +6,9 @@
   "scripts": {
     "blog:build": "node scripts/blog/generate-blog.mjs",
     "blog:og": "node scripts/blog/generate-og-images.mjs",
-    "blog:pdf": "node scripts/blog/generate-pdfs.mjs"
+    "blog:pdf": "node scripts/blog/generate-pdfs.mjs",
+    "blog:rss": "node scripts/blog/generate-rss.mjs",
+    "sitemap": "node scripts/generate-sitemap.mjs"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",

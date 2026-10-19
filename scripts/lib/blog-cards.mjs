@@ -11,6 +11,11 @@ import { pillarByCodigo } from './blog-pillars.mjs';
 import { authorBySlug } from './blog-authors.mjs';
 import { formatDateEs } from './blog-format.mjs';
 
+/** Posts per index page — shared by generate-blog.mjs (pagination) and
+ *  generate-sitemap.mjs (which must compute the identical page count
+ *  to list the right /page/N/ URLs without duplicating this number). */
+export const PAGE_SIZE = 10;
+
 export function relForDepth(dirPath) {
   const depth = dirPath.split('/').filter(Boolean).length;
   return '../'.repeat(depth);

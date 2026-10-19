@@ -28,10 +28,12 @@ import { dirname, resolve, join } from 'node:path';
 import { extractToc } from '../lib/blog-content.mjs';
 import { PILLARS, SERVICIO_NAMES } from '../lib/blog-pillars.mjs';
 import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
-import { relForDepth, buildAllCards, buildByIdMap, withRel } from '../lib/blog-cards.mjs';
+import { relForDepth, buildAllCards, buildByIdMap, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
 import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderBlogTeaserSection } from '../lib/blog-teaser-template.mjs';
+import { generateSitemap } from '../generate-sitemap.mjs';
+import { generateRss } from './generate-rss.mjs';
 import { renderSiteHeader } from '../lib/site-header-template.mjs';
 import { renderFooter } from '../lib/footer-template.mjs';
 import { renderOrganizationSchema } from '../lib/seo-schema.mjs';
@@ -47,7 +49,6 @@ import { escapeHtml } from '../lib/blog-html-utils.mjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
 const PUBLIC_DIR = join(REPO_ROOT, 'public');
-const PAGE_SIZE = 10;
 const RELATED_COUNT = 3;
 
 function renderIndexPage({ dirPath, basePath, cards, pageNum, totalPages, typeFilter, pillarFilter, title, description, featuredFirst }) {
@@ -75,6 +76,7 @@ function renderIndexPage({ dirPath, basePath, cards, pageNum, totalPages, typeFi
   <title>${escapeHtml(fullTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <meta name="theme-color" content="#0a0b0d" />
+  <link rel="alternate" type="application/rss+xml" title="Blog de Continental Media" href="${rel}blog/rss.xml" />
 
 ${renderFavicons(rel)}
 
@@ -229,6 +231,7 @@ function renderArticlePage(entry, all, byId) {
   <title>${escapeHtml(fullTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <meta name="theme-color" content="#0a0b0d" />
+  <link rel="alternate" type="application/rss+xml" title="Blog de Continental Media" href="${rel}blog/rss.xml" />
 
 ${renderFavicons(rel)}
 
@@ -419,8 +422,10 @@ function main() {
   });
 
   injectHomeTeaser(all);
+  generateSitemap();
+  generateRss();
 
-  console.log(`\n${all.length} published post(s). (sitemap, RSS and 301 redirects are later build steps.)`);
+  console.log(`\n${all.length} published post(s). (301 redirects are a later build step.)`);
 }
 
 main();
