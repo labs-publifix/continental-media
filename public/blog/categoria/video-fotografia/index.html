@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video y fotografía — Blog de Continental Media</title>
+  <meta name="description" content="Artículos y guías de Continental Media sobre video y fotografía." />
+  <meta name="theme-color" content="#0a0b0d" />
+
+  <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
+  <link rel="icon" href="../../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="../../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../../favicon-48x48.png" sizes="48x48" type="image/png" />
+  <link rel="icon" href="../../../favicon-96x96.png" sizes="96x96" type="image/png" />
+  <link rel="icon" href="../../../favicon-192x192.png" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="../../../apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="../../../apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="../../../apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="167x167" href="../../../apple-touch-icon-167x167.png" />
+  <link rel="manifest" href="../../../site.webmanifest" />
+
+  <link rel="canonical" href="https://continentalmedia.com.mx/blog/categoria/video-fotografia/" />
+
+  <!-- Open Graph / Twitter Card — see scripts/lib/seo-meta.mjs -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Continental Media" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:url" content="https://continentalmedia.com.mx/blog/categoria/video-fotografia/" />
+  <meta property="og:title" content="Video y fotografía — Blog de Continental Media" />
+  <meta property="og:description" content="Artículos y guías de Continental Media sobre video y fotografía." />
+  <meta property="og:image" content="https://continentalmedia.com.mx/assets/images/seo/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Continental Media — Marketing, comunicación y RP potenciada por IA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Video y fotografía — Blog de Continental Media" />
+  <meta name="twitter:description" content="Artículos y guías de Continental Media sobre video y fotografía." />
+  <meta name="twitter:image" content="https://continentalmedia.com.mx/assets/images/seo/og-image.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../../../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../../../blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="../../../blocks/blog-card/blog-card.css" />
+  <link rel="stylesheet" href="../../../blocks/blog-index/blog-index.css" />
+  <link rel="stylesheet" href="../../../blocks/footer/footer.css" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Continental Media",
+  "url": "https://continentalmedia.com.mx/",
+  "logo": "https://continentalmedia.com.mx/assets/images/continental-media-logo-white.png",
+  "description": "Agencia de marketing, comunicación y relaciones públicas potenciada por Inteligencia Artificial, con presencia en Veracruz y Querétaro.",
+  "email": "contacto@continentalmedia.com.mx",
+  "telephone": "+52-229-210-0926",
+  "sameAs": [
+    "https://www.facebook.com/ContinentalMkt/",
+    "https://www.instagram.com/continental_mkt/",
+    "https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow",
+    "https://mx.linkedin.com/company/continentalmkt"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "url": "https://continentalmedia.com.mx/blog/categoria/video-fotografia/",
+  "name": "Video y fotografía — Blog de Continental Media",
+  "description": "Artículos y guías de Continental Media sobre video y fotografía.",
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Blog de Continental Media",
+    "url": "https://continentalmedia.com.mx/blog/"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": []
+  }
+}
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== SITE HEADER BLOCK — see public/blocks/site-header/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — SITE HEADER BLOCK (canonical source)
+    THESIS: the menu must always be one tap away — extracted from the home
+      hero (where it used to live as position:absolute, scrolling away with
+      it) into its own page-agnostic, always-reachable component.
+    OWN-WORLD: same near-black ground, same restrained blue accent, same
+      Space Grotesk display / Inter body pairing as every other block on
+      the site. The bar and the full-screen expandable menu are the exact
+      same markup/behavior the home hero shipped with (numbered links,
+      dividers, spotlight-dim-on-hover, social icons, hamburger-to-X morph)
+      — only namespaced and relocated, not redesigned.
+    FORM: position:fixed at all times (never absolute), so it survives
+      scroll on every page. Two visual states, both driven by
+      site-header.js:
+        - Default (home, at the very top): transparent bar over the hero
+          video, exactly as before.
+        - .is-scrolled (added once scrollY passes a small threshold): the
+          bar gets a solid/blurred dark background, tighter padding, and a
+          smaller logo — added via a class, not a position:absolute ->
+          fixed swap, so there is no layout jump at the transition.
+        - .cm-site-header--solid (set in markup, not by scroll): interior
+          pages without a hero video — like this one, which has no photo/
+          video to sit transparently over — get the same solid/compact
+          treatment permanently, from first paint, instead of starting
+          transparent over a background that can't guarantee contrast.
+    ACCESSIBILITY: the skip link targets #main-content (a landmark present
+      on every page that uses this header), not a hero-specific heading id,
+      so it works unmodified everywhere this block is used. Full-screen nav
+      is a disclosure (not a modal): Escape closes it, background scroll is
+      locked while open, first link receives focus on open, focus returns
+      to the toggle on close. See site-header.js's own header comment for
+      the rest.
+
+    USAGE — canonical source for this block. To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/site-header/site-header.css.
+      2. Copy the <header class="cm-site-header"> markup below as the very
+         first element inside <body>, before any other section. Add the
+         `cm-site-header--solid` modifier class for interior pages that
+         don't have a full-bleed video/photo hero to overlay transparently.
+      3. Load blocks/site-header/site-header.js as a module (drives the
+         menu disclosure and the scroll-triggered .is-scrolled toggle).
+    Asset paths are root-relative (no leading slash), matching every other
+    block on the site.
+  -->
+  <header class="cm-site-header cm-site-header--solid" data-cm-site-header>
+    <a class="cm-site-header__skip" href="#main-content">Saltar al contenido</a>
+
+    <div class="cm-site-header__bar">
+      <a class="cm-site-header__logo-link" href="../../../index.html" aria-label="Continental Media — ir al inicio">
+        <img
+          class="cm-site-header__logo"
+          src="../../../assets/images/continental-media-logo-white.png"
+          alt="Continental Media"
+          width="380"
+          height="151"
+        />
+      </a>
+
+      <button
+        type="button"
+        class="cm-site-header__menu-toggle"
+        data-cm-site-header-menu-toggle
+        aria-expanded="false"
+        aria-controls="cm-site-header-nav"
+        aria-label="Abrir menú"
+      >
+        <span class="cm-site-header__menu-icon" aria-hidden="true">
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+          <span class="cm-site-header__menu-bar"></span>
+        </span>
+        <span class="cm-site-header__menu-label" data-cm-site-header-menu-label>Menú</span>
+      </button>
+    </div>
+
+    <nav
+      class="cm-site-header__nav"
+      id="cm-site-header-nav"
+      data-cm-site-header-nav
+      aria-label="Menú principal"
+      hidden
+    >
+      <div class="cm-site-header__nav-inner">
+        <ol class="cm-site-header__nav-list">
+          <li class="cm-site-header__nav-item">
+            <a href="../../../index.html#top">
+              <span class="cm-site-header__nav-index">01</span>
+              <span class="cm-site-header__nav-text">Inicio</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../../nosotros.html">
+              <span class="cm-site-header__nav-index">02</span>
+              <span class="cm-site-header__nav-text">Nosotros</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../../index.html#servicios">
+              <span class="cm-site-header__nav-index">03</span>
+              <span class="cm-site-header__nav-text">Servicios</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../../proyectos/">
+              <span class="cm-site-header__nav-index">04</span>
+              <span class="cm-site-header__nav-text">Proyectos</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../../index.html#blog">
+              <span class="cm-site-header__nav-index">05</span>
+              <span class="cm-site-header__nav-text">Blog</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+          <li class="cm-site-header__nav-item">
+            <a href="../../../contacto.html">
+              <span class="cm-site-header__nav-index">06</span>
+              <span class="cm-site-header__nav-text">Contacto</span>
+              <svg class="cm-site-header__nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+        </ol>
+
+        <div class="cm-site-header__nav-aside">
+          <p class="cm-site-header__nav-tagline">
+            La Inteligencia Artificial no reemplaza tu equipo, lo multiplica.
+          </p>
+
+          <div class="cm-site-header__nav-social">
+            <span class="cm-site-header__nav-social-label">Síguenos</span>
+            <ul class="cm-site-header__nav-social-list">
+              <li>
+                <a
+                  href="https://www.facebook.com/ContinentalMkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Facebook (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M13.5 21v-7.2h2.1l.3-2.5h-2.4V9.6c0-.7.2-1.2 1.2-1.2h1.3V6.1c-.3 0-1.3-.1-2.1-.1-2.1 0-3.3 1.2-3.3 3.5v1.9H8.5v2.5h2.1V21" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/continental_mkt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en Instagram (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                    <circle cx="12" cy="12" r="4.2" />
+                    <circle class="cm-site-header__nav-social-dot" cx="16.9" cy="7.1" r="0.6" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en YouTube (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                    <path class="cm-site-header__nav-social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://mx.linkedin.com/company/continentalmkt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Continental Media en LinkedIn (abre en una pestaña nueva)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
+                    <circle class="cm-site-header__nav-social-dot" cx="7.7" cy="8.3" r="1" />
+                    <path d="M7.7 11.2V17" />
+                    <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <p class="cm-site-header__nav-copyright">© 2026 Continental Media</p>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- ===== /SITE HEADER BLOCK ===== -->
+
+  <main id="main-content" tabindex="-1">
+<section class="cm-blog-index" data-cm-blog-index aria-labelledby="cm-blog-index-heading">
+  <noscript>
+    <style>
+      [data-cm-blog-index] [data-cm-blog-index-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-blog-index-hero">
+    <div class="cm-blog-index-hero__inner" data-cm-blog-index-reveal>
+      <span class="cm-blog-index-hero__eyebrow">Blog</span>
+      <h1 class="cm-blog-index-hero__title" id="cm-blog-index-heading">
+        Ideas y guías para hacer crecer tu marca.
+      </h1>
+      <p class="cm-blog-index-hero__subtitle">
+        Estrategia, contenido, redes sociales, relaciones públicas e inteligencia artificial —
+        explicado paso a paso, directo de nuestro equipo.
+      </p>
+    </div>
+  </div>
+
+  <nav class="cm-blog-index-filters" aria-label="Filtrar por tipo" data-cm-blog-index-reveal>
+    <div class="cm-blog-index-filters__inner">
+      <a class="cm-blog-index-filters__chip is-active" href="../../../blog/" aria-current="page">Todo</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/articulos/">Artículos</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/guias/">Guías</a>
+    </div>
+  </nav>
+
+  <nav class="cm-blog-index-filters cm-blog-index-filters--topics" aria-label="Filtrar por tema" data-cm-blog-index-reveal>
+    <div class="cm-blog-index-filters__inner">
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/estrategia-contenidos/">Estrategia de marketing y contenidos</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/redes-sociales/">Redes sociales y comunidad</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/ia-marketing/">IA aplicada al marketing</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/branding-diseno/">Branding, diseño y creatividad</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/relaciones-publicas/">Relaciones públicas y comunicación</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/web-seo-publicidad/">Web, SEO y publicidad digital</a>
+      <a class="cm-blog-index-filters__chip is-active" href="../../../blog/categoria/video-fotografia/" aria-current="page">Video y fotografía</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/eventos-medios/">Eventos, medios y publicidad exterior</a>
+      <a class="cm-blog-index-filters__chip" href="../../../blog/categoria/marketing-industria/">Marketing por industria y mercado</a>
+    </div>
+  </nav>
+
+  <div class="cm-blog-index-empty" data-cm-blog-index-reveal>
+    <h2 class="cm-blog-index-empty__title">Estamos preparando el blog</h2>
+    <p class="cm-blog-index-empty__text">
+      Muy pronto vas a encontrar aquí artículos y guías prácticas sobre marketing digital,
+      contenido, relaciones públicas e inteligencia artificial. Vuelve en unos días.
+    </p>
+  </div>
+</section>
+  </main>
+
+  <!-- ===== FOOTER — see public/blocks/footer/ for the canonical source ===== -->
+  <!--
+    CONTINENTAL MEDIA — GLOBAL FOOTER BLOCK (canonical source)
+    THESIS: the site's one constant reference zone — and, since the 2026
+      redesign, its final conversion moment too. Every page ends here, so
+      it does two jobs in sequence: close with intent (a real "talk to us"
+      beat, not a mid-pivot into silence) and then orient ("where else can
+      I go") without competing with whatever content sits above it. Dark
+      ground (--cm-color-bg, the same near-black as the hero) gives the
+      home page a deliberate light-to-dark close right after Contacto's
+      light "trust seal" background.
+    FORM: a closing CTA band (eyebrow, headline, one primary button to
+      contacto.html) above a thin divider, then 5 columns (Identidad,
+      Sitio, Servicios, Proyectos recientes, Contacto), then one more
+      thin-divider bottom bar (copyright + legal placeholders). Column 1
+      is deliberately wider and carries zero location copy — the brief is
+      explicit that the agency's México + Estados Unidos reach should
+      never read as scoped to one city. Columns 2-4 are real <nav>
+      landmarks (aria-label carries the same text as their visual title,
+      which is aria-hidden to avoid a second identical accessible name);
+      column 5 mixes two contact links with the same 4 social icons
+      already shipped in site-header's mobile nav panel — same hrefs, same
+      SVG paths, reused verbatim rather than re-sourced, per the brief's
+      own instruction not to fork a second copy of that data.
+    SEO: this is the one footer whose link choices were made with search
+      in mind, not just navigation — every link resolves to a real,
+      crawlable URL (no anchor-only fragment pointing at another page's
+      mid-scroll section), and "Proyectos recientes" exists specifically
+      to push internal-link equity at three deep case-study pages from
+      every single page on the site, not just from /proyectos itself. The
+      matching Organization JSON-LD (name, logo, sameAs, contact point)
+      that makes this footer's own NAP/social data machine-readable lives
+      in each page's <head> — see scripts/lib/seo-schema.mjs — since
+      structured data has no visual footprint of its own.
+    NO JS: unlike every other block on this page, this one ships no
+      footer.js and loads no <script> tag. The brief is explicit that the
+      footer is a static, utilitarian, "constant reference" zone with no
+      scroll-entrance animation and no complex interaction — every control
+      here is a plain <a>, every hover is plain CSS (:hover/:focus-visible)
+      — so there is nothing for a script to do. Shipping an empty file just
+      to match the pattern would be the exact network-request waste the
+      brief's own performance note argues against.
+    ACCESSIBILITY: heading hierarchy stays local to the footer landmark —
+      <footer> is an implicit contentinfo region, and its own <h2>s do not
+      compete with each page's real content headings above it. The
+      WhatsApp link's aria-label states the number AND that it opens in a
+      new tab; social icons keep their aria-label on the <a> and
+      aria-hidden="true" on the decorative <svg>, exactly like
+      site-header's own social list. Every link has a visible
+      :focus-visible outline against the dark ground.
+    ROUTING NOTE: "Proyectos" and "Contacto" in the Sitio column point at
+      the real proyectos/ and contacto.html pages (not at home-page anchor
+      fragments) now that both exist; "Servicios" still points at
+      index.html#servicios since there is no standalone /servicios index
+      page, only individual pillar pages (already linked directly in the
+      Servicios column) — this matches site-header's own nav exactly.
+      "Aviso de Privacidad" and "Términos y Condiciones" are real
+      placeholder routes (aviso-de-privacidad.html, terminos-y-
+      condiciones.html) that don't resolve to a built page yet, per the
+      brief's explicit instruction not to block on their absence.
+    USAGE — canonical source for this block. This file is written at
+      HOME-PAGE PATH DEPTH (asset/internal links with no "../" prefix,
+      matching index.html and nosotros.html, which sit at the same
+      depth). To use it on a page:
+      1. Link assets/css/tokens.css, then blocks/footer/footer.css.
+      2. Copy the <footer class="cm-footer"> markup below as the last
+         thing inside <body>, immediately after </main> and before any
+         <script> tags.
+      3. On a page one level deeper than the site root (every
+         servicios/<pillar>/ and proyectos/<caso>/ page), prefix every
+         href/src below that points at another site page or a root asset
+         with "../../" — exactly the same adjustment site-header's own
+         canonical markup already needs at that depth. mailto:/https:
+         links (email, WhatsApp, social) need no prefix at any depth.
+      No footer.js to load — see NO JS above.
+  -->
+  <footer class="cm-footer" data-cm-footer>
+    <div class="cm-footer__inner">
+      <div class="cm-footer__cta">
+        <p class="cm-footer__cta-eyebrow">Hablemos</p>
+        <h2 class="cm-footer__cta-title">¿Listos para el siguiente paso de tu marca?</h2>
+        <a class="cm-footer__cta-button" href="../../../contacto.html">
+          Cuéntanos tu proyecto
+          <svg class="cm-footer__cta-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="cm-footer__divider" aria-hidden="true"></div>
+
+      <div class="cm-footer__grid">
+        <div class="cm-footer__col cm-footer__col--identity">
+          <a class="cm-footer__logo-link" href="../../../index.html" aria-label="Continental Media — ir al inicio">
+            <img
+              class="cm-footer__logo"
+              src="../../../assets/images/continental-media-logo-white.png"
+              alt="Continental Media"
+              width="190"
+              height="76"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <p class="cm-footer__tagline">Agencia de publicidad y comunicación 360°</p>
+        </div>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-site-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-site-title">Sitio</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="../../../nosotros.html">Nosotros</a></li>
+            <li><a href="../../../index.html#servicios">Servicios</a></li>
+            <li><a href="../../../proyectos/">Proyectos</a></li>
+            <li><a href="../../../contacto.html">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-services-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-services-title">Servicios</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="../../../servicios/marketing-digital/">Marketing Digital</a></li>
+            <li><a href="../../../servicios/ai-marketing-solutions/">AI Marketing Solutions</a></li>
+            <li><a href="../../../servicios/marketing-tradicional/">Marketing Tradicional</a></li>
+            <li><a href="../../../servicios/relaciones-publicas/">Relaciones Públicas</a></li>
+            <li><a href="../../../servicios/produccion/">Producción</a></li>
+          </ul>
+        </nav>
+
+        <nav class="cm-footer__col" aria-labelledby="cm-footer-recent-title">
+          <h2 class="cm-footer__col-title" id="cm-footer-recent-title">Proyectos recientes</h2>
+          <ul class="cm-footer__link-list">
+            <li><a href="../../../proyectos/camino-real-veracruz/">Camino Real Veracruz</a></li>
+            <li><a href="../../../proyectos/bosque-residencial-san-lucas/">Bosque Residencial San Lucas</a></li>
+            <li><a href="../../../proyectos/punta-tiburon/">Punta Tiburón</a></li>
+            <li>
+              <a class="cm-footer__link-list-more" href="../../../proyectos/">
+                Ver todos los proyectos
+                <svg class="cm-footer__link-list-more-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M7 17 17 7M9 7h8v8" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="cm-footer__col">
+          <h2 class="cm-footer__col-title">Contacto</h2>
+          <ul class="cm-footer__contact-list">
+            <li><a href="mailto:contacto@continentalmedia.com.mx">contacto@continentalmedia.com.mx</a></li>
+            <li>
+              <a
+                href="https://wa.me/522292100926"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp de Continental Media, 229 210 0926, se abre en una nueva pestaña"
+              >
+                229 210 0926
+              </a>
+            </li>
+          </ul>
+
+          <ul class="cm-footer__social-list" aria-label="Redes sociales de Continental Media">
+            <li>
+              <a
+                href="https://www.facebook.com/ContinentalMkt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en Facebook (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path
+                    d="M13.5 21v-7.2h2.1l.3-2.5h-2.4V9.6c0-.7.2-1.2 1.2-1.2h1.3V6.1c-.3 0-1.3-.1-2.1-.1-2.1 0-3.3 1.2-3.3 3.5v1.9H8.5v2.5h2.1V21"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/continental_mkt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en Instagram (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                  <circle cx="12" cy="12" r="4.2" />
+                  <circle class="cm-footer__social-dot" cx="16.9" cy="7.1" r="0.6" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com/channel/UCcsRE-pEJrz0B2Ain6gqWow"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en YouTube (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                  <path class="cm-footer__social-dot" d="M10.3 9.3 15.4 12 10.3 14.7Z" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://mx.linkedin.com/company/continentalmkt"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Continental Media en LinkedIn (abre en una pestaña nueva)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" />
+                  <circle class="cm-footer__social-dot" cx="7.7" cy="8.3" r="1" />
+                  <path d="M7.7 11.2V17" />
+                  <path d="M11.6 17v-3.6c0-1.3.8-2.1 1.9-2.1s1.8.8 1.8 2.1V17M11.6 17v-5.5" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cm-footer__bottom">
+        <p class="cm-footer__copyright">© 2026 Continental Media. Todos los derechos reservados.</p>
+        <ul class="cm-footer__legal-list">
+          <li><a href="../../../aviso-de-privacidad.html">Aviso de Privacidad</a></li>
+          <li><a href="../../../terminos-y-condiciones.html">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <!-- ===== /FOOTER ===== -->
+
+  <script type="module" src="../../../blocks/site-header/site-header.js"></script>
+  <script type="module" src="../../../blocks/blog-index/blog-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!--
+  CONTINENTAL MEDIA — BLOG INDEX BLOCK (canonical source)
+  THESIS: the blog's front door, built to be found — every filter is a
+    real, statically crawlable URL (/blog/, /blog/guias/, /blog/articulos/,
+    /blog/categoria/<pilar>/, each with its own /page/N/), never a
+    client-side-only toggle that hides content search engines can't see.
+    "Filters as progressive enhancement" here means the filter chips
+    already work with zero JS (they are <a> links to those real pages) —
+    the strongest form of progressive enhancement is needing none.
+  OWN-WORLD: same dark ground / Space Grotesk display / Inter body
+    pairing as every interior page. The hero is Proyectos-teaser-style
+    (eyebrow + title + subtitle, no photography, text only) rather than
+    page-hero's photo band, because the blog's whole visual language —
+    cards, hero, OG images — is explicitly photo-free (solid pillar-color
+    blocks instead), so a photographic hero would be the one inconsistent
+    element on the page. Cards are blog-card (see
+    public/blocks/blog-card/) — this block owns the hero, the filter
+    chips, pagination and the empty state, never a second copy of the
+    card markup.
+  FORM: dark hero -> filter chip rows (Tipo, then Tema) -> card grid
+    (first result gets cm-blog-card-item--featured on the unfiltered
+    page 1 only — see scripts/lib/blog-index-template.mjs) -> numbered
+    pagination with a "Más recursos" next-page button. An empty state
+    (zero published posts) replaces hero+grid+pagination with a single
+    centered message — shown today, since no article is published yet;
+    see generate-blog.mjs.
+  ACCESSIBILITY: the filter rows are <nav aria-label="..."> landmarks of
+    real links; the current filter gets aria-current="page" AND a visual
+    .is-active state, never color alone. Pagination is a <nav
+    aria-label="Paginación">; the current page number is a non-link
+    <span aria-current="page">, not a link to itself. The empty state's
+    message is real text in the page's normal reading flow, not an image.
+  USAGE — canonical source for this block. To use it:
+    1. Link assets/css/tokens.css, blocks/blog-card/blog-card.css, then
+       blocks/blog-index/blog-index.css.
+    2. Render with scripts/lib/blog-index-template.mjs's
+       renderBlogIndexSection(...) — never hand-duplicate this markup.
+    3. Load blocks/blog-index/blog-index.js as a module (scroll-entrance
+       only; the <noscript> fallback and prefers-reduced-motion both
+       force the final visible state without it).
+  Example below shows the unfiltered page 1, mid-list (no empty state).
+-->
+<section class="cm-blog-index" data-cm-blog-index aria-labelledby="cm-blog-index-heading">
+  <noscript>
+    <style>
+      [data-cm-blog-index] [data-cm-blog-index-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-blog-index-hero">
+    <div class="cm-blog-index-hero__inner" data-cm-blog-index-reveal>
+      <span class="cm-blog-index-hero__eyebrow">Blog</span>
+      <h1 class="cm-blog-index-hero__title" id="cm-blog-index-heading">
+        Ideas y guías para hacer crecer tu marca.
+      </h1>
+      <p class="cm-blog-index-hero__subtitle">
+        Estrategia, contenido, redes sociales, relaciones públicas e inteligencia artificial —
+        explicado paso a paso, directo de nuestro equipo.
+      </p>
+    </div>
+  </div>
+
+  <nav class="cm-blog-index-filters" aria-label="Filtrar por tipo" data-cm-blog-index-reveal>
+    <div class="cm-blog-index-filters__inner">
+      <a class="cm-blog-index-filters__chip is-active" href="blog/" aria-current="page">Todo</a>
+      <a class="cm-blog-index-filters__chip" href="blog/articulos/">Artículos</a>
+      <a class="cm-blog-index-filters__chip" href="blog/guias/">Guías</a>
+    </div>
+  </nav>
+
+  <nav class="cm-blog-index-filters cm-blog-index-filters--topics" aria-label="Filtrar por tema" data-cm-blog-index-reveal>
+    <div class="cm-blog-index-filters__inner">
+      <a class="cm-blog-index-filters__chip" href="blog/categoria/estrategia-contenidos/">Estrategia de marketing y contenidos</a>
+      <a class="cm-blog-index-filters__chip" href="blog/categoria/redes-sociales/">Redes sociales y comunidad</a>
+      <a class="cm-blog-index-filters__chip" href="blog/categoria/ia-marketing/">IA aplicada al marketing</a>
+    </div>
+  </nav>
+
+  <!-- renderBlogIndexSection() inserts a <ul class="cm-blog-card-grid"> here (see blog-card.html) -->
+
+  <nav class="cm-blog-index-pagination" aria-label="Paginación" data-cm-blog-index-reveal>
+    <ol class="cm-blog-index-pagination__list">
+      <li><span class="cm-blog-index-pagination__link is-current" aria-current="page">1</span></li>
+      <li><a class="cm-blog-index-pagination__link" href="blog/page/2/">2</a></li>
+      <li><a class="cm-blog-index-pagination__link" href="blog/page/3/">3</a></li>
+    </ol>
+    <a class="cm-blog-index-pagination__more" href="blog/page/2/">Más recursos</a>
+  </nav>
+</section>

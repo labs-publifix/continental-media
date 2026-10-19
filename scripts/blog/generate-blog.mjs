@@ -1,0 +1,249 @@
+#!/usr/bin/env node
+/**
+ * Continental Media — blog build entry point (`npm run blog:build`).
+ *
+ * Builds incrementally as the blog system comes together — see the
+ * task list in the session this was built from. Currently implemented:
+ *   - the index routes (/blog/, /blog/articulos/, /blog/guias/,
+ *     /blog/categoria/<pilar>/, and every /page/N/ variant of each).
+ * Still to come (each will be added as its own step in main(), reusing
+ * the same loadPosts()/pillar/author data this file already loads):
+ *   - individual article/guide pages at /blog/<slug>/
+ *   - per-article OG images, PDF guides
+ *   - the home page teaser, sitemap.xml, RSS feed, 301 redirect stubs
+ *
+ * Usage:
+ *   node scripts/blog/generate-blog.mjs
+ */
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve, join } from 'node:path';
+
+import { loadPosts, publishedPosts } from '../lib/blog-content.mjs';
+import { pillarByCodigo, PILLARS } from '../lib/blog-pillars.mjs';
+import { authorBySlug } from '../lib/blog-authors.mjs';
+import { formatDateEs } from '../lib/blog-format.mjs';
+import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
+import { renderSiteHeader } from '../lib/site-header-template.mjs';
+import { renderFooter } from '../lib/footer-template.mjs';
+import { renderOrganizationSchema } from '../lib/seo-schema.mjs';
+import { renderBlogCollectionPageSchema } from '../lib/blog-schema.mjs';
+import { renderFavicons, renderSeoMeta } from '../lib/seo-meta.mjs';
+import { escapeHtml } from '../lib/blog-html-utils.mjs';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = resolve(__dirname, '..', '..');
+const PUBLIC_DIR = join(REPO_ROOT, 'public');
+const PAGE_SIZE = 10;
+
+function relForDepth(dirPath) {
+  const depth = dirPath.split('/').filter(Boolean).length;
+  return '../'.repeat(depth);
+}
+
+/** Builds the card view-model list for every published post, newest
+ *  first, with a stable consecutive number assigned across the WHOLE
+ *  archive (not reset per page/filter) — so "artículo #37" always
+ *  means the same post regardless of which filtered page you found it
+ *  on. */
+function buildAllCards() {
+  const posts = publishedPosts(loadPosts());
+  return posts.map((post, index) => {
+    const pillar = pillarByCodigo(post.pilar);
+    const author = authorBySlug(post.author);
+    if (!pillar) throw new Error(`Post "${post.slug}" has unknown pilar "${post.pilar}"`);
+    if (!author) throw new Error(`Post "${post.slug}" has unknown author "${post.author}"`);
+
+    return {
+      post,
+      tipo: post.tipo,
+      number: index + 1,
+      card: {
+        href: `blog/${post.slug}/`, // REL prefixed later per output page
+        tipo: post.tipo,
+        pilarNombre: pillar.nombre,
+        pilarSlug: pillar.slug,
+        bg: pillar.bg,
+        fg: pillar.fg,
+        number: index + 1,
+        title: post.title,
+        excerpt: post.excerpt,
+        authorName: author.nombre,
+        authorAvatar: author.avatar, // REL prefixed later
+        dateLabel: formatDateEs(post.publishDate),
+        hasPdf: Boolean(post.pdf),
+        readingMin: post.readingMin,
+      },
+    };
+  });
+}
+
+function withRel(card, rel, featured) {
+  return {
+    ...card,
+    href: `${rel}${card.href}`,
+    authorAvatar: `${rel}${card.authorAvatar}`,
+    featured: Boolean(featured),
+  };
+}
+
+function renderIndexPage({ dirPath, basePath, cards, pageNum, totalPages, typeFilter, pillarFilter, title, description, featuredFirst }) {
+  const rel = relForDepth(dirPath);
+  const viewCards = cards.map((c, i) => withRel(c.card, rel, featuredFirst && pageNum === 1 && i === 0));
+
+  const canonicalPath = `${dirPath}/`;
+  const fullTitle = pageNum === 1 ? title : `${title} | Página ${pageNum}`;
+
+  const section = renderBlogIndexSection({
+    rel,
+    cards: viewCards,
+    typeFilter,
+    pillarFilter,
+    pageNum,
+    totalPages,
+    paginationBasePath: `${basePath}/`,
+  });
+
+  const schemaItems = cards.map((c) => ({ url: `blog/${c.post.slug}/`, name: c.post.title }));
+
+  const head = `<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(fullTitle)}</title>
+  <meta name="description" content="${escapeHtml(description)}" />
+  <meta name="theme-color" content="#0a0b0d" />
+
+${renderFavicons(rel)}
+
+${renderSeoMeta({ rel, canonicalPath, title: escapeHtml(fullTitle), description: escapeHtml(description) })}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="${rel}assets/css/tokens.css" />
+  <link rel="stylesheet" href="${rel}blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="${rel}blocks/blog-card/blog-card.css" />
+  <link rel="stylesheet" href="${rel}blocks/blog-index/blog-index.css" />
+  <link rel="stylesheet" href="${rel}blocks/footer/footer.css" />
+
+${renderOrganizationSchema(rel)}
+${renderBlogCollectionPageSchema({ canonicalPath, name: fullTitle, description, items: schemaItems })}
+
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>`;
+
+  return `<!doctype html>
+<html lang="es-MX">
+${head}
+<body>
+${renderSiteHeader(rel, { solid: true })}
+
+  <main id="main-content" tabindex="-1">
+${section}
+  </main>
+
+${renderFooter(rel)}
+
+  <script type="module" src="${rel}blocks/site-header/site-header.js"></script>
+  <script type="module" src="${rel}blocks/blog-index/blog-index.js"></script>
+</body>
+</html>
+`;
+}
+
+function writePage(dirPath, html) {
+  const dir = join(PUBLIC_DIR, dirPath);
+  mkdirSync(dir, { recursive: true });
+  const outPath = join(dir, 'index.html');
+  writeFileSync(outPath, html, 'utf8');
+  console.log('Wrote', join(dirPath, 'index.html'));
+}
+
+/** Paginates `items` and writes one page per chunk under `basePath`
+ *  (e.g. 'blog', 'blog/articulos', 'blog/categoria/ia-marketing'),
+ *  page 1 at basePath/ and the rest at basePath/page/N/. */
+function writePaginatedRoute({ basePath, items, typeFilter, pillarFilter, title, description, featuredFirst }) {
+  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+
+  for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+    const slice = items.slice((pageNum - 1) * PAGE_SIZE, pageNum * PAGE_SIZE);
+    const dirPath = pageNum === 1 ? basePath : `${basePath}/page/${pageNum}`;
+    const html = renderIndexPage({
+      dirPath,
+      basePath,
+      cards: slice,
+      pageNum,
+      totalPages,
+      typeFilter,
+      pillarFilter,
+      title,
+      description,
+      featuredFirst,
+    });
+    writePage(dirPath, html);
+  }
+}
+
+function main() {
+  const all = buildAllCards();
+
+  // /blog/ — everything, newest first, featured lead card on page 1.
+  writePaginatedRoute({
+    basePath: 'blog',
+    items: all,
+    typeFilter: 'all',
+    pillarFilter: null,
+    title: 'Blog — Continental Media | Marketing, contenido e IA',
+    description:
+      'Artículos y guías prácticas de Continental Media sobre marketing digital, contenido, redes sociales, relaciones públicas e inteligencia artificial.',
+    featuredFirst: true,
+  });
+
+  // /blog/articulos/ — Editorial only.
+  writePaginatedRoute({
+    basePath: 'blog/articulos',
+    items: all.filter((c) => c.tipo === 'Editorial'),
+    typeFilter: 'articulo',
+    pillarFilter: null,
+    title: 'Artículos — Blog de Continental Media',
+    description: 'Artículos de Continental Media sobre estrategia de marketing, contenido, redes sociales y más.',
+  });
+
+  // /blog/guias/ — Guía práctica only.
+  writePaginatedRoute({
+    basePath: 'blog/guias',
+    items: all.filter((c) => c.tipo === 'Guía práctica'),
+    typeFilter: 'guia',
+    pillarFilter: null,
+    title: 'Guías prácticas — Blog de Continental Media',
+    description: 'Guías prácticas descargables de Continental Media, con plantillas y checklists listos para usar.',
+  });
+
+  // /blog/categoria/<pilar>/ — one per pillar.
+  PILLARS.forEach((pillar) => {
+    writePaginatedRoute({
+      basePath: `blog/categoria/${pillar.slug}`,
+      items: all.filter((c) => c.card.pilarSlug === pillar.slug),
+      typeFilter: 'all',
+      pillarFilter: pillar.slug,
+      title: `${pillar.nombre} — Blog de Continental Media`,
+      description: `Artículos y guías de Continental Media sobre ${pillar.nombre.toLowerCase()}.`,
+    });
+  });
+
+  console.log(`\n${all.length} published post(s). (Article pages, OG images, PDFs, sitemap, RSS and home teaser are later build steps.)`);
+}
+
+main();
