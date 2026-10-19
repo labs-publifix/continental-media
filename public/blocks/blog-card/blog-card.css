@@ -1,0 +1,270 @@
+/*
+  Continental Media — blog card block styles.
+  Namespaced under .cm-blog-card*. Depends on assets/css/tokens.css.
+  See blog-card.html for the full direction-contract comment.
+
+  --cm-blog-card-bg / --cm-blog-card-fg are set inline per card (not
+  nth-child, unlike Proyectos) since the color comes from the article's
+  pillar — see scripts/lib/blog-pillars.mjs. Every pair below is reused
+  verbatim from that config, already verified >=4.5:1 WCAG AA.
+*/
+
+.cm-blog-card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+}
+
+.cm-blog-card-item--featured {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 720px) {
+  .cm-blog-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Card ---------- */
+
+.cm-blog-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 320px;
+  padding: clamp(1.5rem, 2.8vw, 2.25rem);
+  border-radius: var(--cm-radius-sm);
+  background: var(--cm-blog-card-bg);
+  color: var(--cm-blog-card-fg);
+  text-decoration: none;
+  outline: none;
+  transition:
+    transform var(--cm-duration-fast) var(--cm-ease-out),
+    opacity var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-blog-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.cm-blog-card:focus-visible {
+  outline: 2px solid var(--cm-blog-card-fg);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-blog-card:hover {
+    transform: none;
+  }
+}
+
+/* Featured: horizontal split on wide screens — badges+number stacked
+   in a left column, content in a right column — still one unbroken
+   color block, never two panes of different colors. Grid (not flex),
+   because the markup has top/number/body as three flat siblings: grid
+   lets two of them share column 1 across two rows while the third
+   spans column 2, which flex's single-axis model can't express without
+   an extra wrapper element. */
+@media (min-width: 860px) {
+  .cm-blog-card--featured {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+    min-height: 360px;
+  }
+
+  .cm-blog-card--featured .cm-blog-card__top {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .cm-blog-card--featured .cm-blog-card__number {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .cm-blog-card--featured .cm-blog-card__body {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    justify-content: center;
+  }
+}
+
+/* ---------- Top row: badges ---------- */
+
+.cm-blog-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.cm-blog-card__badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--cm-font-body);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.5em 0.75em;
+  border-radius: var(--cm-radius-sm);
+}
+
+/* Type badge (Artículo/Guía): solid fill using the card's own fg/bg
+   swapped — guarantees contrast automatically against any of the 9
+   pillar colors without a second contrast check per pillar. */
+.cm-blog-card__badge--type {
+  background: var(--cm-blog-card-fg);
+  color: var(--cm-blog-card-bg);
+}
+
+/* Meta badge (reading time / "Incluye PDF"): ghost outline using the
+   card's own fg as both border and text color. */
+.cm-blog-card__badge--meta {
+  border: 1.5px solid var(--cm-blog-card-fg);
+  color: var(--cm-blog-card-fg);
+}
+
+/* ---------- Number ---------- */
+
+.cm-blog-card__number {
+  display: block;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.8rem + 2.6vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  opacity: 0.4;
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+/* ---------- Body ---------- */
+
+.cm-blog-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cm-blog-card__category {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 0.6em;
+}
+
+.cm-blog-card__title {
+  display: block;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.cm-blog-card--featured .cm-blog-card__title {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+}
+
+.cm-blog-card__excerpt {
+  display: block;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-top: 0.75em;
+}
+
+/* ---------- Footer: author + date ---------- */
+
+.cm-blog-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+}
+
+.cm-blog-card__author {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.cm-blog-card__author-avatar {
+  flex: none;
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.cm-blog-card__author-name {
+  font-family: var(--cm-font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cm-blog-card__date {
+  flex: none;
+  font-family: var(--cm-font-body);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  opacity: 0.7;
+}
+
+/* ---------- CTA ---------- */
+
+.cm-blog-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-top: 1.1rem;
+}
+
+.cm-blog-card__cta-arrow {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cm-blog-card:hover .cm-blog-card__cta-arrow {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-blog-card:hover .cm-blog-card__cta-arrow {
+    transform: none;
+  }
+}

@@ -1,0 +1,161 @@
+<!--
+  CONTINENTAL MEDIA — BLOG CARD BLOCK (canonical source)
+  THESIS: the blog's one visual unit, reused everywhere an article is
+    listed — the index grid, the home page teaser, "Te puede interesar"
+    rails, category pages. One card, one component, never hand-forked
+    per context, so a styling fix made here never has to be repeated.
+  OWN-WORLD: direct extension of the existing Proyectos teaser card
+    (public/blocks/projects-teaser/) rather than a new concept — same
+    idea (a solid color block stands in for photography, never a stock
+    photo or client logo), same near-sharp radius
+    (var(--cm-radius-sm), never pill/soft), same Space Grotesk display /
+    Inter body pairing, same hover/focus language (opacity+transform,
+    fg-colored focus ring so it still reads against light cards). The
+    difference from Proyectos: this block carries meaningfully more
+    content per card (type/PDF badges, a consecutive number, an author
+    line, a date, an explicit CTA), so it reads as "blog card", not
+    "project card with extra text" — Proyectos remains a project's own
+    component, not something this block imports or subclasses.
+  COLOR: the --cm-blog-card-bg/--cm-blog-card-fg custom properties are
+    set inline per card (not via nth-child like Proyectos' 9 fixed
+    cards), because a card's color comes from its article's editorial
+    pillar, not its position in a list — see scripts/lib/blog-pillars.mjs,
+    which reuses the exact same 9-color "checkerboard" palette as
+    Proyectos (projects-teaser.css lines 134-142), each pair already
+    verified >=4.5:1 WCAG AA. Every piece of text and every badge/icon
+    inside a card reads its color from --cm-blog-card-fg — never a flat
+    site-wide white/black — for the same reason Proyectos does: three of
+    the nine pillar colors are light (Bone, Periwinkle, Mist) and a
+    literal white would nearly vanish against them.
+  FORM: a full-bleed solid-color card (never split into a colored "top"
+    strip over a plain body — the whole card IS the color block), in
+    this order: a top row of badges (type: Artículo/Guía, plus either a
+    reading-time badge or an "Incluye PDF" badge for guides with a
+    downloadable deliverable), a large consecutive number, then title/
+    category/excerpt, then a footer row (author avatar + name, date),
+    then the "Leer el artículo"/"Leer la guía" CTA with an arrow icon —
+    reusing the exact external-link arrow path already used by the
+    Aliados chips and the footer's "ver más" links. `.cm-blog-card-grid`
+    is a real, reusable 2-column grid (both the blog index and the home
+    teaser consume it directly rather than redefining their own), and
+    `.cm-blog-card-item--featured` makes one item span the full grid row
+    with its card laid out horizontally instead of stacked — "first card
+    featured, then a 2-column grid" per the reference structure.
+  ACCESSIBILITY: each card is a real <a href> (not div+onClick) whose
+    accessible name comes from a single aria-label ("Leer el artículo:
+    {título} — {categoría}" / "Leer la guía: ...") exactly like
+    Proyectos' cards, since the visible text is split across many
+    sibling <span>s that would otherwise concatenate awkwardly for
+    screen readers; all of that text stays real, selectable DOM content
+    for sighted users and search engines. The author avatar is alt=""
+    (decorative — the name next to it already carries the information)
+    and the CTA arrow is aria-hidden. Hover/focus treatments read their
+    color from the card's own --cm-blog-card-fg, per the COLOR note
+    above. Every number/date/badge is plain visible text, not an image,
+    so it survives zoom and forced-colors mode.
+  USAGE — canonical source for this block. To use it:
+    1. Link assets/css/tokens.css, then blocks/blog-card/blog-card.css.
+    2. Render cards with scripts/lib/blog-card-template.mjs's
+       renderBlogCard(post, options) — mirrors the markup below exactly;
+       never hand-duplicate a card's HTML in a generator script.
+    3. Wrap cards in a <ul class="cm-blog-card-grid">; add
+       `cm-blog-card-item--featured` to the first <li> when the context
+       wants a featured/horizontal lead card (the blog index does; the
+       home teaser and "Te puede interesar" rails don't).
+    No blog-card.js — this block has no state and no animation of its
+    own; a consuming block (blog-index, home-blog-teaser) owns any
+    scroll-entrance stagger on its own <li> wrapper, exactly like
+    Proyectos' cm-projects__card-item does, not this partial.
+  Asset paths below are root-relative (no leading slash); a generator
+  writing pages at a deeper path (e.g. public/blog/<slug>/) prefixes
+  every href/src with its own REL, same convention as every other block.
+-->
+<ul class="cm-blog-card-grid">
+  <li class="cm-blog-card-item cm-blog-card-item--featured">
+    <a
+      class="cm-blog-card cm-blog-card--featured"
+      href="blog/ejemplo-guia-de-ejemplo/"
+      style="--cm-blog-card-bg:#3555cc;--cm-blog-card-fg:#f4f7ff"
+      aria-label="Leer la guía: Guía práctica de ejemplo para ilustrar la tarjeta destacada — Marketing por industria y mercado"
+    >
+      <span class="cm-blog-card__top">
+        <span class="cm-blog-card__badge cm-blog-card__badge--type">Guía</span>
+        <span class="cm-blog-card__badge cm-blog-card__badge--meta">Incluye PDF</span>
+      </span>
+      <span class="cm-blog-card__number">01</span>
+      <span class="cm-blog-card__body">
+        <span class="cm-blog-card__category">Marketing por industria y mercado</span>
+        <span class="cm-blog-card__title">Guía práctica de ejemplo para ilustrar la tarjeta destacada</span>
+        <span class="cm-blog-card__excerpt"
+          >Extracto breve que resume el ángulo de la guía en una o dos frases, sin repetir el
+          título.</span
+        >
+        <span class="cm-blog-card__footer">
+          <span class="cm-blog-card__author">
+            <img
+              class="cm-blog-card__author-avatar"
+              src="assets/images/blog/authors/pepe-bermudez.webp"
+              alt=""
+              width="64"
+              height="64"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="cm-blog-card__author-name">Pepe Bermúdez</span>
+          </span>
+          <span class="cm-blog-card__date">19 oct 2026</span>
+        </span>
+        <span class="cm-blog-card__cta">
+          Leer la guía
+          <svg class="cm-blog-card__cta-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        </span>
+      </span>
+    </a>
+  </li>
+
+  <li class="cm-blog-card-item">
+    <a
+      class="cm-blog-card"
+      href="blog/ejemplo-articulo-de-ejemplo/"
+      style="--cm-blog-card-bg:#1e5fff;--cm-blog-card-fg:#f2f6ff"
+      aria-label="Leer el artículo: Título de ejemplo para ilustrar la tarjeta estándar — Estrategia de marketing y contenidos"
+    >
+      <span class="cm-blog-card__top">
+        <span class="cm-blog-card__badge cm-blog-card__badge--type">Artículo</span>
+        <span class="cm-blog-card__badge cm-blog-card__badge--meta">8 min de lectura</span>
+      </span>
+      <span class="cm-blog-card__number">02</span>
+      <span class="cm-blog-card__body">
+        <span class="cm-blog-card__category">Estrategia de marketing y contenidos</span>
+        <span class="cm-blog-card__title">Título de ejemplo para ilustrar la tarjeta estándar</span>
+        <span class="cm-blog-card__excerpt"
+          >Extracto breve que resume el ángulo del artículo en una o dos frases, sin repetir el
+          título.</span
+        >
+        <span class="cm-blog-card__footer">
+          <span class="cm-blog-card__author">
+            <img
+              class="cm-blog-card__author-avatar"
+              src="assets/images/blog/authors/rafael-aguirre.webp"
+              alt=""
+              width="64"
+              height="64"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="cm-blog-card__author-name">Rafael Aguirre</span>
+          </span>
+          <span class="cm-blog-card__date">22 oct 2026</span>
+        </span>
+        <span class="cm-blog-card__cta">
+          Leer el artículo
+          <svg class="cm-blog-card__cta-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        </span>
+      </span>
+    </a>
+  </li>
+</ul>
