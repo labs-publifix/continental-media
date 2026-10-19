@@ -101,14 +101,14 @@ export function renderCoverHtml(view) {
   }
   .top-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     align-self: stretch;
   }
   .logo {
     flex: none;
-    align-self: flex-start;
-    height: 0.34in;
+    align-self: center;
+    height: 0.62in;
     width: auto;
     display: block;
     ${view.needsDarkLogo ? 'filter: brightness(0);' : ''}
@@ -376,7 +376,7 @@ export function renderBackCoverHtml({ logoAbsPath }) {
     text-align: center;
     overflow: hidden;
   }
-  .logo { height: 0.4in; width: auto; margin-bottom: 0.4in; }
+  .logo { height: 0.68in; width: auto; margin-bottom: 0.45in; }
   .tagline {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-weight: 700;
