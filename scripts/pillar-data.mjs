@@ -22,7 +22,8 @@ export const PILLARS = [
     metaTitle: 'Marketing Digital — Servicios | Continental Media',
     metaDescription:
       'Gestión de redes sociales, desarrollo web, publicidad digital, SEO e influencer marketing: soluciones de Marketing Digital de Continental Media.',
-    intro: null,
+    intro:
+      'Diseñamos y ejecutamos estrategias de marketing digital que conectan cada canal —redes sociales, sitio web, publicidad y posicionamiento— bajo un mismo objetivo de negocio. No se trata solo de estar presentes en cada plataforma: se trata de construir una presencia digital coherente que genere resultados medibles y crecimiento real.',
     subservices: [
       {
         name: 'Gestión de Redes Sociales',
@@ -100,6 +101,11 @@ export const PILLARS = [
         'Un ecosistema de plataformas propias que extienden nuestras capacidades en comunicación, tecnología e inteligencia artificial.',
       platforms: [
         {
+          name: 'MOVO Motion Design Studio',
+          description: 'Nuestro estudio de Motion Graphics',
+          href: 'https://movomotiondesign.com',
+        },
+        {
           name: 'Publifix Suite',
           description: 'Nuestra plataforma de distribución de Notas de Prensa',
           href: 'https://suite.publifix.net',
@@ -125,7 +131,8 @@ export const PILLARS = [
     metaTitle: 'Marketing Tradicional — Servicios | Continental Media',
     metaDescription:
       'Plan de medios, investigación de mercados y branding: soluciones de Marketing Tradicional de Continental Media.',
-    intro: null,
+    intro:
+      'Combinamos planeación estratégica de medios, investigación de mercados y construcción de marca para que cada decisión de comunicación esté respaldada por datos y una identidad sólida. No se trata solo de comprar espacios publicitarios: se trata de invertir con inteligencia en los canales y mensajes que realmente mueven a tu audiencia.',
     subservices: [
       {
         name: 'Plan de Medios',
@@ -153,7 +160,8 @@ export const PILLARS = [
     metaTitle: 'Relaciones Públicas — Servicios | Continental Media',
     metaDescription:
       'Estrategia de relaciones públicas, logística de eventos, patrocinios y convocatoria de medios: soluciones de Relaciones Públicas de Continental Media.',
-    intro: null,
+    intro:
+      'Gestionamos la reputación de tu marca ante medios, públicos clave y la industria, desde la estrategia de comunicación hasta la producción de cada evento y patrocinio. No se trata solo de aparecer en los medios: se trata de construir relaciones que sostengan la credibilidad de tu marca en el tiempo.',
     subservices: [
       {
         name: 'Estrategia de Relaciones Públicas',
@@ -192,7 +200,8 @@ export const PILLARS = [
     metaTitle: 'Producción — Servicios | Continental Media',
     metaDescription:
       'Diseño gráfico, producción audiovisual, animaciones con IA y print: soluciones de Producción de Continental Media.',
-    intro: null,
+    intro:
+      'Producimos cada pieza visual y audiovisual que tu marca necesita, desde diseño gráfico y fotografía hasta video y animación con IA. No se trata solo de generar contenido: se trata de producir material con la calidad y consistencia que tu marca merece en cada punto de contacto.',
     subservices: [
       {
         name: 'Diseño Gráfico',
