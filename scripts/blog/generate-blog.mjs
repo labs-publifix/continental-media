@@ -21,7 +21,7 @@
  * Usage:
  *   node scripts/blog/generate-blog.mjs
  */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
@@ -31,6 +31,7 @@ import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
 import { relForDepth, buildAllCards, buildByIdMap, withRel } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
 import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
+import { renderBlogTeaserSection } from '../lib/blog-teaser-template.mjs';
 import { renderSiteHeader } from '../lib/site-header-template.mjs';
 import { renderFooter } from '../lib/footer-template.mjs';
 import { renderOrganizationSchema } from '../lib/seo-schema.mjs';
@@ -329,6 +330,40 @@ function writePaginatedRoute({ basePath, items, typeFilter, pillarFilter, title,
   }
 }
 
+const HOME_PAGE_PATH = join(PUBLIC_DIR, 'index.html');
+const TEASER_START = '<!-- ===== BLOG TEASER BLOCK (generated — see public/blocks/blog-teaser/ and scripts/blog/generate-blog.mjs; never hand-edit the span between these two comments) ===== -->';
+const TEASER_END = '<!-- ===== /BLOG TEASER BLOCK ===== -->';
+const TEASER_EMPTY_NOTE =
+  '<!-- No posts published yet — generate-blog.mjs leaves this empty per the brief ("mientras ninguno esté publicado, no lo muestres"). -->';
+
+/** Splices the 3 latest published posts into public/index.html, between
+ *  the BLOG TEASER sentinel comments — see blog-teaser.html's FORM note
+ *  for why this lives here instead of being hand-maintained. Per the
+ *  brief, the section renders nothing at all (not an empty state) while
+ *  zero posts are published. */
+function injectHomeTeaser(all) {
+  const html = readFileSync(HOME_PAGE_PATH, 'utf8');
+  const startIdx = html.indexOf(TEASER_START);
+  const endIdx = html.indexOf(TEASER_END);
+  if (startIdx === -1 || endIdx === -1) {
+    throw new Error('BLOG TEASER sentinel comments not found in public/index.html — was the markup moved or renamed?');
+  }
+
+  const latest = all.slice(0, 3).map((c) => withRel(c.card, '', false));
+  const body = latest.length > 0 ? `\n    ${renderBlogTeaserSection(latest)}\n\n    ` : `\n    ${TEASER_EMPTY_NOTE}\n    `;
+
+  const before = html.slice(0, startIdx + TEASER_START.length);
+  const after = html.slice(endIdx);
+  const next = `${before}${body}${after}`;
+
+  if (next !== html) {
+    writeFileSync(HOME_PAGE_PATH, next, 'utf8');
+    console.log(`Updated index.html blog teaser (${latest.length} post(s))`);
+  } else {
+    console.log('index.html blog teaser already up to date');
+  }
+}
+
 function main() {
   const all = buildAllCards();
   const byId = buildByIdMap(all);
@@ -383,7 +418,9 @@ function main() {
     });
   });
 
-  console.log(`\n${all.length} published post(s). (OG images, PDFs, sitemap, RSS, redirects and the home teaser are later build steps.)`);
+  injectHomeTeaser(all);
+
+  console.log(`\n${all.length} published post(s). (sitemap, RSS and 301 redirects are later build steps.)`);
 }
 
 main();

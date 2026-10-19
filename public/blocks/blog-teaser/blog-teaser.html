@@ -1,0 +1,74 @@
+<!--
+  CONTINENTAL MEDIA — HOME "BLOG" TEASER BLOCK (canonical source)
+  THESIS: the same closing move as Proyectos — intro (eyebrow, title,
+    subtitle) -> a card grid -> one CTA to the full index — reused
+    deliberately, not reinvented, so the home page reads as one
+    consistent rhythm of teaser sections rather than a new pattern per
+    section. The one content difference: Proyectos always shows its
+    fixed 9 cases; this section shows the 3 most recently published
+    blog posts, which is why it's GENERATED, not hand-authored.
+  OWN-WORLD: same dark ground / Space Grotesk display / Inter body
+    pairing, same eyebrow+title+subtitle intro shape, same CTA-row
+    pattern as every other teaser on the page. Cards are blog-card
+    (public/blocks/blog-card/) at a 3-column grid on desktop — the
+    index/teaser default of 2 columns would leave one of exactly 3
+    cards stranded alone in its own row, which only this block avoids
+    via the .cm-blog-teaser modifier in blog-teaser.css.
+  FORM: THIS BLOCK IS GENERATED, not hand-maintained. scripts/blog/
+    generate-blog.mjs rewrites the content between the
+    <!-- ===== BLOG TEASER BLOCK (generated...) ===== --> /
+    <!-- ===== /BLOG TEASER BLOCK ===== --> sentinel comments in
+    public/index.html directly, every time it runs — those comments,
+    not this file, are the real source of truth for what's live on the
+    home page right now. Never hand-edit the section between them.
+    Per the brief: "mientras ninguno esté publicado, no lo muestres" —
+    with zero published posts the generator leaves that span EMPTY
+    (just an explanatory HTML comment), so the section renders nothing
+    at all rather than an empty-state message; this is the one teaser
+    on the page allowed to not exist. The surrounding <link
+    rel="stylesheet"> for blog-card.css/blog-teaser.css and the
+    <script> for blog-teaser.js stay in index.html permanently either
+    way — loading an unused stylesheet/script when the section is
+    empty is cheap and far simpler than also generator-managing head
+    tags.
+  ACCESSIBILITY: same as every other teaser — h2 heading id referenced
+    by aria-labelledby, cards keep blog-card's own accessible-name
+    pattern unchanged, CTA is a real <a href="blog/">.
+  USAGE: not meant to be hand-copied — this file exists to document the
+    shape generate-blog.mjs produces, for review outside running the
+    generator. To actually change what ships, edit
+    scripts/lib/blog-teaser-template.mjs and re-run
+    `node scripts/blog/generate-blog.mjs`.
+  Example below shows 3 sample cards (the shape the generator emits
+  when posts are published); the real file today has an empty span
+  since nothing is published yet.
+-->
+<section id="blog" class="cm-blog-teaser" data-cm-blog-teaser aria-labelledby="cm-blog-teaser-heading">
+  <noscript>
+    <style>
+      [data-cm-blog-teaser] [data-cm-blog-teaser-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <div class="cm-blog-teaser__inner">
+    <div class="cm-blog-teaser__intro" data-cm-blog-teaser-reveal>
+      <span class="cm-blog-teaser__eyebrow">Blog</span>
+      <h2 class="cm-blog-teaser__title" id="cm-blog-teaser-heading">
+        Ideas y guías para hacer crecer tu marca.
+      </h2>
+      <p class="cm-blog-teaser__subtitle">
+        Estrategia, contenido, redes sociales, relaciones públicas e inteligencia artificial —
+        explicado paso a paso, directo de nuestro equipo.
+      </p>
+    </div>
+
+    <!-- renderBlogCardGrid() inserts a <ul class="cm-blog-card-grid"> of the 3 latest posts here -->
+
+    <div class="cm-blog-teaser__cta-row" data-cm-blog-teaser-reveal>
+      <a class="cm-blog-teaser__cta" href="blog/">Ver todo el blog</a>
+    </div>
+  </div>
+</section>
