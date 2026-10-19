@@ -290,7 +290,11 @@
   .cm-blog-article__toc {
     display: block;
     position: sticky;
-    top: clamp(1.5rem, 4vh, 2.5rem);
+    /* Clears the fixed site-header (~64-108px tall across its own
+       clamps, see site-header.css's __bar) plus breathing room — below
+       this, the sticky TOC card scrolls up under the header and gets
+       visually clipped. */
+    top: clamp(6rem, 13vh, 7.5rem);
   }
 }
 
