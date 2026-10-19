@@ -159,21 +159,37 @@ export function loadBacklog(path = DEFAULT_PATH) {
   }));
 
   // ---------- Posts actuales (redirects) ----------
+  // activateOn (column I) is itself a formula in the workbook:
+  //   =IF(OR(D2="Consolidar",D2="Re-redactar v2026",D2="Actualizar v2026"),
+  //       IFERROR(INDEX(Backlog!$X$2:$X$101,MATCH(E2,Backlog!$A$2:$A$101,0)),""),"")
+  // i.e. "the target post's own fechaPublicacion, but only for these 3
+  // decisions". Same openpyxl-strips-cached-formulas problem as
+  // computeCalendarFields() above, so recomputed here in JS from
+  // `posts` (already loaded, fechaPublicacion is a literal cell, not a
+  // formula) instead of ever trusting column I's cached value.
+  const ACTIVATES_ON_TARGET_PUBLISH = new Set(['Consolidar', 'Re-redactar v2026', 'Actualizar v2026']);
+  const fechaPublicacionById = new Map(posts.map((p) => [p.id, p.fechaPublicacion]));
+
   const redirectRows = sheetRows(workbook, 'Posts actuales');
   const redirects = redirectRows
     .slice(1)
     .filter((r) => r[0] && r[4]) // only rows with a resolved target ID
-    .map((r) => ({
-      fromUrl: r[0],
-      year: r[1],
-      lastModified: r[2],
-      decision: r[3],
-      targetId: String(r[4]).trim(),
-      targetTitle: r[5],
-      action: r[6],
-      note: r[7],
-      activateOn: toISODate(r[8]),
-    }));
+    .map((r) => {
+      const decision = r[3];
+      const targetId = String(r[4]).trim();
+      const activateOn = ACTIVATES_ON_TARGET_PUBLISH.has(decision) ? fechaPublicacionById.get(targetId) || null : null;
+      return {
+        fromUrl: r[0],
+        year: r[1],
+        lastModified: r[2],
+        decision,
+        targetId,
+        targetTitle: r[5],
+        action: r[6],
+        note: r[7],
+        activateOn,
+      };
+    });
 
   return { posts, pillars, crossLinks, redirects, path };
 }

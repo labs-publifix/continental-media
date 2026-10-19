@@ -36,7 +36,7 @@ cruces:
   - G-19
   - G-22
 servicio: ai-marketing-solutions
-status: "En revisión"
+status: Publicado
 ---
 ## Lo que cambió en 2026 no es que la IA exista
 
