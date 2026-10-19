@@ -111,6 +111,15 @@ export const PILLARS = [
   },
 ];
 
+/** Display name for each /servicios/<slug>/ page — see scripts/pillar-data.mjs. */
+export const SERVICIO_NAMES = {
+  'marketing-digital': 'Marketing Digital',
+  'ai-marketing-solutions': 'AI Marketing Solutions',
+  'marketing-tradicional': 'Marketing Tradicional',
+  'relaciones-publicas': 'Relaciones Públicas',
+  produccion: 'Producción',
+};
+
 export function pillarByCodigo(codigo) {
   return PILLARS.find((p) => p.codigo === codigo) || null;
 }

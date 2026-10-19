@@ -19,6 +19,9 @@
  *   metaTitle     <=60 chars
  *   metaDescription <=155 chars
  *   excerpt       1-2 sentence card/index excerpt
+ *   resumen       string[] — 2-4 bullets, the "En pocas palabras" direct-answer
+ *                 box rendered right after the hero (also what AI Overviews/
+ *                 AI search engines tend to lift verbatim)
  *   primaryKeyword
  *   secondaryKeywords  string[]
  *   author        author slug — fixed forever once first written, see blog-authors.mjs
@@ -29,20 +32,56 @@
  *   servicio      /servicios/<slug>/ override — defaults to the pillar's own mapping
  *   pdf           { filename, pageCount } — guides only
  *   status        mirrors the backlog Estado at the time this file was last touched (display/debug only — the xlsx remains authoritative for workflow)
- * Body: Markdown, starting with an "En pocas palabras" direct-answer
- *   section, then clean H2/H3 structure.
+ * Body: Markdown, H2/H3 only (no H1 — the title front matter field is the
+ *   page's one <h1>). Every H2/H3 gets an auto-generated id (see the
+ *   custom marked renderer below) so the article's sidebar table of
+ *   contents (extractToc()) can link straight to each section.
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 import matter from 'gray-matter';
-import { marked } from 'marked';
+import { Marked } from 'marked';
 import { wordCount, readingMinutes } from './blog-format.mjs';
+import { slugify } from './blog-html-utils.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
 const POSTS_DIR = join(REPO_ROOT, 'content', 'blog', 'posts');
 const DRAFTS_DIR = join(REPO_ROOT, 'content', 'blog', 'drafts');
+
+// Own Marked instance (not the module-level singleton) with a renderer
+// that slugifies H2/H3 text into an `id`, deduping repeats the way
+// GitHub/most static site generators do (-2, -3, ...) — this is the
+// only thing that lets the article template's sidebar TOC
+// (extractToc()) and FAQ/section deep-links point at a real anchor.
+// headingSlugCounts is reset before each document's own parse() call
+// (see readMarkdownDir below) so numbering never leaks across articles.
+let headingSlugCounts = new Map();
+const marked = new Marked({
+  renderer: {
+    heading({ tokens, depth }) {
+      const text = this.parser.parseInline(tokens);
+      const plain = tokens.map((t) => t.raw || '').join('');
+      const base = slugify(plain);
+      const n = headingSlugCounts.get(base) || 0;
+      headingSlugCounts.set(base, n + 1);
+      const id = n === 0 ? base : `${base}-${n + 1}`;
+      return `<h${depth} id="${id}">${text}</h${depth}>\n`;
+    },
+  },
+});
+
+// gray-matter's YAML parser auto-converts an unquoted 'YYYY-MM-DD'
+// scalar into a JS Date (midnight UTC) rather than keeping it a
+// string — normalize back to 'YYYY-MM-DD' so every date field is
+// always a plain ISO string throughout the rest of the blog system,
+// regardless of whether a front matter author quoted the date or not.
+function toIsoDateString(value) {
+  if (!value) return value;
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return value;
+}
 
 function readMarkdownDir(dir) {
   if (!existsSync(dir)) return [];
@@ -52,8 +91,11 @@ function readMarkdownDir(dir) {
       const raw = readFileSync(join(dir, filename), 'utf8');
       const { data, content } = matter(raw);
       const words = wordCount(content);
+      headingSlugCounts = new Map();
       return {
         ...data,
+        publishDate: toIsoDateString(data.publishDate),
+        updateDate: toIsoDateString(data.updateDate),
         slug: data.slug || filename.replace(/\.md$/, ''),
         body: content,
         html: marked.parse(content),
@@ -62,6 +104,17 @@ function readMarkdownDir(dir) {
         sourceFile: join(dir, filename),
       };
     });
+}
+
+/** Extracts {level, text, id} for every <h2>/<h3> in an already-rendered
+ *  post.html string, in document order — feeds the article sidebar TOC. */
+export function extractToc(html) {
+  const matches = [...html.matchAll(/<h([23]) id="([^"]+)">(.*?)<\/h[23]>/g)];
+  return matches.map((m) => ({
+    level: Number(m[1]),
+    id: m[2],
+    text: m[3].replace(/<[^>]+>/g, ''),
+  }));
 }
 
 /** Real posts only — content/blog/posts/. */

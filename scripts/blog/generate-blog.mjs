@@ -6,11 +6,17 @@
  * task list in the session this was built from. Currently implemented:
  *   - the index routes (/blog/, /blog/articulos/, /blog/guias/,
  *     /blog/categoria/<pilar>/, and every /page/N/ variant of each).
+ *   - individual article/guide pages at /blog/<slug>/, with full SEO
+ *     (BlogPosting/BreadcrumbList/FAQPage schema, OG/Twitter meta).
  * Still to come (each will be added as its own step in main(), reusing
  * the same loadPosts()/pillar/author data this file already loads):
- *   - individual article/guide pages at /blog/<slug>/
- *   - per-article OG images, PDF guides
+ *   - per-article OG images, PDF guides (image/href currently point at
+ *     the path they'll occupy once generated; both 404 until then)
  *   - the home page teaser, sitemap.xml, RSS feed, 301 redirect stubs
+ *   - retroactive cross-linking from already-published articles into a
+ *     newly published one (task #21 — this file only resolves a NEW
+ *     article's OWN cruces into already-published targets; it doesn't
+ *     yet rewrite older articles to link back)
  *
  * Usage:
  *   node scripts/blog/generate-blog.mjs
@@ -19,15 +25,21 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
-import { loadPosts, publishedPosts } from '../lib/blog-content.mjs';
-import { pillarByCodigo, PILLARS } from '../lib/blog-pillars.mjs';
+import { loadPosts, publishedPosts, extractToc } from '../lib/blog-content.mjs';
+import { pillarByCodigo, PILLARS, SERVICIO_NAMES } from '../lib/blog-pillars.mjs';
 import { authorBySlug } from '../lib/blog-authors.mjs';
-import { formatDateEs } from '../lib/blog-format.mjs';
+import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
+import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderSiteHeader } from '../lib/site-header-template.mjs';
 import { renderFooter } from '../lib/footer-template.mjs';
 import { renderOrganizationSchema } from '../lib/seo-schema.mjs';
-import { renderBlogCollectionPageSchema } from '../lib/blog-schema.mjs';
+import {
+  renderBlogCollectionPageSchema,
+  renderBlogPostingSchema,
+  renderBreadcrumbListSchema,
+  renderFaqPageSchema,
+} from '../lib/blog-schema.mjs';
 import { renderFavicons, renderSeoMeta } from '../lib/seo-meta.mjs';
 import { escapeHtml } from '../lib/blog-html-utils.mjs';
 
@@ -35,6 +47,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
 const PUBLIC_DIR = join(REPO_ROOT, 'public');
 const PAGE_SIZE = 10;
+const RELATED_COUNT = 3;
 
 function relForDepth(dirPath) {
   const depth = dirPath.split('/').filter(Boolean).length;
@@ -56,6 +69,8 @@ function buildAllCards() {
 
     return {
       post,
+      pillar,
+      author,
       tipo: post.tipo,
       number: index + 1,
       card: {
@@ -76,6 +91,12 @@ function buildAllCards() {
       },
     };
   });
+}
+
+function buildByIdMap(all) {
+  const map = new Map();
+  all.forEach((entry) => map.set(entry.post.id, entry));
+  return map;
 }
 
 function withRel(card, rel, featured) {
@@ -163,6 +184,177 @@ ${renderFooter(rel)}
 `;
 }
 
+/** Builds the "Te puede interesar" rail: other published posts from the
+ *  same pillar first (newest first), then backfilled with the newest
+ *  posts overall if the pillar doesn't have enough — never empty
+ *  unless this is the only published post. */
+function pickRelated(entry, all) {
+  const others = all.filter((e) => e.post.slug !== entry.post.slug);
+  const samePillar = others.filter((e) => e.pillar.slug === entry.pillar.slug);
+  const rest = others.filter((e) => e.pillar.slug !== entry.pillar.slug);
+  return [...samePillar, ...rest].slice(0, RELATED_COUNT);
+}
+
+/** First cruce (backlog ID) that resolves to an already-published guide
+ *  with a PDF — becomes the "Llévate la guía en PDF, gratis" promo. */
+function pickPdfPromo(entry, byId) {
+  for (const crossId of entry.post.cruces || []) {
+    const target = byId.get(crossId);
+    if (target && target.post.tipo === 'Guía práctica' && target.post.pdf) {
+      return target;
+    }
+  }
+  return null;
+}
+
+function renderArticlePage(entry, all, byId) {
+  const { post, pillar, author } = entry;
+  const dirPath = `blog/${post.slug}`;
+  const rel = relForDepth(dirPath);
+  const { isGuia } = tipoLabels(post.tipo);
+
+  const canonicalPath = `${dirPath}/`;
+  const fullTitle = post.metaTitle || post.title;
+  const description = post.metaDescription || post.excerpt;
+
+  const pdfView = post.pdf
+    ? {
+        title: post.pdf.title || post.title,
+        meta: `PDF · ${post.pdf.pageCount} página${post.pdf.pageCount === 1 ? '' : 's'}`,
+        href: `${rel}assets/pdfs/blog/${post.slug}.pdf`,
+      }
+    : null;
+
+  const promoTarget = pickPdfPromo(entry, byId);
+  const promoView = promoTarget
+    ? {
+        bg: promoTarget.pillar.bg,
+        fg: promoTarget.pillar.fg,
+        title: promoTarget.post.title,
+        href: `${rel}blog/${promoTarget.post.slug}/`,
+      }
+    : null;
+
+  const servicioSlug = post.servicio || pillar.servicioSlug;
+  const servicioNombre = SERVICIO_NAMES[servicioSlug] || servicioSlug;
+
+  const related = pickRelated(entry, all).map((e, i) => withRel(e.card, rel, false));
+
+  const section = renderBlogArticleSection({
+    rel,
+    breadcrumbs: [
+      { name: 'Blog', href: `${rel}blog/` },
+      { name: pillar.nombre, href: `${rel}blog/categoria/${pillar.slug}/` },
+      { name: post.title },
+    ],
+    isGuide: isGuia,
+    badgeBg: pillar.bg,
+    badgeFg: pillar.fg,
+    title: post.title,
+    subtitle: post.excerpt,
+    authorName: author.nombre,
+    authorRole: author.rol,
+    authorAvatar: `${rel}${author.avatar}`,
+    publishLabel: formatDateEs(post.publishDate, { long: true }),
+    updateLabel: formatDateEs(post.updateDate || post.publishDate, { long: true }),
+    readingMin: post.readingMin,
+    resumen: post.resumen || [],
+    pdf: pdfView,
+    toc: extractToc(post.html),
+    bodyHtml: post.html,
+    promo: promoView,
+    faqs: post.faqs || [],
+    serviceCta: {
+      text: '¿Quieres que te ayudemos a implementarlo?',
+      label: `Conoce ${servicioNombre}`,
+      href: `${rel}servicios/${servicioSlug}/`,
+    },
+    author: {
+      name: author.nombre,
+      bio: author.bio,
+      avatar: `${rel}${author.avatar}`,
+      teamHref: `${rel}${author.teamUrl}`,
+    },
+    related,
+  });
+
+  const keywords = [post.primaryKeyword, ...(post.secondaryKeywords || [])].filter(Boolean);
+  const ogImagePath = `assets/images/blog/og/${post.slug}.jpg`;
+
+  const head = `<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(fullTitle)}</title>
+  <meta name="description" content="${escapeHtml(description)}" />
+  <meta name="theme-color" content="#0a0b0d" />
+
+${renderFavicons(rel)}
+
+${renderSeoMeta({ rel, canonicalPath, title: escapeHtml(fullTitle), description: escapeHtml(description), image: `${rel}${ogImagePath}` })}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="${rel}assets/css/tokens.css" />
+  <link rel="stylesheet" href="${rel}blocks/site-header/site-header.css" />
+  <link rel="stylesheet" href="${rel}blocks/blog-card/blog-card.css" />
+  <link rel="stylesheet" href="${rel}blocks/blog-article/blog-article.css" />
+  <link rel="stylesheet" href="${rel}blocks/footer/footer.css" />
+
+${renderOrganizationSchema(rel)}
+${renderBreadcrumbListSchema([
+    { name: 'Inicio', path: '' },
+    { name: 'Blog', path: 'blog/' },
+    { name: post.title, path: canonicalPath },
+  ])}
+${renderBlogPostingSchema({
+    canonicalPath,
+    headline: post.title,
+    description,
+    imageCanonicalPath: ogImagePath,
+    author: { name: author.nombre, teamCanonicalPath: author.teamUrl },
+    publishDate: post.publishDate,
+    updateDate: post.updateDate || post.publishDate,
+    pillarName: pillar.nombre,
+    keywords,
+    wordCount: post.wordCount,
+  })}
+${renderFaqPageSchema(post.faqs || [])}
+
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: var(--cm-color-bg);
+      font-family: var(--cm-font-body);
+    }
+  </style>
+</head>`;
+
+  return `<!doctype html>
+<html lang="es-MX">
+${head}
+<body>
+${renderSiteHeader(rel, { solid: true })}
+
+  <main id="main-content" tabindex="-1">
+${section}
+  </main>
+
+${renderFooter(rel)}
+
+  <script type="module" src="${rel}blocks/site-header/site-header.js"></script>
+  <script type="module" src="${rel}blocks/blog-article/blog-article.js"></script>
+</body>
+</html>
+`;
+}
+
 function writePage(dirPath, html) {
   const dir = join(PUBLIC_DIR, dirPath);
   mkdirSync(dir, { recursive: true });
@@ -198,6 +390,13 @@ function writePaginatedRoute({ basePath, items, typeFilter, pillarFilter, title,
 
 function main() {
   const all = buildAllCards();
+  const byId = buildByIdMap(all);
+
+  // /blog/<slug>/ — one page per published post.
+  all.forEach((entry) => {
+    const html = renderArticlePage(entry, all, byId);
+    writePage(`blog/${entry.post.slug}`, html);
+  });
 
   // /blog/ — everything, newest first, featured lead card on page 1.
   writePaginatedRoute({
@@ -243,7 +442,7 @@ function main() {
     });
   });
 
-  console.log(`\n${all.length} published post(s). (Article pages, OG images, PDFs, sitemap, RSS and home teaser are later build steps.)`);
+  console.log(`\n${all.length} published post(s). (OG images, PDFs, sitemap, RSS, redirects and the home teaser are later build steps.)`);
 }
 
 main();
