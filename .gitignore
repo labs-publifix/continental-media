@@ -8,3 +8,11 @@ __pycache__/
 public/blog/_drafts/
 public/assets/images/blog/og/_drafts/
 public/assets/pdfs/blog/_drafts/
+
+# Review previews for one real in-progress post by id (`node scripts/
+# blog/generate-*.mjs --preview=<id>`) — e.g. an "En revisión" article
+# before it's authorized to publish. Never part of the production
+# build, never committed.
+public/blog/_preview/
+public/assets/images/blog/og/_preview/
+public/assets/pdfs/blog/_preview/

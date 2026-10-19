@@ -28,7 +28,7 @@ import { dirname, resolve, join } from 'node:path';
 import { extractToc } from '../lib/blog-content.mjs';
 import { PILLARS, SERVICIO_NAMES, pillarAccent } from '../lib/blog-pillars.mjs';
 import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
-import { relForDepth, buildAllCards, buildDraftCards, buildByIdMap, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
+import { relForDepth, buildAllCards, buildDraftCards, buildByIdMap, buildReviewCard, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
 import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderBlogTeaserSection } from '../lib/blog-teaser-template.mjs';
@@ -495,4 +495,28 @@ function buildDrafts() {
   console.log(`\n${drafts.length} draft(s) rendered to public/blog/_drafts/ (preview only — never linked from production).`);
 }
 
-main();
+/**
+ * Renders ONE real in-progress post (content/blog/posts/, any status —
+ * typically "En revisión") to an isolated public/blog/_preview/<slug>/
+ * path, so it can be reviewed exactly as it'll look once published,
+ * without touching the production index/sitemap/RSS/home teaser and
+ * without requiring status: Publicado. Gitignored, same isolation
+ * pattern as buildDrafts()'s public/blog/_drafts/. Its own cross-links/
+ * related rail only ever consider itself (all = [entry]), since by
+ * definition it isn't part of the published graph yet.
+ */
+function buildPreview(id) {
+  const entry = buildReviewCard(id);
+  const all = [entry];
+  const byId = buildByIdMap(all);
+  const html = renderArticlePage(entry, all, byId, 'blog/_preview');
+  writePage(`blog/_preview/${entry.post.slug}`, html);
+  console.log(`\nPreview rendered: public/blog/_preview/${entry.post.slug}/index.html (gitignored, not part of production).`);
+}
+
+const previewId = (process.argv.find((a) => a.startsWith('--preview=')) || '').split('=')[1];
+if (previewId) {
+  buildPreview(previewId);
+} else {
+  main();
+}

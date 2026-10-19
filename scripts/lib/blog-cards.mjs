@@ -76,6 +76,19 @@ export function buildDraftCards() {
   return buildCardsFromPosts(loadDrafts());
 }
 
+/** Resolves ONE real post (content/blog/posts/) by its backlog id,
+ *  regardless of status — used by each generator's `--preview=<id>`
+ *  flag so an in-progress article ("En revisión") can be rendered and
+ *  reviewed before it's ever eligible for buildAllCards()'s
+ *  status==='Publicado' filter. Never mixed into the production
+ *  index/sitemap/RSS/home teaser — see generate-blog.mjs's
+ *  buildPreview(). */
+export function buildReviewCard(id) {
+  const post = loadPosts().find((p) => p.id === id);
+  if (!post) throw new Error(`No post with id "${id}" found in content/blog/posts/.`);
+  return buildCardsFromPosts([post])[0];
+}
+
 export function buildByIdMap(all) {
   const map = new Map();
   all.forEach((entry) => map.set(entry.post.id, entry));

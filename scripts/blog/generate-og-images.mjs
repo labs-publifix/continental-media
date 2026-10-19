@@ -16,6 +16,10 @@
  *   node scripts/blog/generate-og-images.mjs --drafts   (content/blog/drafts/*.md,
  *     isolated at public/assets/images/blog/og/_drafts/<slug>.jpg — gitignored,
  *     same isolation as generate-blog.mjs's --drafts)
+ *   node scripts/blog/generate-og-images.mjs --preview=G-01   (one real
+ *     in-progress post by backlog id, any status — isolated at
+ *     public/assets/images/blog/og/_preview/<slug>.jpg, gitignored,
+ *     same isolation pattern as generate-blog.mjs's --preview=<id>)
  */
 import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -23,7 +27,7 @@ import { dirname, resolve, join } from 'node:path';
 import os from 'node:os';
 import { chromium } from 'playwright-core';
 
-import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
+import { buildAllCards, buildDraftCards, buildReviewCard } from '../lib/blog-cards.mjs';
 import { tipoLabels } from '../lib/blog-format.mjs';
 import { isDarkHex } from '../lib/blog-pillars.mjs';
 import { renderOgHtml } from './og-template.mjs';
@@ -31,9 +35,12 @@ import { renderOgHtml } from './og-template.mjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
 const isDrafts = process.argv.includes('--drafts');
-const OUT_DIR = isDrafts
-  ? join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og', '_drafts')
-  : join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og');
+const previewId = (process.argv.find((a) => a.startsWith('--preview=')) || '').split('=')[1];
+const OUT_DIR = previewId
+  ? join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og', '_preview')
+  : isDrafts
+    ? join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og', '_drafts')
+    : join(REPO_ROOT, 'public', 'assets', 'images', 'blog', 'og');
 const LOGO_ABS_PATH = pathToFileURL(
   join(REPO_ROOT, 'public', 'assets', 'images', 'continental-media-logo-white.png')
 ).href;
@@ -45,7 +52,7 @@ const LOGO_ABS_PATH = pathToFileURL(
 const TMP_DIR = join(os.tmpdir(), 'cm-og-render');
 
 async function main() {
-  const all = isDrafts ? buildDraftCards() : buildAllCards();
+  const all = previewId ? [buildReviewCard(previewId)] : isDrafts ? buildDraftCards() : buildAllCards();
   mkdirSync(OUT_DIR, { recursive: true });
 
   if (all.length === 0) {
@@ -78,7 +85,8 @@ async function main() {
 
     const outPath = join(OUT_DIR, `${post.slug}.jpg`);
     await page.screenshot({ path: outPath, type: 'jpeg', quality: 90 });
-    console.log('Wrote', `assets/images/blog/og/${isDrafts ? '_drafts/' : ''}${post.slug}.jpg`);
+    const subdir = previewId ? '_preview/' : isDrafts ? '_drafts/' : '';
+    console.log('Wrote', `assets/images/blog/og/${subdir}${post.slug}.jpg`);
   }
 
   await browser.close();

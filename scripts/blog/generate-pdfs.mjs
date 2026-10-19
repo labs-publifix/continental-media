@@ -24,6 +24,10 @@
  *   node scripts/blog/generate-pdfs.mjs --drafts   (content/blog/drafts/*.md,
  *     isolated at public/assets/pdfs/blog/_drafts/<slug>.pdf — gitignored,
  *     same isolation as generate-blog.mjs's --drafts)
+ *   node scripts/blog/generate-pdfs.mjs --preview=G-01   (one real
+ *     in-progress guide by backlog id, any status — isolated at
+ *     public/assets/pdfs/blog/_preview/<slug>.pdf, gitignored, same
+ *     isolation pattern as generate-blog.mjs's --preview=<id>)
  */
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -32,7 +36,7 @@ import os from 'node:os';
 import { chromium } from 'playwright-core';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
-import { buildAllCards, buildDraftCards } from '../lib/blog-cards.mjs';
+import { buildAllCards, buildDraftCards, buildReviewCard } from '../lib/blog-cards.mjs';
 import { formatDateEs } from '../lib/blog-format.mjs';
 import { isDarkHex, pillarAccent } from '../lib/blog-pillars.mjs';
 import {
@@ -46,9 +50,12 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
 const isDrafts = process.argv.includes('--drafts');
-const OUT_DIR = isDrafts
-  ? join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog', '_drafts')
-  : join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog');
+const previewId = (process.argv.find((a) => a.startsWith('--preview=')) || '').split('=')[1];
+const OUT_DIR = previewId
+  ? join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog', '_preview')
+  : isDrafts
+    ? join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog', '_drafts')
+    : join(REPO_ROOT, 'public', 'assets', 'pdfs', 'blog');
 const LOGO_ABS_PATH = pathToFileURL(
   join(REPO_ROOT, 'public', 'assets', 'images', 'continental-media-logo-white.png')
 ).href;
@@ -170,14 +177,16 @@ async function buildGuidePdf(browser, entry) {
 }
 
 async function main() {
-  const all = isDrafts ? buildDraftCards() : buildAllCards();
+  const all = previewId ? [buildReviewCard(previewId)] : isDrafts ? buildDraftCards() : buildAllCards();
   const guides = all.filter((e) => e.post.tipo === 'Guía práctica' && e.post.pdf && e.post.pdf.sections);
 
   if (guides.length === 0) {
     console.log(
-      isDrafts
-        ? 'No draft guides with pdf.sections in content/blog/drafts/ — nothing to render.'
-        : 'No published guides with pdf.sections — nothing to render.'
+      previewId
+        ? `Post "${previewId}" is not a Guía práctica with pdf.sections — nothing to render.`
+        : isDrafts
+          ? 'No draft guides with pdf.sections in content/blog/drafts/ — nothing to render.'
+          : 'No published guides with pdf.sections — nothing to render.'
     );
     return;
   }
