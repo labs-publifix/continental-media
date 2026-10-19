@@ -9,6 +9,11 @@
  * If IntersectionObserver isn't available, everything renders already
  * visible; the page's own <noscript> rule covers the no-JS case
  * independently of this script.
+ * The observer's TARGET is the hero, not the whole (potentially very
+ * tall, paginated) section — threshold is a ratio of the TARGET's own
+ * area, so observing the full section made the ratio depend on total
+ * page length and could fail to fire on load on a long/narrow mobile
+ * layout (same bug fixed in blog-article.js — see its comment).
  */
 (function () {
   'use strict';
@@ -21,6 +26,7 @@
     return;
   }
 
+  var hero = section.querySelector('.cm-blog-index-hero') || section;
   var observer = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
@@ -32,5 +38,5 @@
     },
     { threshold: 0.1 }
   );
-  observer.observe(section);
+  observer.observe(hero);
 })();
