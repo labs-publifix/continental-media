@@ -31,7 +31,7 @@ faqs:
 cruces: []
 servicio: marketing-digital
 ruta_heredada: /2014/02/pioneros-de-la-publicidad-en-mexico/
-status: "En revisión"
+status: Publicado
 ---
 ## Antes de los nombres, la industria
 

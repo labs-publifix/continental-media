@@ -31,7 +31,7 @@ faqs:
 cruces: []
 servicio: marketing-digital
 ruta_heredada: /2013/04/historia-de-la-publicidad-en-mexico/
-status: "En revisión"
+status: Publicado
 ---
 ## El siglo XIX: cuando anunciarse se volvió un oficio
 
