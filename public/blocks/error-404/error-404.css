@@ -1,0 +1,156 @@
+/*
+  Continental Media — 404 page block styles.
+  Namespaced under .cm-404*. Depends on assets/css/tokens.css and
+  blog-card.css (the "lo más reciente" grid). See error-404.html for
+  the full direction-contract comment.
+*/
+
+.cm-404 {
+  display: block;
+}
+
+.cm-404__hero {
+  padding: clamp(7.5rem, 20vh, 10.5rem) var(--cm-gutter) clamp(3rem, 7vw, 4.5rem);
+}
+
+.cm-404__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cm-404__eyebrow {
+  display: inline-block;
+  font-family: var(--cm-font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cm-color-accent);
+  margin-bottom: 1.25rem;
+}
+
+.cm-404__title {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cm-404__subtitle {
+  margin: 1.1em auto 0;
+  max-width: 540px;
+  font-family: var(--cm-font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.cm-404__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: clamp(2rem, 5vw, 2.75rem);
+}
+
+.cm-404__action {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--cm-color-fg);
+  text-decoration: none;
+  padding: 0.75em 1.3em;
+  border-radius: var(--cm-radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition:
+    background var(--cm-duration-fast) var(--cm-ease-out),
+    border-color var(--cm-duration-fast) var(--cm-ease-out);
+}
+
+.cm-404__action:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.cm-404__action:focus-visible {
+  outline: 2px solid var(--cm-color-accent);
+  outline-offset: 2px;
+}
+
+.cm-404__action--primary {
+  background: var(--cm-color-accent);
+  border-color: var(--cm-color-accent);
+  color: var(--cm-color-on-accent);
+}
+
+.cm-404__action--primary:hover {
+  background: var(--cm-color-accent-hover);
+  border-color: var(--cm-color-accent-hover);
+}
+
+.cm-404__action--whatsapp {
+  border-color: rgba(37, 211, 102, 0.55);
+  color: #25d366;
+}
+
+.cm-404__action--whatsapp:hover {
+  background: rgba(37, 211, 102, 0.1);
+  border-color: #25d366;
+}
+
+/* ---------- Client-side keyword suggestion ---------- */
+
+.cm-404__suggestion {
+  margin: clamp(2rem, 5vw, 2.75rem) auto 0;
+  max-width: 480px;
+  padding: 1.1rem 1.4rem;
+  border-radius: var(--cm-radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cm-404__suggestion[hidden] {
+  display: none;
+}
+
+.cm-404__suggestion-label {
+  margin: 0 0 0.4em;
+  font-family: var(--cm-font-body);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cm-404__suggestion-link {
+  font-family: var(--cm-font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--cm-color-fg);
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.cm-404__suggestion-link:focus-visible {
+  outline: 2px solid var(--cm-color-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- "Lo más reciente del blog" ---------- */
+
+.cm-404__recent {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vh, 4.5rem) var(--cm-gutter) clamp(4rem, 9vh, 6rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cm-404__recent-title {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+}

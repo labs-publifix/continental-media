@@ -8,8 +8,10 @@
     "blog:og": "node scripts/blog/generate-og-images.mjs",
     "blog:pdf": "node scripts/blog/generate-pdfs.mjs",
     "blog:rss": "node scripts/blog/generate-rss.mjs",
-    "blog:redirects": "node scripts/blog/generate-redirects.mjs",
-    "sitemap": "node scripts/generate-sitemap.mjs"
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "migracion:redirects": "node scripts/migracion/generar-redirects.mjs",
+    "migracion:redirects:vercel": "node scripts/migracion/generar-redirects.mjs --format=vercel",
+    "migracion:redirects:netlify": "node scripts/migracion/generar-redirects.mjs --format=redirects-file"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",

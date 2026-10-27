@@ -16,3 +16,8 @@ public/assets/pdfs/blog/_drafts/
 public/blog/_preview/
 public/assets/images/blog/og/_preview/
 public/assets/pdfs/blog/_preview/
+
+# Old-site WordPress export (XML export + .sql dump) the user drops
+# here for the SEO migration — see migracion/LEEME_transicion_seo.md.
+# Explicitly NOT committed (1.8GB, includes wp-content/uploads).
+migracion/respaldo/
