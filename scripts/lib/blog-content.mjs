@@ -30,6 +30,20 @@
  *   faqs          [{ q, a }] — 3-5 entries, rendered as visible FAQs + FAQPage schema
  *   cruces        backlog IDs this article should link to (only ones already published get a live link)
  *   servicio      /servicios/<slug>/ override — defaults to the pillar's own mapping
+ *   ruta_heredada SEO migration only (see migracion/LEEME_transicion_seo.md §5) —
+ *                 a conserved legacy URL (e.g. '/2013/04/historia-de-la-publicidad-en-mexico/').
+ *                 When set, this post's page is written at that literal path
+ *                 instead of blog/<slug>/ (production builds only — see
+ *                 scripts/lib/blog-cards.mjs's outputDirFor()), that path becomes
+ *                 the canonical URL, and it's included in the sitemap and in
+ *                 /blog/ + its category listing like any other post. slug is
+ *                 still required (used for its OG image/PDF asset filenames,
+ *                 decoupled from the URL route). publishDate/updateDate carry
+ *                 their normal meaning unchanged — set publishDate to the
+ *                 ORIGINAL legacy publish date and updateDate to this version's
+ *                 own publish date, so BlogPosting schema's datePublished/
+ *                 dateModified and the on-screen "Publicado el.../Actualizado
+ *                 el..." both come out right with no special-casing.
  *   pdf           guides only — { pageCount, filename?, title?, subtitle?, sections }.
  *                 pageCount is the AUTHORED/declared value shown on cards/article
  *                 before the PDF exists; scripts/blog/generate-pdfs.mjs computes the

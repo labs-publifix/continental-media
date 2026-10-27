@@ -13,7 +13,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
-import { buildAllCards } from '../lib/blog-cards.mjs';
+import { buildAllCards, outputDirFor } from '../lib/blog-cards.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
@@ -37,7 +37,7 @@ function rfc822(isoDate) {
 
 function renderItem(entry) {
   const { post, pillar } = entry;
-  const url = `${SITE_URL}/blog/${post.slug}/`;
+  const url = `${SITE_URL}/${outputDirFor(post)}/`;
 
   return `    <item>
       <title>${escapeXml(post.title)}</title>

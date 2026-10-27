@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { CASE_STUDIES } from './case-study-data.mjs';
 import { PILLARS } from './pillar-data.mjs';
-import { buildAllCards, PAGE_SIZE } from './lib/blog-cards.mjs';
+import { buildAllCards, outputDirFor, PAGE_SIZE } from './lib/blog-cards.mjs';
 import { PILLARS as BLOG_PILLARS } from './lib/blog-pillars.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -58,7 +58,7 @@ export function generateSitemap() {
     ...BLOG_PILLARS.flatMap((pillar) =>
       paginatedUrls(`blog/categoria/${pillar.slug}`, blogCards.filter((c) => c.card.pilarSlug === pillar.slug).length, '0.6')
     ),
-    ...blogCards.map((c) => ({ path: `blog/${c.post.slug}/`, priority: '0.8', changefreq: 'monthly' })),
+    ...blogCards.map((c) => ({ path: `${outputDirFor(c.post)}/`, priority: '0.8', changefreq: 'monthly' })),
   ];
 
   const urls = [

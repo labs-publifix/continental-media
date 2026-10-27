@@ -25,6 +25,7 @@ import { dirname, resolve, join } from 'node:path';
 import { loadBacklog } from './blog-backlog.mjs';
 import { loadPosts } from './blog-content.mjs';
 import { pillarByNombre } from './blog-pillars.mjs';
+import { outputDirFor } from './blog-cards.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
@@ -135,7 +136,7 @@ export function resolveRow(row, { backlogPosts, publishedPosts }) {
   const targetId = m[1];
   const published = publishedPosts.find((p) => p.id === targetId);
   if (published) {
-    return { path: `/blog/${published.slug}/`, kind: 'article', targetId, title: published.title };
+    return { path: `/${outputDirFor(published)}/`, kind: 'article', targetId, title: published.title };
   }
 
   const backlogRow = backlogPosts.find((p) => p.id === targetId);

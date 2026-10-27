@@ -28,7 +28,7 @@ import { dirname, resolve, join } from 'node:path';
 import { extractToc } from '../lib/blog-content.mjs';
 import { PILLARS, SERVICIO_NAMES, pillarAccent } from '../lib/blog-pillars.mjs';
 import { formatDateEs, tipoLabels } from '../lib/blog-format.mjs';
-import { relForDepth, buildAllCards, buildDraftCards, buildByIdMap, buildReviewCard, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
+import { relForDepth, outputDirFor, buildAllCards, buildDraftCards, buildByIdMap, buildReviewCard, withRel, PAGE_SIZE } from '../lib/blog-cards.mjs';
 import { renderBlogIndexSection } from '../lib/blog-index-template.mjs';
 import { renderBlogArticleSection } from '../lib/blog-article-template.mjs';
 import { renderBlogTeaserSection } from '../lib/blog-teaser-template.mjs';
@@ -70,7 +70,7 @@ function renderIndexPage({ dirPath, basePath, cards, pageNum, totalPages, typeFi
     paginationBasePath: `${basePath}/`,
   });
 
-  const schemaItems = cards.map((c) => ({ url: `blog/${c.post.slug}/`, name: c.post.title }));
+  const schemaItems = cards.map((c) => ({ url: `${outputDirFor(c.post)}/`, name: c.post.title }));
 
   const head = `<head>
   <meta charset="utf-8" />
@@ -184,15 +184,20 @@ function pickPdfPromo(entry, byId) {
 
 function renderArticlePage(entry, all, byId, basePath = 'blog') {
   const { post, pillar, author } = entry;
-  const dirPath = `${basePath}/${post.slug}`;
+  // A conserved legacy URL (ruta_heredada — see migracion/
+  // LEEME_transicion_seo.md §5) lives at its own literal path instead
+  // of blog/<slug>, in a real production build only — a preview/draft
+  // build always stays isolated under its own slug-based subfolder
+  // (see outputDirFor's own doc comment).
+  const dirPath = outputDirFor(post, basePath);
   const rel = relForDepth(dirPath);
   const { isGuia } = tipoLabels(post.tipo);
-  // Drafts' OG images/PDFs live under their own _drafts/ subfolder
-  // (see generate-og-images.mjs / generate-pdfs.mjs's own --drafts
-  // flag) — basePath is 'blog/_drafts' for a draft page, 'blog'
-  // otherwise, so this mirrors that same split for the asset paths
-  // this page links to.
-  const assetSubdir = basePath === 'blog' ? '' : '_drafts/';
+  // Drafts'/previews' OG images/PDFs live under their own _drafts//
+  // _preview/ subfolder (see generate-og-images.mjs / generate-pdfs.mjs's
+  // own --drafts/--preview= flags) — basePath is 'blog/_drafts' or
+  // 'blog/_preview' for those, 'blog' otherwise, so this mirrors that
+  // same split for the asset paths this page links to.
+  const assetSubdir = basePath === 'blog' ? '' : `${basePath.replace(/^blog\//, '')}/`;
 
   const canonicalPath = `${dirPath}/`;
   const fullTitle = post.metaTitle || post.title;
@@ -212,7 +217,7 @@ function renderArticlePage(entry, all, byId, basePath = 'blog') {
         bg: promoTarget.pillar.bg,
         fg: promoTarget.pillar.fg,
         title: promoTarget.post.title,
-        href: `${rel}blog/${promoTarget.post.slug}/`,
+        href: `${rel}${outputDirFor(promoTarget.post, basePath)}/`,
       }
     : null;
 
@@ -409,10 +414,11 @@ function main() {
   const all = buildAllCards();
   const byId = buildByIdMap(all);
 
-  // /blog/<slug>/ — one page per published post.
+  // /blog/<slug>/ — one page per published post (or its ruta_heredada
+  // path, for a conserved legacy URL — see outputDirFor).
   all.forEach((entry) => {
     const html = renderArticlePage(entry, all, byId);
-    writePage(`blog/${entry.post.slug}`, html);
+    writePage(outputDirFor(entry.post), html);
   });
 
   // /blog/ — everything, newest first, featured lead card on page 1.
@@ -491,7 +497,7 @@ function buildDrafts() {
   const byId = buildByIdMap(drafts);
   drafts.forEach((entry) => {
     const html = renderArticlePage(entry, drafts, byId, 'blog/_drafts');
-    writePage(`blog/_drafts/${entry.post.slug}`, html);
+    writePage(outputDirFor(entry.post, 'blog/_drafts'), html);
   });
 
   console.log(`\n${drafts.length} draft(s) rendered to public/blog/_drafts/ (preview only — never linked from production).`);
@@ -512,8 +518,9 @@ function buildPreview(id) {
   const all = [entry];
   const byId = buildByIdMap(all);
   const html = renderArticlePage(entry, all, byId, 'blog/_preview');
-  writePage(`blog/_preview/${entry.post.slug}`, html);
-  console.log(`\nPreview rendered: public/blog/_preview/${entry.post.slug}/index.html (gitignored, not part of production).`);
+  const previewDir = outputDirFor(entry.post, 'blog/_preview');
+  writePage(previewDir, html);
+  console.log(`\nPreview rendered: public/${previewDir}/index.html (gitignored, not part of production).`);
 }
 
 const previewId = (process.argv.find((a) => a.startsWith('--preview=')) || '').split('=')[1];

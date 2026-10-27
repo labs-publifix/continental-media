@@ -21,6 +21,25 @@ export function relForDepth(dirPath) {
   return '../'.repeat(depth);
 }
 
+/**
+ * Output directory (no leading/trailing slash) for a post's own page.
+ * Normally `blog/<slug>` — but a post carrying `ruta_heredada` (a
+ * conserved legacy URL kept alive at its original path instead of a
+ * redirect — see migracion/LEEME_transicion_seo.md §5) lives at that
+ * literal path instead, in production only: a preview/draft build
+ * (basePath !== 'blog') always stays isolated under its own slug-based
+ * subfolder, never at the real conserved path, even for a
+ * ruta_heredada post. The single source of truth for this post's
+ * route — every generator (article page, index/sitemap/RSS entries,
+ * cross-link hrefs) calls this instead of reconstructing `blog/<slug>`
+ * by hand, so they can never drift out of sync with each other. */
+export function outputDirFor(post, basePath = 'blog') {
+  if (basePath === 'blog' && post.ruta_heredada) {
+    return post.ruta_heredada.replace(/^\/|\/$/g, '');
+  }
+  return `${basePath}/${post.slug}`;
+}
+
 /** Shared per-post resolution (pillar, author, card view-model) for an
  *  already-ordered list of posts — used for both the real published
  *  archive (buildAllCards) and isolated draft previews (buildDraftCards). */
@@ -38,7 +57,7 @@ function buildCardsFromPosts(posts) {
       tipo: post.tipo,
       number: index + 1,
       card: {
-        href: `blog/${post.slug}/`, // REL prefixed later per output page
+        href: `${outputDirFor(post)}/`, // REL prefixed later per output page
         tipo: post.tipo,
         pilarNombre: pillar.nombre,
         pilarSlug: pillar.slug,
