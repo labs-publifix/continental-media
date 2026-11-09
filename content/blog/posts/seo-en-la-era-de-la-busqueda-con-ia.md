@@ -35,7 +35,7 @@ cruces:
   - G-35
   - G-36
 servicio: ai-marketing-solutions
-status: "En revisión"
+status: Publicado
 ---
 ## La búsqueda ya no termina en una lista de diez enlaces
 
