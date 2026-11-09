@@ -17,8 +17,8 @@ secondaryKeywords:
   - "calendario comercial méxico 2027"
   - "cómo planear una campaña estacional"
 author: pepe-bermudez
-publishDate: 2026-11-10
-updateDate: 2026-11-10
+publishDate: 2026-11-09
+updateDate: 2026-11-09
 faqs:
   - q: "¿Cuándo es El Buen Fin 2027?"
     a: "Todavía no hay fecha oficial — Concanaco-Servytur suele anunciarla uno o dos meses antes del evento, no con más de un año de anticipación. Por patrón, El Buen Fin coincide con el fin de semana largo del Día de la Revolución (lunes 15 de noviembre de 2027), así que una ventana razonable para planear en borrador es alrededor del 12 al 16 de noviembre — pero confírmalo en elbuenfin.org antes de comprometer presupuesto o inventario."
@@ -89,7 +89,7 @@ pdf:
         - "¿Confirmaste la fecha exacta en la fuente oficial, si se trata de una fecha variable (Buen Fin, Hot Sale)?"
         - "¿El presupuesto y el inventario están asignados para esta fecha específica, no repartidos de forma genérica?"
         - "¿Ya definiste qué vas a medir para saber si la campaña funcionó, antes de lanzarla?"
-status: "En revisión"
+status: Publicado
 ---
 ## Por qué un calendario comercial no es solo una lista de fechas
 
