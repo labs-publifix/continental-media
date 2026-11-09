@@ -81,7 +81,7 @@ pdf:
         - "¿La frecuencia planeada es la que de verdad se cumplió, o hay que ajustarla para el mes siguiente?"
         - "¿Dejaste espacio para al menos una publicación reactiva o no planeada?"
         - "¿Revisaste qué publicación tuvo mejor resultado este mes, para considerarlo en la planeación del siguiente?"
-status: "En revisión"
+status: Publicado
 ---
 ## Por qué un calendario de contenido cambia el resultado de tus redes sociales
 
